@@ -12,7 +12,6 @@ public class Ripple : MonoBehaviour
         {
             while (true)
             {
-                Debug.Log("SET");
                 mr.material.SetFloat(Shader.PropertyToID("_RippleStartTime"), Time.time);
                 yield return new WaitForSeconds(5);
             }

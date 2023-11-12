@@ -14,12 +14,12 @@ public class PlayerFish : MonoBehaviour
     [SerializeField] float rodRotateSpeed = 5;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
+    [SerializeField] FishingLine fishingLine;
 
     bool fishing = false;
     bool cast = false;
 
-    Vector3 rodCurPos;
-    Vector3 rodTargetPos;
+    Vector3 rodOffsetPos;
     Quaternion rodCurRot;
     Quaternion rodTargetRot;
     Quaternion rodFishingStartRot;
@@ -41,6 +41,7 @@ public class PlayerFish : MonoBehaviour
     {
         rodCurRot = rodTransform.rotation;
         lastRodTipPos = rodTipTransform.position;
+        rodOffsetPos = rodTransform.position - transform.position;
     }
 
     void Update()
@@ -55,6 +56,8 @@ public class PlayerFish : MonoBehaviour
         var rodTipPos = rodTipTransform.position;
         rodTipVelocity = (rodTipPos - lastRodTipPos) / Time.deltaTime;
         lastRodTipPos = rodTipPos;
+
+        rodTransform.position = transform.position + rodOffsetPos;
     }
 
     public void OnFish(InputAction.CallbackContext ctx)
@@ -88,8 +91,7 @@ public class PlayerFish : MonoBehaviour
     {
         if (ctx.performed)
         {
-            var hook = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
-            hook.GetComponent<Rigidbody>().velocity = rodTipVelocity;
+            Cast();
         }
     }
 
@@ -98,5 +100,12 @@ public class PlayerFish : MonoBehaviour
         fishing = false;
         input.SwitchCurrentActionMap("Gameplay");
         rodTargetRot = rodFishingStartRot;
+    }
+
+    void Cast()
+    {
+        var hook = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
+        hook.GetComponent<Rigidbody>().velocity = rodTipVelocity;
+        fishingLine.SetHook(hook.GetComponent<FishingHook>());
     }
 }

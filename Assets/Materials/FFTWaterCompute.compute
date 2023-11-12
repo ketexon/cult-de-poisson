@@ -1,0 +1,202 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CS_InitializeHeightSpectrum
+#pragma kernel CS_InitializeHeightSpectrumConjugates
+#pragma kernel CS_UpdateHeightSpectrum
+#pragma kernel CS_FFTHorizontal
+#pragma kernel CS_FFTVertical
+#pragma kernel CS_DFT
+
+#define PI 3.14159265358979323846f
+#define SIZE 256
+#define LOG_SIZE 8
+
+RWTexture2D<float4> _FTTarget;
+RWTexture2D<float4> _HeightSpectrum;
+RWTexture2D<float4> _InitialHeightSpectrum;
+uint _Seed;
+uint _NSamples;
+float _PhysicalLength;
+float _Gravity;
+float _Period;
+float _WindAngle;
+float _WindSpeed;
+float _PhillipsA;
+float _Time;
+
+uint hash(uint x) {
+    x += (x << 10u);
+    x ^= (x >> 6u);
+    x += (x << 3u);
+    x ^= (x >> 11u);
+    x += (x << 15u);
+    return x;
+}
+
+// [0, 1)
+float Uniform(uint seed){
+    float v = hash(seed) / 3141.592653f;
+    return v - floor(v);
+}
+
+float2 BoxMullerGauss(float u1, float u2)
+{
+    float r = sqrt(-2 * log(u1));
+    float theta = 2 * PI * u2;
+    return float2(r * cos(theta), r * sin(theta));
+}
+
+float2 IndexToK(uint2 index)
+{
+    return (2 * PI / _PhysicalLength) * float2((float) index.x - float(_NSamples) / 2, (float) index.y - float(_NSamples) / 2);
+}
+
+float2 IndexToX(uint2 index)
+{
+    return (_PhysicalLength / _NSamples) * float2((float) index.x - float(_NSamples) / 2, (float) index.y - float(_NSamples) / 2);
+}
+
+float DispersionRelation(float2 K)
+{
+    float kMag = length(K);
+    float frequency = sqrt(_Gravity * kMag);
+    float frequency0 = 2 * PI / _Period;
+    return floor(frequency / frequency0) * frequency0;
+}
+
+float Phillips(float2 K)
+{
+    float kMagSquared = dot(K, K);
+    float normKDotWindDir = dot(normalize(K), float2(cos(_WindAngle), sin(_WindAngle)));
+    float phillipsL = _WindSpeed * _WindSpeed / _Gravity;
+    return _PhillipsA * exp(-1 / (phillipsL * phillipsL * kMagSquared)) / (kMagSquared * kMagSquared) * normKDotWindDir * normKDotWindDir;
+}
+
+float2 ComplexMult(float2 a, float2 b)
+{
+    return float2(
+        a.x * b.x - a.y * b.y,
+        a.x * b.y + a.y * b.x
+    );
+}
+
+float2 CIS(float t)
+{
+    return float2(cos(t), sin(t));
+}
+
+float2 SampleHeightSpectrum(uint2 index, float time)
+{
+    float2 K = IndexToK(index);
+    float2 h0K = _InitialHeightSpectrum[index].xy;
+    float2 h0NegKConj = _InitialHeightSpectrum[index].zw;
+    float dispersionRelation = DispersionRelation(K);
+    return ComplexMult(h0K, CIS(dispersionRelation * time))
+        + ComplexMult(h0NegKConj, CIS(-dispersionRelation * time));
+
+}
+
+[numthreads(8,8,1)]
+void CS_InitializeHeightSpectrum(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x > _NSamples || id.y > _NSamples)
+    {
+        return;
+    }
+    uint seed = (id.x + id.y * _NSamples + _Seed) * 2;
+
+    float2 K = IndexToK(id.xy);
+    float2 Xi = BoxMullerGauss(Uniform(seed), Uniform(seed + 1));
+    _InitialHeightSpectrum[id.xy] = float4(Xi * sqrt(Phillips(K) / 2), 0, 0);
+}
+
+[numthreads(8, 8, 1)]
+void CS_InitializeHeightSpectrumConjugates(uint3 id : SV_DispatchThreadID)
+{
+    /// if k(i, j) = A (i - nSamples / 2, j - nSamples / 2)
+    /// then -k(i, j) = A (-i + nSamples / 2, -j + nSamples / 2)
+    /// which equals k(-i + nSamples, -j + nSamples)
+    /// and then we mod by nSamples just in case
+    float2 heightK = _InitialHeightSpectrum[id.xy].xy;
+    float2 heightNegK = _InitialHeightSpectrum[uint2((-(int) id.x + _NSamples) % _NSamples, (-(int) id.y + _NSamples) % _NSamples)].xy;
+    _InitialHeightSpectrum[id.xy] = float4(heightK, heightNegK.x, -heightNegK.y);
+}
+
+[numthreads(8, 8, 1)]
+void CS_UpdateHeightSpectrum(uint3 id : SV_DispatchThreadID)
+{
+    _HeightSpectrum[id.xy] = float4(SampleHeightSpectrum(id.xy, _Time), 0, 0);
+}
+
+groupshared float4 fftGroupBuffer[2][SIZE];
+
+void ButterflyValues(uint step, uint index, out uint2 indices, out float2 twiddle)
+{
+    const float twoPi = 6.28318530718;
+    uint b = SIZE >> (step + 1);
+    uint w = b * (index / b);
+    uint i = (w + index) % SIZE;
+    sincos(-twoPi / SIZE * w, twiddle.y, twiddle.x);
+
+    //This is what makes it the inverse FFT
+    twiddle.y = -twiddle.y;
+    indices = uint2(i, i + b);
+}
+
+float4 FFT(uint threadIndex, float4 input)
+{
+    fftGroupBuffer[0][threadIndex] = input;
+    GroupMemoryBarrierWithGroupSync();
+    bool flag = false;
+
+    [unroll]
+    for (uint step = 0; step < LOG_SIZE; ++step)
+    {
+        uint2 inputsIndices;
+        float2 twiddle;
+        ButterflyValues(step, threadIndex, inputsIndices, twiddle);
+
+        float4 v = fftGroupBuffer[flag][inputsIndices.y];
+        fftGroupBuffer[!flag][threadIndex] = fftGroupBuffer[flag][inputsIndices.x] + float4(ComplexMult(twiddle, v.xy), ComplexMult(twiddle, v.zw));
+
+        flag = !flag;
+        GroupMemoryBarrierWithGroupSync();
+    }
+
+    return fftGroupBuffer[flag][threadIndex];
+}
+
+[numthreads(SIZE, 1, 1)]
+void CS_FFTHorizontal(uint3 id : SV_DISPATCHTHREADID)
+{
+    _FTTarget[id.xy] = FFT(id.x, _FTTarget[id.xy]);
+}
+
+[numthreads(SIZE, 1, 1)]
+void CS_FFTVertical(uint3 id : SV_DISPATCHTHREADID)
+{
+    _FTTarget[id.yx] = FFT(id.x, _FTTarget[id.yx]);
+}
+
+[numthreads(SIZE, 1, 1)]
+void CS_DFT(uint3 id : SV_DISPATCHTHREADID)
+{
+    float2 val = float2(0, 0);
+    float2 X = IndexToX(id.xy);
+    for (uint i = 0; i < SIZE; ++i)
+    {
+        for (uint j = 0; j < SIZE; ++j)
+        {
+            float2 K = IndexToK(uint2(i, j));
+            val += ComplexMult(_HeightSpectrum[uint2(i, j)].xy, CIS(dot(K, X)));
+            // val += _HeightSpectrum[uint2(i, j)].xy;
+            //val += CIS(dot(K, X));
+            //val += CIS(dot(K, X));
+        }
+    }
+    //_FTTarget[id.xy] = float4(
+    //    ComplexMult(_HeightSpectrum[uint2(0, 0)].xy, CIS(dot(IndexToK(uint2(0, 0)), X))),
+    //    0, 0
+    //);
+    _FTTarget[id.xy] = float4(val / 100000000000000000000000.0f, 0, 0);
+    //_FTTarget[id.xy] = float4(_HeightSpectrum[uint2(10, 10)].xy, 0, 1);
+}
