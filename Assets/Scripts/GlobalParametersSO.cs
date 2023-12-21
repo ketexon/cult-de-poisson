@@ -7,6 +7,9 @@ public class GlobalParametersSO : ScriptableObject
 {
     [Header("Layers")]
     [SerializeField]
+    public LayerMask WaterLayerMask;
+
+    [SerializeField]
     public LayerMask HookLayerMask;
 
     [Header("Fish Zones")]

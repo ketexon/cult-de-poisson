@@ -8,4 +8,9 @@ public static class Extensions
     {
         return (mask & 1 << layer) > 0;
     }
+
+    public static Vector3 ProjectXZ(this Vector3 v)
+    {
+        return new Vector3(v.x, 0, v.z);
+    }
 }

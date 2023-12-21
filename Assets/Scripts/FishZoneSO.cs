@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FishZone", menuName = "Fish Zone")]
 public class FishZoneSO : ScriptableObject
 {
-    [SerializeField] public List<GameObject> Fish;
+    [SerializeField] public List<FishSO> Fish;
 }

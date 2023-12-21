@@ -8,42 +8,39 @@ using UnityEngine.UIElements;
 public class FishingLine : MonoBehaviour
 {
     [SerializeField] Transform tip;
-    [SerializeField] float pointDistance = 0.1f;
-    [SerializeField] float bobDistance = 3.0f;
     [SerializeField] GameObject defaultBobPrefab;
-    [SerializeField] float bounciness;
-    int bobPoint => nPoints - Mathf.FloorToInt(bobDistance / pointDistance);
+
     GameObject bobPrefab = null;
     FishingHook hook = null;
 
-    FishingBob bobInstance = null;
-    Rigidbody bobRB = null;
-    bool bobInWater = false;
+    GameObject bobInstance;
 
     LineRenderer lineRenderer;
 
-    int nPoints = 0;
-    Vector3[] previousPoints = new Vector3[100];
-    // note: the last point only APPEARS to be connected to the hook.
-    // to prevent stretching the rope, it does not actually follow the hook, and is likely one step behind the hook
-    Vector3[] points = new Vector3[100];
+    Vector3[] points = new Vector3[3];
+
+    bool hookHitWater = false;
+    bool fishCaught = false;
 
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        AddPoint(tip.position, tip.position);
+        points[0] = points[1] = tip.position;
         bobPrefab = defaultBobPrefab;
-    }
-
-    public void OnBobHitWater()
-    {
-        hook.OnBobHitWater(bobInstance, bobDistance, bounciness);
-        bobInWater = true;
     }
 
     public void SetHook(FishingHook hook)
     {
         this.hook = hook;
+        hook.WaterHitEvent += OnHookHitWater;
+        hook.FishCatchEvent += OnFishCatch;
+
+        lineRenderer.positionCount = 2;
+    }
+
+    void OnFishCatch(Fish fish)
+    {
+        fishCaught = true;
     }
 
     public void SetBobPrefab(GameObject prefab)
@@ -53,130 +50,79 @@ public class FishingLine : MonoBehaviour
 
     void Update()
     {
-        points[0] = tip.position;
         if (hook)
         {
-            var hookPoint = points[nPoints - 1];
-            // if the distance between the last point and the tip could fit another vertex, add one
-            if ((hookPoint - hook.transform.position).magnitude >= pointDistance)
-            {
-                AddPoint(hook.transform.position, hook.transform.position);
-            }
+            UpdateBob();
+            UpdatePoints();
+            DrawPoints();
         }
-        UpdatePoints();
-        UpdateBob();
-        DrawPoints();
     }
 
-    /// METHOD:
-    /// https://www.owlree.blog/posts/simulating-a-rope.html
     void UpdatePoints()
     {
-        // Verlet integration
-        for (int i = 1; i < nPoints - 1; ++i)
+        if (hook)
         {
-            if(bobInstance && bobPoint == i)
+            points[0] = hook.transform.position;
+        }
+        if (hookHitWater)
+        {
+            points[2] = tip.position;
+            if (fishCaught)
             {
-                points[i] = bobInstance.transform.position;
-            }
-            else
-            {
-                Vector3 pos = points[i];
-                Vector3 prevPos = previousPoints[i];
-                points[i] = 2 * pos - prevPos + Time.deltaTime * Time.deltaTime * Physics.gravity;
-                previousPoints[i] = pos;
+                points[1] = hook.WaterHitPos.Value;
             }
         }
-
-        // Jakobson method for constraints
-        Vector3 GetDeltaDisp(int i, int j)
+        else
         {
-            Vector3 disp = points[j] - points[i];
-            float length = disp.magnitude;
-            float dLength = length - pointDistance;
-            Vector3 dir = disp / length;
-            return dLength * dir;
+            points[1] = tip.position;
         }
+    }
 
-        void RelaxConstraintLeftFixed(int i, int j)
-        {
-            var disp = GetDeltaDisp(i, j);
-            points[j] -= disp;
-        }
+    void OnHookHitWater(Vector3 pos)
+    {
+        hookHitWater = true;
+        points[1] = pos;
 
-        void RelaxConstraint(int i, int j)
-        {
-            var disp = GetDeltaDisp(i, j);
-            points[i] += disp / 2;
-            points[j] -= disp / 2;
-        }
-
-        void RelaxConstraintRightFixed(int i, int j)
-        {
-            var disp = GetDeltaDisp(i, j);
-            points[i] += disp;
-        }
-
-        // if points.Count is 2, then the constraints are always satisfied + doesn't work with code
-        if (nPoints > 2)
-        {
-            for (int iter = 0; iter < nPoints; ++iter)
-            {
-                RelaxConstraintLeftFixed(0, 1);
-                for (int i = 1; i < nPoints - 2; ++i)
-                {
-                    if(bobInstance && i == bobPoint)
-                    {
-                        RelaxConstraintLeftFixed(i, i + 1);
-                    }
-                    else if(bobInstance && i + 1 == bobPoint)
-                    {
-                        RelaxConstraintRightFixed(i, i + 1);
-                    }
-                    else {
-                        RelaxConstraint(i, i + 1);
-                    }
-                }
-                RelaxConstraintRightFixed(nPoints - 2, nPoints - 1);
-            }
-        }
+        lineRenderer.positionCount = 3;
     }
 
     void UpdateBob()
     {
-        if (bobPrefab && !bobInstance && bobPoint >= 0)
+        Vector3? bobPos = CalculateBobPosition();
+        if (bobPrefab && !bobInstance && bobPos.HasValue)
         {
-            var bobGO = Instantiate(bobPrefab, points[bobPoint], Quaternion.identity);
-            bobInstance = bobGO.GetComponent<FishingBob>();
-            bobInstance.SetLine(this);
-            bobRB = bobInstance.GetComponent<Rigidbody>();
-            Debug.Log("SPAWNED BOB");
+            bobInstance = Instantiate(bobPrefab, bobPos.Value, Quaternion.identity);
         }
-        if (bobInstance && !bobInWater)
+        else if (bobInstance)
         {
-            Vector3 pos = points[bobPoint];
-            Vector3 dir = points[bobPoint + 1] - points[bobPoint];
-            dir.Normalize();
-            pos += dir * ((pos - hook.transform.position).magnitude - bobDistance);
-            bobInstance.transform.position = pos;
+            if (bobPos.HasValue)
+            {
+                bobInstance.transform.position = bobPos.Value;
+            }
+            else
+            {
+                bobInstance.transform.position = tip.position;
+            }
         }
+    }
+
+    Vector3? CalculateBobPosition()
+    {
+        float distanceLeft = hook.BobDistance;
+        for (int i = 0; i < lineRenderer.positionCount - 1; ++i)
+        {
+            float lineLength = (points[i + 1] - points[i]).magnitude;
+            if(lineLength > distanceLeft)
+            {
+                return points[i] + (points[i + 1] - points[i]) / lineLength * distanceLeft;
+            }
+            distanceLeft -= lineLength;
+        }
+        return null;
     }
 
     void DrawPoints()
     {
-        lineRenderer.positionCount = nPoints;
         lineRenderer.SetPositions(points);
-    }
-
-    void AddPoint(Vector3 point, Vector3 prevPoint)
-    {
-        if(nPoints >= points.Length)
-        {
-            Array.Resize(ref points, points.Length * 2);
-            Array.Resize(ref previousPoints, points.Length * 2);
-        }
-        points[nPoints] = point;
-        previousPoints[nPoints] = prevPoint;
-        ++nPoints;
     }
 }

@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce80aec2b176804db9d323d59dac0b3, type: 3}
-  m_Name: GlobalParameters
+  m_Script: {fileID: 11500000, guid: c5d99a69eb107724eb670fb6e2043528, type: 3}
+  m_Name: Carp
   m_EditorClassIdentifier: 
-  WaterLayerMask:
-    serializedVersion: 2
-    m_Bits: 16
-  HookLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  MinHookInFishZoneDelay: 5
-  MaxHookInFishZoneDelay: 10
+  Name: Carp
+  Prefab: {fileID: 582537697710654690, guid: 7549e94af72b31845b206f97437179a3, type: 3}

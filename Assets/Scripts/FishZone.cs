@@ -61,7 +61,11 @@ public class FishZone : MonoBehaviour
     {
         float seconds = globalParams.GetRandomFishZoneDelay();
         yield return new WaitForSeconds(seconds);
-        Debug.Log("CAUGHT");
         hookCaughtFish = true;
+        if (hook)
+        {
+            var fish = properties.Fish[Random.Range(0, properties.Fish.Count)];
+            hook.OnCatchFish(fish);
+        }
     }
 }

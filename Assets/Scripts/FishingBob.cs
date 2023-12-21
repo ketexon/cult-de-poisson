@@ -7,9 +7,9 @@ public class FishingBob : MonoBehaviour
     [SerializeField] LayerMask waterLayerMask;
     Rigidbody rb;
 
-    FishingLine line;
+    FishingLineOld line;
 
-    public void SetLine(FishingLine line)
+    public void SetLine(FishingLineOld line)
     {
         this.line = line;
     }

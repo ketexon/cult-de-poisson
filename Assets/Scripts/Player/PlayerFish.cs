@@ -6,6 +6,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerFish : MonoBehaviour
 {
+    enum FishingState
+    {
+        Uncast,
+        Cast,
+        Caught,
+    }
+
     [SerializeField] PlayerInput input;
     [SerializeField] Transform rodTransform;
     [SerializeField] Transform rodTipTransform;
@@ -15,6 +22,8 @@ public class PlayerFish : MonoBehaviour
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
     [SerializeField] FishingLine fishingLine;
+
+    FishingState fishingState = FishingState.Uncast;
 
     bool fishing = false;
     bool cast = false;
@@ -29,6 +38,8 @@ public class PlayerFish : MonoBehaviour
 
     float rodFishingTargetAngle;
     float rodFishingTargetX;
+
+    float reelStrength = 0;
 
     void Reset()
     {
@@ -91,8 +102,20 @@ public class PlayerFish : MonoBehaviour
     {
         if (ctx.performed)
         {
-            Cast();
+            if(fishingState == FishingState.Uncast)
+            {
+                Cast();
+            }
+            else if(fishingState == FishingState.Cast)
+            {
+
+            }
         }
+    }
+
+    public void OnFishReel(InputAction.CallbackContext ctx)
+    {
+        reelStrength = Mathf.Clamp01(-ctx.ReadValue<float>() / 120);
     }
 
     public void OnExitFishing(InputAction.CallbackContext ctx)
@@ -104,8 +127,21 @@ public class PlayerFish : MonoBehaviour
 
     void Cast()
     {
-        var hook = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
-        hook.GetComponent<Rigidbody>().velocity = rodTipVelocity;
-        fishingLine.SetHook(hook.GetComponent<FishingHook>());
+        var hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
+        var hook = hookGO.GetComponent<FishingHook>();
+
+        hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
+        hook.PlayerFish = this;
+
+        hook.FishCatchEvent += OnCatchFish;
+
+        fishingLine.SetHook(hook);
+
+        fishingState = FishingState.Cast;
+    }
+
+    public void OnCatchFish(Fish fish)
+    {
+
     }
 }
