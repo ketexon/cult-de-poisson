@@ -7,13 +7,15 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(LineRenderer))]
 public class FishingLine : MonoBehaviour
 {
+    [SerializeField] GlobalParametersSO parameters;
     [SerializeField] Transform tip;
     [SerializeField] GameObject defaultBobPrefab;
 
     GameObject bobPrefab = null;
     FishingHook hook = null;
 
-    GameObject bobInstance;
+    GameObject bobGO;
+    FishingBob bob;
 
     LineRenderer lineRenderer;
 
@@ -22,6 +24,13 @@ public class FishingLine : MonoBehaviour
     bool hookHitWater = false;
     bool fishCaught = false;
 
+    float? bobDistance = null;
+    float? hookDistance = null;
+
+    Vector3 rodTipVelocity;
+
+    bool reelingPhase = false;
+
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -29,11 +38,18 @@ public class FishingLine : MonoBehaviour
         bobPrefab = defaultBobPrefab;
     }
 
-    public void SetHook(FishingHook hook)
+    void Reset()
+    {
+        parameters = FindUtil.Asset<GlobalParametersSO>();
+    }
+
+    public void OnCast(FishingHook hook, Vector3 rodTipVelocity)
     {
         this.hook = hook;
         hook.WaterHitEvent += OnHookHitWater;
         hook.FishCatchEvent += OnFishCatch;
+
+        this.rodTipVelocity = rodTipVelocity;
 
         lineRenderer.positionCount = 2;
     }
@@ -48,6 +64,37 @@ public class FishingLine : MonoBehaviour
         bobPrefab = prefab;
     }
 
+    public void Reel(float amount)
+    {
+        if (!reelingPhase) return;
+        if (bob && bobDistance.HasValue)
+        {
+            // 0.01f because physics engine instantaneously
+            // teleports object to anchor if distance is 0
+            bobDistance = bobDistance.Value - amount * Time.deltaTime * parameters.ReelStrength;
+            if (bobDistance < 0)
+            {
+                Destroy(bobGO);
+                lineRenderer.positionCount = 2;
+
+                bobGO = null;
+                bob = null;
+
+                hook.AttachToRB(tip.GetComponent<Rigidbody>());
+                hookDistance = hook.BobDistance;
+            }
+            else
+            {
+                bob.Reel(bobDistance.Value);
+            }
+        }
+        else if(hook && hookDistance.HasValue)
+        {
+            hookDistance = Mathf.Max(0, hookDistance.Value - amount * Time.deltaTime * parameters.ReelStrength);
+            hook.Reel(hookDistance.Value);
+        }
+    }
+
     void Update()
     {
         if (hook)
@@ -60,22 +107,13 @@ public class FishingLine : MonoBehaviour
 
     void UpdatePoints()
     {
-        if (hook)
-        {
-            points[0] = hook.transform.position;
-        }
-        if (hookHitWater)
-        {
-            points[2] = tip.position;
-            if (fishCaught)
-            {
-                points[1] = hook.WaterHitPos.Value;
-            }
-        }
-        else
-        {
-            points[1] = tip.position;
-        }
+        points[0] = hook
+            ? hook.transform.position
+            : tip.position ;
+        points[1] = bobGO
+            ? bobGO.transform.position
+            : tip.position;
+        points[2] = tip.position;
     }
 
     void OnHookHitWater(Vector3 pos)
@@ -88,37 +126,32 @@ public class FishingLine : MonoBehaviour
 
     void UpdateBob()
     {
-        Vector3? bobPos = CalculateBobPosition();
-        if (bobPrefab && !bobInstance && bobPos.HasValue)
+        if (!reelingPhase && bobPrefab && !bobGO && (tip.position - hook.transform.position).magnitude > hook.BobDistance)
         {
-            bobInstance = Instantiate(bobPrefab, bobPos.Value, Quaternion.identity);
-        }
-        else if (bobInstance)
-        {
-            if (bobPos.HasValue)
-            {
-                bobInstance.transform.position = bobPos.Value;
-            }
-            else
-            {
-                bobInstance.transform.position = tip.position;
-            }
+            AddBob();
         }
     }
 
-    Vector3? CalculateBobPosition()
+    void AddBob()
     {
-        float distanceLeft = hook.BobDistance;
-        for (int i = 0; i < lineRenderer.positionCount - 1; ++i)
-        {
-            float lineLength = (points[i + 1] - points[i]).magnitude;
-            if(lineLength > distanceLeft)
-            {
-                return points[i] + (points[i + 1] - points[i]) / lineLength * distanceLeft;
-            }
-            distanceLeft -= lineLength;
-        }
-        return null;
+        bobGO = Instantiate(bobPrefab, tip.position, Quaternion.identity);
+        var bobRB = bobGO.GetComponent<Rigidbody>();
+        bobRB.velocity = rodTipVelocity;
+        hook.AttachToRB(bobRB);
+
+        bob = bobGO.GetComponent<FishingBob>();
+        bob.HitWaterEvent += OnBobHitWater;
+
+        lineRenderer.positionCount = 3;
+    }
+
+    void OnBobHitWater()
+    {
+        bob.HitWaterEvent -= OnBobHitWater;
+        bobDistance = (tip.position - bob.transform.position).magnitude;
+        bob.AttachToTip(tip.gameObject, bobDistance.Value);
+
+        reelingPhase = true;
     }
 
     void DrawPoints()

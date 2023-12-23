@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fish : MonoBehaviour
 {
-    public virtual Vector3 ResistanceVelocity()
+    public virtual Vector3 ResistanceAcceleration()
     {
         return Vector3.zero;
     }

@@ -12,9 +12,15 @@ public class FishingHook : MonoBehaviour
     [SerializeField] float waterDrag = 5.0f;
     [SerializeField] float bobDistance = 5.0f;
     [SerializeField] Fish fish = null;
+    
     Rigidbody rb;
+    ConfigurableJoint joint;
+
+    bool inWater = false;
 
     public float BobDistance => bobDistance;
+
+    float initialDrag;
 
     public System.Action<Vector3> WaterHitEvent;
     public System.Action<Fish> FishCatchEvent;
@@ -35,36 +41,44 @@ public class FishingHook : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        joint = rb.GetComponent<ConfigurableJoint>();
+
+        initialDrag = rb.drag;
+
+        joint.linearLimit = new SoftJointLimit() {
+            limit = bobDistance
+        };
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if(WaterHitPos.HasValue)
+        if (fish && inWater)
         {
-            if((transform.position - WaterHitPos.Value).magnitude > bobDistance)
-            {
-                transform.position = WaterHitPos.Value + (transform.position - WaterHitPos.Value).normalized * bobDistance;
-                rb.isKinematic = true;
-            }
-
-            if (fish)
-            {
-                var rot = Quaternion.FromToRotation(
-                    Vector3.forward,
-                    (transform.position - PlayerFish.transform.position).ProjectXZ()
-                );
-                var disp = rot * fish.ResistanceVelocity() * Time.deltaTime;
-                transform.position += disp;
-                WaterHitPos += disp / 2;
-            }
+            rb.AddForce(fish.ResistanceAcceleration(), ForceMode.Acceleration);            
         }
+    }
+
+    public void Reel(float limit)
+    {
+        joint.linearLimit = new SoftJointLimit()
+        {
+            limit = limit
+        };
+    }
+
+    public void AttachToRB(Rigidbody rb)
+    {
+        joint.connectedBody = rb;
+        joint.xMotion = ConfigurableJointMotion.Limited;
+        joint.yMotion = ConfigurableJointMotion.Limited;
+        joint.zMotion = ConfigurableJointMotion.Limited;
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (!fish)
         {
-            rb.isKinematic = true;
+            //rb.isKinematic = true;
         }
     }
 
@@ -75,8 +89,9 @@ public class FishingHook : MonoBehaviour
         {
             WaterHitPos = transform.position;
             WaterHitEvent?.Invoke(WaterHitPos.Value);
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
             rb.drag = waterDrag;
+            inWater = true;
         }
     }
 
@@ -84,7 +99,8 @@ public class FishingHook : MonoBehaviour
     {
         if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
         {
-            rb.drag = 0;
+            inWater = false;
+            rb.drag = initialDrag;  
         }
     }
 }

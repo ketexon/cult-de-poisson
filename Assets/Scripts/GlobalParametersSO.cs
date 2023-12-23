@@ -23,6 +23,10 @@ public class GlobalParametersSO : ScriptableObject
     [SerializeField] 
     public float MaxHookInFishZoneDelay = 10.0f;
 
+    [Header("Fishing")]
+    [SerializeField]
+    public float ReelStrength = 5.0f;
+
     public float GetRandomFishZoneDelay()
     {
         return Random.Range(MinHookInFishZoneDelay, MaxHookInFishZoneDelay);

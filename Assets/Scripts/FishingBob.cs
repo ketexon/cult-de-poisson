@@ -4,33 +4,78 @@ using UnityEngine;
 
 public class FishingBob : MonoBehaviour
 {
-    [SerializeField] LayerMask waterLayerMask;
+    [SerializeField] GlobalParametersSO parameters;
+    [SerializeField] float waterDrag = 5;
+    [SerializeField] float waterBuoyancy = 20;
     Rigidbody rb;
+    ConfigurableJoint joint;
 
-    FishingLineOld line;
+    float initialDrag;
 
-    public void SetLine(FishingLineOld line)
+    public System.Action HitWaterEvent;
+
+    bool inWater = false;
+
+    public void AttachToTip(GameObject tip, float initialLimit)
     {
-        this.line = line;
+        joint.connectedBody = tip.GetComponent<Rigidbody>();
+        joint.linearLimit = new SoftJointLimit()
+        {
+            limit = initialLimit,
+        };
+        joint.xMotion = ConfigurableJointMotion.Limited;
+        joint.yMotion = ConfigurableJointMotion.Limited;
+        joint.zMotion = ConfigurableJointMotion.Limited;
+
+        Debug.Log("WHATEVER");
+    }
+
+    public void Reel(float limit)
+    {
+        joint.linearLimit = new SoftJointLimit()
+        {
+            limit = limit,
+        };
     }
 
     void Reset()
     {
-        waterLayerMask = FindUtil.Layer("water");
+        parameters = FindUtil.Asset<GlobalParametersSO>();
     }
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        joint = GetComponent<ConfigurableJoint>();
+
+        initialDrag = rb.drag;
+    }
+
+    void FixedUpdate()
+    {
+        if (inWater)
+        {
+            // acceleration bc we don't want it to depend on mass
+            rb.AddForce(Vector3.up * waterBuoyancy, ForceMode.Acceleration);
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        var otherLayerMask = 1 << other.gameObject.layer;
-        if ((otherLayerMask & waterLayerMask.value) > 0)
+        if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
         {
-            rb.isKinematic = true;
-            line.OnBobHitWater();
+            inWater = true;
+            rb.drag = waterDrag;
+            HitWaterEvent?.Invoke();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
+        {
+            inWater = false;
+            rb.drag = initialDrag;
         }
     }
 }

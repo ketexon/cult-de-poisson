@@ -115,7 +115,8 @@ public class PlayerFish : MonoBehaviour
 
     public void OnFishReel(InputAction.CallbackContext ctx)
     {
-        reelStrength = Mathf.Clamp01(-ctx.ReadValue<float>() / 120);
+        reelStrength = Mathf.Clamp(-ctx.ReadValue<float>() / 120, -1, 1);
+        fishingLine.Reel(reelStrength);
     }
 
     public void OnExitFishing(InputAction.CallbackContext ctx)
@@ -135,7 +136,7 @@ public class PlayerFish : MonoBehaviour
 
         hook.FishCatchEvent += OnCatchFish;
 
-        fishingLine.SetHook(hook);
+        fishingLine.OnCast(hook, rodTipVelocity);
 
         fishingState = FishingState.Cast;
     }
