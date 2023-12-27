@@ -47,7 +47,7 @@ public class FishingLine : MonoBehaviour
     {
         this.hook = hook;
         hook.WaterHitEvent += OnHookHitWater;
-        hook.FishCatchEvent += OnFishCatch;
+        hook.FishHookEvent += OnFishCatch;
 
         this.rodTipVelocity = rodTipVelocity;
 

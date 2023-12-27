@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6645e9ca491bf4db40b1c247a6d308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FishSO: {fileID: 11400000, guid: 3096543c62d9a0344989ca67f001de5b, type: 2}
   accelerationCycleFrequency: 3
   horizontalAcceleration: 30
   forwardAcceleration: 30

@@ -7,10 +7,8 @@ public class FishZone : MonoBehaviour
     [SerializeField] GlobalParametersSO globalParams;
     [SerializeField] FishZoneSO properties;
 
-
     FishingHook hook = null;
     Coroutine catchFishCoroutine = null;
-    bool hookCaughtFish = false;
 
     void Reset()
     {
@@ -61,7 +59,6 @@ public class FishZone : MonoBehaviour
     {
         float seconds = globalParams.GetRandomFishZoneDelay();
         yield return new WaitForSeconds(seconds);
-        hookCaughtFish = true;
         if (hook)
         {
             var fish = properties.Fish[Random.Range(0, properties.Fish.Count)];

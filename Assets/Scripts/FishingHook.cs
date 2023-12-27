@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 public class FishingHook : MonoBehaviour
@@ -11,8 +12,13 @@ public class FishingHook : MonoBehaviour
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] float waterDrag = 5.0f;
     [SerializeField] float bobDistance = 5.0f;
-    [SerializeField] Fish fish = null;
-    
+    [SerializeField] InputActionReference useAction;
+
+    public System.Action<Vector3> WaterHitEvent;
+    public System.Action<Fish> FishHookEvent;
+    public Vector3? WaterHitPos { get; private set; }
+
+    Fish fish = null;
     Rigidbody rb;
     ConfigurableJoint joint;
 
@@ -22,15 +28,13 @@ public class FishingHook : MonoBehaviour
 
     float initialDrag;
 
-    public System.Action<Vector3> WaterHitEvent;
-    public System.Action<Fish> FishCatchEvent;
-    public Vector3? WaterHitPos { get; private set; }
+    System.Action inputUIDestructor = null;
 
     public void OnCatchFish(FishSO fish)
     {
         var fishGO = Instantiate(fish.Prefab, transform);
         this.fish = fishGO.GetComponent<Fish>();
-        FishCatchEvent?.Invoke(this.fish);
+        FishHookEvent?.Invoke(this.fish);
     }
 
     void Reset()
@@ -64,6 +68,15 @@ public class FishingHook : MonoBehaviour
         {
             limit = limit
         };
+
+        if(fish && limit < parameters.HookDistancePickupRange)
+        {
+            PlayerFish.SetFishInRange(true);
+        }
+        else if(fish && limit > parameters.HookDistancePickupRange)
+        {
+            PlayerFish.SetFishInRange(false);
+        }
     }
 
     public void AttachToRB(Rigidbody rb)

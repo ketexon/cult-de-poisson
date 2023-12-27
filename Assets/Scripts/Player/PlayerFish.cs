@@ -13,12 +13,11 @@ public class PlayerFish : MonoBehaviour
         Caught,
     }
 
+    [SerializeField] GlobalParametersSO parameters;
     [SerializeField] PlayerInput input;
-    [SerializeField] Transform rodTransform;
+    [SerializeField] PlayerItem itemRotate;
     [SerializeField] Transform rodTipTransform;
-    [SerializeField] PlayerMovement playerMovement;
     [SerializeField] GameObject hookPrefab;
-    [SerializeField] float rodRotateSpeed = 5;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
     [SerializeField] FishingLine fishingLine;
@@ -28,9 +27,6 @@ public class PlayerFish : MonoBehaviour
     bool fishing = false;
     bool cast = false;
 
-    Vector3 rodOffsetPos;
-    Quaternion rodCurRot;
-    Quaternion rodTargetRot;
     Quaternion rodFishingStartRot;
 
     Vector3 lastRodTipPos;
@@ -41,34 +37,28 @@ public class PlayerFish : MonoBehaviour
 
     float reelStrength = 0;
 
+    bool fishInRange = false;
+
+    Fish hookedFish;
+
+    System.Action inputUIDestructor = null;
+
     void Reset()
     {
+        parameters = FindUtil.Asset<GlobalParametersSO>();
         input = GetComponentInParent<PlayerInput>();
-        playerMovement = GetComponentInParent<PlayerMovement>();
-        rodTransform = this.Query<Transform>().InChildren.NameContains("rod", insensitive: true).Execute();
     }
 
     void Awake()
     {
-        rodCurRot = rodTransform.rotation;
         lastRodTipPos = rodTipTransform.position;
-        rodOffsetPos = rodTransform.position - transform.position;
     }
 
     void Update()
     {
-        if (!fishing)
-        {
-            rodTargetRot = transform.rotation;
-        }
-        rodCurRot = Quaternion.Lerp(rodCurRot, rodTargetRot, Time.deltaTime * rodRotateSpeed);
-        rodTransform.rotation = rodCurRot;
-
         var rodTipPos = rodTipTransform.position;
         rodTipVelocity = (rodTipPos - lastRodTipPos) / Time.deltaTime;
         lastRodTipPos = rodTipPos;
-
-        rodTransform.position = transform.position + rodOffsetPos;
     }
 
     public void OnFish(InputAction.CallbackContext ctx)
@@ -76,9 +66,13 @@ public class PlayerFish : MonoBehaviour
         fishing = true;
         cast = false;
         input.SwitchCurrentActionMap("Fishing");
-        rodFishingStartRot = rodTargetRot;
+        rodFishingStartRot = itemRotate.TargetRot;
         rodFishingTargetAngle = 0;
         rodFishingTargetX = 0;
+
+        itemRotate.SetRotationLock(false);
+
+        UpdateInputUI();
     }
 
 
@@ -95,7 +89,7 @@ public class PlayerFish : MonoBehaviour
             -10, 10
         );
 
-        rodTargetRot = rodFishingStartRot * Quaternion.Euler(rodFishingTargetAngle, rodFishingTargetX, 0);
+        itemRotate.TargetRot = rodFishingStartRot * Quaternion.Euler(rodFishingTargetAngle, rodFishingTargetX, 0);
     }
 
     public void OnFishClick(InputAction.CallbackContext ctx)
@@ -123,7 +117,18 @@ public class PlayerFish : MonoBehaviour
     {
         fishing = false;
         input.SwitchCurrentActionMap("Gameplay");
-        rodTargetRot = rodFishingStartRot;
+        itemRotate.TargetRot = rodFishingStartRot;
+        itemRotate.SetRotationLock(true);
+
+        UpdateInputUI();
+    }
+
+    public void OnUse(InputAction.CallbackContext ctx)
+    {
+        if(hookedFish && fishInRange)
+        {
+
+        }
     }
 
     void Cast()
@@ -134,15 +139,59 @@ public class PlayerFish : MonoBehaviour
         hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
         hook.PlayerFish = this;
 
-        hook.FishCatchEvent += OnCatchFish;
+        hook.FishHookEvent += OnHookFish;
 
         fishingLine.OnCast(hook, rodTipVelocity);
 
         fishingState = FishingState.Cast;
     }
 
-    public void OnCatchFish(Fish fish)
+    public void SetFishInRange(bool inRange)
     {
+        fishInRange = inRange;
+        if(inputUIDestructor != null)
+        {
+            inputUIDestructor.Invoke();
+            inputUIDestructor = null;
+        }
+        if (!fishInRange)
+        {
+            return;
+        }
 
+        if(input.currentActionMap.name == parameters.FishingActionMap)
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Exit"], "Stop fishing");
+        }
+        else
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Use"], "Collect fish");
+        }
+    }
+
+    void UpdateInputUI()
+    {
+        if (!fishInRange)
+        {
+            return;
+        }
+        if (inputUIDestructor != null)
+        {
+            inputUIDestructor.Invoke();
+            inputUIDestructor = null;
+        }
+        if (input.currentActionMap.name == parameters.FishingActionMap)
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Exit"], "Stop fishing");
+        }
+        else
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Use"], "Collect fish");
+        }
+    }
+
+    public void OnHookFish(Fish fish)
+    {
+        this.hookedFish = fish;
     }
 }

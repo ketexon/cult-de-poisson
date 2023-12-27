@@ -151,6 +151,8 @@ MonoBehaviour:
   waterDrag: 5
   bobDistance: 5
   fish: {fileID: 0}
+  useAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
 --- !u!153 &7978381937376338535
 ConfigurableJoint:
   m_ObjectHideFlags: 0

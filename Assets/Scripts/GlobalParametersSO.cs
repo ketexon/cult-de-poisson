@@ -25,7 +25,13 @@ public class GlobalParametersSO : ScriptableObject
 
     [Header("Fishing")]
     [SerializeField]
+    public string FishingActionMap = "Fishing";
+
+    [SerializeField]
     public float ReelStrength = 5.0f;
+
+    [SerializeField]
+    public float HookDistancePickupRange = 2.0f;
 
     public float GetRandomFishZoneDelay()
     {
