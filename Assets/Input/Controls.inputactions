@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fish",
+                    "name": "UseItem",
                     "type": "Button",
                     "id": "85e5096d-3597-46cc-a874-b4b5b2963735",
                     "expectedControlType": "Button",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Use",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "fa14e4ad-a9f0-466a-b438-d0d75d357933",
                     "expectedControlType": "Button",
@@ -165,7 +165,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Fish",
+                    "action": "UseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -176,7 +176,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Use",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

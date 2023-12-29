@@ -34,7 +34,6 @@ public class FishingLine : MonoBehaviour
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        points[0] = points[1] = tip.position;
         bobPrefab = defaultBobPrefab;
     }
 
@@ -43,8 +42,11 @@ public class FishingLine : MonoBehaviour
         parameters = FindUtil.Asset<GlobalParametersSO>();
     }
 
-    public void OnCast(FishingHook hook, Vector3 rodTipVelocity)
+    public void OnCast(FishingHook hook, Transform tip, Vector3 rodTipVelocity)
     {
+        this.tip = tip;
+        points[0] = points[1] = tip.position;
+
         this.hook = hook;
         hook.WaterHitEvent += OnHookHitWater;
         hook.FishHookEvent += OnFishCatch;
@@ -109,7 +111,7 @@ public class FishingLine : MonoBehaviour
     {
         points[0] = hook
             ? hook.transform.position
-            : tip.position ;
+            : tip.position;
         points[1] = bobGO
             ? bobGO.transform.position
             : tip.position;

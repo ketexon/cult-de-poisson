@@ -1030,7 +1030,6 @@ GameObject:
   - component: {fileID: 812620990}
   - component: {fileID: 812620989}
   - component: {fileID: 812620988}
-  - component: {fileID: 812620993}
   - component: {fileID: 812620994}
   m_Layer: 0
   m_Name: Player
@@ -1163,9 +1162,9 @@ MonoBehaviour:
     m_ActionName: Gameplay/Cancel[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 812620993}
-        m_TargetAssemblyTypeName: PlayerFish, Assembly-CSharp
-        m_MethodName: OnFish
+      - m_Target: {fileID: 812620994}
+        m_TargetAssemblyTypeName: PlayerItem, Assembly-CSharp
+        m_MethodName: OnUseItem
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1179,7 +1178,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Fish[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 812620993}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerFish, Assembly-CSharp
         m_MethodName: OnFishMove
         m_Mode: 0
@@ -1195,7 +1194,7 @@ MonoBehaviour:
     m_ActionName: Fishing/Move[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 812620993}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerFish, Assembly-CSharp
         m_MethodName: OnFishClick
         m_Mode: 0
@@ -1211,7 +1210,7 @@ MonoBehaviour:
     m_ActionName: Fishing/Click[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 812620993}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerFish, Assembly-CSharp
         m_MethodName: OnExitFishing
         m_Mode: 0
@@ -1235,7 +1234,7 @@ MonoBehaviour:
     m_ActionName: UI/Cancel[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 812620993}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerFish, Assembly-CSharp
         m_MethodName: OnFishReel
         m_Mode: 0
@@ -1250,19 +1249,7 @@ MonoBehaviour:
     m_ActionId: 8db6ad73-b52e-49a5-8be7-0cae0dd16615
     m_ActionName: Fishing/Reel[/Mouse/scroll/y]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 812620993}
-        m_TargetAssemblyTypeName: PlayerFish, Assembly-CSharp
-        m_MethodName: OnUse
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: fa14e4ad-a9f0-466a-b438-d0d75d357933
     m_ActionName: Gameplay/Use[/Keyboard/f]
   - m_PersistentCalls:
@@ -1398,27 +1385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df65bcb2147fb40b031d102d0d928d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &812620993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812620984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a20caf702325e94f8054c923e0eb9a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
-  input: {fileID: 812620987}
-  itemRotate: {fileID: 812620994}
-  rodTipTransform: {fileID: 1116924128}
-  hookPrefab: {fileID: 3444284660832831277, guid: 13560da57ab3b9d4aab512d8a856c6b2,
-    type: 3}
-  fishingSensitivityY: 0.05
-  fishingSensitivityX: 0.05
-  fishingLine: {fileID: 1685202903}
 --- !u!114 &812620994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1431,40 +1397,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37cb7812c808ebc44b7b8bb1d6a20bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 812620987}
   itemTransform: {fileID: 1899648719}
   rotateSpeed: 5
-  defaultItem: {fileID: 0}
---- !u!1 &845184129
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 845184130}
-  m_Layer: 0
-  m_Name: Fish
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &845184130
+  startingItems:
+  - {fileID: 11400000, guid: 1f6f4f7c9b40ba347b0b45434aa0a965, type: 2}
+  startingItemIndex: 0
+  saveState: {fileID: 11400000, guid: 7b8994e2d97575d42a5b075aae33ef95, type: 2}
+--- !u!4 &845184130 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+    type: 3}
+  m_PrefabInstance: {fileID: 4084103045881991804}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845184129}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1899648719}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &849193240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 807094908905749210, guid: e3c86562f757c6640b740a19fbb5278b,
@@ -2189,6 +2134,74 @@ Transform:
   - {fileID: 845184130}
   m_Father: {fileID: 1894415889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4084103045881991804
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1899648719}
+    m_Modifications:
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758263563624850767, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688625216361870954, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_Name
+      value: Fish
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bea5292862d48e840a3b7841c421e111, type: 3}
 --- !u!1001 &6931732652718301295
 PrefabInstance:
   m_ObjectHideFlags: 0

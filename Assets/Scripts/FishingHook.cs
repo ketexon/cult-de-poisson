@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class FishingHook : MonoBehaviour
 {
     [System.NonSerialized]
-    public PlayerFish PlayerFish;
+    public FishingRod PlayerFish;
 
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] float waterDrag = 5.0f;

@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerFish : MonoBehaviour
+public class FishingRod : Item
 {
     enum FishingState
     {
@@ -14,13 +14,22 @@ public class PlayerFish : MonoBehaviour
     }
 
     [SerializeField] GlobalParametersSO parameters;
-    [SerializeField] PlayerInput input;
-    [SerializeField] PlayerItem itemRotate;
     [SerializeField] Transform rodTipTransform;
     [SerializeField] GameObject hookPrefab;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
-    [SerializeField] FishingLine fishingLine;
+    [SerializeField] GameObject fishingLinePrefab;
+
+    [SerializeField] ItemSO fishItem;
+
+    [SerializeField] InputActionReference interactAction;
+    [SerializeField] InputActionReference moveAction;
+    [SerializeField] InputActionReference clickAction;
+    [SerializeField] InputActionReference reelAction;
+    [SerializeField] InputActionReference exitAction;
+
+    GameObject hookGO;
+    FishingLine fishingLine;
 
     FishingState fishingState = FishingState.Uncast;
 
@@ -43,10 +52,24 @@ public class PlayerFish : MonoBehaviour
 
     System.Action inputUIDestructor = null;
 
+    public override void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem)
+    {
+        base.Initialize(player, playerInput, playerItem);
+
+        interactAction.action.performed += OnInteract;
+
+        moveAction.action.performed += OnFishMove;
+        moveAction.action.canceled += OnFishMove;
+
+        clickAction.action.performed += OnFishClick;
+        reelAction.action.performed += OnFishReel;
+        exitAction.action.performed += OnExitFishing;
+    }
+
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
-        input = GetComponentInParent<PlayerInput>();
+        playerInput = GetComponentInParent<PlayerInput>();
     }
 
     void Awake()
@@ -61,18 +84,27 @@ public class PlayerFish : MonoBehaviour
         lastRodTipPos = rodTipPos;
     }
 
-    public void OnFish(InputAction.CallbackContext ctx)
+    public override void OnUse()
     {
+        base.OnUse();
+    
         fishing = true;
         cast = false;
-        input.SwitchCurrentActionMap("Fishing");
-        rodFishingStartRot = itemRotate.TargetRot;
+        playerInput.SwitchCurrentActionMap("Fishing");
+        rodFishingStartRot = playerItem.TargetRot;
         rodFishingTargetAngle = 0;
         rodFishingTargetX = 0;
 
-        itemRotate.SetRotationLock(false);
+        playerItem.SetRotationLock(false);
 
         UpdateInputUI();
+    }
+
+    public override void OnStopUsingItem()
+    {
+        base.OnStopUsingItem();
+        Destroy(fishingLine.gameObject);
+        Destroy(hookGO);
     }
 
 
@@ -89,21 +121,18 @@ public class PlayerFish : MonoBehaviour
             -10, 10
         );
 
-        itemRotate.TargetRot = rodFishingStartRot * Quaternion.Euler(rodFishingTargetAngle, rodFishingTargetX, 0);
+        playerItem.TargetRot = rodFishingStartRot * Quaternion.Euler(rodFishingTargetAngle, rodFishingTargetX, 0);
     }
 
     public void OnFishClick(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if(fishingState == FishingState.Uncast)
         {
-            if(fishingState == FishingState.Uncast)
-            {
-                Cast();
-            }
-            else if(fishingState == FishingState.Cast)
-            {
+            Cast();
+        }
+        else if(fishingState == FishingState.Cast)
+        {
 
-            }
         }
     }
 
@@ -116,24 +145,25 @@ public class PlayerFish : MonoBehaviour
     public void OnExitFishing(InputAction.CallbackContext ctx)
     {
         fishing = false;
-        input.SwitchCurrentActionMap("Gameplay");
-        itemRotate.TargetRot = rodFishingStartRot;
-        itemRotate.SetRotationLock(true);
+        playerInput.SwitchCurrentActionMap("Gameplay");
+        playerItem.TargetRot = rodFishingStartRot;
+        playerItem.SetRotationLock(true);
 
         UpdateInputUI();
     }
 
-    public void OnUse(InputAction.CallbackContext ctx)
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         if(hookedFish && fishInRange)
         {
-
+            playerItem.EnableTemporaryItem(fishItem);
+            (playerItem.EnabledItem as FishItem).SetFish(hookedFish.FishSO);
         }
     }
 
     void Cast()
     {
-        var hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
+        hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
         var hook = hookGO.GetComponent<FishingHook>();
 
         hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
@@ -141,52 +171,41 @@ public class PlayerFish : MonoBehaviour
 
         hook.FishHookEvent += OnHookFish;
 
-        fishingLine.OnCast(hook, rodTipVelocity);
+        var fishingLineGO = Instantiate(fishingLinePrefab);
+        fishingLine = fishingLineGO.GetComponent<FishingLine>();
+
+        fishingLine.OnCast(hook, rodTipTransform, rodTipVelocity);
 
         fishingState = FishingState.Cast;
     }
 
     public void SetFishInRange(bool inRange)
     {
-        fishInRange = inRange;
-        if(inputUIDestructor != null)
+        if(fishInRange != inRange)
         {
-            inputUIDestructor.Invoke();
-            inputUIDestructor = null;
-        }
-        if (!fishInRange)
-        {
-            return;
-        }
-
-        if(input.currentActionMap.name == parameters.FishingActionMap)
-        {
-            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Exit"], "Stop fishing");
-        }
-        else
-        {
-            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Use"], "Collect fish");
+            fishInRange = inRange;
+            UpdateInputUI();
         }
     }
 
     void UpdateInputUI()
     {
-        if (!fishInRange)
-        {
-            return;
-        }
         if (inputUIDestructor != null)
         {
             inputUIDestructor.Invoke();
             inputUIDestructor = null;
         }
-        if (input.currentActionMap.name == parameters.FishingActionMap)
+        if (!fishInRange)
         {
-            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Exit"], "Stop fishing");
+            return;
+        }
+        if (playerInput.currentActionMap.name == parameters.FishingActionMap)
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(exitAction, "Stop fishing");
         }
         else
         {
-            inputUIDestructor = InputUI.Instance.AddInputUI(input.actions["Use"], "Collect fish");
+            inputUIDestructor = InputUI.Instance.AddInputUI(interactAction, "Collect fish");
         }
     }
 

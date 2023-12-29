@@ -4,21 +4,33 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.VolumeComponent;
 
 public class PlayerItem : MonoBehaviour
 {
+    [SerializeField] PlayerInput playerInput;
     [SerializeField] Transform itemTransform;
     [SerializeField] float rotateSpeed = 5;
-    [SerializeField] GameObject defaultItem;
+    [SerializeField] List<ItemSO> startingItems;
+    [SerializeField] int startingItemIndex;
 
     [System.NonSerialized] public Vector3 ItemOffsetPos;
     [System.NonSerialized] public Quaternion CurRot;
     [System.NonSerialized] public Quaternion TargetRot;
     [System.NonSerialized] public Quaternion FishingStartRot;
 
+    [SerializeField] SaveStateSO saveState;
+
+    List<ItemSO> items;
+
+    public System.Action<Item> ItemChangeEvent;
+
     bool playerLock = true;
 
-    int enabledItemIndex;
+    public int EnabledItemIndex { get; protected set; }
+    public Item EnabledItem { get; protected set; }
+
+    public bool IsTemporaryItem { get; protected set; }
 
     public void SetRotationLock(bool value)
     {
@@ -27,39 +39,18 @@ public class PlayerItem : MonoBehaviour
 
     void Awake()
     {
+        items = startingItems;
+        EnabledItemIndex = startingItemIndex;
+
+        foreach(Transform t in itemTransform)
+        {
+            Destroy(t.gameObject);
+        }
+
         CurRot = itemTransform.rotation;
         ItemOffsetPos = itemTransform.position - transform.position;
 
-        // enable item
-        if (defaultItem != null)
-        {
-            foreach (Transform t in itemTransform)
-            {
-                t.gameObject.SetActive(t.gameObject == defaultItem);
-            }
-
-            enabledItemIndex = defaultItem.transform.GetSiblingIndex();
-        }
-        else
-        {
-            bool enabledItem = false;
-            foreach (Transform t in itemTransform)
-            {
-                if (enabledItem)
-                {
-                    t.gameObject.SetActive(false);
-                }
-                else
-                {
-                    enabledItem = t.gameObject.activeSelf;
-                    enabledItemIndex = t.GetSiblingIndex();
-                }
-            }
-            if (!enabledItem && transform.childCount > 0)
-            {
-                transform.GetChild(0).gameObject.SetActive(true);
-            }
-        }
+        EnableItem(EnabledItemIndex);
     }
 
     public void OnCycleItem(InputAction.CallbackContext ctx)
@@ -68,23 +59,76 @@ public class PlayerItem : MonoBehaviour
         {
             return;
         }
-        float v = ctx.ReadValue<float>();
-        int newItemIndex = (Math.Sign(v) + enabledItemIndex + itemTransform.childCount) % itemTransform.childCount;
+        int newItemIndex;
+        if (IsTemporaryItem)
+        {
+            newItemIndex = EnabledItemIndex;
+        }
+        else
+        {
+            float v = ctx.ReadValue<float>();
+            newItemIndex = (Math.Sign(v) + EnabledItemIndex + items.Count) % items.Count;
+        }
 
         EnableItem(newItemIndex);
     }
 
-    public void EnableItem(int index)
+    public void OnUseItem(InputAction.CallbackContext ctx)
     {
-        itemTransform.GetChild(enabledItemIndex).gameObject.SetActive(false);
+        saveState.MaxSaveSlot();
 
-        enabledItemIndex = index;
-        itemTransform.GetChild(enabledItemIndex).gameObject.SetActive(true);
+        return;
+        if (ctx.performed && EnabledItem)
+        {
+            EnabledItem.OnUse();
+        }
     }
 
-    public void EnableItem(GameObject item)
+    public void EnableItem(int index)
     {
-        EnableItem(item.transform.GetSiblingIndex());
+        EnableItem(items[index], index);
+    }
+
+    void EnableItem(ItemSO item, int index)
+    {
+        EnabledItemIndex = index;
+        EnableItemInternal(item);
+    }
+
+    public void EnableItem(ItemSO item)
+    {
+        // if no index supplied, try to determine it
+        var index = items.FindIndex((otherItem) => otherItem == item);
+        Debug.Assert(
+            index >= 0,
+            $"Could not find item \"{item}\" in currently held items.\n"
+            + "Use EnableTemporaryItem to add an item not in held items."
+        );
+
+        EnableItem(item, index);
+    }
+
+    // This enables the item but makes it so when you cycle items, it goes
+    // back to the last item used, since they have no index.
+    public void EnableTemporaryItem(ItemSO item)
+    {
+        IsTemporaryItem = true;
+        EnableItemInternal(item);
+    }
+
+    void EnableItemInternal(ItemSO item)
+    {
+        if (EnabledItem)
+        {
+            EnabledItem.OnStopUsingItem();
+        }
+
+        var itemGO = Instantiate(item.Prefab, itemTransform);
+        EnabledItem = itemGO.GetComponent<Item>();
+        Debug.Log(EnabledItem);
+        EnabledItem.Initialize(gameObject, playerInput, this);
+
+        ItemChangeEvent?.Invoke(EnabledItem);
     }
 
     void Update()

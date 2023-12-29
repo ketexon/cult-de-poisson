@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2141869000190547782}
   - component: {fileID: 8302906439693588856}
   - component: {fileID: 6613007344709013117}
-  - component: {fileID: 8819209838816541946}
+  - component: {fileID: 4372783216200421315}
   m_Layer: 7
   m_Name: Rod
   m_TagString: Untagged
@@ -135,7 +135,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8819209838816541946
+--- !u!114 &4372783216200421315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,10 +144,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 565233922410181394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78fb4bfd971da0f4997f4d496a0295d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a20caf702325e94f8054c923e0eb9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tip: {fileID: 4567784010583370540}
+  itemSO: {fileID: 11400000, guid: 1f6f4f7c9b40ba347b0b45434aa0a965, type: 2}
+  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
+  rodTipTransform: {fileID: 4567784010583370540}
+  hookPrefab: {fileID: 3444284660832831277, guid: 13560da57ab3b9d4aab512d8a856c6b2,
+    type: 3}
+  fishingSensitivityY: 0.05
+  fishingSensitivityX: 0.05
+  fishingLinePrefab: {fileID: 5223843240797983492, guid: 53d4a18ed579bbd4682fea320020be8f,
+    type: 3}
+  fishItem: {fileID: 11400000, guid: 8fe9604f1e6adc54a859ab482f080426, type: 2}
+  interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  moveAction: {fileID: -1182480507873766809, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  clickAction: {fileID: -7825872856963117365, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  reelAction: {fileID: 7374333455508392733, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  exitAction: {fileID: -4443748350865400099, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
 --- !u!1 &3720365078389726662
 GameObject:
   m_ObjectHideFlags: 0
