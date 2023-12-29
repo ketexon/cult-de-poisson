@@ -32,7 +32,7 @@ public class FishingHook : MonoBehaviour
 
     public void OnCatchFish(FishSO fish)
     {
-        var fishGO = Instantiate(fish.Prefab, transform);
+        var fishGO = Instantiate(fish.InWaterPrefab, transform);
         this.fish = fishGO.GetComponent<Fish>();
         FishHookEvent?.Invoke(this.fish);
     }

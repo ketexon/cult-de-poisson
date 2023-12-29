@@ -6,5 +6,6 @@ using UnityEngine;
 public class FishSO : ScriptableObject
 {
     public string Name;
-    public GameObject Prefab;
+    public GameObject InWaterPrefab;
+    public GameObject InHandPrefab;
 }
