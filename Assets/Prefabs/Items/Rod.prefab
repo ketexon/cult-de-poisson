@@ -157,6 +157,7 @@ MonoBehaviour:
   fishingLinePrefab: {fileID: 5223843240797983492, guid: 53d4a18ed579bbd4682fea320020be8f,
     type: 3}
   fishItem: {fileID: 11400000, guid: 8fe9604f1e6adc54a859ab482f080426, type: 2}
+  inventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
   interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   moveAction: {fileID: -1182480507873766809, guid: 74ba8a3a9aaed2040a694812328659e2,

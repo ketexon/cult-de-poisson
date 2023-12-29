@@ -21,6 +21,7 @@ public class FishingRod : Item
     [SerializeField] GameObject fishingLinePrefab;
 
     [SerializeField] ItemSO fishItem;
+    [SerializeField] PlayerInventorySO inventory;
 
     [SerializeField] InputActionReference interactAction;
     [SerializeField] InputActionReference moveAction;
@@ -46,7 +47,7 @@ public class FishingRod : Item
 
     float reelStrength = 0;
 
-    bool fishInRange = false;
+    bool hookInRange = false;
 
     Fish hookedFish;
 
@@ -64,6 +65,18 @@ public class FishingRod : Item
         clickAction.action.performed += OnFishClick;
         reelAction.action.performed += OnFishReel;
         exitAction.action.performed += OnExitFishing;
+    }
+
+    void OnDestroy()
+    {
+        interactAction.action.performed -= OnInteract;
+
+        moveAction.action.performed -= OnFishMove;
+        moveAction.action.canceled -= OnFishMove;
+
+        clickAction.action.performed -= OnFishClick;
+        reelAction.action.performed -= OnFishReel;
+        exitAction.action.performed -= OnExitFishing;
     }
 
     void Reset()
@@ -102,9 +115,12 @@ public class FishingRod : Item
 
     public override void OnStopUsingItem()
     {
+        if (hookedFish && hookInRange)
+        {
+            inventory.AddFish(hookedFish.FishSO);
+        }
         base.OnStopUsingItem();
-        Destroy(fishingLine.gameObject);
-        Destroy(hookGO);
+        ResetFishing();
     }
 
 
@@ -154,10 +170,21 @@ public class FishingRod : Item
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if(hookedFish && fishInRange)
+        if(hookInRange)
         {
-            playerItem.EnableTemporaryItem(fishItem);
-            (playerItem.EnabledItem as FishItem).SetFish(hookedFish.FishSO);
+            if (hookedFish)
+            {
+                inventory.AddFish(hookedFish.FishSO);
+
+                var fishSO = hookedFish.FishSO;
+
+                playerItem.EnableTemporaryItem(fishItem);
+                Debug.Log(playerItem.EnabledItem as FishItem);
+                (playerItem.EnabledItem as FishItem).SetFish(fishSO);
+            }
+
+            ResetFishing();
+            UpdateInputUI();
         }
     }
 
@@ -179,11 +206,30 @@ public class FishingRod : Item
         fishingState = FishingState.Cast;
     }
 
-    public void SetFishInRange(bool inRange)
+    void ResetFishing()
     {
-        if(fishInRange != inRange)
+        fishingState = FishingState.Uncast;
+
+        hookedFish = null;
+        hookInRange = false;
+
+        if (fishingLine)
         {
-            fishInRange = inRange;
+            Destroy(fishingLine.gameObject);
+            fishingLine = null;
+        }
+        if (hookGO)
+        {
+            Destroy(hookGO);
+            hookGO = null;
+        }
+    }
+
+    public void SetHookInRange(bool inRange)
+    {
+        if(hookInRange != inRange)
+        {
+            hookInRange = inRange;
             UpdateInputUI();
         }
     }
@@ -195,7 +241,7 @@ public class FishingRod : Item
             inputUIDestructor.Invoke();
             inputUIDestructor = null;
         }
-        if (!fishInRange)
+        if (!hookInRange)
         {
             return;
         }
@@ -205,7 +251,14 @@ public class FishingRod : Item
         }
         else
         {
-            inputUIDestructor = InputUI.Instance.AddInputUI(interactAction, "Collect fish");
+            if (hookedFish)
+            {
+                inputUIDestructor = InputUI.Instance.AddInputUI(interactAction, "Collect fish");
+            }
+            else
+            {
+                inputUIDestructor = InputUI.Instance.AddInputUI(interactAction, "Reset fishing");
+            }
         }
     }
 

@@ -75,9 +75,6 @@ public class PlayerItem : MonoBehaviour
 
     public void OnUseItem(InputAction.CallbackContext ctx)
     {
-        saveState.MaxSaveSlot();
-
-        return;
         if (ctx.performed && EnabledItem)
         {
             EnabledItem.OnUse();

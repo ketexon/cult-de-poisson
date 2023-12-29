@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Serialization.Json;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 #if UNITY_EDITOR
 
@@ -15,9 +17,11 @@ public class SaveStateSOEditor : Editor
     {
         DrawDefaultInspector();
 
-        var baseDir = Application.persistentDataPath;
-        var saveDir = serializedObject.FindProperty("saveDir").stringValue;
-        EditorGUILayout.LabelField($"Save Path: {Path.Combine(baseDir, saveDir)}");
+        EditorGUILayout.LabelField($"Persistent Data Path: {Application.persistentDataPath}");
+        if(GUILayout.Button("Reveal in Explorer"))
+        {
+            EditorUtility.RevealInFinder(Application.persistentDataPath);
+        }
     }
 }
 
@@ -27,12 +31,17 @@ public class SaveStateSOEditor : Editor
 public class SaveStateSO : ScriptableObject
 {
     [Tooltip("File path. Use \"{0}\" in filepath to represent the save slot index")]
-    [SerializeField] string saveDir = "./savedata";
-    [SerializeField] string filepath = "./{0}.json";
+    [SerializeField] string saveDirRoot = "./savedata";
+    [SerializeField] string saveDir = "./{0}";
+    [SerializeField] string saveFilename = "{0}.json";
     [SerializeField] List<SavableSO> savables = new();
 
-    public string AbsoluteSaveDir => Path.Combine(Application.persistentDataPath, saveDir);
-    public string AbsoluteFilePath => Path.Combine(Application.persistentDataPath, saveDir, filepath);
+    int? lastSaveSlot = null;
+
+    public string AbsoluteSaveDirRoot => Path.Combine(Application.persistentDataPath, saveDirRoot);
+    public string AbsoluteSaveDir(int slot) => Path.Combine(Application.persistentDataPath, saveDirRoot, string.Format(saveDir, slot));
+
+    public string AbsoluteSaveFile(int slot, string filename) => Path.Combine(AbsoluteSaveDir(slot), string.Format(saveFilename, filename));
 
     Dictionary<string, SavableSO> savableDict = new();
 
@@ -47,10 +56,10 @@ public class SaveStateSO : ScriptableObject
     public int? MaxSaveSlot()
     {
         int? max = null;
-        if (Directory.Exists(AbsoluteSaveDir))
+        if (Directory.Exists(AbsoluteSaveDirRoot))
         {
             foreach(var entry in Directory.EnumerateFileSystemEntries(saveDir)){
-                Debug.Log(entry);
+                max = System.Math.Max(max.GetValueOrDefault(-1), int.Parse(Regex.Match(entry, @"\d+$").Value));
             }
         }
         return max;
@@ -62,21 +71,52 @@ public class SaveStateSO : ScriptableObject
         return maxSaveSlot.HasValue ? maxSaveSlot.Value + 1 : 0;
     }
 
-    public void Save(int slot)
+    void EnsureSaveDirectory(int slot)
     {
-        string path = Path.Combine(AbsoluteSaveDir, filepath);
-        using (StreamWriter sw = File.CreateText(path))
+        if (!Directory.Exists(AbsoluteSaveDir(slot)))
         {
-            sw.Write(JsonSerialization.ToJson(savables));
+            Directory.CreateDirectory(AbsoluteSaveDir(slot));
         }
     }
 
-    public void Load(int slot)
+    public async void Save()
     {
-        string path = Path.Join(AbsoluteSaveDir, filepath);
-        using (StreamReader sr = File.OpenText(path))
+        Debug.Assert(lastSaveSlot.HasValue, "Can't save without save slot when haven't saved last");
+        if (lastSaveSlot.HasValue)
         {
-            JsonSerialization.FromJsonOverride(sr.ReadToEnd(), ref savables);
+            await Save(lastSaveSlot.Value);
         }
+    }
+
+    public async Task Save(int slot)
+    {
+        throw new System.NotImplementedException();
+        Debug.Log("HI");
+        EnsureSaveDirectory(slot);
+
+        foreach(var savable in savables)
+        {
+            using (StreamWriter sw = File.CreateText(AbsoluteSaveFile(slot, savable.Key)))
+            {
+                await sw.WriteAsync(JsonSerialization.ToJson(savable));
+            }
+        }
+        
+        lastSaveSlot = slot;
+    }
+
+    public async void Load(int slot)
+    {
+        throw new System.NotImplementedException();
+        foreach (var savable in savables)
+        {
+            using (StreamReader sr = File.OpenText(AbsoluteSaveFile(slot, savable.Key)))
+            {
+                var savableTmp = savable;
+                JsonSerialization.FromJsonOverride(await sr.ReadToEndAsync(), ref savableTmp);
+            }
+        }
+
+        lastSaveSlot = slot;
     }
 }

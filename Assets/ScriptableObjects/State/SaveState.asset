@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23da1ba1023522a4c94fb0660ff8d2e9, type: 3}
   m_Name: SaveState
   m_EditorClassIdentifier: 
-  saveDir: ./savedata
-  filepath: ./{0}.json
+  saveDirRoot: ./savedata
+  saveDir: ./{0}
+  saveFilename: '{0}.json'
   savables:
   - {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}

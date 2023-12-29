@@ -42,6 +42,14 @@ public class FishingLine : MonoBehaviour
         parameters = FindUtil.Asset<GlobalParametersSO>();
     }
 
+    void OnDestroy()
+    {
+        if (bobGO)
+        {
+            Destroy(bobGO);
+        }
+    }
+
     public void OnCast(FishingHook hook, Transform tip, Vector3 rodTipVelocity)
     {
         this.tip = tip;

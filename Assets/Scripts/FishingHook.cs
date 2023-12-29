@@ -69,13 +69,13 @@ public class FishingHook : MonoBehaviour
             limit = limit
         };
 
-        if(fish && limit < parameters.HookDistancePickupRange)
+        if(limit < parameters.HookDistancePickupRange)
         {
-            PlayerFish.SetFishInRange(true);
+            PlayerFish.SetHookInRange(true);
         }
-        else if(fish && limit > parameters.HookDistancePickupRange)
+        else if(limit > parameters.HookDistancePickupRange)
         {
-            PlayerFish.SetFishInRange(false);
+            PlayerFish.SetHookInRange(false);
         }
     }
 
