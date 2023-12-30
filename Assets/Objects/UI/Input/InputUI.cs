@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class InputUI : Singleton<InputUI>
+public class InputUI : SingletonBehaviour<InputUI>
 {
     [SerializeField] GameObject inputUIElementPrefab;
     [SerializeField] GameObject inputUIElementParent;
