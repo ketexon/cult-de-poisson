@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d99a69eb107724eb670fb6e2043528, type: 3}
   m_Name: KeyFish
   m_EditorClassIdentifier: 
-  Name: Carp
-  InWaterPrefab: {fileID: 582537697710654690, guid: 7549e94af72b31845b206f97437179a3,
+  Name: Key Fish
+  InWaterPrefab: {fileID: 582537697710654690, guid: 4c9cabd52cae4c842805e61c999bb609,
     type: 3}
-  InHandPrefab: {fileID: 582537697710654690, guid: 5137abbc280b8de47ab2104b5bb72251,
+  InHandPrefab: {fileID: 582537697710654690, guid: c0e1788d0692979458dc10a3465d403c,
     type: 3}
