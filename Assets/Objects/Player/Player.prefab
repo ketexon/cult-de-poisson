@@ -180,8 +180,7 @@ GameObject:
   - component: {fileID: 2972364860089777460}
   - component: {fileID: 75327676347670396}
   - component: {fileID: 589010488059326791}
-  - component: {fileID: 5793860608170251849}
-  - component: {fileID: 5220389864628783084}
+  - component: {fileID: 3547995663088542019}
   - component: {fileID: 2403612065999515020}
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
@@ -439,14 +438,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df65bcb2147fb40b031d102d0d928d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &5793860608170251849
-CapsuleCollider:
+--- !u!143 &3547995663088542019
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6868503324844711377}
-  m_Material: {fileID: 13400000, guid: d6cbb01366828574299e0777924b483d, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -457,38 +456,14 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
+  serializedVersion: 3
   m_Height: 2
-  m_Direction: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &5220389864628783084
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868503324844711377}
-  serializedVersion: 4
-  m_Mass: 50
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!33 &2403612065999515020
 MeshFilter:
   m_ObjectHideFlags: 0

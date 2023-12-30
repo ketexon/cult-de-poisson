@@ -12,6 +12,9 @@ public class GlobalParametersSO : ScriptableObject
     [SerializeField]
     public LayerMask HookLayerMask;
 
+    [SerializeField]
+    public LayerMask GroundLayerMask;
+
     [Header("Fish Zones")]
     [Tooltip("How long a hook needs to be in a Fish Zone for a fish to be caught.")]
     [Min(0)]
