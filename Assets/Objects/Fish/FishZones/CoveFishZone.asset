@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de6eb714c7512144b83ae5432d38a0bb, type: 3}
-  m_Name: CarpFishZone
+  m_Name: CoveFishZone
   m_EditorClassIdentifier: 
   Fish:
   - {fileID: 11400000, guid: 3096543c62d9a0344989ca67f001de5b, type: 2}
