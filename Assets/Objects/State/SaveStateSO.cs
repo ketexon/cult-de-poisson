@@ -108,15 +108,15 @@ public class SaveStateSO : ScriptableObject
     public async void Load(int slot)
     {
         throw new System.NotImplementedException();
-        foreach (var savable in savables)
-        {
-            using (StreamReader sr = File.OpenText(AbsoluteSaveFile(slot, savable.Key)))
-            {
-                var savableTmp = savable;
-                JsonSerialization.FromJsonOverride(await sr.ReadToEndAsync(), ref savableTmp);
-            }
-        }
+        //foreach (var savable in savables)
+        //{
+        //    using (StreamReader sr = File.OpenText(AbsoluteSaveFile(slot, savable.Key)))
+        //    {
+        //        var savableTmp = savable;
+        //        JsonSerialization.FromJsonOverride(await sr.ReadToEndAsync(), ref savableTmp);
+        //    }
+        //}
 
-        lastSaveSlot = slot;
+        //lastSaveSlot = slot;
     }
 }

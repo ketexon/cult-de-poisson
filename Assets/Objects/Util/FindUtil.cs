@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using UnityEditor;
+using UnityEditor.VersionControl;
 
 #if UNITY_EDITOR
 using UnityEngine;
@@ -13,10 +15,10 @@ public static class FindUtil
     {
         enum Direction { Self, Parents, Children, All };
 
-        MonoBehaviour monobehavior;
+        readonly MonoBehaviour monobehavior;
         Direction direction = Direction.Self;
 
-        List<System.Func<T, bool>> filters = new();
+        readonly List<System.Func<T, bool>> filters = new();
 
         public FindQuery(MonoBehaviour monobehavior)
         {
@@ -155,6 +157,115 @@ public static class FindUtil
         where T : Component
     {
         return new(mb);
+    }
+
+    public class FindAssetQuery<T> where T: Object
+    {
+        string directory = null;
+        int limit = int.MaxValue;
+
+        List<System.Func<T, bool>> filters = new();
+
+        public FindAssetQuery()
+        {
+#if !UNITY_EDITOR
+            Debug.LogError("Cannot use FindAssetQuery at runtime");
+            throw new System.ApplicationException();
+#else
+#endif
+        }
+
+        public FindAssetQuery<T> SiblingTo(Object obj)
+        {
+#if UNITY_EDITOR
+            string path = AssetDatabase.GetAssetPath(obj);
+            directory = System.IO.Path.GetDirectoryName(path);
+#endif
+            return this;
+        }
+
+        public FindAssetQuery<T> Limit(int limit)
+        {
+            this.limit = limit;
+            return this;
+        }
+
+        public FindAssetQuery<T> NameEquals(string name, bool insensitive = false)
+        {
+            if (insensitive)
+            {
+                name = name.ToLower();
+                filters.Add(asset => asset.name.ToLower() == name);
+            }
+            else
+            {
+                filters.Add(asset => asset.name == name);
+            }
+            return this;
+        }
+
+        public FindAssetQuery<T> NameContains(string name, bool insensitive = false)
+        {
+            if (insensitive)
+            {
+                name = name.ToLower();
+                filters.Add(asset => asset.name.ToLower().Contains(name));
+            }
+            else
+            {
+                filters.Add(asset => asset.name.Contains(name));
+            }
+            return this;
+        }
+
+        public T Execute()
+        {
+            limit = 1;
+            var result = ExecuteMultiple();
+            return result.Count > 0 ? result[0] : null;
+        }
+
+        string GenerateQueryString()
+        {
+            return $"t:{typeof(T).Name}";
+        }
+
+        public List<T> ExecuteMultiple()
+        {
+            var q = GenerateQueryString();
+            string[] guids = directory != null
+                ? AssetDatabase.FindAssets(q, new string[] { directory })
+                : AssetDatabase.FindAssets(q);
+            List<T> res = new();
+            foreach(var guid in guids)
+            {
+                if (res.Count >= limit) break;
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                T asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+                bool passesFilters = true;
+
+                foreach (var filter in filters)
+                {
+                    if (!filter(asset))
+                    {
+                        passesFilters = false;
+                        break;
+                    }
+                }
+
+                if (passesFilters)
+                {
+                    res.Add(asset);
+                }
+            }
+            return res;
+        }
+    }
+
+    public static FindAssetQuery<T> QueryAsset<T>()
+        where T : Object
+    {
+        return new();
     }
 
     public static LayerMask Layer(string layer)

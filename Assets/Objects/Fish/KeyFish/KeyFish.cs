@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Carp : Fish
+public class KeyFish : Fish
 {
     [SerializeField] float accelerationCycleFrequency = 3;
 
