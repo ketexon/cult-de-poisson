@@ -122,7 +122,6 @@ public class PlayerItem : MonoBehaviour
 
         var itemGO = Instantiate(item.Prefab, itemTransform);
         EnabledItem = itemGO.GetComponent<Item>();
-        Debug.Log(EnabledItem);
         EnabledItem.Initialize(gameObject, playerInput, this);
 
         ItemChangeEvent?.Invoke(EnabledItem);

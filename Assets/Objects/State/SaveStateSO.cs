@@ -88,24 +88,28 @@ public class SaveStateSO : ScriptableObject
         }
     }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task Save(int slot)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         throw new System.NotImplementedException();
-        Debug.Log("HI");
-        EnsureSaveDirectory(slot);
+        //Debug.Log("HI");
+        //EnsureSaveDirectory(slot);
 
-        foreach(var savable in savables)
-        {
-            using (StreamWriter sw = File.CreateText(AbsoluteSaveFile(slot, savable.Key)))
-            {
-                await sw.WriteAsync(JsonSerialization.ToJson(savable));
-            }
-        }
+        //foreach(var savable in savables)
+        //{
+        //    using (StreamWriter sw = File.CreateText(AbsoluteSaveFile(slot, savable.Key)))
+        //    {
+        //        await sw.WriteAsync(JsonSerialization.ToJson(savable));
+        //    }
+        //}
         
-        lastSaveSlot = slot;
+        //lastSaveSlot = slot;
     }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async void Load(int slot)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         throw new System.NotImplementedException();
         //foreach (var savable in savables)

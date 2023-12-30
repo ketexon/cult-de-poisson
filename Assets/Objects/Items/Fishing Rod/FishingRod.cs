@@ -34,9 +34,6 @@ public class FishingRod : Item
 
     FishingState fishingState = FishingState.Uncast;
 
-    bool fishing = false;
-    bool cast = false;
-
     Quaternion rodFishingStartRot;
 
     Vector3 lastRodTipPos;
@@ -101,8 +98,6 @@ public class FishingRod : Item
     {
         base.OnUse();
     
-        fishing = true;
-        cast = false;
         playerInput.SwitchCurrentActionMap("Fishing");
         rodFishingStartRot = playerItem.TargetRot;
         rodFishingTargetAngle = 0;
@@ -146,10 +141,6 @@ public class FishingRod : Item
         {
             Cast();
         }
-        else if(fishingState == FishingState.Cast)
-        {
-
-        }
     }
 
     public void OnFishReel(InputAction.CallbackContext ctx)
@@ -160,7 +151,6 @@ public class FishingRod : Item
 
     public void OnExitFishing(InputAction.CallbackContext ctx)
     {
-        fishing = false;
         playerInput.SwitchCurrentActionMap("Gameplay");
         playerItem.TargetRot = rodFishingStartRot;
         playerItem.SetRotationLock(true);
@@ -179,7 +169,6 @@ public class FishingRod : Item
                 var fishSO = hookedFish.FishSO;
 
                 playerItem.EnableTemporaryItem(fishItem);
-                Debug.Log(playerItem.EnabledItem as FishItem);
                 (playerItem.EnabledItem as FishItem).SetFish(fishSO);
             }
 

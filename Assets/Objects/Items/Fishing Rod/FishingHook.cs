@@ -28,8 +28,6 @@ public class FishingHook : MonoBehaviour
 
     float initialDrag;
 
-    System.Action inputUIDestructor = null;
-
     public void OnCatchFish(FishSO fish)
     {
         var fishGO = Instantiate(fish.InWaterPrefab, transform);
@@ -87,14 +85,6 @@ public class FishingHook : MonoBehaviour
         joint.zMotion = ConfigurableJointMotion.Limited;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (!fish)
-        {
-            //rb.isKinematic = true;
-        }
-    }
-
     void OnTriggerEnter(Collider other)
     {
         int otherLayerField = 1 << other.gameObject.layer;
@@ -102,7 +92,6 @@ public class FishingHook : MonoBehaviour
         {
             WaterHitPos = transform.position;
             WaterHitEvent?.Invoke(WaterHitPos.Value);
-            //rb.velocity = Vector3.zero;
             rb.drag = waterDrag;
             inWater = true;
         }

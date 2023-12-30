@@ -21,9 +21,6 @@ public class FishingLine : MonoBehaviour
 
     Vector3[] points = new Vector3[3];
 
-    bool hookHitWater = false;
-    bool fishCaught = false;
-
     float? bobDistance = null;
     float? hookDistance = null;
 
@@ -57,16 +54,10 @@ public class FishingLine : MonoBehaviour
 
         this.hook = hook;
         hook.WaterHitEvent += OnHookHitWater;
-        hook.FishHookEvent += OnFishCatch;
 
         this.rodTipVelocity = rodTipVelocity;
 
         lineRenderer.positionCount = 2;
-    }
-
-    void OnFishCatch(Fish fish)
-    {
-        fishCaught = true;
     }
 
     public void SetBobPrefab(GameObject prefab)
@@ -128,7 +119,6 @@ public class FishingLine : MonoBehaviour
 
     void OnHookHitWater(Vector3 pos)
     {
-        hookHitWater = true;
         points[1] = pos;
 
         lineRenderer.positionCount = 3;

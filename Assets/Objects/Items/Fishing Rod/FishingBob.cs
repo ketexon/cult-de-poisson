@@ -26,8 +26,6 @@ public class FishingBob : MonoBehaviour
         joint.xMotion = ConfigurableJointMotion.Limited;
         joint.yMotion = ConfigurableJointMotion.Limited;
         joint.zMotion = ConfigurableJointMotion.Limited;
-
-        Debug.Log("WHATEVER");
     }
 
     public void Reel(float limit)
