@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyFish : Fish
 {
     [SerializeField] float accelerationCycleFrequency = 3;
+    [SerializeField] float accelerationSubCycleFrequency = 3;
 
     [Min(0)]
     [SerializeField] float horizontalAcceleration = 30;
@@ -15,9 +16,9 @@ public class KeyFish : Fish
     public override Vector3 ResistanceAcceleration()
     {
         // 1, 0, -1, 0, 1, 0, -1, ...
-        var cos = Mathf.Cos(Time / accelerationCycleFrequency * 2 * Mathf.PI);
+        var cos = Mathf.Cos(Time / accelerationCycleFrequency * 2 * Mathf.PI) * Mathf.Cos(Time / accelerationCycleFrequency / accelerationSubCycleFrequency * 2 * Mathf.PI);
         return new Vector3(
-            Mathf.Floor(Mathf.Abs(cos * 2)) * Mathf.Sign(cos) / 2 * horizontalAcceleration,
+            cos * horizontalAcceleration,
             0,
             forwardAcceleration
         );
