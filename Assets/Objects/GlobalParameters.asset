@@ -21,8 +21,12 @@ MonoBehaviour:
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  InteractLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
   MinHookInFishZoneDelay: 5
   MaxHookInFishZoneDelay: 10
   FishingActionMap: Fishing
   ReelStrength: 5
   HookDistancePickupRange: 2
+  InteractDistance: 2

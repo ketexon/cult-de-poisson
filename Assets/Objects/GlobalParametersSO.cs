@@ -15,6 +15,9 @@ public class GlobalParametersSO : ScriptableObject
     [SerializeField]
     public LayerMask GroundLayerMask;
 
+    [SerializeField]
+    public LayerMask InteractLayerMask;
+
     [Header("Fish Zones")]
     [Tooltip("How long a hook needs to be in a Fish Zone for a fish to be caught.")]
     [Min(0)]
@@ -35,6 +38,10 @@ public class GlobalParametersSO : ScriptableObject
 
     [SerializeField]
     public float HookDistancePickupRange = 2.0f;
+
+    [Header("Interaction")]
+    [SerializeField]
+    public float InteractDistance = 4.0f;
 
     public float GetRandomFishZoneDelay()
     {

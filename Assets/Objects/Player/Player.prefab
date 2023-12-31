@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 2403612065999515020}
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
+  - component: {fileID: 1349254100363335738}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -386,7 +387,19 @@ MonoBehaviour:
     m_ActionId: 8db6ad73-b52e-49a5-8be7-0cae0dd16615
     m_ActionName: Fishing/Reel[/Mouse/scroll/y]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1349254100363335738}
+        m_TargetAssemblyTypeName: PlayerInteract, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fa14e4ad-a9f0-466a-b438-d0d75d357933
     m_ActionName: Gameplay/Use[/Keyboard/f]
   - m_PersistentCalls:
@@ -422,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413b2e282ef02a14cb2474d1e41d8eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 0}
   camera: {fileID: 1752303393481585720}
   mouseSensitivity: 0.1
   maxPitch: 85
@@ -533,6 +547,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1f6f4f7c9b40ba347b0b45434aa0a965, type: 2}
   startingItemIndex: 0
   saveState: {fileID: 11400000, guid: 7b8994e2d97575d42a5b075aae33ef95, type: 2}
+--- !u!114 &1349254100363335738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8141ec177d8a2841b4f0430857c801d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
+  interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0

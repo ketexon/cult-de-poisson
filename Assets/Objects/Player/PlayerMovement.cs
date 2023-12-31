@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
+    public Camera Camera => camera;
+
     CharacterController characterController;
 
     public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y);

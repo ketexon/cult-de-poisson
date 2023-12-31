@@ -7,8 +7,19 @@ using TMPro;
 [RequireComponent(typeof(TMP_Text))]
 public class InputUIElement : MonoBehaviour
 {
-    public void Initialize(string key, string action)
+    [SerializeField] Color activeColor = Color.black;
+    [SerializeField] Color disabledColor = Color.gray;
+
+    TMP_Text tmp;
+
+    void Awake()
     {
-        GetComponent<TMP_Text>().text = $"{key}: {action}";
+        tmp = GetComponent<TMP_Text>();
+    }
+
+    public void Initialize(string key, string action, bool disabled)
+    {
+        tmp.text = $"{key}: {action}";
+        tmp.color = disabled ? disabledColor : activeColor;
     }
 }

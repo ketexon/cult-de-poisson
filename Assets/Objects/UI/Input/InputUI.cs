@@ -22,12 +22,22 @@ public class InputUI : SingletonBehaviour<InputUI>
         }
     }
 
-    public System.Action AddInputUI(InputAction inputAction, string message)
+    override protected void Awake()
+    {
+        base.Awake();
+        foreach(Transform t in transform)
+        {
+            Destroy(t.gameObject);
+        }
+    }
+
+    public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false)
     {
         var go = Instantiate(inputUIElementPrefab, inputUIElementParent.transform);
         go.GetComponent<InputUIElement>().Initialize(
             inputAction.GetBindingDisplayString(),
-            message
+            message,
+            disabled
         );
         
         return () =>
