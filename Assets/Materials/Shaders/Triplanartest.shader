@@ -1,5 +1,6 @@
-Shader "Unlit/Triplanar"
+Shader "Unlit/Triplanartest"
 {
+
     Properties
     {
         _Color ("Main Color", Color) = (1,1,1,1) //HLSL requires defining inspector constants here
@@ -13,13 +14,25 @@ Shader "Unlit/Triplanar"
         _Tiling ("Tiling", Float) = 1.0
 
         _Falloff ("Falloff", Range(0,1)) = 0.1
-
-        [HideInInspector] _TerrainHolesTexture("Holes Map (RGB)", 2D) = "white" {}
+        // Control Texture ("Splat Map")
+        [HideInInspector] _Control ("Control (RGBA)", 2D) = "red" {}
+     
+        // Terrain textures - each weighted according to the corresponding colour
+        // channel in the control texture
+        [HideInInspector] _Splat3 ("Layer 3 (A)", 2D) = "white" {}
+        [HideInInspector] _Splat2 ("Layer 2 (B)", 2D) = "white" {}
+        [HideInInspector] _Splat1 ("Layer 1 (G)", 2D) = "white" {}
+        [HideInInspector] _Splat0 ("Layer 0 (R)", 2D) = "white" {}
+    
         
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags {
+            "SplatCount" = "4"
+            "Queue" = "Geometry-100"
+            "RenderType" = "Opaque"
+        }
         LOD 100
 
         Pass
@@ -28,6 +41,10 @@ Shader "Unlit/Triplanar"
             #pragma vertex vert
             #pragma fragment frag
             
+                // Access the Shaderlab properties
+            uniform sampler2D _Control;
+            uniform sampler2D _Splat0,_Splat1,_Splat2,_Splat3;
+            uniform fixed4 _Color;
 
             #include "UnityCG.cginc"
 
@@ -88,94 +105,42 @@ Shader "Unlit/Triplanar"
                 return (tex2D(tex, coordinate.xz));
             }
 
+            struct Input {
+                float2 uv_Control : TEXCOORD0;
+                float2 uv_Splat0 : TEXCOORD1;
+                float2 uv_Splat1 : TEXCOORD2;
+                float2 uv_Splat2 : TEXCOORD3;
+                float2 uv_Splat3 : TEXCOORD4;
+            };
+
             //frag shader
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag (v2f i, Input IN) : SV_Target
             {
                 float steepness = dot(normalize(abs(i.worldNormal)), float3(0, 1, 0)); //get dot product of normal with up vector. can be returned as a shader
                 float textureChoice = step(_Falloff, steepness); //strictly divides world into steep and not steep parts based on a Falloff value
                 //steepness and textureChoice are both between 0 and 1
+
+                fixed4 splat_control = tex2D (_Control, IN.uv_Control);
 
                 //sample the texture
                 fixed4 col = 
                     textureChoice * SampleTextureFlat(_MainTex, i.coords)
                     + (1 - textureChoice) * SampleTexture(_SecTex, i.coords);
 
+                col  = splat_control.r * tex2D (_Splat0, IN.uv_Splat0).rgb;
+                col += splat_control.g * tex2D (_Splat1, IN.uv_Splat1).rgb;
+                col += splat_control.b * tex2D (_Splat2, IN.uv_Splat2).rgb;
+                col += splat_control.a * tex2D (_Splat3, IN.uv_Splat3).rgb;
+
                 col *= Toon(i.worldNormal, _WorldSpaceLightPos0.xyz)*_Strength+_Brightness;
 
-                return col;
-
-                // --> comment statement
-                /* --> actual old code */
-
-                //Blending factor, not sure exactly what it does though
-                /* float3 bf = abs(i.worldNormal);
-                   bf /= dot(bf, 1); */
-
-                // Base color
-                
-                /*
-                fixed4 cx = tex2D(_SecTex, i.coords.yz) * bf.x; //Steeper surfaces
-                fixed4 cy = tex2D(_MainTex, i.coords.xz) * bf.y ; //Handles all flat surfaces
-                fixed4 cz = step(0, tex2D(_SecTex, i.coords.xy) * bf.z) * tex2D(_SecTex, i.coords.xy) * bf.z; //Steeper surfaces
-                */                
-                
-
-                // sample the texture
-
-                /*
-                
-                fixed4 col2 = cx + cz + cy;
-                col2 = col/2 + fixed4(1, 1, 1, 1)/2;
-                
-                col2 *= Toon(i.worldNormal, _WorldSpaceLightPos0.xyz)*_Strength+_Brightness;
-                 
-                return col2;
-                
-                */
-                
-                
-                               
-                //col.r = step(0.1, col.r - col.g - col.b - col.a);
-	            //col.g = step(0.1, col.g - col.r - col.b - col.a);
-	            //col.b = step(0.1, col.b - col.g - col.r - col.a);
-	            //col.a = step(0.1, col.a - col.g - col.b - col.r);
-
-                
-	            
+                return col;   
                 
             }
 
             ENDCG
         }
-
-        Pass
-        {
-            Name "ShadowCaster"
-            Tags{"LightMode" = "ShadowCaster"}
-
-            ZWrite On
-            ColorMask 0
-
-            HLSLPROGRAM
-            #pragma target 2.0
-
-            #pragma vertex ShadowPassVertex
-            #pragma fragment ShadowPassFragment
-
-            #pragma multi_compile_instancing
-            #pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
-
-            // -------------------------------------
-            // Universal Pipeline keywords
-
-            // This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
-            #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
-
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/Terrain/TerrainLitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/Terrain/TerrainLitPasses.hlsl"
-            ENDHLSL
-        }
     }
 
-        Fallback "Standard"
+    Fallback "Standard"
 }
