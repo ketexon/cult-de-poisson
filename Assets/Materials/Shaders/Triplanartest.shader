@@ -127,10 +127,10 @@ Shader "Unlit/Triplanartest"
                     textureChoice * SampleTextureFlat(_MainTex, i.coords)
                     + (1 - textureChoice) * SampleTexture(_SecTex, i.coords);
 
-                col  = splat_control.r * tex2D (_Splat0, IN.uv_Splat0).rgb;
-                col += splat_control.g * tex2D (_Splat1, IN.uv_Splat1).rgb;
-                col += splat_control.b * tex2D (_Splat2, IN.uv_Splat2).rgb;
-                col += splat_control.a * tex2D (_Splat3, IN.uv_Splat3).rgb;
+                col  = splat_control.r * tex2D (_Splat0, IN.uv_Splat0).rgba;
+                col += splat_control.g * tex2D (_Splat1, IN.uv_Splat1).rgba;
+                col += splat_control.b * tex2D (_Splat2, IN.uv_Splat2).rgba;
+                col += splat_control.a * tex2D (_Splat3, IN.uv_Splat3).rgba;
 
                 col *= Toon(i.worldNormal, _WorldSpaceLightPos0.xyz)*_Strength+_Brightness;
 
