@@ -50,11 +50,9 @@ public class FishingRod : Item
 
     System.Action inputUIDestructor = null;
 
-    public override void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem)
+    public override void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem, PlayerInteract playerInteract)
     {
-        base.Initialize(player, playerInput, playerItem);
-
-        interactAction.action.performed += OnInteract;
+        base.Initialize(player, playerInput, playerItem, playerInteract);
 
         moveAction.action.performed += OnFishMove;
         moveAction.action.canceled += OnFishMove;
@@ -66,8 +64,6 @@ public class FishingRod : Item
 
     void OnDestroy()
     {
-        interactAction.action.performed -= OnInteract;
-
         moveAction.action.performed -= OnFishMove;
         moveAction.action.canceled -= OnFishMove;
 
@@ -114,6 +110,7 @@ public class FishingRod : Item
 
     public override void OnStopUsingItem()
     {
+        inputUIDestructor?.Invoke();
         if (hookedFish && hookInRange)
         {
             inventory.AddFish(hookedFish.FishSO);
@@ -162,7 +159,7 @@ public class FishingRod : Item
         UpdateInputUI();
     }
 
-    public void OnInteract(InputAction.CallbackContext ctx)
+    public void OnInteract()
     {
         if(hookInRange)
         {
@@ -229,11 +226,9 @@ public class FishingRod : Item
 
     void UpdateInputUI()
     {
-        if (inputUIDestructor != null)
-        {
-            inputUIDestructor.Invoke();
-            inputUIDestructor = null;
-        }
+        inputUIDestructor?.Invoke();
+        inputUIDestructor = null;
+
         if (!hookInRange)
         {
             return;
@@ -246,11 +241,11 @@ public class FishingRod : Item
         {
             if (hookedFish)
             {
-                inputUIDestructor = InputUI.Instance.AddInputUI(interactAction, "Collect fish");
+                inputUIDestructor = playerInteract.AddInteract(OnInteract, "Collect fish");
             }
             else
             {
-                inputUIDestructor = InputUI.Instance.AddInputUI(interactAction, "Reset fishing");
+                inputUIDestructor = playerInteract.AddInteract(OnInteract, "Reset fishing");
             }
         }
     }

@@ -9,6 +9,7 @@ using static UnityEngine.Rendering.VolumeComponent;
 public class PlayerItem : MonoBehaviour
 {
     [SerializeField] PlayerInput playerInput;
+    [SerializeField] PlayerInteract playerInteract;
     [SerializeField] Transform itemTransform;
     [SerializeField] float rotateSpeed = 5;
     [SerializeField] List<ItemSO> startingItems;
@@ -122,7 +123,7 @@ public class PlayerItem : MonoBehaviour
 
         var itemGO = Instantiate(item.Prefab, itemTransform);
         EnabledItem = itemGO.GetComponent<Item>();
-        EnabledItem.Initialize(gameObject, playerInput, this);
+        EnabledItem.Initialize(gameObject, playerInput, this, playerInteract);
 
         ItemChangeEvent?.Invoke(EnabledItem);
     }

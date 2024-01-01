@@ -9,6 +9,16 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] InputActionReference interactAction;
 
+    class InteractTarget
+    {
+        public System.Action Callback;
+        public string Message;
+        public bool Disabled;
+        public System.Action InputUIDestructor;
+    }
+
+    List<InteractTarget> interactTargets = new();
+
     Interactable _interactable;
     Interactable Interactable {
         get => _interactable;
@@ -58,10 +68,38 @@ public class PlayerInteract : MonoBehaviour
         {
             return;
         }
-        if(Interactable && Interactable.CanInteract)
+        if (Interactable && Interactable.CanInteract)
         {
             Interactable.OnInteract();
         }
+        else
+        {
+            foreach (var interactTarget in interactTargets)
+            {
+                if (!interactTarget.Disabled)
+                {
+                    interactTarget.Callback();
+                    return;
+                }
+            }
+        }
+    }
+
+    public System.Action AddInteract(System.Action callback, string message, bool disabled = false)
+    {
+        InteractTarget target = new()
+        {
+            Callback = callback,
+            Message = message,
+            Disabled = disabled,
+        };
+        interactTargets.Add(target);
+        UpdateUI();
+        return () =>
+        {
+            interactTargets.Remove(target);
+            target.InputUIDestructor?.Invoke();
+        };
     }
 
     void Update()
@@ -90,13 +128,30 @@ public class PlayerInteract : MonoBehaviour
     {
         interactableUIDestructor?.Invoke();
         interactableUIDestructor = null;
+        bool hasInteractTarget = false;
         if (Interactable)
         {
             interactableUIDestructor = InputUI.Instance.AddInputUI(
-                interactAction, 
-                Interactable.InteractMessage, 
+                interactAction,
+                Interactable.InteractMessage,
                 !Interactable.CanInteract
             );
+            hasInteractTarget = Interactable.CanInteract;
+            InputUI.Instance.SetCrosshairEnabled(Interactable.CanInteract);
+        }
+        else
+        {
+            InputUI.Instance.SetCrosshairEnabled(false);
+        }
+        foreach (var interactTarget in interactTargets)
+        {
+            interactTarget.InputUIDestructor?.Invoke();
+            interactTarget.InputUIDestructor = InputUI.Instance.AddInputUI(
+                interactAction,
+                interactTarget.Message,
+                interactTarget.Disabled || hasInteractTarget
+            );
+            hasInteractTarget = true;
         }
     }
 }

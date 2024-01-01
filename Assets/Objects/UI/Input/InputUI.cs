@@ -8,6 +8,9 @@ public class InputUI : SingletonBehaviour<InputUI>
 {
     [SerializeField] GameObject inputUIElementPrefab;
     [SerializeField] GameObject inputUIElementParent;
+    [SerializeField] Animator crosshairAnimator;
+
+    public bool CrosshairEnabled { get; private set; } = false;
 
     void Reset()
     {
@@ -25,9 +28,18 @@ public class InputUI : SingletonBehaviour<InputUI>
     override protected void Awake()
     {
         base.Awake();
-        foreach(Transform t in transform)
+        foreach(Transform t in inputUIElementParent.transform)
         {
             Destroy(t.gameObject);
+        }
+    }
+
+    public void SetCrosshairEnabled(bool value)
+    {
+        if(CrosshairEnabled != value)
+        {
+            CrosshairEnabled = value;
+            crosshairAnimator.SetBool("Enabled", CrosshairEnabled);
         }
     }
 

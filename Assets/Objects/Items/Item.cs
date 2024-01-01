@@ -12,6 +12,7 @@ public class Item : MonoBehaviour
     protected GameObject player;
     protected PlayerInput playerInput;
     protected PlayerItem playerItem;
+    protected PlayerInteract playerInteract;
 
     public virtual void OnUse()
     {}
@@ -21,10 +22,11 @@ public class Item : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public virtual void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem)
+    public virtual void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem, PlayerInteract playerInteract)
     {
         this.player = player;
         this.playerInput = playerInput;
         this.playerItem = playerItem;
+        this.playerInteract = playerInteract;
     }
 }

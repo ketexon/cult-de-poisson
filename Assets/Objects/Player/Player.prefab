@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413b2e282ef02a14cb2474d1e41d8eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parameters: {fileID: 0}
+  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   camera: {fileID: 1752303393481585720}
   mouseSensitivity: 0.1
   maxPitch: 85
@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 2972364860089777460}
+  playerInteract: {fileID: 0}
   itemTransform: {fileID: 8616573123594162493}
   rotateSpeed: 5
   startingItems:
