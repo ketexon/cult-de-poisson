@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -50,9 +51,15 @@ public class FishingRod : Item
 
     System.Action inputUIDestructor = null;
 
-    public override void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem, PlayerInteract playerInteract)
+    public override void Initialize(
+        GameObject player, 
+        PlayerInput playerInput, 
+        PlayerItem playerItem, 
+        PlayerInteract playerInteract,
+        Camera camera
+    )
     {
-        base.Initialize(player, playerInput, playerItem, playerInteract);
+        base.Initialize(player, playerInput, playerItem, playerInteract, camera);
 
         moveAction.action.performed += OnFishMove;
         moveAction.action.canceled += OnFishMove;
@@ -169,12 +176,17 @@ public class FishingRod : Item
 
                 var fishSO = hookedFish.FishSO;
 
+                ResetFishing();
+                UpdateInputUI();
+
                 playerItem.EnableTemporaryItem(fishItem);
                 (playerItem.EnabledItem as FishItem).SetFish(fishSO);
             }
-
-            ResetFishing();
-            UpdateInputUI();
+            else
+            {
+                ResetFishing();
+                UpdateInputUI();
+            }
         }
     }
 

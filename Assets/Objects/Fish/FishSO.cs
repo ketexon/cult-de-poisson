@@ -8,6 +8,7 @@ public class FishSO : ScriptableObject
     public string Name;
     public GameObject InWaterPrefab;
     public GameObject InHandPrefab;
+    public GameObject InBucketPrefab;
 
     void Reset()
     {
@@ -19,6 +20,11 @@ public class FishSO : ScriptableObject
         InWaterPrefab = new FindUtil.FindAssetQuery<GameObject>()
             .SiblingTo(this)
             .NameContains("water", insensitive: true)
+            .Execute();
+
+        InWaterPrefab = new FindUtil.FindAssetQuery<GameObject>()
+            .SiblingTo(this)
+            .NameContains("bucket", insensitive: true)
             .Execute();
     }
 }

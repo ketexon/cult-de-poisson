@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ public class PlayerItem : MonoBehaviour
 {
     [SerializeField] PlayerInput playerInput;
     [SerializeField] PlayerInteract playerInteract;
+    [SerializeField] Camera mainCamera;
     [SerializeField] Transform itemTransform;
     [SerializeField] float rotateSpeed = 5;
     [SerializeField] List<ItemSO> startingItems;
@@ -32,6 +34,11 @@ public class PlayerItem : MonoBehaviour
     public Item EnabledItem { get; protected set; }
 
     public bool IsTemporaryItem { get; protected set; }
+
+    void Reset()
+    {
+        mainCamera = FindObjectOfType<Camera>();
+    }
 
     public void SetRotationLock(bool value)
     {
@@ -89,8 +96,10 @@ public class PlayerItem : MonoBehaviour
 
     void EnableItem(ItemSO item, int index)
     {
+        IsTemporaryItem = false;
         EnabledItemIndex = index;
         EnableItemInternal(item);
+
     }
 
     public void EnableItem(ItemSO item)
@@ -123,7 +132,7 @@ public class PlayerItem : MonoBehaviour
 
         var itemGO = Instantiate(item.Prefab, itemTransform);
         EnabledItem = itemGO.GetComponent<Item>();
-        EnabledItem.Initialize(gameObject, playerInput, this, playerInteract);
+        EnabledItem.Initialize(gameObject, playerInput, this, playerInteract, mainCamera);
 
         ItemChangeEvent?.Invoke(EnabledItem);
     }

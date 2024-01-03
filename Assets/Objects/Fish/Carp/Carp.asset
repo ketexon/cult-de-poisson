@@ -17,3 +17,5 @@ MonoBehaviour:
     type: 3}
   InHandPrefab: {fileID: 582537697710654690, guid: 5137abbc280b8de47ab2104b5bb72251,
     type: 3}
+  InBucketPrefab: {fileID: 582537697710654690, guid: e02c432db0573a540ac3ccaba5d85cf3,
+    type: 3}
