@@ -12,6 +12,7 @@ public class PlayerItem : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     [SerializeField] PlayerInteract playerInteract;
     [SerializeField] Camera mainCamera;
+    [SerializeField] CinemachineBrain cinemachineBrain;
     [SerializeField] Transform itemTransform;
     [SerializeField] float rotateSpeed = 5;
     [SerializeField] List<ItemSO> startingItems;
@@ -29,6 +30,8 @@ public class PlayerItem : MonoBehaviour
     public System.Action<Item> ItemChangeEvent;
 
     bool playerLock = true;
+
+    Item.InitializeParams itemInitializeParams;
 
     public int EnabledItemIndex { get; protected set; }
     public Item EnabledItem { get; protected set; }
@@ -57,6 +60,16 @@ public class PlayerItem : MonoBehaviour
 
         CurRot = itemTransform.rotation;
         ItemOffsetPos = itemTransform.position - transform.position;
+
+        itemInitializeParams = new()
+        {
+            Player = gameObject,
+            PlayerInput = playerInput,
+            PlayerItem = this,
+            PlayerInteract = playerInteract,
+            MainCamera = mainCamera,
+            CinemachineBrain = cinemachineBrain,
+        };
 
         EnableItem(EnabledItemIndex);
     }
@@ -99,7 +112,6 @@ public class PlayerItem : MonoBehaviour
         IsTemporaryItem = false;
         EnabledItemIndex = index;
         EnableItemInternal(item);
-
     }
 
     public void EnableItem(ItemSO item)
@@ -132,7 +144,7 @@ public class PlayerItem : MonoBehaviour
 
         var itemGO = Instantiate(item.Prefab, itemTransform);
         EnabledItem = itemGO.GetComponent<Item>();
-        EnabledItem.Initialize(gameObject, playerInput, this, playerInteract, mainCamera);
+        EnabledItem.Initialize(itemInitializeParams);
 
         ItemChangeEvent?.Invoke(EnabledItem);
     }

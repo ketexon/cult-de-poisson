@@ -14,7 +14,6 @@ public class LockCursor : MonoBehaviour
 
     public static void PopLockState()
     {
-        
         Cursor.lockState = lockModeStack.Pop();
     }
 

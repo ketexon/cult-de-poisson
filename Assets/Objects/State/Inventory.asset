@@ -14,12 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingFish:
   - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
+  - {fileID: 11400000, guid: 3096543c62d9a0344989ca67f001de5b, type: 2}
+  - {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}

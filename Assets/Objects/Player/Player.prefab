@@ -706,6 +706,7 @@ MonoBehaviour:
   playerInput: {fileID: 2972364860089777460}
   playerInteract: {fileID: 1349254100363335738}
   mainCamera: {fileID: 2649129788575905462}
+  cinemachineBrain: {fileID: 1204132734477593009}
   itemTransform: {fileID: 8616573123594162493}
   rotateSpeed: 5
   startingItems:

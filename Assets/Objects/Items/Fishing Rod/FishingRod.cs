@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.ParticleSystem;
 
 public class FishingRod : Item
 {
@@ -51,15 +52,9 @@ public class FishingRod : Item
 
     System.Action inputUIDestructor = null;
 
-    public override void Initialize(
-        GameObject player, 
-        PlayerInput playerInput, 
-        PlayerItem playerItem, 
-        PlayerInteract playerInteract,
-        Camera camera
-    )
+    public override void Initialize(InitializeParams initParams)
     {
-        base.Initialize(player, playerInput, playerItem, playerInteract, camera);
+        base.Initialize(initParams);
 
         moveAction.action.performed += OnFishMove;
         moveAction.action.canceled += OnFishMove;

@@ -56,6 +56,7 @@ public class Bucket : Item
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     [SerializeField] PlayerInventorySO inventory;
+    [SerializeField] ItemSO fishItem;
     [SerializeField] float maxRaycastDistance = 5.0f;
 
     [FormerlySerializedAs("SpawnMin")]
@@ -72,7 +73,9 @@ public class Bucket : Item
 
     List<GameObject> spawnedFish = new();
 
-    GameObject hoveredGameObject = null;
+    Fish hoveredFish = null;
+
+    bool usingBucket = false;
 
     void Reset()
     {
@@ -94,15 +97,9 @@ public class Bucket : Item
             (SpawnMax - SpawnMin).Abs()
         );
     }
-    public override void Initialize(
-        GameObject player, 
-        PlayerInput playerInput, 
-        PlayerItem playerItem, 
-        PlayerInteract playerInteract,
-        Camera camera
-    )
+    public override void Initialize(InitializeParams initParams)
     {
-        base.Initialize(player, playerInput, playerItem, playerInteract, camera);
+        base.Initialize(initParams);
 
         foreach(var fish in inventory.Fish)
         {
@@ -123,7 +120,7 @@ public class Bucket : Item
 
     public override void OnStopUsingItem()
     {
-        base.OnStopUsingItem();
+        OnExitBucket(new());
 
         pointAction.action.performed -= OnPoint;
         clickAction.action.performed -= OnClick;
@@ -133,11 +130,33 @@ public class Bucket : Item
         {
             Destroy(fish);
         }
+        foreach(Transform t in transform)
+        {
+            if(t.gameObject != virtualCamera.gameObject)
+            {
+                Destroy(t.gameObject);
+            }
+        }
+
+        virtualCamera.enabled = false;
+
+        IEnumerator DestroyCoroutine()
+        {
+            yield return new WaitForEndOfFrame();
+            while (cinemachineBrain.IsBlending)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            base.OnStopUsingItem();
+        }
+        StartCoroutine(DestroyCoroutine());
     }
 
     public override void OnUse()
     {
         base.OnUse();
+
+        usingBucket = true;
 
         playerInput.SwitchCurrentActionMap("Bucket");
         virtualCamera.enabled = true;
@@ -159,13 +178,21 @@ public class Bucket : Item
             parameters.BucketFishLayerMask
         ))
         {
-            Debug.Log(hit.collider.gameObject);
+            var fish = hit.collider.GetComponent<Fish>();
+            hoveredFish = fish;
         }
     }
 
     void OnClick(InputAction.CallbackContext ctx)
     {
-        Debug.Log(pointPos);
+        if (hoveredFish)
+        {
+            var fishSO = hoveredFish.FishSO;
+
+            playerItem.EnableTemporaryItem(fishItem);
+
+            (playerItem.EnabledItem as FishItem).SetFish(fishSO);
+        }
     }
 
     void OnExitBucket(InputAction.CallbackContext ctx)
@@ -174,6 +201,11 @@ public class Bucket : Item
         virtualCamera.enabled = false;
         InputUI.Instance.SetCrosshairVisible(true);
 
-        LockCursor.PopLockState();
+        if (usingBucket)
+        {
+            LockCursor.PopLockState();
+        }
+
+        usingBucket = false;
     }
 }

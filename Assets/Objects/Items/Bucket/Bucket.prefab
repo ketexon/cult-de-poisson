@@ -220,6 +220,7 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   virtualCamera: {fileID: 3476402752573936858}
   inventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
+  fishItem: {fileID: 11400000, guid: 8fe9604f1e6adc54a859ab482f080426, type: 2}
   maxRaycastDistance: 5
   SpawnMin: {x: -0.10381645, y: -0.26559713, z: -0.11215003}
   SpawnMax: {x: 0.1382423, y: 0.09564838, z: 0.21286196}

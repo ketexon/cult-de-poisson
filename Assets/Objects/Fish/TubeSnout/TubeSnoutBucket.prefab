@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4813528668829628773}
   - component: {fileID: 7835887299839184861}
   - component: {fileID: 5637659945751463456}
+  - component: {fileID: 6598688621893821870}
   m_Layer: 14
   m_Name: TubeSnoutBucket
   m_TagString: Untagged
@@ -82,6 +83,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6598688621893821870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed56369614364d40b3ddec9f7686ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FishSO: {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
+  accelerationCycleFrequency: 3
+  accelerationSubCycleFrequency: 3
+  horizontalAcceleration: 30
+  forwardAcceleration: 30
 --- !u!1001 &7022373686687059133
 PrefabInstance:
   m_ObjectHideFlags: 0

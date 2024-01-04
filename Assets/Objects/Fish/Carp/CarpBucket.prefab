@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3281116494833135188}
   - component: {fileID: 9122598884488510255}
   - component: {fileID: 5945798559691110391}
+  - component: {fileID: 5125067697970170994}
   m_Layer: 14
   m_Name: CarpBucket
   m_TagString: Untagged
@@ -133,3 +134,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5125067697970170994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6645e9ca491bf4db40b1c247a6d308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FishSO: {fileID: 11400000, guid: 3096543c62d9a0344989ca67f001de5b, type: 2}
+  accelerationCycleFrequency: 3
+  horizontalAcceleration: 30
+  forwardAcceleration: 30
