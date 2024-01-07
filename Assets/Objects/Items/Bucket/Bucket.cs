@@ -14,14 +14,18 @@ public class Bucket : Item
     [SerializeField] float maxRaycastDistance = 5.0f;
 
     [SerializeField] InputActionReference pointAction;
+    [SerializeField] InputActionReference cycleFishAction;
+    [SerializeField] InputActionReference selectFishAction;
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference exitAction;
 
+    [SerializeField] Transform fishSelectedTransform;
     [SerializeField] Transform fishSpawnContainer;
 
     Vector2 pointPos = Vector2.zero;
 
-    List<GameObject> spawnedFish = new();
+    List<BucketFish> spawnedFish = new();
+    int? selectedFish = null;
 
     Fish hoveredFish = null;
 
@@ -53,18 +57,21 @@ public class Bucket : Item
             var fish = go.GetComponent<Fish>();
             fish.InitializeBucket();
 
-            float length;
-
-            length = fish.GetComponent<BoxCollider>().size.z * fish.transform.localScale.z;
+            float length = fish.GetComponent<BoxCollider>().size.z * fish.transform.localScale.z;
 
             float deltaHeight = spawn.localScale.z - length;
             go.transform.position += spawn.transform.forward * deltaHeight / 2;
-            spawnedFish.Add(go);
+
+            var bucketFish = fish.gameObject.AddComponent<BucketFish>();
+            spawnedFish.Add(bucketFish);
         }
 
         pointAction.action.performed += OnPoint;
         clickAction.action.performed += OnClick;
         exitAction.action.performed += OnExitBucket;
+
+        cycleFishAction.action.performed += OnCycleFish;
+        selectFishAction.action.performed += OnSelectFish;
     }
 
     public override void OnStopUsingItem()
@@ -75,11 +82,14 @@ public class Bucket : Item
         clickAction.action.performed -= OnClick;
         exitAction.action.performed -= OnExitBucket;
 
-        foreach(var fish in spawnedFish)
+        cycleFishAction.action.performed -= OnCycleFish;
+        selectFishAction.action.performed -= OnSelectFish;
+
+        foreach (BucketFish fish in spawnedFish)
         {
-            Destroy(fish);
+            Destroy(fish.gameObject);
         }
-        foreach(Transform t in transform)
+        foreach (Transform t in transform)
         {
             if(t.gameObject != virtualCamera.gameObject)
             {
@@ -144,6 +154,45 @@ public class Bucket : Item
         }
     }
 
+    void OnCycleFish(InputAction.CallbackContext ctx)
+    {
+        var floatValue = ctx.ReadValue<float>();
+        var intValue = System.Math.Sign(floatValue);
+        if (intValue == 0)
+        {
+            return;
+        }
+
+        int? newSelectedFish;
+
+        if (selectedFish.HasValue)
+        {
+            newSelectedFish = selectedFish.Value + intValue;
+            newSelectedFish =
+                newSelectedFish >= 0 && newSelectedFish < spawnedFish.Count
+                    ? newSelectedFish
+                    : null;
+        }
+        else
+        {
+            newSelectedFish = intValue < 0 ? spawnedFish.Count - 1 : 0;
+        }
+
+        SelectFish(newSelectedFish);
+    }
+
+    void OnSelectFish(InputAction.CallbackContext ctx)
+    {
+        if (selectedFish.HasValue)
+        {
+            var fishSO = spawnedFish[selectedFish.Value].GetComponent<Fish>().FishSO;
+
+            playerItem.EnableTemporaryItem(fishItem);
+
+            (playerItem.EnabledItem as FishItem).SetFish(fishSO);
+        }
+    }
+
     void OnExitBucket(InputAction.CallbackContext ctx)
     {
         playerInput.SwitchCurrentActionMap("Gameplay");
@@ -156,5 +205,22 @@ public class Bucket : Item
         }
 
         usingBucket = false;
+
+        SelectFish(null);
+    }
+
+    void SelectFish(int? index)
+    {
+        if (selectedFish.HasValue)
+        {
+            spawnedFish[selectedFish.Value].TargetLocalPos = spawnedFish[selectedFish.Value].StartLocalPos;
+            spawnedFish[selectedFish.Value].TargetLocalRotation = spawnedFish[selectedFish.Value].StartLocalRotation;
+        }
+        selectedFish = index;
+        if (selectedFish.HasValue)
+        {
+            spawnedFish[selectedFish.Value].TargetLocalPos = fishSelectedTransform.localPosition;
+            spawnedFish[selectedFish.Value].TargetLocalRotation = fishSelectedTransform.localRotation;
+        }
     }
 }

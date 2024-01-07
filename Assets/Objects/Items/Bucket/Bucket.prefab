@@ -113,8 +113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590440580591216274}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.71480674, y: -0.18057787, z: -0.06915736, w: -0.67205673}
-  m_LocalPosition: {x: -0.1817, y: 0.011, z: 0.0265}
+  m_LocalRotation: {x: -0.691127, y: -0.12595128, z: -0.13043702, w: -0.6996185}
+  m_LocalPosition: {x: -0.1939, y: 0.0099, z: -0.0353}
   m_LocalScale: {x: 0.08611962, y: 0.087445065, z: 0.60231227}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -243,6 +243,50 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4069516535043722976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531c3852ef3b66e44805ff9ba9cd5a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4208735534570186320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4354726798530819310}
+  - component: {fileID: 696247570704042553}
+  m_Layer: 13
+  m_Name: SelectedFishTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4354726798530819310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208735534570186320}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: -0.5}
+  m_LocalPosition: {x: 0.016200006, y: 0.000000029802322, z: 0.013999999}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5678470297259284058}
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: -90}
+--- !u!114 &696247570704042553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208735534570186320}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 531c3852ef3b66e44805ff9ba9cd5a60, type: 3}
@@ -545,6 +589,7 @@ Transform:
   - {fileID: 5624240733288413645}
   - {fileID: 3923370713875650078}
   - {fileID: 1463099932033849091}
+  - {fileID: 4354726798530819310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6629303398945635519
@@ -567,10 +612,15 @@ MonoBehaviour:
   maxRaycastDistance: 5
   pointAction: {fileID: 1113494480348105432, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+  cycleFishAction: {fileID: 602046538289693272, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  selectFishAction: {fileID: 7764835902256030524, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
   clickAction: {fileID: 667610082495058770, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   exitAction: {fileID: 2346939016296474379, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+  fishSelectedTransform: {fileID: 4354726798530819310}
   fishSpawnContainer: {fileID: 5624240733288413645}
 --- !u!1 &8472559706201177289
 GameObject:
