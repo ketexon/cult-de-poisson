@@ -94,6 +94,15 @@ Shader "Unlit/Triplanartest"
                 return floor(NdotL/_Ratio);
             }
 
+            fixed4 SplitMap(fixed4 map){
+                map.r = step(0.1, map.r - map.g - map.b - map.a);
+                map.g = step(0.1, map.g - map.r - map.b - map.a);
+                map.b = step(0.1, map.b - map.g - map.r - map.a);
+                map.a = step(0.1, map.a - map.g - map.b - map.r);
+
+                return map;
+            }
+
             fixed4 SampleTexture(sampler2D tex, float3 coordinate){ //sampler2D is the texture image
                 return (tex2D(tex, coordinate.yz) //sample in each plane axis?
                     + tex2D(tex, coordinate.xy)
@@ -103,14 +112,14 @@ Shader "Unlit/Triplanartest"
 
             fixed4 SampleTextureFlat(sampler2D tex, float3 coordinate){
                 return (tex2D(tex, coordinate.xz));
-            }
+            };
 
             struct Input {
                 float2 uv_Control : TEXCOORD0;
-                float2 uv_Splat0 : TEXCOORD1;
-                float2 uv_Splat1 : TEXCOORD2;
-                float2 uv_Splat2 : TEXCOORD3;
-                float2 uv_Splat3 : TEXCOORD4;
+                float2 uv_Splat0 : TEXCOORD2;
+                float2 uv_Splat1 : TEXCOORD3;
+                float2 uv_Splat2 : TEXCOORD4;
+                float2 uv_Splat3 : TEXCOORD5;
             };
 
             //frag shader
@@ -120,18 +129,23 @@ Shader "Unlit/Triplanartest"
                 float textureChoice = step(_Falloff, steepness); //strictly divides world into steep and not steep parts based on a Falloff value
                 //steepness and textureChoice are both between 0 and 1
 
-                fixed4 splat_control = tex2D (_Control, IN.uv_Control);
+                fixed4 splat_control = SplitMap(tex2D (_Control, IN.uv_Control));
+
+                //splat_control = SplitMap(splat_control);
 
                 //sample the texture
-                fixed4 col = 
-                    textureChoice * SampleTextureFlat(_MainTex, i.coords)
+                
+                fixed4 col2 =
+                    //textureChoice * SampleTextureFlat(_MainTex, i.coords)
                     + (1 - textureChoice) * SampleTexture(_SecTex, i.coords);
 
-                col  = splat_control.r * tex2D (_Splat0, IN.uv_Splat0).rgba;
-                col += splat_control.g * tex2D (_Splat1, IN.uv_Splat1).rgba;
-                col += splat_control.b * tex2D (_Splat2, IN.uv_Splat2).rgba;
-                col += splat_control.a * tex2D (_Splat3, IN.uv_Splat3).rgba;
+                fixed4 col = splat_control.r * tex2D (_Splat0, i.coords).rgba;
+                col += splat_control.g * tex2D (_Splat1, i.coords).rgba;
+                col += splat_control.b * tex2D (_Splat2, i.coords).rgba;
+                col += splat_control.a * tex2D (_Splat3, i.coords).rgba;
 
+                col -= (1 - textureChoice) * col;
+                col += col2;
                 col *= Toon(i.worldNormal, _WorldSpaceLightPos0.xyz)*_Strength+_Brightness;
 
                 return col;   

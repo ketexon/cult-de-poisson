@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 10736a6368dc24d4ea2cb6b2dc17d7b4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask0:
@@ -117,7 +117,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SecTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: bf4da65f01b25d240a61126b303bc3ba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -179,7 +179,7 @@ Material:
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
     - _EnvironmentReflections: 1
-    - _Falloff: 0.1
+    - _Falloff: 0.866
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -194,7 +194,7 @@ Material:
     - _Outline: 0.005
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _Ratio: 0.3
+    - _Ratio: 0.223
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _Smoothness0: 0.5
