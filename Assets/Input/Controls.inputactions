@@ -42,13 +42,31 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fish",
+                    "name": "UseItem",
                     "type": "Button",
                     "id": "85e5096d-3597-46cc-a874-b4b5b2963735",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "fa14e4ad-a9f0-466a-b438-d0d75d357933",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CycleItem",
+                    "type": "Value",
+                    "id": "3d2df260-eb19-4e36-ba27-9512c3fb326a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -147,7 +165,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Fish",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "66edfc94-df80-4ff0-9158-5f6dda7584b3",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6184301b-908b-49bf-b2d2-e30871472764",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "CycleItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
