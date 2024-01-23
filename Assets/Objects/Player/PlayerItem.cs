@@ -89,6 +89,7 @@ public class PlayerItem : MonoBehaviour
         {
             float v = ctx.ReadValue<float>();
             newItemIndex = (Math.Sign(v) + EnabledItemIndex + items.Count) % items.Count;
+            Debug.Log(newItemIndex);
         }
 
         EnableItem(newItemIndex);
