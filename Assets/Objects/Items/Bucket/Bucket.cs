@@ -76,7 +76,7 @@ public class Bucket : Item
 
     public override void OnStopUsingItem()
     {
-        OnExitBucket(new());
+        StopUsingBucket();
 
         pointAction.action.performed -= OnPoint;
         clickAction.action.performed -= OnClick;
@@ -127,7 +127,6 @@ public class Bucket : Item
     void OnPoint(InputAction.CallbackContext ctx)
     {
         pointPos = ctx.ReadValue<Vector2>();
-
 
         Ray ray = mainCamera.ScreenPointToRay(pointPos);
         if (Physics.Raycast(
@@ -196,6 +195,15 @@ public class Bucket : Item
     void OnExitBucket(InputAction.CallbackContext ctx)
     {
         playerInput.SwitchCurrentActionMap("Gameplay");
+        StopUsingBucket();
+    }
+
+    // This is separated into two functions because
+    // the destructor needs to do everything BUT swapping input maps
+    // if you swap input maps to the currently active
+    // input map, it will refire events.
+    void StopUsingBucket()
+    {
         virtualCamera.enabled = false;
         InputUI.Instance.SetCrosshairVisible(true);
 
