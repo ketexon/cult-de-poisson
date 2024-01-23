@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ public class PlayerItem : MonoBehaviour
 {
     [SerializeField] PlayerInput playerInput;
     [SerializeField] PlayerInteract playerInteract;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] CinemachineBrain cinemachineBrain;
     [SerializeField] Transform itemTransform;
     [SerializeField] float rotateSpeed = 5;
     [SerializeField] List<ItemSO> startingItems;
@@ -28,10 +31,17 @@ public class PlayerItem : MonoBehaviour
 
     bool playerLock = true;
 
+    Item.InitializeParams itemInitializeParams;
+
     public int EnabledItemIndex { get; protected set; }
     public Item EnabledItem { get; protected set; }
 
     public bool IsTemporaryItem { get; protected set; }
+
+    void Reset()
+    {
+        mainCamera = FindObjectOfType<Camera>();
+    }
 
     public void SetRotationLock(bool value)
     {
@@ -50,6 +60,16 @@ public class PlayerItem : MonoBehaviour
 
         CurRot = itemTransform.rotation;
         ItemOffsetPos = itemTransform.position - transform.position;
+
+        itemInitializeParams = new()
+        {
+            Player = gameObject,
+            PlayerInput = playerInput,
+            PlayerItem = this,
+            PlayerInteract = playerInteract,
+            MainCamera = mainCamera,
+            CinemachineBrain = cinemachineBrain,
+        };
 
         EnableItem(EnabledItemIndex);
     }
@@ -89,6 +109,7 @@ public class PlayerItem : MonoBehaviour
 
     void EnableItem(ItemSO item, int index)
     {
+        IsTemporaryItem = false;
         EnabledItemIndex = index;
         EnableItemInternal(item);
     }
@@ -123,7 +144,7 @@ public class PlayerItem : MonoBehaviour
 
         var itemGO = Instantiate(item.Prefab, itemTransform);
         EnabledItem = itemGO.GetComponent<Item>();
-        EnabledItem.Initialize(gameObject, playerInput, this, playerInteract);
+        EnabledItem.Initialize(itemInitializeParams);
 
         ItemChangeEvent?.Invoke(EnabledItem);
     }

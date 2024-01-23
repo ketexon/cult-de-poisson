@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,18 @@ public class Item : MonoBehaviour
     protected PlayerInput playerInput;
     protected PlayerItem playerItem;
     protected PlayerInteract playerInteract;
+    protected Camera mainCamera;
+    protected CinemachineBrain cinemachineBrain;
+
+    public class InitializeParams
+    {
+        public GameObject Player;
+        public PlayerInput PlayerInput;
+        public PlayerItem PlayerItem;
+        public PlayerInteract PlayerInteract;
+        public Camera MainCamera;
+        public CinemachineBrain CinemachineBrain;
+    };
 
     public virtual void OnUse()
     {}
@@ -22,11 +35,13 @@ public class Item : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public virtual void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem, PlayerInteract playerInteract)
+    public virtual void Initialize(InitializeParams initParams)
     {
-        this.player = player;
-        this.playerInput = playerInput;
-        this.playerItem = playerItem;
-        this.playerInteract = playerInteract;
+        player = initParams.Player;
+        playerInput = initParams.PlayerInput;
+        playerItem = initParams.PlayerItem;
+        playerInteract = initParams.PlayerInteract;
+        mainCamera = initParams.MainCamera;
+        cinemachineBrain = initParams.CinemachineBrain;
     }
 }

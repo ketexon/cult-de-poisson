@@ -7,12 +7,12 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] GlobalParametersSO parameters;
-    [SerializeField] new Camera camera;
+    [SerializeField] new Cinemachine.CinemachineVirtualCamera camera;
     [SerializeField] float mouseSensitivity;
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
-    public Camera Camera => camera;
+    public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
     CharacterController characterController;
 
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
-        camera = GetComponentInChildren<Camera>();
+        camera = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
     }
 
     void Awake()

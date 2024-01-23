@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Hook
@@ -18,8 +18,8 @@ TagManager:
   - Bob
   - WaterFloor
   - Interactable
-  - 
-  - 
+  - ClipPlayer
+  - BucketFish
   - 
   - 
   - 

@@ -18,6 +18,9 @@ public class GlobalParametersSO : ScriptableObject
     [SerializeField]
     public LayerMask InteractLayerMask;
 
+    [SerializeField]
+    public LayerMask BucketFishLayerMask;
+
     [Header("Fish Zones")]
     [Tooltip("How long a hook needs to be in a Fish Zone for a fish to be caught.")]
     [Min(0)]
@@ -51,5 +54,6 @@ public class GlobalParametersSO : ScriptableObject
     void Reset()
     {
         HookLayerMask = FindUtil.Layer("hook");
+        BucketFishLayerMask = FindUtil.Layer("BucketFish");
     }
 }

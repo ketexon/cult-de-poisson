@@ -11,6 +11,7 @@ public class InputUI : SingletonBehaviour<InputUI>
     [SerializeField] Animator crosshairAnimator;
 
     public bool CrosshairEnabled { get; private set; } = false;
+    public bool CrosshairVisible { get; private set; } = true;
 
     void Reset()
     {
@@ -40,6 +41,15 @@ public class InputUI : SingletonBehaviour<InputUI>
         {
             CrosshairEnabled = value;
             crosshairAnimator.SetBool("Enabled", CrosshairEnabled);
+        }
+    }
+
+    public void SetCrosshairVisible(bool value)
+    {
+        if (CrosshairVisible != value)
+        {
+            CrosshairVisible = value;
+            crosshairAnimator.SetBool("Visible", CrosshairVisible);
         }
     }
 

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a606ef199430946bcf2f7bbba0e5cf, type: 3}
-  m_Name: Inventory
+  m_Script: {fileID: 11500000, guid: a70a0f68096847f4da331a3be8124772, type: 3}
+  m_Name: Bucket
   m_EditorClassIdentifier: 
-  StartingFish:
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
+  Name: Bucket
+  Prefab: {fileID: 7684512066022116301, guid: 3545394e24651a147a73e6382ef503fb, type: 3}
