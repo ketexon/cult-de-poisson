@@ -88,4 +88,9 @@ public class PlayerInventorySO : SavableSO
         Fish.Add(fish);
         FishAddedEvent?.Invoke(fish);
     }
+
+    public void RemoveFish(FishSO fish)
+    {
+        Fish.Remove(fish);
+    }
 }
