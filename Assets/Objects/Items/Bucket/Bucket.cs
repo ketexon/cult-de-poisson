@@ -42,23 +42,40 @@ public class Bucket : Item
             .Execute();
     }
 
+
+    /// <summary>
+    /// Initializes the bucket's fish and registers input bindings.
+    /// The bucket's fish are spawned programmatically through the FishSOs in the
+    /// PlayerInventorySO.
+    /// The fish are spawned in one by one with the same transforms as the children in fishSpawnContainer.
+    /// The scale of the spawn transform is treated as a bounding box, and the fish are then
+    /// moved down in the spawn bounding box as far as possible to the bottom of this bounding box.
+    /// </summary>
+    /// <param name="initParams"></param>
     public override void Initialize(InitializeParams initParams)
     {
         base.Initialize(initParams);
 
+        // assign fish to each slot in the bucket
         for(int i = 0; i < fishSpawnContainer.childCount; i++)
         {
+            // if we have no more slots or we have no more fish, break
             if (i >= inventory.Fish.Count) break;
 
             Transform spawn = fishSpawnContainer.GetChild(i);
             FishSO fishSO = inventory.Fish[i];
 
+            // spawn the Fish's bucket prefab
             var go = Instantiate(fishSO.InBucketPrefab, spawn.position, spawn.rotation, transform);
             var fish = go.GetComponent<Fish>();
             fish.InitializeBucket();
 
+            // get the physical bounding box of the fish (from BoxCollider)
+            // and use itz z as the length
             float length = fish.GetComponent<BoxCollider>().size.z * fish.transform.localScale.z;
 
+            // move the fish as far down as it can in the bucket
+            // without touching the bottom
             float deltaHeight = spawn.localScale.z - length;
             go.transform.position += spawn.transform.forward * deltaHeight / 2;
 
@@ -73,7 +90,6 @@ public class Bucket : Item
         cycleFishAction.action.performed += OnCycleFish;
         selectFishAction.action.performed += OnSelectFish;
     }
-
     public override void OnStopUsingItem()
     {
         StopUsingBucket();
@@ -85,10 +101,13 @@ public class Bucket : Item
         cycleFishAction.action.performed -= OnCycleFish;
         selectFishAction.action.performed -= OnSelectFish;
 
+        // Destroy all fish
         foreach (BucketFish fish in spawnedFish)
         {
             Destroy(fish.gameObject);
         }
+
+        // Destroy everything BUT the vcam
         foreach (Transform t in transform)
         {
             if(t.gameObject != virtualCamera.gameObject)
@@ -96,6 +115,9 @@ public class Bucket : Item
                 Destroy(t.gameObject);
             }
         }
+
+        // disable the vcam, but wait until it is done blending to destroy it
+        // and finish the destructor (ie. Destroy(gameObject))
 
         virtualCamera.enabled = false;
 
@@ -152,10 +174,11 @@ public class Bucket : Item
             (playerItem.EnabledItem as FishItem).SetFish(fishSO);
         }
     }
-
+    
     void OnCycleFish(InputAction.CallbackContext ctx)
     {
         var floatValue = ctx.ReadValue<float>();
+        // either -1 or 1 corresponding to input
         var intValue = System.Math.Sign(floatValue);
         if (intValue == 0)
         {
@@ -164,6 +187,9 @@ public class Bucket : Item
 
         int? newSelectedFish;
 
+        // if we are currently selecting the fish,
+        // add the intValue and unselect the fish if 
+        // we go out of bounds
         if (selectedFish.HasValue)
         {
             newSelectedFish = selectedFish.Value + intValue;
@@ -172,6 +198,9 @@ public class Bucket : Item
                     ? newSelectedFish
                     : null;
         }
+        // if we are not currently selecting a fish,
+        // go to the first fish if we cycle forward or the last
+        // if we cycle backwards
         else
         {
             newSelectedFish = intValue < 0 ? spawnedFish.Count - 1 : 0;
@@ -180,6 +209,8 @@ public class Bucket : Item
         SelectFish(newSelectedFish);
     }
 
+    // Called when we press e on a fish
+    // switch to fishItem and set the fish to the one selected
     void OnSelectFish(InputAction.CallbackContext ctx)
     {
         if (selectedFish.HasValue)
@@ -202,6 +233,9 @@ public class Bucket : Item
     // the destructor needs to do everything BUT swapping input maps
     // if you swap input maps to the currently active
     // input map, it will refire events.
+    /// <summary>
+    /// Resets camera, crosshair state, cursor lock state, and internal variables.
+    /// </summary>
     void StopUsingBucket()
     {
         virtualCamera.enabled = false;
@@ -217,6 +251,8 @@ public class Bucket : Item
         SelectFish(null);
     }
 
+    // when a fish is highlighted, sets the position and rotation
+    // on the BucketFish script, which takes care of the lerping
     void SelectFish(int? index)
     {
         if (selectedFish.HasValue)

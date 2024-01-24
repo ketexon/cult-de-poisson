@@ -5,6 +5,11 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] bool _interactable = true;
+
+    /// <summary>
+    /// Used by <c>PlayerIntact</c> to show interact text but not
+    /// allow interaction. Useful for disabled interactables.
+    /// </summary>
     public bool CanInteract
     {
         get => _interactable;
@@ -18,8 +23,15 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when CanInteract is changed.
+    /// </summary>
     public System.Action<bool> CanInteractChangeEvent;
 
+    /// <summary>
+    /// Message to show in UI when hovering this item
+    /// </summary>
     public abstract string InteractMessage { get; }
+
     public virtual void OnInteract() { }
 }

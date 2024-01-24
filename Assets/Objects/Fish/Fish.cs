@@ -20,6 +20,11 @@ public class Fish : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
     }
 
+    /// <summary>
+    /// The acceleration the fish causes while caught
+    /// Applied every FixedUpdate to the hook of the fishing line
+    /// </summary>
+    /// <returns></returns>
     public virtual Vector3 ResistanceAcceleration()
     {
         return Vector3.zero;

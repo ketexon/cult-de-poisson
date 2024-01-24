@@ -17,7 +17,9 @@ public class FishZone : MonoBehaviour
 
 
     /// <summary>
-    /// Returns true if the hook will succeed in catching a fish
+    /// Returns true if the hook will succeed in catching a fish.
+    /// This can be used to, for example, check if the hook is baited
+    /// and only catch the fish if there is bait.
     /// </summary>
     bool ValidateHook(FishingHook hook)
     {
@@ -26,12 +28,14 @@ public class FishZone : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        // if the hook enters this fish zone
         if(globalParams.HookLayerMask.Contains(other.gameObject.layer))
         {
             FishingHook hook = other.GetComponent<FishingHook>();
             if (ValidateHook(hook))
             {
                 this.hook = hook;
+                // wait some time before catching a fish
                 catchFishCoroutine = StartCoroutine(FishCatchDelay());
             }
         }
@@ -39,10 +43,13 @@ public class FishZone : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
+        // if the hook exits the fishing zone
         var otherLayerMask = 1 << other.gameObject.layer;
         if (globalParams.HookLayerMask.Contains(other.gameObject.layer))
         {
             FishingHook hook = other.GetComponent<FishingHook>();
+
+            // remove the hook and stop the catch fish coroutine
             if (this.hook == hook)
             {
                 this.hook = null;
