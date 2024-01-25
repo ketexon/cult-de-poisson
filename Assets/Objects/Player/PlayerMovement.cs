@@ -65,6 +65,12 @@ public class PlayerMovement : MonoBehaviour
         inputDir = transform.rotation * new Vector3(dir.x, 0, dir.y);
     }
 
+    /// <summary>
+    /// Used to calculate velocity relative to any plane we are on.
+    /// This is to prevent the player from moving into a plane when going uphill
+    /// or into air when going downhill. This function also applies gravity.
+    /// </summary>
+    /// <returns></returns>
     Vector3 CalculateVelocity()
     {
         var velocity = inputDir * speed;

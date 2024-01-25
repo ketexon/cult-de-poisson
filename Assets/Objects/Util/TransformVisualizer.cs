@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Helper utility to draw a unit cube transformed by the GameObject's transform.
+/// </summary>
 [ExecuteInEditMode]
 public class TransformVisualizer : MonoBehaviour
 {

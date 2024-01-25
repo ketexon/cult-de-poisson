@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Parameters fro the game used across multiple components.
+/// Includes layer masks and economy values.
+/// </summary>
 [CreateAssetMenu(fileName = "GlobalParameters", menuName = "Global Parameters")]
 public class GlobalParametersSO : ScriptableObject
 {
