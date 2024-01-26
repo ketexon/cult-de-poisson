@@ -6,4 +6,5 @@ using UnityEngine;
 public class FishZoneSO : ScriptableObject
 {
     [SerializeField] public List<FishSO> Fish;
+    [SerializeField] public float FishDensity = 1;
 }

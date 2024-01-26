@@ -46,4 +46,18 @@ public static class Extensions
         Mathf.Max(v1.y, v2.y),
         Mathf.Max(v1.z, v2.z)
     );
+
+    public static float Volume(this Vector3 length) => length.x * length.y * length.z;
+
+    /// <summary>
+    /// Returns a random vector between two vectors.
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public static Vector3 Random(Vector3 min, Vector3 max) => new Vector3(
+        (max - min).x * UnityEngine.Random.value,
+        (max - min).y * UnityEngine.Random.value,
+        (max - min).z * UnityEngine.Random.value
+    ) + min;
 }
