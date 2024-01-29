@@ -1,52 +1,66 @@
-using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Journal : Item
 {
-    [SerializeField] CinemachineVirtualCamera virtualCamera;
+    [SerializeField]
+    CinemachineVirtualCamera virtualCamera;
 
-	[SerializeField] InputActionReference exitAction;
+    [SerializeField]
+    InputActionReference exitAction;
 
-	bool usingJournal = false;
+    bool usingJournal = false;
+
+	private void Start()
+	{
+		Canvas canvas = GetComponentInChildren<Canvas>();
+        canvas.worldCamera = mainCamera;
+	}
 
 	public override void Initialize(InitializeParams initParams)
-	{
-		base.Initialize(initParams);
+    {
+        base.Initialize(initParams);
 
-		exitAction.action.performed += OnExitJournal;
-	}
+        exitAction.action.performed += StopUsingJournal;
+    }
 
-	public override void OnUse()
-	{
-		base.OnUse();
+    public override void OnUse()
+    {
+        base.OnUse();
 
-		usingJournal = true;
-		playerInput.SwitchCurrentActionMap("Journal");
+        usingJournal = true;
+        playerInput.SwitchCurrentActionMap("Journal");
         virtualCamera.enabled = true;
-		LockCursor.PushLockState(CursorLockMode.None);
-	}
+        LockCursor.PushLockState(CursorLockMode.None);
+    }
 
-	public override void OnStopUsingItem()
-	{
-		OnExitJournal(new());
-		exitAction.action.performed -= OnExitJournal;
-		base.OnStopUsingItem();
-	}
+    public override void OnStopUsingItem()
+    {
+        OnExitJournal();
+        exitAction.action.performed -= StopUsingJournal;
+        base.OnStopUsingItem();
+    }
 
-	void OnExitJournal(CallbackContext ctx)
-	{
-		playerInput.SwitchCurrentActionMap("Gameplay");
+    void StopUsingJournal(CallbackContext ctx)
+    {
+        playerInput.SwitchCurrentActionMap("Gameplay");
 
-		if (usingJournal)
-		{
-			LockCursor.PopLockState();
-		}
+        OnExitJournal();
+    }
 
-		usingJournal = false;
-		virtualCamera.enabled = false;
-	}
+    void OnExitJournal()
+    {
+        if (usingJournal)
+        {
+            LockCursor.PopLockState();
+        }
+
+        usingJournal = false;
+        virtualCamera.enabled = false;
+    }
 }
