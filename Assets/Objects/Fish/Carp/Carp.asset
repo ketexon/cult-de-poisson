@@ -19,3 +19,12 @@ MonoBehaviour:
     type: 3}
   InBucketPrefab: {fileID: 582537697710654690, guid: 7549e94af72b31845b206f97437179a3,
     type: 3}
+  FishInfo:
+    Weight: 5
+    LengthFeet: 0
+    LengthInches: 4
+    FishDepth: 0
+    CatchMethod: Lake
+    CatchDifficulty: 2
+    IsKeyFish: 1
+    Notes: None
