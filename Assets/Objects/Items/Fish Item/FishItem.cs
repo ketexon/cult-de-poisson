@@ -68,11 +68,15 @@ public class FishItem : Item
     
     public void OnPlaceUse(InputAction.CallbackContext ctx)
     {
-        // Create a raycast from the center of the screen
-        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        // Get the front and position vectors of the camera
+        Transform cameraTransform = mainCamera.transform;
+        Vector3 front = cameraTransform.forward;
+        Vector3 position = cameraTransform.position;
+
+        RaycastHit hit;
 
         // If the raycast hits something, place the fish
-        if(Physics.Raycast(ray, out RaycastHit hit, placeMaxDistance))
+        if(Physics.Raycast(position, front, out hit, placeMaxDistance))
         {
             // Get the current position of the in hand
             Quaternion rotation = fishGO.transform.rotation;
@@ -90,5 +94,4 @@ public class FishItem : Item
             Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
         }
     }
-
 }
