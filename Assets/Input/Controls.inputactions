@@ -210,6 +210,39 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "QE",
+                    "id": "99622df0-41fe-44cc-86c7-918b2e500fdb",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleItem",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "ac0304c8-1267-4174-bc32-69328df1e13d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleItem",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "66766119-4b1a-42db-89b3-6b4bd51c143e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleItem",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "7e5377d9-fc8b-4623-8d6d-2292bad93800",
                     "path": "<Keyboard>/g",
@@ -522,7 +555,7 @@
                 {
                     "name": "",
                     "id": "cd8b8295-1597-45d3-90ec-9d1e1da58053",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
