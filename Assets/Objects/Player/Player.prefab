@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
   - component: {fileID: 1349254100363335738}
+  - component: {fileID: 8185658800015492802}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -581,6 +582,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3d2df260-eb19-4e36-ba27-9512c3fb326a
     m_ActionName: Gameplay/CycleItem[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0137aa6b-8079-449a-b942-714415ed9290
+    m_ActionName: Bucket/Point[/Mouse/position,/Touchscreen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f31e202a-244f-40f0-8cea-738db6a12c7b
+    m_ActionName: Bucket/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 979966ae-7c05-433c-92cf-9254a7e0ccac
+    m_ActionName: Bucket/Exit[/Keyboard/escape,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6f95cb1f-d502-4269-a874-a54bd34e1ce7
+    m_ActionName: Bucket/Cycle[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a5dc4b7-8ad3-44a0-9320-807d6df94166
+    m_ActionName: Bucket/Select[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -729,6 +750,18 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+--- !u!114 &8185658800015492802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb0f5d3847f7f4aa115277bc0321d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0
