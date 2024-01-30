@@ -72,7 +72,7 @@ public class FishItem : Item
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
         // If the raycast hits something, place the fish
-        if(Physics.Raycast(ray, out RaycastHit hit, 10.0f))
+        if(Physics.Raycast(ray, out RaycastHit hit, placeMaxDistance))
         {
             // Get the current position of the in hand
             Quaternion rotation = fishGO.transform.rotation;
