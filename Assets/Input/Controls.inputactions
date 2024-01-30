@@ -67,6 +67,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "AltUseItem",
+                    "type": "Button",
+                    "id": "9fc70747-2bfd-423c-8a38-d86331696788",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Temp1",
+                    "type": "Button",
+                    "id": "81b698d2-052b-444e-b1ce-b87fb6e2bd7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -192,37 +210,26 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Button Binding",
-                    "id": "1057a317-3c90-41fc-b02a-0d7ad7382de9",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "7e5377d9-fc8b-4623-8d6d-2292bad93800",
+                    "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CycleItem",
-                    "isComposite": true,
+                    "action": "AltUseItem",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "8796ab73-86ab-4483-8832-7fd3359644ac",
-                    "path": "<Keyboard>/q",
+                    "name": "",
+                    "id": "281d1c8f-2a4d-4dfe-8787-3839d9d80e39",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CycleItem",
+                    "action": "Temp1",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "84de9b97-1834-4e8a-ad24-f20d19c6b78e",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CycleItem",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         },
