@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using Unity.VisualScripting;
 
 public class FishItem : Item
 {
@@ -14,7 +15,6 @@ public class FishItem : Item
     [SerializeField] float placeMaxDistance = 10.0f;
     FishSO fishSO;
     GameObject fishGO;
-    GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
 
     public void SetFish(FishSO fishSO)
@@ -58,7 +58,8 @@ public class FishItem : Item
         inventory.RemoveFish(fishSO);
 
         // Instantiate thrown fish and set its velocity
-        thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
+        GameObject thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
+        thrownFish.tag = "GroundFish";
         thrownFishRigidbody = thrownFish.GetComponent<Rigidbody>(); 
         thrownFishRigidbody.velocity = throwVelocity * front;
 
@@ -78,6 +79,13 @@ public class FishItem : Item
         // If the raycast hits something, place the fish
         if(Physics.Raycast(position, front, out hit, placeMaxDistance))
         {
+            if(hit.collider.tag == "GroundFish")
+            {
+                FishSO ground = hit.collider.GetComponent<Fish>().FishSO;
+                inventory.AddFish(ground);
+                DestroyImmediate(hit.collider.gameObject);
+                return;
+            }
             // Get the current position of the in hand
             Quaternion rotation = fishGO.transform.rotation;
 
@@ -91,7 +99,8 @@ public class FishItem : Item
             inventory.RemoveFish(fishSO);
 
             // Instantiate the fish at the hit location
-            Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
+            GameObject placedFish = Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
+            placedFish.tag = "GroundFish";
         }
     }
 }
