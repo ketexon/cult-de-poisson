@@ -25,7 +25,7 @@ public class CommandPromptEditorUtil
         System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
         {
             WorkingDirectory = directoryPath,
-            FileName = "cmd.exe",
+            FileName = "powershell.exe",
         });
 #else
         Debug.LogError("Cannot open console on your platform: not supported");
