@@ -230,7 +230,10 @@ public class Bucket : Item
 
     void StopUsingBucket()
     {
-        playerInput.SwitchCurrentActionMap("Gameplay");
+        if(playerInput.currentActionMap.name != "Gameplay")
+        {
+            playerInput.SwitchCurrentActionMap("Gameplay");
+        }
 
         virtualCamera.enabled = false;
         InputUI.Instance.SetCrosshairVisible(true);
