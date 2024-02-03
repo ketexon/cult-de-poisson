@@ -93,4 +93,9 @@ public class PlayerInventorySO : SavableSO
     {
         Fish.Remove(fish);
     }
+
+    public bool HasFish(FishSO fish)
+    {
+        return Fish.Contains(fish);
+    }
 }

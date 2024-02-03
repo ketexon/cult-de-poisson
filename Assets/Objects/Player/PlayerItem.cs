@@ -103,6 +103,11 @@ public class PlayerItem : MonoBehaviour
         {
             return;
         }
+        CycleItem((int)ctx.ReadValue<float>());
+    }
+
+    public void CycleItem(int direction)
+    {
         int newItemIndex;
         if (IsTemporaryItem)
         {
@@ -110,8 +115,7 @@ public class PlayerItem : MonoBehaviour
         }
         else
         {
-            float v = ctx.ReadValue<float>();
-            newItemIndex = (Math.Sign(v) + EnabledItemIndex + items.Count) % items.Count;
+            newItemIndex = (Math.Sign(direction) + EnabledItemIndex + items.Count) % items.Count;
         }
 
         EnableItem(newItemIndex);

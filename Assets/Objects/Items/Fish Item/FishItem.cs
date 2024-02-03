@@ -41,6 +41,11 @@ public class FishItem : Item
 
     public void OnAltUse(InputAction.CallbackContext ctx)
     {
+        if(!inventory.HasFish(fishSO))
+        {
+            return;
+        }
+
         // Get the camera's front vector and make it a unit vector
         Vector3 front = mainCamera.transform.forward;
         front.Normalize();
@@ -58,13 +63,16 @@ public class FishItem : Item
         inventory.RemoveFish(fishSO);
 
         // Instantiate thrown fish and set its velocity
-        GameObject thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
-        thrownFish.tag = "GroundFish";
-        thrownFishRigidbody = thrownFish.GetComponent<Rigidbody>(); 
+        fishGO = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
+        Fish fish = fishGO.GetComponent<Fish>();
+        fish.InitializeOnGround();
+        fishGO.tag = "GroundFish";
+        thrownFishRigidbody = fishGO.GetComponent<Rigidbody>(); 
         thrownFishRigidbody.velocity = throwVelocity * front;
 
         // Give the thrown fish angular velocity
         thrownFishRigidbody.angularVelocity = throwAngularVelocity * front;
+        playerItem.CycleItem(1);
     }
     
     public void OnPlaceUse(InputAction.CallbackContext ctx)
@@ -76,9 +84,15 @@ public class FishItem : Item
 
         RaycastHit hit;
 
+        if(fishGO == null)
+        {
+            return;
+        }
+
         // If the raycast hits something, place the fish
         if(Physics.Raycast(position, front, out hit, placeMaxDistance))
         {
+            // If the fish is placed on the ground, add it to the inventory
             if(hit.collider.tag == "GroundFish")
             {
                 FishSO ground = hit.collider.GetComponent<Fish>().FishSO;
@@ -86,21 +100,30 @@ public class FishItem : Item
                 DestroyImmediate(hit.collider.gameObject);
                 return;
             }
-            // Get the current position of the in hand
-            Quaternion rotation = fishGO.transform.rotation;
 
-            // Destroy the in hand fish
-            if(fishGO)
+            // If we are trying to place the fish on the ground, place it
+            if(inventory.HasFish(fishSO))
             {
-                Destroy(fishGO);
+                Quaternion rotation = fishGO.transform.rotation;
+
+                // Destroy the in hand fish
+                if(fishGO)
+                {
+                    Destroy(fishGO);
+                }
+
+                // Remove the fish from the inventory
+                inventory.RemoveFish(fishSO);
+
+                // Instantiate the fish at the hit location
+                fishGO = Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
+                fishGO.tag = "GroundFish";
+                Fish fish = fishGO.GetComponent<Fish>();
+                fish.InitializeOnGround();
+                playerItem.CycleItem(1);
+                return;
             }
-
-            // Remove the fish from the inventory
-            inventory.RemoveFish(fishSO);
-
-            // Instantiate the fish at the hit location
-            GameObject placedFish = Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
-            placedFish.tag = "GroundFish";
         }
     }
 }
+

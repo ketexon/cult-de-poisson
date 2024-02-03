@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FishSO: {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
+  PlayerInventorySO: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
+  globalParametersSO: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   accelerationCycleFrequency: 3
   accelerationSubCycleFrequency: 3
   horizontalAcceleration: 30

@@ -56,6 +56,19 @@ public class Bucket : Item
     {
         base.Initialize(initParams);
 
+        InitializeFish();
+
+        pointAction.action.performed += OnPoint;
+        clickAction.action.performed += OnClick;
+        exitAction.action.performed += OnExitBucket;
+
+        cycleFishAction.action.performed += OnCycleFish;
+        selectFishAction.action.performed += OnSelectFish;
+        inventory.FishAddedEvent += OnFishAdded;
+    }
+
+    public void InitializeFish()
+    {
         // assign fish to each slot in the bucket
         for(int i = 0; i < fishSpawnContainer.childCount; i++)
         {
@@ -82,14 +95,8 @@ public class Bucket : Item
             var bucketFish = fish.gameObject.AddComponent<BucketFish>();
             spawnedFish.Add(bucketFish);
         }
-
-        pointAction.action.performed += OnPoint;
-        clickAction.action.performed += OnClick;
-        exitAction.action.performed += OnExitBucket;
-
-        cycleFishAction.action.performed += OnCycleFish;
-        selectFishAction.action.performed += OnSelectFish;
     }
+
     public override void OnStopUsingItem()
     {
         StopUsingBucket();
@@ -100,6 +107,7 @@ public class Bucket : Item
 
         cycleFishAction.action.performed -= OnCycleFish;
         selectFishAction.action.performed -= OnSelectFish;
+        inventory.FishAddedEvent -= OnFishAdded;
 
         // Destroy all fish
         foreach (BucketFish fish in spawnedFish)
@@ -263,5 +271,20 @@ public class Bucket : Item
             spawnedFish[selectedFish.Value].TargetLocalPos = fishSelectedTransform.localPosition;
             spawnedFish[selectedFish.Value].TargetLocalRotation = fishSelectedTransform.localRotation;
         }
+    }
+
+    public void OnFishAdded(FishSO fish)
+    {
+        UpdateBucketFish();
+    }
+
+    public void UpdateBucketFish()
+    {
+        foreach (var fish in spawnedFish)
+        {
+            Destroy(fish.gameObject);
+        }
+        spawnedFish.Clear();
+        InitializeFish();
     }
 }
