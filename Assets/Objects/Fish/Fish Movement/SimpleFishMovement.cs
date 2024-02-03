@@ -4,73 +4,32 @@ using UnityEngine;
 
 public class SimpleFishMovement : FishMovement
 {
-    [SerializeField] float minWaitTime = 1.0f;
-    [SerializeField] float maxWaitTime = 3.0f;
-    [SerializeField] float speed = 1.0f;
-    [SerializeField] float rotateSpeed = 1.0f;
+    [SerializeField] float idleSpeed = 2.0f;
+    [SerializeField] float maxRotation = 2.0f;
+    [SerializeField] float radiusOfCurvatureMult = 1.0f;
 
-    enum State
-    {
-        Waiting,
-        Swimming
-    }
+    Vector3 velocity;
 
-    State state = State.Waiting;
-    Vector3 targetPoint;
-    Quaternion targetRotation;
+    float lastTailRotation;
 
-    float endWaitTime;
+    float tailRotation = 0;
+    float tailRotationalVelocity = 0;
+    float tailRotationalAcceleration = 0;
 
-    Vector3 startSwimPos;
-    float startSwimTime;
-    float endSwimTime;
+    float actualTailRotationalVelocity => 
+        tailRotationalVelocity * (1 - Mathf.Abs(tailRotation) / maxRotation);
+
+
 
     void Start()
     {
-        endWaitTime = Time.time;
     }
 
     void Update()
     {
-        if (state == State.Waiting && Time.time >= endWaitTime)
-        {
-            StartSwimming();
-        }
-        if(state == State.Swimming)
-        {
-            if(Time.time >= endSwimTime)
-            {
-                StartWaiting();
-            }
-            else
-            {
-                var t = (Time.time - startSwimTime) / (endSwimTime - startSwimTime);
-                transform.position = Vector3.Lerp(startSwimPos, targetPoint, t);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            }
-        }
-    }
+        tailRotation += actualTailRotationalVelocity * Time.deltaTime;
+        tailRotation = Mathf.Clamp(tailRotation, -maxRotation, maxRotation);
 
-    void StartSwimming()
-    {
-        state = State.Swimming;
 
-        startSwimPos = transform.position;
-        startSwimTime = Time.time;
-
-        targetPoint = FishZone.GetRandomPoint();
-        targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
-
-        endSwimTime = Time.time + (targetPoint - startSwimPos).magnitude / speed;
-    }
-
-    void StartWaiting()
-    {
-        transform.position = targetPoint;
-        transform.rotation = targetRotation;
-
-        state = State.Waiting;
-
-        endWaitTime = Time.time + Random.Range(minWaitTime, maxWaitTime);
     }
 }
