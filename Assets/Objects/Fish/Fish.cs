@@ -48,4 +48,6 @@ public class Fish : MonoBehaviour
             fishMovement.FishZone = fishZone;
         }
     }
+
+    public Bounds Bounds => boxCollider.bounds;
 }

@@ -142,7 +142,7 @@ public class FishZone : MonoBehaviour
     /// <returns></returns>
     public bool Contains(Vector3 point)
     {
-        var localPoint = point - transform.position;
+        var localPoint = point;
         foreach(var boxCollider in boxColliders)
         {
             if (boxCollider.bounds.Contains(localPoint))
