@@ -12,13 +12,11 @@ public class Bucket : Item
     [SerializeField] PlayerInventorySO inventory;
     [SerializeField] ItemSO fishItem;
     [SerializeField] float maxRaycastDistance = 5.0f;
-
     [SerializeField] InputActionReference pointAction;
     [SerializeField] InputActionReference cycleFishAction;
     [SerializeField] InputActionReference selectFishAction;
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference exitAction;
-
     [SerializeField] Transform fishSelectedTransform;
     [SerializeField] Transform fishSpawnContainer;
 

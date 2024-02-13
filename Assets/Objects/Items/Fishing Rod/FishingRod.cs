@@ -22,7 +22,6 @@ public class FishingRod : Item
     /// </summary>
     [SerializeField] Transform rodTipTransform;
     
-    
     [SerializeField] GameObject hookPrefab;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
@@ -36,10 +35,8 @@ public class FishingRod : Item
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference reelAction;
     [SerializeField] InputActionReference exitAction;
-
     GameObject hookGO;
     FishingLine fishingLine;
-
     FishingState fishingState = FishingState.Uncast;
 
     /// <summary>
@@ -154,7 +151,6 @@ public class FishingRod : Item
         base.OnStopUsingItem();
         ResetFishing();
     }
-
 
     public void OnFishMove(InputAction.CallbackContext ctx)
     {

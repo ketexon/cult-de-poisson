@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 565233922410181394}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.25, z: 1}
+  m_LocalPosition: {x: 1.469, y: 0.25, z: 1}
   m_LocalScale: {x: 0.1, y: 2, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 7773518039701886064}
   - component: {fileID: 5872197296140091527}
   - component: {fileID: 8996253360725176635}
-  - component: {fileID: 6002242348139145675}
+  - component: {fileID: 6051481200874782843}
   m_Layer: 0
   m_Name: TackleBox
   m_TagString: Untagged
@@ -256,7 +256,7 @@ Transform:
   m_GameObject: {fileID: 5181037198814782986}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.79, y: -0.581, z: 0}
+  m_LocalPosition: {x: -21.51, y: -0.581, z: 0}
   m_LocalScale: {x: 8.257357, y: 0.4128678, z: 8.257357}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -312,7 +312,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6002242348139145675
+--- !u!65 &6051481200874782843
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,4 +332,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.00000011920929, z: 0}
