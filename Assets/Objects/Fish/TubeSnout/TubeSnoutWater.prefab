@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7065934463964850046}
   - component: {fileID: -624479839853968388}
   - component: {fileID: 7205110707389097849}
+  - component: {fileID: -7549936155770739509}
   m_Layer: 0
   m_Name: TubeSnoutWater
   m_TagString: Untagged
@@ -95,11 +96,29 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-7549936155770739509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7357566fc6bd9404cb94482f97d1bb6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishVisionPrefab: {fileID: 8707592453951195884, guid: 268206c8877278b4388f6f122c8b2805,
+    type: 3}
+  visionSize: 1
+  idleSpeed: 2
+  maxRotation: 2
+  collisionDistance: 1
 --- !u!1001 &4777690079186523124
 PrefabInstance:
   m_ObjectHideFlags: 0

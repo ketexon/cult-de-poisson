@@ -1183,6 +1183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1230435380}
   - component: {fileID: 1230435379}
+  - component: {fileID: 1230435382}
   - component: {fileID: 1230435381}
   m_Layer: 9
   m_Name: FishZone
@@ -1210,7 +1211,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 5, z: 10}
+  m_Size: {x: 10, y: 1.5, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1230435380
 Transform:
@@ -1221,7 +1222,7 @@ Transform:
   m_GameObject: {fileID: 1230435378}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.91, y: -4.67, z: 10.36}
+  m_LocalPosition: {x: 0.03, y: -1.27, z: 13.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1241,6 +1242,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalParams: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   properties: {fileID: 11400000, guid: 949d5b1558f20b2449f7874728fe3026, type: 2}
+--- !u!65 &1230435382
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230435378}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 1.5, z: 8}
+  m_Center: {x: 0, y: -1.42, z: 1.08}
 --- !u!1 &1520844829 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c87874373c579f44081eeab9a0ea1aa7,

@@ -32,7 +32,22 @@ public class Fish : MonoBehaviour
 
     public void InitializeBucket()
     {
-        Destroy(rb);
+        rb.isKinematic = false;
+        rb.detectCollisions = false;
         boxCollider.isTrigger = true;
+        if(TryGetComponent<FishMovement>(out var fishMovement))
+        {
+            Destroy(fishMovement);
+        }
     }
+
+    public void InitializeWater(FishZone fishZone)
+    {
+        if (TryGetComponent<FishMovement>(out var fishMovement))
+        {
+            fishMovement.FishZone = fishZone;
+        }
+    }
+
+    public Bounds Bounds => boxCollider.bounds;
 }
