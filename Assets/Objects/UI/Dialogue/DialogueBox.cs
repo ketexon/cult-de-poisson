@@ -11,9 +11,14 @@ public class DialogueBox : DialogueViewBase
     Player player;
     float textSpeed = 0.05f;
 
-    void Start()
+    void Awake()
     {
         player = Player.Instance;
+    }
+
+    void OnEnable()
+    {
+        LookAtPlayerImmediate();
     }
 
     void Update()
@@ -21,6 +26,9 @@ public class DialogueBox : DialogueViewBase
         LookAtPlayer();
     }
 
+    /// <summary>
+    /// Does a slight rotation towards the player
+    /// </summary>
     void LookAtPlayer()
     {
         Vector3 playerTarget = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
@@ -31,6 +39,17 @@ public class DialogueBox : DialogueViewBase
         float angle = Mathf.Max(Quaternion.Angle(current, target), 15f);
 
         transform.parent.rotation = Quaternion.RotateTowards(current, target, angle * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Does an immediate rotation towards the player
+    /// </summary>
+    void LookAtPlayerImmediate()
+    {
+        Vector3 playerTarget = new(player.transform.position.x, transform.position.y, player.transform.position.z);
+
+        Quaternion target = Quaternion.LookRotation(playerTarget - transform.position);
+        transform.parent.rotation = target;
     }
 
     IEnumerator RunLineInternal(string text, Action onDialogueLineFinished)

@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Player : SingletonBehaviour<Player>
 {
+    public DialogueManager DialogueManager;
     public PlayerInput Input;
     public PlayerItem Item;
     public PlayerInteract Interact;
