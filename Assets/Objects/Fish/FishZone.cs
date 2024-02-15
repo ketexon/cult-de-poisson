@@ -9,7 +9,7 @@ public class FishZone : MonoBehaviour
     [SerializeField] FishZoneSO properties;
 
 
-    FishingHook hook = null;
+    FishingHookV2 hook = null;
     Coroutine catchFishCoroutine = null;
 
     /// <summary>
@@ -33,7 +33,7 @@ public class FishZone : MonoBehaviour
     /// This can be used to, for example, check if the hook is baited
     /// and only catch the fish if there is bait.
     /// </summary>
-    bool ValidateHook(FishingHook hook)
+    bool ValidateHook(FishingHookV2 hook)
     {
         return true;
     }
@@ -72,7 +72,7 @@ public class FishZone : MonoBehaviour
         // if the hook enters this fish zone
         if(globalParams.HookLayerMask.Contains(other.gameObject.layer))
         {
-            FishingHook hook = other.GetComponent<FishingHook>();
+            FishingHookV2 hook = other.GetComponent<FishingHookV2>();
             if (ValidateHook(hook))
             {
                 this.hook = hook;
@@ -88,7 +88,7 @@ public class FishZone : MonoBehaviour
         var otherLayerMask = 1 << other.gameObject.layer;
         if (globalParams.HookLayerMask.Contains(other.gameObject.layer))
         {
-            FishingHook hook = other.GetComponent<FishingHook>();
+            FishingHookV2 hook = other.GetComponent<FishingHookV2>();
 
             // remove the hook and stop the catch fish coroutine
             if (this.hook == hook)

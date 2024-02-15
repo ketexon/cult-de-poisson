@@ -17,7 +17,7 @@ public class SimpleFishMovement : FishMovement
     Vector3 targetDirection;
     float speed;
 
-    FishingHook hook;
+    FishingHookV2 hook;
 
     void Awake()
     {
@@ -45,7 +45,7 @@ public class SimpleFishMovement : FishMovement
         }
     }
 
-    void OnHookVisible(FishingHook hook)
+    void OnHookVisible(FishingHookV2 hook)
     {
         this.hook = hook;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(LineRenderer))]
-public class FishingLine : MonoBehaviour
+public class FishingLineV2 : MonoBehaviour
 {
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] Transform tip;

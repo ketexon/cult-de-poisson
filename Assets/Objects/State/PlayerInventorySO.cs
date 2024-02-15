@@ -72,6 +72,7 @@ public class PlayerInventorySO : SavableSO
     public override string Key => "inventory";
 
     [SerializeField] public List<FishSO> StartingFish = new();
+    [SerializeField] public List<FishSO> StartingRods = new();
 
     [System.NonSerialized]
     public List<FishSO> Fish;

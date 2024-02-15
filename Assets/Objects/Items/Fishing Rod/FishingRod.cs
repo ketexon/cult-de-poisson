@@ -38,7 +38,7 @@ public class FishingRod : Item
     [SerializeField] InputActionReference exitAction;
 
     GameObject hookGO;
-    FishingLine fishingLine;
+    FishingLineV2 fishingLine;
 
     FishingState fishingState = FishingState.Uncast;
 
@@ -226,7 +226,7 @@ public class FishingRod : Item
     void Cast()
     {
         hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
-        var hook = hookGO.GetComponent<FishingHook>();
+        var hook = hookGO.GetComponent<FishingHookV2>();
 
         hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
         hook.PlayerFish = this;
@@ -234,7 +234,7 @@ public class FishingRod : Item
         hook.FishHookEvent += OnHookFish;
 
         var fishingLineGO = Instantiate(fishingLinePrefab);
-        fishingLine = fishingLineGO.GetComponent<FishingLine>();
+        fishingLine = fishingLineGO.GetComponent<FishingLineV2>();
 
         fishingLine.OnCast(hook, rodTipTransform, rodTipVelocity);
 
@@ -265,7 +265,7 @@ public class FishingRod : Item
     }
 
     /// <summary>
-    /// Called by <see cref="FishingHook"/> to set the <see cref="hookInRange"/> member.
+    /// Called by <see cref="FishingHookV2"/> to set the <see cref="hookInRange"/> member.
     /// </summary>
     /// <param name="inRange"></param>
     public void SetHookInRange(bool inRange)
