@@ -38,7 +38,7 @@ public class FishingRod : Item
     [SerializeField] InputActionReference exitAction;
 
     GameObject hookGO;
-    FishingLineV2 fishingLine;
+    FishingLine fishingLine;
 
     FishingState fishingState = FishingState.Uncast;
 
@@ -226,7 +226,7 @@ public class FishingRod : Item
     void Cast()
     {
         hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
-        var hook = hookGO.GetComponent<FishingHookV2>();
+        var hook = hookGO.GetComponent<FishingHook>();
 
         hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
         hook.PlayerFish = this;
@@ -234,7 +234,7 @@ public class FishingRod : Item
         hook.FishHookEvent += OnHookFish;
 
         var fishingLineGO = Instantiate(fishingLinePrefab);
-        fishingLine = fishingLineGO.GetComponent<FishingLineV2>();
+        fishingLine = fishingLineGO.GetComponent<FishingLine>();
 
         fishingLine.OnCast(hook, rodTipTransform, rodTipVelocity);
 

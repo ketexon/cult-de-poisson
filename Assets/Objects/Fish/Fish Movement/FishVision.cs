@@ -7,7 +7,7 @@ public class FishVision : MonoBehaviour
 {
     new SphereCollider collider;
 
-    public System.Action<FishingHookV2> HookVisibleEvent;
+    public System.Action<FishingHook> HookVisibleEvent;
     public System.Action HookInvisibleEvent;
 
     void Awake()
@@ -22,7 +22,7 @@ public class FishVision : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        HookVisibleEvent?.Invoke(other.GetComponent<FishingHookV2>());
+        HookVisibleEvent?.Invoke(other.GetComponent<FishingHook>());
     }
 
     void OnTriggerExit(Collider other)

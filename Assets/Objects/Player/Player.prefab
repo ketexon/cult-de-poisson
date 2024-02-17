@@ -710,7 +710,7 @@ MonoBehaviour:
   itemTransform: {fileID: 8616573123594162493}
   rotateSpeed: 5
   startingItems:
-  - {fileID: 11400000, guid: 1f6f4f7c9b40ba347b0b45434aa0a965, type: 2}
+  - {fileID: 11400000, guid: 0cb8874548aedac418b99e7746fe1938, type: 2}
   - {fileID: 11400000, guid: 1ec4f379f33f4e7448412f1b042a3151, type: 2}
   startingItemIndex: 0
   saveState: {fileID: 11400000, guid: 7b8994e2d97575d42a5b075aae33ef95, type: 2}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a70a0f68096847f4da331a3be8124772, type: 3}
-  m_Name: Fishing Rod
+  m_Name: Fishing Mode
   m_EditorClassIdentifier: 
   Name: Fishing Rod
-  Prefab: {fileID: 565233922410181394, guid: e3c86562f757c6640b740a19fbb5278b, type: 3}
+  Prefab: {fileID: 8519303036256168987, guid: 1e989189663875f4f82f76873b6e635b, type: 3}

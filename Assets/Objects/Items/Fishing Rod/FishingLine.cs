@@ -12,10 +12,10 @@ public class FishingLine : MonoBehaviour
     [SerializeField] GameObject defaultBobPrefab;
 
     GameObject bobPrefab = null;
-    FishingHookV2 hook = null;
+    FishingHook hook = null;
 
     GameObject bobGO;
-    FishingBobV2 bob;
+    FishingBob bob;
 
     LineRenderer lineRenderer;
 
@@ -47,7 +47,7 @@ public class FishingLine : MonoBehaviour
         }
     }
 
-    public void OnCast(FishingHookV2 hook, Transform tip, Vector3 rodTipVelocity)
+    public void OnCast(FishingHook hook, Transform tip, Vector3 rodTipVelocity)
     {
         this.tip = tip;
         points[0] = points[1] = tip.position;
@@ -139,7 +139,7 @@ public class FishingLine : MonoBehaviour
         bobRB.velocity = rodTipVelocity;
         hook.AttachToRB(bobRB);
 
-        bob = bobGO.GetComponent<FishingBobV2>();
+        bob = bobGO.GetComponent<FishingBob>();
         bob.HitWaterEvent += OnBobHitWater;
 
         lineRenderer.positionCount = 3;
