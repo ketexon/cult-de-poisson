@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1241044267180831678}
   - component: {fileID: 3281116494833135188}
   - component: {fileID: -4577288862426192580}
+  - component: {fileID: -574308956670406970}
+  - component: {fileID: 589835350538209767}
   - component: {fileID: 7065934463964850046}
   - component: {fileID: -7640563538418567719}
-  - component: {fileID: -574308956670406970}
   m_Layer: 0
   m_Name: CarpInWater
   m_TagString: Untagged
@@ -103,6 +104,42 @@ MonoBehaviour:
   accelerationCycleFrequency: 3
   horizontalAcceleration: 30
   forwardAcceleration: 30
+--- !u!114 &-574308956670406970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7357566fc6bd9404cb94482f97d1bb6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
+  fishVisionPrefab: {fileID: 8707592453951195884, guid: 268206c8877278b4388f6f122c8b2805,
+    type: 3}
+  visionSize: 3
+  idleSpeed: 2
+  chaseHookSpeed: 4
+  maxRotation: 2
+  collisionDistance: 1
+--- !u!114 &589835350538209767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b45b251ada4484db65d474d2629ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTugInterval: 2
+  maxTugInterval: 3
+  minTugStrength: 1
+  maxTugStrength: 4
 --- !u!65 &7065934463964850046
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -151,20 +188,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-574308956670406970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582537697710654690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7357566fc6bd9404cb94482f97d1bb6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fishVisionPrefab: {fileID: 8707592453951195884, guid: 268206c8877278b4388f6f122c8b2805,
-    type: 3}
-  idleSpeed: 2
-  maxRotation: 2
-  collisionDistance: 1

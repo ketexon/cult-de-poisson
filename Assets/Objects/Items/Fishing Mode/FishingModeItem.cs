@@ -58,7 +58,10 @@ class FishingModeItem : Item
         if (!usingRod) return;
 
         usingRod = false;
-        playerInput.SwitchCurrentActionMap("Gameplay");
+        if(playerInput.currentActionMap.name == "FishingV2")
+        {
+            playerInput.SwitchCurrentActionMap("Gameplay");
+        }
     }
 
     void OnExit(InputAction.CallbackContext ctx)

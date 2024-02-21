@@ -225,7 +225,7 @@ public class Bucket : Item
 
     void OnExitBucket(InputAction.CallbackContext ctx)
     {
-        StopUsingBucket();
+        //StopUsingBucket();
     }
 
     void StopUsingBucket()
