@@ -176,9 +176,11 @@ MonoBehaviour:
   itemSO: {fileID: 11400000, guid: 0cb8874548aedac418b99e7746fe1938, type: 2}
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   playerInventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
-  navigateAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
+  castAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
-  castAction: {fileID: 5625327622422706064, guid: 74ba8a3a9aaed2040a694812328659e2,
+  navigateAction: {fileID: 5613400123319863347, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  lookAction: {fileID: -796715118409362209, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   exitAction: {fileID: 5625327622422706064, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}

@@ -19,6 +19,7 @@ public class DeepSeaRod : FishingRodV2
         Default,
         FishTug,
         PlayerTug,
+        FishTugSnap,
     }
 
     [SerializeField] GameObject tip;
@@ -60,7 +61,7 @@ public class DeepSeaRod : FishingRodV2
     /// <summary>
     /// Called when the cast key is used
     /// </summary>
-    protected override void OnCast()
+    public override void Cast()
     {
         if (state != State.Uncast) return;
         state = State.Casting;
@@ -116,6 +117,9 @@ public class DeepSeaRod : FishingRodV2
 
     void OnFishTug(float strength)
     {
+        // reset playertug trigger just in case
+        animator.ResetTrigger("PlayerTug");
+
         hookedState = HookedState.FishTug;
         animator.SetFloat("FishTugSpeedMult", 1 + Mathf.Log10(strength + 1));
         animator.SetTrigger("FishTug");
@@ -141,7 +145,7 @@ public class DeepSeaRod : FishingRodV2
         // if the player has not tugged back
         if(hookedState == HookedState.FishTug)
         {
-
+            hookedState = HookedState.FishTugSnap;
         }
     }
 }

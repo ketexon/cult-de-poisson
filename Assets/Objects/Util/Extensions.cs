@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public static class Extensions
 {
@@ -60,4 +61,22 @@ public static class Extensions
         (max - min).y * UnityEngine.Random.value,
         (max - min).z * UnityEngine.Random.value
     ) + min;
+
+    public static float NormalizeAngle360(float angle) => (angle % 360 + 360) % 360;
+    public static float NormalizeAngle180(float angle) => NormalizeAngle360(angle + 180) - 180;
+
+    static public float ClampAngle(float angle, float min, float max)
+    {
+        float minNormalized = NormalizeAngle180(min - angle);
+        float maxNormalized = NormalizeAngle180(max - angle);
+
+        if (minNormalized <= 0 && maxNormalized >= 0)
+        {
+            return angle;
+        }
+        if (Mathf.Abs(minNormalized) <= Mathf.Abs(maxNormalized))
+            return min;
+        return max;
+    }
+
 }
