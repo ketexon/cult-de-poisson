@@ -604,6 +604,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Reel",
+                    "type": "Value",
+                    "id": "95432716-5e9b-4aa3-b2af-de6cd581676c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -624,7 +633,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -635,7 +644,7 @@
                     "path": "<AndroidJoystick>/stick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -646,7 +655,7 @@
                     "path": "<NimbusGamepadHid>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -657,7 +666,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -668,7 +677,7 @@
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "Cast",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -692,6 +701,17 @@
                     "processors": "",
                     "groups": "KBM",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "620591bb-25cd-4174-825d-2076c520dadc",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Reel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

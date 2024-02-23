@@ -1,12 +1,85 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Fish))]
+/// <summary>
+/// Base class for behaviors for fish while they are hooked.
+/// Disabled by default, but when the fish collides with a hook, it is enabled.
+/// Currently, the only thing the fish can do is tug with a certain force, which currently just plays an animation
+/// on the fishing rod and adds tension.
+/// </summary>
+[RequireComponent(typeof(Fish), typeof(FishMovement))]
 public class HookedFish : MonoBehaviour
 {
+    [SerializeField] GlobalParametersSO parameters;
+
+    Rigidbody rb;
+
     public System.Action<float> TugEvent;
+    public System.Action OutOfWaterEvent;
+
+    FishMovement fishMovement;
+
+    public System.Action UnhookEvent;
+
+    // whether the fish is in water
+    // used to prevent tugging while not in water.
+    bool inWater = false;
+
+    virtual protected void Awake()
+    {
+        // just in case its not disabled in editor, disable here
+        enabled = false;
+
+        rb = GetComponent<Rigidbody>();
+    }
 
     protected void Tug(float strength)
     {
-        TugEvent?.Invoke(strength);
+        if (inWater)
+        {
+            TugEvent?.Invoke(strength);
+        }
+    }
+
+    // check if the fish enters water
+    void OnTriggerEnter(Collider other)
+    {
+        if (!inWater && parameters.WaterLayerMask.Contains(other.gameObject.layer))
+        {
+            Debug.Log("ENTER");
+            inWater = true;
+        }
+    }
+
+    // check if the fish leaves water
+    void OnTriggerExit(Collider other)
+    {
+        
+        if(inWater && parameters.WaterLayerMask.Contains(other.gameObject.layer))
+        {
+            Debug.Log(other.gameObject);
+            inWater = false;
+            if (enabled)
+            {
+                OnOutOfWater();
+            }
+        }
+    }
+
+    void OnOutOfWater()
+    {
+        OutOfWaterEvent?.Invoke();
+
+        rb.constraints = RigidbodyConstraints.None;
+    }
+
+    void OnEnable()
+    {
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.rotation = Quaternion.identity;
+    }
+
+    void OnDisable()
+    {
+        rb.constraints = RigidbodyConstraints.None;
     }
 }

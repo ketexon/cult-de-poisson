@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b45b251ada4484db65d474d2629ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   minTugInterval: 2
   maxTugInterval: 3
   minTugStrength: 1

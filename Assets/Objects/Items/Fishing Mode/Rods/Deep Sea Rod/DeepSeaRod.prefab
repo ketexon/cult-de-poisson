@@ -48,13 +48,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5f3ad438b15484a828bfc9dc4e3cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
-    type: 3}
   tugAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+  reelAction: {fileID: -2954641729320732605, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  interactAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
   hook: {fileID: 2093584310836886442}
+  reelSensitivity: 0.1
+  maxReelPerSecond: 1
   tip: {fileID: 3720365078389726662}
-  lineLength: 5
+  maxLineLength: 5
+  tensionHalfLife: 8
+  maxTension: 5
+  lineReturnDuration: 1
 --- !u!95 &2433253259262806422
 Animator:
   serializedVersion: 5
@@ -127,7 +134,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.0030797124
+        value: 0.010770142
         inSlope: 0
         outSlope: 0
         tangentMode: 0

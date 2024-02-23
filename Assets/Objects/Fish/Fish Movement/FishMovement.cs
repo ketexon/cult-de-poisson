@@ -15,6 +15,18 @@ public class FishMovement : MonoBehaviour
     virtual protected void Awake()
     {
         hookedFish = GetComponent<HookedFish>();
+        hookedFish.UnhookEvent += Unhook;
+    }
+
+    virtual protected void OnDestroy()
+    {
+        hookedFish.UnhookEvent -= Unhook;
+    }
+
+    virtual public void Unhook()
+    {
+        enabled = true;
+        hookedFish.enabled = false;
     }
 
     void OnCollisionEnter(Collision collision)

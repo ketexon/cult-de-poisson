@@ -8,7 +8,14 @@ public class Fish : MonoBehaviour
     protected Rigidbody rb;
     protected BoxCollider boxCollider;
 
+    [System.NonSerialized]
+    public ConfigurableJoint Joint;
+
     float _startTime;
+
+    public FishMovement FishMovement { get; protected set; }
+
+    public HookedFish HookedFish { get; protected set; }
 
     protected float Time => UnityEngine.Time.time - _startTime;
 
@@ -18,6 +25,11 @@ public class Fish : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+
+        FishMovement = GetComponent<FishMovement>();
+        HookedFish = GetComponent<HookedFish>();
+
+        Joint = GetComponent<ConfigurableJoint>();
     }
 
     /// <summary>
@@ -37,7 +49,7 @@ public class Fish : MonoBehaviour
         boxCollider.isTrigger = true;
         if(TryGetComponent<FishMovement>(out var fishMovement))
         {
-            Destroy(fishMovement);
+            fishMovement.enabled = false;
         }
     }
 
@@ -47,6 +59,24 @@ public class Fish : MonoBehaviour
         {
             fishMovement.FishZone = fishZone;
         }
+    }
+
+    public void AttachTo(Rigidbody rb)
+    {
+        Joint.connectedBody = rb;
+
+        Joint.xMotion = ConfigurableJointMotion.Locked;
+        Joint.yMotion = ConfigurableJointMotion.Locked;
+        Joint.zMotion = ConfigurableJointMotion.Locked;
+    }
+
+    public void Detach()
+    {
+        Joint.connectedBody = null;
+
+        Joint.xMotion = ConfigurableJointMotion.Free;
+        Joint.yMotion = ConfigurableJointMotion.Free;
+        Joint.zMotion = ConfigurableJointMotion.Free;
     }
 
     public Bounds Bounds => boxCollider.bounds;

@@ -14,12 +14,6 @@ public class SimpleHookedFish : HookedFish
 
     Coroutine coro = null;
 
-    void Awake()
-    {
-        // just in case its not disabled in editor, disable here
-        enabled = false;
-    }
-
     void OnEnable()
     {
         coro = StartCoroutine(TugCoroutine());

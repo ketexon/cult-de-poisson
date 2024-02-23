@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-class FishingModeItem : Item
+public class FishingModeItem : Item
 {
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] PlayerInventorySO playerInventory;
@@ -10,6 +10,9 @@ class FishingModeItem : Item
     [SerializeField] InputActionReference navigateAction;
     [SerializeField] InputActionReference lookAction;
     [SerializeField] InputActionReference exitAction;
+    
+    // expose so that FishingRod can use it
+    public PlayerInteract PlayerInteract => playerInteract;
 
     static FishingRodSO lastUsedFishingRod = null;
 
@@ -112,5 +115,15 @@ class FishingModeItem : Item
 
         var fishingRodGO = Instantiate(fishingRodSO.Prefab.gameObject, transform);
         fishingRod = fishingRodGO.GetComponent<FishingRodV2>();
+        fishingRod.FishingModeItem = this;
+    }
+
+    public void CollectFish(Fish fish)
+    {
+        var fishSO = fish.FishSO;
+        playerInventory.AddFish(fishSO);
+
+        Destroy(fish.gameObject);
+        fishingRod.ResetFishing();
     }
 }

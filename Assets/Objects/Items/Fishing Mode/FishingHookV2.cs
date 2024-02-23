@@ -12,10 +12,12 @@ public class FishingHookV2 : MonoBehaviour
 
     public System.Action<Fish> OnHook;
 
+    new Collider collider;
     Rigidbody rb;
     float drag;
 
     Fish fish;
+    HookedFish hookedFish;
 
     void Reset()
     {
@@ -25,14 +27,43 @@ public class FishingHookV2 : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
         drag = rb.drag;
 
         OnHook += OnHookInternal;
     }
 
+    void OnDestroy()
+    {
+        if (hookedFish)
+        {
+            hookedFish.UnhookEvent -= Unhook;
+        }
+    }
+
     void OnHookInternal(Fish fish)
     {
         this.fish = fish;
+        hookedFish = fish.GetComponent<HookedFish>();
+
+        fish.AttachTo(rb);
+
+        collider.enabled = false;
+        // since we disable the collider, we don't get any
+        // more OnTrigger_ updates, so we should reset the
+        // drag here
+        rb.drag = drag;
+
+        hookedFish.UnhookEvent += Unhook;
+    }
+
+    void Unhook()
+    {
+        hookedFish.UnhookEvent -= Unhook;
+
+        fish.Detach();
+
+        ResetHook();
     }
 
     void OnTriggerEnter(Collider other)
@@ -53,9 +84,27 @@ public class FishingHookV2 : MonoBehaviour
 
     void Update()
     {
-        if (fish)
-        {
-            fish.transform.position = transform.position;
-        }
+        //if (fish)
+        //{
+        //    fish.transform.position = transform.position;
+        //}
+    }
+
+    public void Break()
+    {
+        collider.enabled = false;
+    }
+
+    public void Fix()
+    {
+        collider.enabled = true;
+    }
+
+    public void ResetHook()
+    {
+        fish = null;
+        hookedFish = null;
+
+        collider.enabled = true;
     }
 }

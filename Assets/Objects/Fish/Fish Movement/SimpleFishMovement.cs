@@ -44,7 +44,7 @@ public class SimpleFishMovement : FishMovement
         fishVision.HookInvisibleEvent += OnHookInvisible;
     }
 
-    void OnDestroy()
+    override protected void OnDestroy()
     {
         if (fishVision)
         {
@@ -61,6 +61,14 @@ public class SimpleFishMovement : FishMovement
 
     void OnHookInvisible()
     {
+        hook = null;
+        speed = idleSpeed;
+    }
+
+    public override void Unhook()
+    {
+        base.Unhook();
+
         hook = null;
         speed = idleSpeed;
     }
@@ -96,13 +104,9 @@ public class SimpleFishMovement : FishMovement
         {
             fishVision.enabled = true;
         }
-        if (rb)
-        {
-            rb.isKinematic = false;
-        }
         if (collider)
         {
-            collider.enabled = true;
+            //collider.enabled = true;
         }
     }
 
@@ -116,11 +120,9 @@ public class SimpleFishMovement : FishMovement
         }
         if (rb)
         {
-            rb.isKinematic = true;
-        }
-        if (collider)
-        {
-            collider.enabled = false;
+            rb.rotation = Quaternion.identity;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            //rb.isKinematic = true;
         }
     }
 
@@ -145,5 +147,24 @@ public class SimpleFishMovement : FishMovement
         actualDirection = Vector3.Lerp(actualDirection, targetDirection, Time.deltaTime);
         transform.rotation = Quaternion.LookRotation(actualDirection, Vector3.up);
         rb.velocity = actualDirection * speed;
+    }
+
+    // remove gravity if fish in water
+    void OnTriggerEnter(Collider other)
+    {
+        if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
+        {
+            rb.useGravity = false;
+        }
+    }
+
+    // add gravity if fish leaves water
+    void OnTriggerExit(Collider other)
+    {
+
+        if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
+        {
+            rb.useGravity = true;
+        }
     }
 }
