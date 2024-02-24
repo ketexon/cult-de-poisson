@@ -19,3 +19,5 @@ MonoBehaviour:
     type: 3}
   InBucketPrefab: {fileID: 582537697710654690, guid: a2723a24d53ce334bba425a6a1ddde26,
     type: 3}
+  PhysicalPrefab: {fileID: 582537697710654690, guid: a2723a24d53ce334bba425a6a1ddde26,
+    type: 3}

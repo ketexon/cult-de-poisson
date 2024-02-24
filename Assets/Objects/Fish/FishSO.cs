@@ -9,6 +9,7 @@ public class FishSO : ScriptableObject
     public GameObject InWaterPrefab;
     public GameObject InHandPrefab;
     public GameObject InBucketPrefab;
+    public GameObject PhysicalPrefab;
 
     void Reset()
     {
