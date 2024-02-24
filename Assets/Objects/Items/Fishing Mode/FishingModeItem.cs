@@ -10,8 +10,11 @@ public class FishingModeItem : Item
     [SerializeField] InputActionReference navigateAction;
     [SerializeField] InputActionReference lookAction;
     [SerializeField] InputActionReference exitAction;
+
+    [SerializeField] float fishCollectableLineLength;
     
     // expose so that FishingRod can use it
+    public GameObject Player => player;
     public PlayerInteract PlayerInteract => playerInteract;
 
     static FishingRodSO lastUsedFishingRod = null;
@@ -116,6 +119,7 @@ public class FishingModeItem : Item
         var fishingRodGO = Instantiate(fishingRodSO.Prefab.gameObject, transform);
         fishingRod = fishingRodGO.GetComponent<FishingRodV2>();
         fishingRod.FishingModeItem = this;
+        fishingRod.CollectableLineLength = fishCollectableLineLength;
     }
 
     public void CollectFish(Fish fish)

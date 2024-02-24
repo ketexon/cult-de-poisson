@@ -153,8 +153,10 @@ public class DeepSeaRod : FishingRodV2
         
         hookedFish = fish.GetComponent<HookedFish>();
         
+        hookedFish.RodTipTransform = tip.transform;
+        hookedFish.PlayerTransform = FishingModeItem.Player.transform;
+
         hookedFish.TugEvent += OnFishTug;
-        hookedFish.OutOfWaterEvent += OnFishOutOfWater;
 
         tugAction.action.performed += OnPlayerTug;
     }
@@ -162,19 +164,11 @@ public class DeepSeaRod : FishingRodV2
     void OnFishUnhooked()
     {
         hookedFish.TugEvent -= OnFishTug;
-        hookedFish.OutOfWaterEvent -= OnFishOutOfWater;
 
         tugAction.action.performed -= OnPlayerTug;
 
         fish = null;
         hookedFish = null;
-    }
-
-    void OnFishOutOfWater()
-    {
-        fishCollectable = true;
-        inputUIDestructor?.Invoke();
-        inputUIDestructor = InputUI.Instance.AddInputUI(interactAction.action, "Collect fish");
     }
 
     protected override void Interact()
@@ -260,6 +254,13 @@ public class DeepSeaRod : FishingRodV2
             bounciness = hookJoint.linearLimit.bounciness,
             contactDistance = hookJoint.linearLimit.contactDistance,
         };
+
+        if(lineLength < CollectableLineLength && fish)
+        {
+            fishCollectable = true;
+            inputUIDestructor?.Invoke();
+            inputUIDestructor = InputUI.Instance.AddInputUI(interactAction.action, "Collect fish");
+        }
     }
 
     override public void ResetFishing()

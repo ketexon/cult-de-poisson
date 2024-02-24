@@ -96,33 +96,21 @@ public class SimpleFishMovement : FishMovement
         return !FishZone.Contains(transform.position + targetDirection * collisionDistance);
     }
 
-    // enable fishVision when we are enable
-    // make RB non-kinematic (physics works) when we are disabled
+    // enable fishVision when we are enabled
     void OnEnable()
     {
         if (fishVision)
         {
             fishVision.enabled = true;
         }
-        if (collider)
-        {
-            //collider.enabled = true;
-        }
     }
 
     // disable fishVision when we are disabled
-    // make RB kinematic (no physics) when we are disabled
     void OnDisable()
     {
         if (fishVision)
         {
             fishVision.enabled = false;
-        }
-        if (rb)
-        {
-            rb.rotation = Quaternion.identity;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-            //rb.isKinematic = true;
         }
     }
 

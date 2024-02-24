@@ -19,6 +19,7 @@ public class FishingRodV2 : MonoBehaviour
     [SerializeField] float maxReelPerSecond = 1.0f;
 
     [System.NonSerialized] public FishingModeItem FishingModeItem;
+    [System.NonSerialized] public float CollectableLineLength;
 
     float reeledThisUpdate = 0;
 

@@ -11,7 +11,10 @@ public class HookedFish : MonoBehaviour
 {
     [SerializeField] GlobalParametersSO parameters;
 
-    Rigidbody rb;
+    [System.NonSerialized] public Transform PlayerTransform;
+    [System.NonSerialized] public Transform RodTipTransform;
+
+    protected Rigidbody rb;
 
     public System.Action<float> TugEvent;
     public System.Action OutOfWaterEvent;
@@ -22,7 +25,7 @@ public class HookedFish : MonoBehaviour
 
     // whether the fish is in water
     // used to prevent tugging while not in water.
-    bool inWater = false;
+    protected bool inWater = false;
 
     virtual protected void Awake()
     {
@@ -45,8 +48,11 @@ public class HookedFish : MonoBehaviour
     {
         if (!inWater && parameters.WaterLayerMask.Contains(other.gameObject.layer))
         {
-            Debug.Log("ENTER");
             inWater = true;
+            if (enabled)
+            {
+                OnInWater();
+            }
         }
     }
 
@@ -65,21 +71,22 @@ public class HookedFish : MonoBehaviour
         }
     }
 
-    void OnOutOfWater()
+    virtual protected void OnOutOfWater()
     {
         OutOfWaterEvent?.Invoke();
-
-        rb.constraints = RigidbodyConstraints.None;
     }
 
-    void OnEnable()
+    virtual protected void OnInWater()
     {
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.rotation = Quaternion.identity;
     }
 
-    void OnDisable()
+    virtual protected void OnEnable()
     {
-        rb.constraints = RigidbodyConstraints.None;
+        
+    }
+
+    virtual protected void OnDisable()
+    {
+        
     }
 }
