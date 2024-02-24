@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c5c79bcc-1fc4-4083-9668-5f1ecc877d39}">
+		<property name="assetPath">
+			<value>Cove/memory loop 1 + tail mixdown.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>41.200476190476188</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{8d18ca12-7cbc-48ee-8291-09baef12cba5}</destination>
+		</relationship>
+	</object>
+</objects>

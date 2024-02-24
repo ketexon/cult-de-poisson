@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{58733f12-ffeb-488c-a8ea-864651b14abb}">
+		<property name="assetPath">
+			<value>Cove/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{8d18ca12-7cbc-48ee-8291-09baef12cba5}</destination>
+		</relationship>
+	</object>
+</objects>
