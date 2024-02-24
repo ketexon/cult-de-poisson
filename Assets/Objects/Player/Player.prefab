@@ -340,6 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8300069304211402914}
+  - component: {fileID: 3059176816871463667}
   - component: {fileID: 2972364860089777460}
   - component: {fileID: 75327676347670396}
   - component: {fileID: 589010488059326791}
@@ -371,6 +372,23 @@ Transform:
   - {fileID: 927102954168792265}
   m_Father: {fileID: 3340069615599303650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3059176816871463667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74de42c11e75ea8499562f2e53df33d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Input: {fileID: 2972364860089777460}
+  Item: {fileID: 9126025737234344027}
+  Interact: {fileID: 1349254100363335738}
+  Camera: {fileID: 2649129788575905462}
+  CinemachineBrain: {fileID: 1204132734477593009}
 --- !u!114 &2972364860089777460
 MonoBehaviour:
   m_ObjectHideFlags: 0
