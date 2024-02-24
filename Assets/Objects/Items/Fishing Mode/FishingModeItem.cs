@@ -106,6 +106,11 @@ public class FishingModeItem : Item
 
     void OnExit(InputAction.CallbackContext ctx)
     {
+        if (!fishingRod.CanExitFishingMode)
+        {
+            return;
+        }
+
         if (ctx.performed)
         {
             StopUsing();

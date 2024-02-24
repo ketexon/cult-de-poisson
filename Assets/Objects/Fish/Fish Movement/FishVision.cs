@@ -10,6 +10,8 @@ public class FishVision : MonoBehaviour
     public System.Action<FishingHookV2> HookVisibleEvent;
     public System.Action HookInvisibleEvent;
 
+    FishingHookV2 hook;
+
     void Awake()
     {
         collider = GetComponent<SphereCollider>();
@@ -20,15 +22,42 @@ public class FishVision : MonoBehaviour
         collider.radius = size * 2;
     }
 
+    void OnDisable()
+    {
+        if (hook)
+        {
+            hook.VisibilityChangedEvent -= OnHookVisibilityChanged;
+            hook = null;
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (!enabled) return;
-        HookVisibleEvent?.Invoke(other.GetComponent<FishingHookV2>());
+        hook = other.GetComponent<FishingHookV2>();
+
+        if (hook.Visible)
+        {
+            HookVisibleEvent?.Invoke(hook);
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (!enabled) return;
+        if (!enabled || !hook) return;
         HookInvisibleEvent?.Invoke();
+        hook = null;
+    }
+
+    void OnHookVisibilityChanged(bool newValue)
+    {
+        if (newValue)
+        {
+            HookVisibleEvent?.Invoke(hook);
+        }
+        else
+        {
+            HookInvisibleEvent?.Invoke();
+        }
     }
 }

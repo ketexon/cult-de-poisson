@@ -25,6 +25,8 @@ public class FishingRodV2 : MonoBehaviour
 
     public FishingHookV2 Hook => hook;
 
+    virtual public bool CanExitFishingMode => true;
+
     virtual protected void Awake()
     {
         reelAction.action.performed += OnInputReel;

@@ -10,12 +10,45 @@ public class FishingHookV2 : MonoBehaviour
 
     [System.NonSerialized] public BaitSO Bait;
 
+    /// <summary>
+    /// Whether a fish can see the hook.
+    /// Eg., if the player cancels the cast,
+    /// then, even if the hook is in the water,
+    /// a fish should not bite it.
+    /// </summary>
+    bool _visible = false;
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if (_visible != value)
+            {
+                _visible = value;
+                VisibilityChangedEvent?.Invoke(value);
+            }
+        }
+    }
+    public System.Action<bool> VisibilityChangedEvent;
+
+    /// <summary>
+    /// Called when a fish collides with this hook
+    /// </summary>
     public System.Action<Fish> OnHook;
 
     new Collider collider;
     Rigidbody rb;
-    float drag;
 
+    /// <summary>
+    /// Initial drag of the hook.
+    /// When the hook exits water, it resets to this drag
+    /// </summary>
+    float initialDrag;
+
+    /// <summary>
+    /// Currently hooked Fish and corresponding HookedFish
+    /// Null if no fish is hooked
+    /// </summary>
     Fish fish;
     HookedFish hookedFish;
 
@@ -28,7 +61,7 @@ public class FishingHookV2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
-        drag = rb.drag;
+        initialDrag = rb.drag;
 
         OnHook += OnHookInternal;
     }
@@ -52,11 +85,15 @@ public class FishingHookV2 : MonoBehaviour
         // since we disable the collider, we don't get any
         // more OnTrigger_ updates, so we should reset the
         // drag here
-        rb.drag = drag;
+        rb.drag = initialDrag;
 
         hookedFish.UnhookEvent += Unhook;
     }
 
+    /// <summary>
+    /// Callback for when the Fish issues an Unhook event.
+    /// This is invoked, for example, when the rope snaps.
+    /// </summary>
     void Unhook()
     {
         hookedFish.UnhookEvent -= Unhook;
@@ -65,6 +102,10 @@ public class FishingHookV2 : MonoBehaviour
 
         ResetHook();
     }
+
+
+    #region Physics
+    // Physics: only used for applying drag when entering water
 
     void OnTriggerEnter(Collider other)
     {
@@ -78,17 +119,10 @@ public class FishingHookV2 : MonoBehaviour
     {
         if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
         {
-            rb.drag = drag;
+            rb.drag = initialDrag;
         }
     }
-
-    void Update()
-    {
-        //if (fish)
-        //{
-        //    fish.transform.position = transform.position;
-        //}
-    }
+    #endregion
 
     public void Break()
     {
@@ -106,5 +140,7 @@ public class FishingHookV2 : MonoBehaviour
         hookedFish = null;
 
         collider.enabled = true;
+
+        Visible = false;
     }
 }

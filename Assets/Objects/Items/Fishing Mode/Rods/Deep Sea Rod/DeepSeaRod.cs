@@ -50,12 +50,24 @@ public class DeepSeaRod : FishingRodV2
     float minLineLength;
     float lineLength;
 
-    float breakLineLength;
-    float breakTime;
+    /// <summary>
+    /// The length of the line when the 
+    /// return animation starts.
+    /// Used in the first parameter for the lerp
+    /// </summary>
+    float lineReturnStartLength;
+
+    /// <summary>
+    /// The start time for the return animation
+    /// Used for the time parameter of the lerp
+    /// </summary>
+    float lineReturnStartTime;
 
     bool fishCollectable = false;
 
     System.Action inputUIDestructor = null;
+
+    public override bool CanExitFishingMode => state == State.Uncast && base.CanExitFishingMode;
 
     override protected void Awake()
     {
@@ -80,13 +92,22 @@ public class DeepSeaRod : FishingRodV2
     }
 
     /// <summary>
-    /// Called when the cast key is used
+    /// Called when the cast key is used.
+    /// Used to both cast the line and to 
+    /// uncast the line
     /// </summary>
     public override void Cast()
     {
-        if (state != State.Uncast) return;
-        state = State.Casting;
-        animator.SetTrigger("Cast");
+        if (state == State.Uncast)
+        {
+            state = State.Casting;
+            animator.SetTrigger("Cast");
+        }
+        else if(state == State.Cast)
+        {
+            ReturnLine();
+            ResetFishing();
+        }
     }
 
     override protected void Update()
@@ -107,11 +128,11 @@ public class DeepSeaRod : FishingRodV2
                 //Break();
             }
         }
-        if(state == State.Broken)
+        if(state == State.Broken || state == State.Uncast)
         {
-            if(Time.time < breakTime + lineReturnDuration)
+            if(Time.time < lineReturnStartTime + lineReturnDuration)
             {
-                UpdateLineLength(Mathf.Lerp(breakLineLength, minLineLength, (Time.time - breakTime)/lineReturnDuration));
+                UpdateLineLength(Mathf.Lerp(lineReturnStartLength, minLineLength, (Time.time - lineReturnStartTime)/lineReturnDuration));
             }
         }
     }
@@ -137,6 +158,9 @@ public class DeepSeaRod : FishingRodV2
         state = State.Cast;
         // Remove the distance limit on the hook (ie. drop the line)
         UpdateLineLength(maxLineLength);
+
+        // make the hook visible to fish
+        Hook.Visible = true;
     }
 
     /// <summary>
@@ -194,8 +218,7 @@ public class DeepSeaRod : FishingRodV2
 
         Hook.Break();
 
-        breakTime = Time.time;
-        breakLineLength = lineLength;
+        ReturnLine();
         state = State.Broken;
     }
 
@@ -261,6 +284,12 @@ public class DeepSeaRod : FishingRodV2
             inputUIDestructor?.Invoke();
             inputUIDestructor = InputUI.Instance.AddInputUI(interactAction.action, "Collect fish");
         }
+    }
+
+    void ReturnLine()
+    {
+        lineReturnStartTime = Time.time;
+        lineReturnStartLength = lineLength;
     }
 
     override public void ResetFishing()

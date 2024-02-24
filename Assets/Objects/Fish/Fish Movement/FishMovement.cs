@@ -29,12 +29,21 @@ public class FishMovement : MonoBehaviour
         hookedFish.enabled = false;
     }
 
+    /// <summary>
+    /// If we collide with a hook,
+    /// call its OnHook callback and 
+    /// enable the HookedFish behavior.
+    /// Only works if Hook is visible
+    /// </summary>
+    /// <param name="collision"></param>
     void OnCollisionEnter(Collision collision)
     {
         if (!enabled) return;
         if (parameters.HookLayerMask.Contains(collision.gameObject.layer))
         {
-            collision.gameObject.GetComponent<FishingHookV2>().OnHook?.Invoke(GetComponent<Fish>());
+            var hook = collision.gameObject.GetComponent<FishingHookV2>();
+            if (!hook.Visible) return;
+            hook.OnHook?.Invoke(GetComponent<Fish>());
             enabled = false;
             hookedFish.enabled = true;
         }
