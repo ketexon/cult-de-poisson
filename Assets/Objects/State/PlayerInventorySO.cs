@@ -73,6 +73,7 @@ public class PlayerInventorySO : SavableSO
 
     [SerializeField] public List<FishSO> StartingFish = new();
     [SerializeField] public List<FishingRodSO> StartingRods = new();
+    [SerializeField] public List<TackleboxItemSO> StartingTackleboxItems = new();
 
     [System.NonSerialized]
     public List<FishSO> Fish;
@@ -80,12 +81,16 @@ public class PlayerInventorySO : SavableSO
     [System.NonSerialized]
     public List<FishingRodSO> Rods;
 
+    [System.NonSerialized]
+    public List<TackleboxItemSO> TackleboxItems;
+
     public System.Action<FishSO> FishAddedEvent;
 
     void OnEnable()
     {
         Fish = new(StartingFish);
         Rods = new(StartingRods);
+        TackleboxItems = new(StartingTackleboxItems);
     }
 
     public void AddFish(FishSO fish)

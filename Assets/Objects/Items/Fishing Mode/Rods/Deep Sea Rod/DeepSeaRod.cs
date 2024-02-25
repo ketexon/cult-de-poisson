@@ -125,7 +125,7 @@ public class DeepSeaRod : FishingRodV2
             //Debug.Log($"Tension: {tension}");
             if (tension > maxTension)
             {
-                //Break();
+                Break();
             }
         }
         if(state == State.Broken || state == State.Uncast)

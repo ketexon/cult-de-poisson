@@ -17,3 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
   StartingRods:
   - {fileID: 11400000, guid: 1567b03e664957648ab7234545690108, type: 2}
+  StartingTackleboxItems:
+  - {fileID: 11400000, guid: d23696d5009b9084f950f6161fde5db6, type: 2}
