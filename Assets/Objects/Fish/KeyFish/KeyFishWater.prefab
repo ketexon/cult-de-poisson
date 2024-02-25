@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7065934463964850046}
   - component: {fileID: -624479839853968388}
   - component: {fileID: 3284012575237066576}
-  - component: {fileID: 8893481813508327763}
   - component: {fileID: 3485631663913339017}
+  - component: {fileID: 8893481813508327763}
   m_Layer: 0
   m_Name: KeyFishWater
   m_TagString: Untagged
@@ -95,6 +95,24 @@ MonoBehaviour:
   chaseHookSpeed: 4
   maxRotation: 2
   collisionDistance: 1
+--- !u!114 &3485631663913339017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b45b251ada4484db65d474d2629ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
+  minTugInterval: 2
+  maxTugInterval: 3
+  minTugStrength: 1
+  maxTugStrength: 4
+  tugAcceleration: 2
 --- !u!54 &8893481813508327763
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -122,23 +140,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3485631663913339017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582537697710654690}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49b45b251ada4484db65d474d2629ba8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
-  minTugInterval: 2
-  maxTugInterval: 3
-  minTugStrength: 1
-  maxTugStrength: 4
 --- !u!1001 &7537686541899175224
 PrefabInstance:
   m_ObjectHideFlags: 0
