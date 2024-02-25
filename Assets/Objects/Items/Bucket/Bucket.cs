@@ -225,19 +225,16 @@ public class Bucket : Item
 
     void OnExitBucket(InputAction.CallbackContext ctx)
     {
-        playerInput.SwitchCurrentActionMap("Gameplay");
         StopUsingBucket();
     }
 
-    // This is separated into two functions because
-    // the destructor needs to do everything BUT swapping input maps
-    // if you swap input maps to the currently active
-    // input map, it will refire events.
-    /// <summary>
-    /// Resets camera, crosshair state, cursor lock state, and internal variables.
-    /// </summary>
     void StopUsingBucket()
     {
+        if(playerInput.currentActionMap.name != "Gameplay")
+        {
+            playerInput.SwitchCurrentActionMap("Gameplay");
+        }
+
         virtualCamera.enabled = false;
         InputUI.Instance.SetCrosshairVisible(true);
 

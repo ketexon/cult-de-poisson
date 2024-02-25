@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4813528668829628773}
   - component: {fileID: 7065934463964850046}
   - component: {fileID: -624479839853968388}
+  - component: {fileID: 7205110707389097849}
   m_Layer: 0
   m_Name: TubeSnoutWater
   m_TagString: Untagged
@@ -72,6 +73,33 @@ MonoBehaviour:
   accelerationSubCycleFrequency: 3
   horizontalAcceleration: 30
   forwardAcceleration: 30
+--- !u!54 &7205110707389097849
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582537697710654690}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 5
+  m_AngularDrag: 5
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &4777690079186523124
 PrefabInstance:
   m_ObjectHideFlags: 0
