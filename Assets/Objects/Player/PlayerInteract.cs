@@ -160,7 +160,15 @@ public class PlayerInteract : MonoBehaviour
             parameters.InteractLayerMask
         ))
         {
-            Interactable = hit.collider.GetComponent<Interactable>();
+            var interactable = hit.collider.GetComponent<Interactable>();
+            if (interactable.enabled)
+            {
+                Interactable = interactable;
+            }
+            else
+            {
+                Interactable = null;
+            }
         }
         else
         {
