@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 /// <summary>
 /// Class that contains references to monobehaviours
 /// relevant to the player
 /// </summary>
-public class Player : MonoBehaviour
+public class Player : SingletonBehaviour<Player>
 {
+    public DialogueManager DialogueManager;
     public PlayerInput Input;
     public PlayerItem Item;
     public PlayerInteract Interact;

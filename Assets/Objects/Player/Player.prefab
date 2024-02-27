@@ -163,6 +163,88 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &4401689185411706630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5692129817034609282}
+  - component: {fileID: 2144066935154577829}
+  - component: {fileID: 3947325995384777100}
+  m_Layer: 0
+  m_Name: Dialogue System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5692129817034609282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401689185411706630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3340069615599303650}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144066935154577829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401689185411706630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yarnProject: {fileID: 7545569452688597077, guid: f929eda2041551748bc7203a04918f47,
+    type: 3}
+  _variableStorage: {fileID: 0}
+  dialogueViews:
+  - {fileID: 0}
+  startNode: Start
+  startAutomatically: 0
+  runSelectedOptionAsLine: 0
+  lineProvider: {fileID: 0}
+  verboseLogging: 1
+  onNodeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onNodeComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onDialogueStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onDialogueComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onCommand:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3947325995384777100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401689185411706630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912b2d09881b41f46a41a6d41ee1b662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6852782053222671192
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,9 +431,10 @@ GameObject:
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
   - component: {fileID: 1349254100363335738}
+  - component: {fileID: 8185658800015492802}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -384,6 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74de42c11e75ea8499562f2e53df33d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DialogueManager: {fileID: 3947325995384777100}
   Input: {fileID: 2972364860089777460}
   Item: {fileID: 9126025737234344027}
   Interact: {fileID: 1349254100363335738}
@@ -599,6 +683,34 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3d2df260-eb19-4e36-ba27-9512c3fb326a
     m_ActionName: Gameplay/CycleItem[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0137aa6b-8079-449a-b942-714415ed9290
+    m_ActionName: Bucket/Point[/Mouse/position,/Touchscreen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f31e202a-244f-40f0-8cea-738db6a12c7b
+    m_ActionName: Bucket/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 979966ae-7c05-433c-92cf-9254a7e0ccac
+    m_ActionName: Bucket/Exit[/Keyboard/escape,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6f95cb1f-d502-4269-a874-a54bd34e1ce7
+    m_ActionName: Bucket/Cycle[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a5dc4b7-8ad3-44a0-9320-807d6df94166
+    m_ActionName: Bucket/Select[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9fc70747-2bfd-423c-8a38-d86331696788
+    m_ActionName: Gameplay/AltUseItem[/Keyboard/g]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 81b698d2-052b-444e-b1ce-b87fb6e2bd7c
+    m_ActionName: Gameplay/Temp1[/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -747,6 +859,20 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+--- !u!114 &8185658800015492802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb0f5d3847f7f4aa115277bc0321d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerInteract: {fileID: 1349254100363335738}
+  DialogueManager: {fileID: 3947325995384777100}
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +1100,7 @@ GameObject:
   - component: {fileID: 3340069615599303650}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -995,5 +1121,6 @@ Transform:
   - {fileID: 8300069304211402914}
   - {fileID: 8616573123594162493}
   - {fileID: 929415633395559043}
+  - {fileID: 5692129817034609282}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
