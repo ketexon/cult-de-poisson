@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class NPC : Interactable
 {
+    //TODO: Integrate animations with Yarnspinner
+    //TODO: Pathfinding
+
     public NPCSO npcSO;
     public DialogueBox DialogueView;
 
@@ -20,7 +23,7 @@ public class NPC : Interactable
 
     public override void OnInteract()
     {
-        dialogueManager.StartDialogue(this);
+        dialogueManager.StartDialogue(this, npcSO.YarnStartNode);
     }
 
 }
