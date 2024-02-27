@@ -6,6 +6,8 @@ public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] bool _interactable = true;
 
+    protected new Collider collider;
+    
     /// <summary>
     /// Used by <c>PlayerIntact</c> to show interact text but not
     /// allow interaction. Useful for disabled interactables.
