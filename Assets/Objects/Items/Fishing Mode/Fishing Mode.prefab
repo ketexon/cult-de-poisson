@@ -739,7 +739,7 @@ Transform:
   m_GameObject: {fileID: 7334272071940694942}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.824, y: -0.464, z: 0.343}
+  m_LocalPosition: {x: -0.824, y: -0.464, z: 0.577}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -761,6 +761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
   spawnContainer: {fileID: 3997700829544895449}
+  FishingModeItem: {fileID: -3481160751637879449}
 --- !u!95 &5509524018283281553
 Animator:
   serializedVersion: 5
@@ -1006,6 +1007,8 @@ MonoBehaviour:
   itemSO: {fileID: 11400000, guid: 0cb8874548aedac418b99e7746fe1938, type: 2}
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   playerInventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
+  interactAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
   castAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   navigateAction: {fileID: 5613400123319863347, guid: 74ba8a3a9aaed2040a694812328659e2,

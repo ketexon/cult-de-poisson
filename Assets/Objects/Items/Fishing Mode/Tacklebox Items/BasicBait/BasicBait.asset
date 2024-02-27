@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BasicBait
   m_EditorClassIdentifier: 
   Name: Basic bait
-  Prefab: {fileID: 2308955014481621864, guid: 5bd05316c7f775c4382ad3ba78a29fa2, type: 3}
+  Prefab: {fileID: 4278781091253439032, guid: beb4d39641adda04faf2e59ff1674fea, type: 3}

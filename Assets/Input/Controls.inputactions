@@ -588,7 +588,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Cast",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "0d800d33-35d7-401c-aee1-90027d663a87",
                     "expectedControlType": "Button",
@@ -678,7 +678,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Cast",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

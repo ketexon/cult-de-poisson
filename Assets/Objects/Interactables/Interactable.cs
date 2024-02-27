@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
+    [SerializeField] protected new Collider collider;
     [SerializeField] bool _interactable = true;
 
     /// <summary>
@@ -21,6 +22,21 @@ public abstract class Interactable : MonoBehaviour
                 CanInteractChangeEvent?.Invoke(_interactable);
             }
         }
+    }
+
+    protected virtual void Awake()
+    {
+        collider = GetComponent<Collider>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        collider.enabled = true;
+    }
+
+    protected virtual void OnDisable()
+    {
+        collider.enabled = false;
     }
 
     /// <summary>

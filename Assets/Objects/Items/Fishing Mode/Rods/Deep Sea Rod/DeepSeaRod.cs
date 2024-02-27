@@ -110,6 +110,23 @@ public class DeepSeaRod : FishingRodV2
         }
     }
 
+    /// <summary>
+    /// When the FISHING ROD is interacted fish. This is called by PlayerInteract
+    /// when the player presses INTERACT on the fishing rod (used to start casting)
+    /// Compare <see cref="OnInputInteract"/>, which is the Fishing Rod's own
+    /// interact behaviour, used to pick up fish.
+    /// </summary>
+    public override void OnInteract()
+    {
+        base.OnInteract();
+
+        FishingModeItem.Phase = FishingModePhase.Fishing;
+        state = State.Casting;
+        animator.SetTrigger("Cast");
+
+        collider.enabled = false;
+    }
+
     override protected void Update()
     {
         base.Update();
@@ -183,6 +200,7 @@ public class DeepSeaRod : FishingRodV2
         hookedFish.TugEvent += OnFishTug;
 
         tugAction.action.performed += OnPlayerTug;
+        interactAction.action.performed += OnInputInteract;
     }
 
     void OnFishUnhooked()
@@ -190,15 +208,22 @@ public class DeepSeaRod : FishingRodV2
         hookedFish.TugEvent -= OnFishTug;
 
         tugAction.action.performed -= OnPlayerTug;
+        interactAction.action.performed -= OnInputInteract;
 
         fish = null;
         hookedFish = null;
     }
 
-    protected override void Interact()
+    /// <summary>
+    /// Called when interact key is pressed, used to primarily collect
+    /// fish at end of fishing.
+    /// Compare with <see cref="OnInteract"/>, which is used to start fishing,
+    /// called from the base class <see cref="Interactable"/>
+    /// </summary>
+    /// <param name="ctx"></param>
+    protected void OnInputInteract(InputAction.CallbackContext ctx)
     {
-        base.Interact();
-
+        if (!ctx.performed) return;
         if (fishCollectable)
         {
             inputUIDestructor?.Invoke();
@@ -301,6 +326,9 @@ public class DeepSeaRod : FishingRodV2
         animator.SetTrigger("Reset");
 
         state = State.Uncast;
+        FishingModeItem.Phase = FishingModePhase.Prepping;
+
+        collider.enabled = false;
 
         Hook.ResetHook();
     }

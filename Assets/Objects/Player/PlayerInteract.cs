@@ -157,7 +157,8 @@ public class PlayerInteract : MonoBehaviour
             transform.position, playerMovement.Camera.transform.forward, 
             out RaycastHit hit, 
             parameters.InteractDistance, 
-            parameters.InteractLayerMask
+            parameters.InteractLayerMask,
+            QueryTriggerInteraction.Collide // hit triggers
         ))
         {
             Interactable = hit.collider.GetComponent<Interactable>();

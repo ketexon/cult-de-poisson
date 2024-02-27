@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2298263982331697524}
   - component: {fileID: 2433253259262806422}
   - component: {fileID: 4895920827598239002}
-  m_Layer: 0
+  - component: {fileID: 3412315649134226035}
+  m_Layer: 12
   m_Name: DeepSeaRod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5f3ad438b15484a828bfc9dc4e3cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactable: 1
   tugAction: {fileID: -595563474672938538, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   reelAction: {fileID: -2954641729320732605, guid: 74ba8a3a9aaed2040a694812328659e2,
@@ -185,6 +187,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!65 &3412315649134226035
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565233922410181394}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1591842727833672907
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for the fishing hook on a fishing rod.
+/// Contains data regarding whether a fish can see the fishing rod (<see cref="Visible"/>)
+/// Also contains logic and callbacks for hooking a fish (<see cref="OnHook"/>)
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class FishingHookV2 : MonoBehaviour
 {
@@ -86,6 +91,10 @@ public class FishingHookV2 : MonoBehaviour
         // more OnTrigger_ updates, so we should reset the
         // drag here
         rb.drag = initialDrag;
+
+        // other fish can no longer see the hook until we
+        // cast again
+        Visible = false;
 
         hookedFish.UnhookEvent += Unhook;
     }

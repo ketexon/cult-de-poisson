@@ -7,6 +7,8 @@ public class Tacklebox : MonoBehaviour
     [SerializeField] PlayerInventorySO inventory;
     [SerializeField] Transform spawnContainer;
 
+    public FishingModeItem FishingModeItem;
+
     List<TackleboxItem> items = new();
 
     void Awake()
@@ -27,11 +29,22 @@ public class Tacklebox : MonoBehaviour
 
     void OnEnable()
     {
-        
+        UpdateInteractables(FishingModeItem.Phase);
+        FishingModeItem.PhaseChangedEvent += UpdateInteractables;
     }
 
     void OnDisable()
     {
-        
+        FishingModeItem.PhaseChangedEvent -= UpdateInteractables;
+    }
+
+    void UpdateInteractables(FishingModePhase phase)
+    {
+        Debug.Log($"PHASE CHANGED: {phase}");
+        var value = phase == FishingModePhase.Prepping;
+        foreach (var item in items)
+        {
+            item.enabled = value;
+        }
     }
 }

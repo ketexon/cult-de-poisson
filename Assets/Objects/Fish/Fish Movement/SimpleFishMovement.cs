@@ -114,7 +114,6 @@ public class SimpleFishMovement : FishMovement
         }
     }
 
-
     void FixedUpdate()
     {
         if (!enabled) return;

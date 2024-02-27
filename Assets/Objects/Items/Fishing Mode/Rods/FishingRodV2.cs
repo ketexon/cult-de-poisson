@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 /// Base class for fishing rods used in <see cref="global::FishingModeItem"/>.
 /// Performs input calculations needed in all fishing
 /// </summary>
-public class FishingRodV2 : MonoBehaviour
+public class FishingRodV2 : Interactable
 {
     [SerializeField] protected InputActionReference tugAction;
     [SerializeField] protected InputActionReference reelAction;
@@ -18,8 +18,31 @@ public class FishingRodV2 : MonoBehaviour
     [SerializeField] float reelSensitivity = 0.1f;
     [SerializeField] float maxReelPerSecond = 1.0f;
 
-    [System.NonSerialized] public FishingModeItem FishingModeItem;
+    FishingModeItem _fishingModeItem;
+    public FishingModeItem FishingModeItem {
+        get => _fishingModeItem;
+        set
+        {
+            // if we are changing the value
+            if(_fishingModeItem != value)
+            {
+                // deregister callbacks on old value
+                if (_fishingModeItem)
+                {
+                    _fishingModeItem.PhaseChangedEvent -= PhaseChangedEvent;
+                }
+                _fishingModeItem = value;
+                // register callbacks on new value
+                if (_fishingModeItem)
+                {
+                    _fishingModeItem.PhaseChangedEvent += PhaseChangedEvent;
+                }
+            }
+        }
+    }
     [System.NonSerialized] public float CollectableLineLength;
+
+    public override string InteractMessage => "Start fishing";
 
     float reeledThisUpdate = 0;
 
@@ -27,16 +50,44 @@ public class FishingRodV2 : MonoBehaviour
 
     virtual public bool CanExitFishingMode => true;
 
-    virtual protected void Awake()
+
+    override protected void Awake()
     {
+        base.Awake();
+
         reelAction.action.performed += OnInputReel;
-        interactAction.action.performed += OnInputInteract;
+        //interactAction.action.performed += OnInputInteract;
+        collider.enabled = false;
     }
+
+    // we define onenable here
+    // to prevent default behavior of enabling interaction
+    // on enable
+    protected override void OnEnable()
+    {}
+
+
+    // we define onenable here
+    // to prevent default behavior of disabling interaction
+    // on disable
+    protected override void OnDisable()
+    { }
 
     virtual protected void OnDestroy()
     {
         reelAction.action.performed -= OnInputReel;
-        interactAction.action.performed -= OnInputInteract;
+        if (FishingModeItem)
+        {
+            FishingModeItem.PhaseChangedEvent -= PhaseChangedEvent;
+        }
+    }
+
+
+    void PhaseChangedEvent(FishingModePhase newPhase)
+    {
+        // only allow interacting with fishing rod if
+        // we are in the prep phase
+        collider.enabled = newPhase == FishingModePhase.Prepping;
     }
 
     virtual protected void Update()
@@ -64,18 +115,8 @@ public class FishingRodV2 : MonoBehaviour
         }
     }
 
-    private void OnInputInteract(InputAction.CallbackContext ctx)
-    {
-        if(!ctx.performed) return;
-
-        Interact();
-    }
-
     virtual protected void Reel(float amount)
     {}
-
-    virtual protected void Interact()
-    { }
 
     virtual public void ResetFishing()
     {}

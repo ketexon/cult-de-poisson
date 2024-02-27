@@ -12,6 +12,16 @@ public class FishVision : MonoBehaviour
 
     FishingHookV2 hook;
 
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        UnityEditor.Handles.Label(
+            transform.position,
+            $"HOOK: {(!hook ? "NONE" : hook.Visible ? "VISIBLE" : "INVISIBLE")}"
+        );
+    }
+#endif
+
     void Awake()
     {
         collider = GetComponent<SphereCollider>();
@@ -36,6 +46,8 @@ public class FishVision : MonoBehaviour
         if (!enabled) return;
         hook = other.GetComponent<FishingHookV2>();
 
+        hook.VisibilityChangedEvent += OnHookVisibilityChanged;
+
         if (hook.Visible)
         {
             HookVisibleEvent?.Invoke(hook);
@@ -45,6 +57,9 @@ public class FishVision : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         if (!enabled || !hook) return;
+
+        hook.VisibilityChangedEvent -= OnHookVisibilityChanged;
+
         HookInvisibleEvent?.Invoke();
         hook = null;
     }
