@@ -6,10 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Fish", menuName = "Fish")]
 public class FishSO : ScriptableObject
 {
-	public string Name;
-	public GameObject InWaterPrefab;
-	public GameObject InHandPrefab;
-	public GameObject InBucketPrefab;
+    public string Name;
+    public GameObject InWaterPrefab;
+    public GameObject InHandPrefab;
+    public GameObject InBucketPrefab;
+    public GameObject PhysicalPrefab;
 	public FishInfo FishInfo;
 
 	void Reset()

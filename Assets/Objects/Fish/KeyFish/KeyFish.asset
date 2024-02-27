@@ -29,3 +29,5 @@ MonoBehaviour:
     CatchDifficulty: 1
     IsKeyFish: 1
     Notes: Fsh
+  PhysicalPrefab: {fileID: 582537697710654690, guid: 7a82e6fbf01764848ac70417c21419d9,
+    type: 3}
