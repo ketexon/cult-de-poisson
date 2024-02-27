@@ -4,14 +4,11 @@ using Yarn.Unity;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] DialogueViewBase optionsView = null;
-
     DialogueRunner dialogueRunner;
     void Awake()
     {
         dialogueRunner = GetComponent<DialogueRunner>();
         dialogueRunner.dialogueViews = new DialogueViewBase[2];
-        dialogueRunner.dialogueViews[1] = optionsView;
     }
 
     void OnEnable()

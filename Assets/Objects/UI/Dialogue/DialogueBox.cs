@@ -10,10 +10,12 @@ public class DialogueBox : DialogueViewBase
 
     Player player;
     float textSpeed = 0.05f;
+    string npcName;
 
     void Awake()
     {
         player = Player.Instance;
+        npcName = GetComponentInParent<NPC>().npcSO.Name;
     }
 
     void OnEnable()
@@ -67,8 +69,10 @@ public class DialogueBox : DialogueViewBase
 
     public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
     {
+        if (dialogueLine.CharacterName != npcName) { return; }
+
         textSpeed = 0.05f;
-        StartCoroutine(RunLineInternal(dialogueLine.RawText, onDialogueLineFinished));
+        StartCoroutine(RunLineInternal(dialogueLine.TextWithoutCharacterName.Text, onDialogueLineFinished));
     }
 
     public override void InterruptLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
