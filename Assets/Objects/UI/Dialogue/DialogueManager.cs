@@ -24,12 +24,13 @@ public class DialogueManager : MonoBehaviour
         dialogueRunner.onDialogueComplete.RemoveListener(OnEndDialogue);
     }
 
-    public void StartDialogue(NPC npc)
+    //TODO: Check for already running dialogue
+    public void StartDialogue(NPC npc, string startNode)
     {
         NPCSO so = npc.npcSO;
         npc.DialogueView.gameObject.SetActive(true);
         dialogueRunner.dialogueViews[0] = npc.DialogueView;
-        dialogueRunner.StartDialogue(so.YarnStartNode);
+        dialogueRunner.StartDialogue(startNode);
     }
 
     void OnEndDialogue()

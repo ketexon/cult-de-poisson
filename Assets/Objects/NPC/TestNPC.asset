@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TestNPC
   m_EditorClassIdentifier: 
   Name: NPC Name
-  YarnStartNode: Start
+  YarnStartNode: OtherYarnScript
