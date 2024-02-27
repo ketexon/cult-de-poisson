@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private string eventName = "event:/Explosion";
+
+
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] new Cinemachine.CinemachineVirtualCamera camera;
     [SerializeField] float mouseSensitivity;
@@ -63,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var dir = ctx.ReadValue<Vector2>();
         inputDir = transform.rotation * new Vector3(dir.x, 0, dir.y);
+        RuntimeManager.PlayOneShot(eventName, transform.position);
     }
 
     /// <summary>
