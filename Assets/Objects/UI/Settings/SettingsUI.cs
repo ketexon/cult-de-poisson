@@ -6,10 +6,11 @@ using UnityEngine.InputSystem;
 public class SettingsUI : SingletonBehaviour<SettingsUI>
 {
     [SerializeField] Canvas canvas;
-    [SerializeField] PlayerInput playerInput;
-    [SerializeField] Camera playerCamera;
+    [SerializeField] Player player;
 
     [SerializeField] InputActionReference escapeAction;
+
+    Stack<GameObject> panels;
 
     bool Open => canvas.enabled;
 
@@ -34,7 +35,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
     {
         if (Open)
         {
-            CloseMenu();
+            PopPanel();
         }
         else
         {
@@ -44,14 +45,41 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     void OpenMenu()
     {
-        
-        playerInput.DeactivateInput();
+        player.Input.DeactivateInput();
         canvas.enabled = true;
+        player.Camera.enabled = false;
     }
 
     void CloseMenu()
     {
         canvas.enabled = false;
-        playerInput.ActivateInput();
+        player.Input.ActivateInput();
+        player.Camera.enabled = true;
+    }
+
+    public void PushPanel(GameObject panel)
+    {
+        if(panels.TryPeek(out var oldPanel)){
+            oldPanel.SetActive(false);
+        }
+        panels.Push(panel);
+        panel.SetActive(true);
+    }
+
+    public void Quit()
+    {
+
+    }
+
+    public void PopPanel()
+    {
+        if(panels.Count > 0)
+        {
+            panels.Pop();
+        }
+        if(panels.Count == 0)
+        {
+            CloseMenu();
+        }
     }
 }
