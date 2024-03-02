@@ -431,7 +431,6 @@ GameObject:
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
   - component: {fileID: 1349254100363335738}
-  - component: {fileID: 8185658800015492802}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -469,6 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DialogueManager: {fileID: 3947325995384777100}
   Input: {fileID: 2972364860089777460}
+  Movement: {fileID: 75327676347670396}
   Item: {fileID: 9126025737234344027}
   Interact: {fileID: 1349254100363335738}
   Camera: {fileID: 2649129788575905462}
@@ -859,20 +859,6 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
---- !u!114 &8185658800015492802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868503324844711377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38fb0f5d3847f7f4aa115277bc0321d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerInteract: {fileID: 1349254100363335738}
-  DialogueManager: {fileID: 3947325995384777100}
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0

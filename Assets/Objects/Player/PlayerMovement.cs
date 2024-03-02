@@ -96,4 +96,9 @@ public class PlayerMovement : MonoBehaviour
         velocity += Physics.gravity * (Time.time - lastTimeOnGround);
         return velocity;
     }
+
+    public void Teleport(Transform target)
+    {
+        transform.SetPositionAndRotation(target.position, target.rotation);
+    }
 }

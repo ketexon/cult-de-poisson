@@ -11,6 +11,7 @@ public class Player : SingletonBehaviour<Player>
 {
     public DialogueManager DialogueManager;
     public PlayerInput Input;
+    public PlayerMovement Movement;
     public PlayerItem Item;
     public PlayerInteract Interact;
     public Camera Camera;
