@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System;
 
-public class SpeciesDropdown : JournalUIElement, IPointerClickHandler
+public class SpeciesDropdown : JournalUIElement
 {
 	const float DROPDOWN_HEIGHT = 360f;
 	const float TOLERANCE = 10f;
@@ -33,7 +33,7 @@ public class SpeciesDropdown : JournalUIElement, IPointerClickHandler
 	}
 
 	//Implemented by IPointerClickHandler interface
-	public void OnPointerClick(PointerEventData eventData)
+	public override void OnPointerClick(PointerEventData eventData)
 	{
 		if (!isInteractable) return;
 
