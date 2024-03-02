@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using FMODUnity;
+using UnityEditor.Callbacks;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using System.Diagnostics;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private string eventName = "event:/Explosion";
-
-
+    [SerializeField] private string eventName = "event:/VO/Welcome";
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] new Cinemachine.CinemachineVirtualCamera camera;
     [SerializeField] float mouseSensitivity;
@@ -26,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 inputDir = Vector3.zero;
 
     float lastTimeOnGround;
+
+    Coroutine footstepCoroutine;
 
     void Reset()
     {
@@ -46,6 +51,24 @@ public class PlayerMovement : MonoBehaviour
         }
 
         characterController.Move(CalculateVelocity() * Time.deltaTime);
+        if(!Mathf.Approximately(inputDir.sqrMagnitude, 0) && footstepCoroutine == null && characterController.isGrounded){
+            footstepCoroutine = StartCoroutine(FootstepCoroutine());
+        }
+        else if(Mathf.Approximately(inputDir.sqrMagnitude, 0) && footstepCoroutine != null){
+            StopCoroutine(footstepCoroutine);
+            footstepCoroutine = null;
+        }
+    }
+
+    IEnumerator FootstepCoroutine(){
+        while(true){
+            var time = Stopwatch.StartNew();
+            time.Start();
+            RuntimeManager.PlayOneShot(eventName, transform.position);
+            time.Stop();
+            UnityEngine.Debug.Log($"Time to play sound: {time.ElapsedMilliseconds}ms");
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
@@ -67,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
     {
         var dir = ctx.ReadValue<Vector2>();
         inputDir = transform.rotation * new Vector3(dir.x, 0, dir.y);
-        RuntimeManager.PlayOneShot(eventName, transform.position);
     }
 
     /// <summary>
