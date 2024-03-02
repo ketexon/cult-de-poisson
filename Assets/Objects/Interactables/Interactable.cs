@@ -48,7 +48,7 @@ public abstract class Interactable : MonoBehaviour
     /// <summary>
     /// Message to show in UI when hovering this item
     /// </summary>
-    public abstract string InteractMessage { get; }
+    public virtual string InteractMessage => "Interact";
 
     public virtual void OnInteract() { }
 }
