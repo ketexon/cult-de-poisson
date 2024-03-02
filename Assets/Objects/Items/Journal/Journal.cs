@@ -14,15 +14,20 @@ public class Journal : Item
     [SerializeField]
     InputActionReference exitAction;
 
+    [SerializeField]
+    GameObject[] journalPages = new GameObject[0];
+
     bool usingJournal = false;
 
-	private void Start()
-	{
-		Canvas canvas = GetComponentInChildren<Canvas>();
+    private void Start()
+    {
+        Canvas canvas = GetComponentInChildren<Canvas>();
         canvas.worldCamera = mainCamera;
-	}
 
-	public override void Initialize(InitializeParams initParams)
+        OnExitJournal();
+    }
+
+    public override void Initialize(InitializeParams initParams)
     {
         base.Initialize(initParams);
 
@@ -31,7 +36,13 @@ public class Journal : Item
 
     public override void OnUse()
     {
-        base.OnUse();
+        if (journalPages.Length == 0)
+        {
+            Debug.LogError("Journal has no pages to display.");
+            return;
+        }
+
+        journalPages[0].SetActive(true);
 
         usingJournal = true;
         playerInput.SwitchCurrentActionMap("Journal");
@@ -46,7 +57,7 @@ public class Journal : Item
         base.OnStopUsingItem();
     }
 
-    void StopUsingJournal(CallbackContext ctx)
+    void StopUsingJournal(CallbackContext ctx) //Exiting the journal
     {
         playerInput.SwitchCurrentActionMap("Gameplay");
 
@@ -62,5 +73,26 @@ public class Journal : Item
 
         usingJournal = false;
         virtualCamera.enabled = false;
+
+        foreach (GameObject page in journalPages)
+        {
+            page.SetActive(false);
+        }
+    }
+
+    public void OpenPage(int pageNumber)
+    {
+        if (pageNumber < 0 || pageNumber >= journalPages.Length)
+        {
+            Debug.LogError("Invalid page number: " + pageNumber);
+            return;
+        }
+
+        foreach (GameObject page in journalPages)
+        {
+            page.SetActive(false);
+        }
+
+        journalPages[pageNumber].SetActive(true);
     }
 }
