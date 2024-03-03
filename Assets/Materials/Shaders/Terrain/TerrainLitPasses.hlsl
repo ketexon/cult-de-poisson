@@ -358,6 +358,7 @@ half3 CustomCalculateLightingColor(LightingData lightingData, half3 albedo)
     return lightingColor;
 }
 
+
 half3 CustomCalculateBlinnPhong(Light light, InputData inputData, SurfaceData surfaceData)
 {
     half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
@@ -441,7 +442,7 @@ half4 CustomLighting(InputData inputData, SurfaceData surfaceData)
     LIGHT_LOOP_END
     #endif
 
-    lightIntensity = ceil(lightIntensity * 4) / 4;
+    lightIntensity = ceil(lightIntensity * 4) / 3;
 
     return half4(surfaceData.albedo, surfaceData.alpha) * lightIntensity;
 }

@@ -98,14 +98,14 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthMaxDistance: 0.67
+    - _DepthMaxDistance: 1.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FoamMaxDistance: 0.4
-    - _FoamMinDistance: 0.04
+    - _FoamMaxDistance: 0.73
+    - _FoamMinDistance: 2.51
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -128,11 +128,11 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DepthGradientDeep: {r: 0.03137255, g: 0.63529414, b: 0.85490197, a: 0.749}
-    - _DepthGradientShallow: {r: 0.03137255, g: 0.63529414, b: 0.85490197, a: 0.725}
+    - _DepthGradientShallow: {r: 0.61196154, g: 0.7858313, b: 0.8490566, a: 0.725}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceNoiseScroll: {r: 0.03, g: 0.03, b: 0, a: 0}
+    - _SurfaceNoiseScroll: {r: -0.03, g: -0.03, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8200690653025939323
 MonoBehaviour:

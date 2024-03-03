@@ -24,7 +24,6 @@ Shader "Unlit/Triplanartest"
         [HideInInspector] _Splat1 ("Layer 1 (G)", 2D) = "white" {}
         [HideInInspector] _Splat0 ("Layer 0 (R)", 2D) = "white" {}
     
-        
     }
     SubShader
     {
@@ -47,6 +46,7 @@ Shader "Unlit/Triplanartest"
             uniform fixed4 _Color;
 
             #include "UnityCG.cginc"
+            #include "AutoLight.cginc"
 
             struct appdata
             {
@@ -62,6 +62,7 @@ Shader "Unlit/Triplanartest"
                 float4 vertex : SV_POSITION;
                 half3 worldNormal: NORMAL;
                 float3 coords : TEXCOORD1;
+                LIGHTING_COORDS(2,3)
             };
 
             float _Tiling;
@@ -83,13 +84,13 @@ Shader "Unlit/Triplanartest"
                 o.coords = v.vertex.xyz * _Tiling;
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
+                TRANSFER_VERTEX_TO_FRAGMENT(o); 
                 return o;
             }
 
 
             float Toon(float3 normal, float3 lightDir)
-            {
-                
+            {                
                 float NdotL = max (0.0, dot (normalize(normal), normalize(lightDir)));
                 return floor(NdotL/_Ratio);
             }
@@ -125,6 +126,7 @@ Shader "Unlit/Triplanartest"
             //frag shader
             fixed4 frag (v2f i, Input IN) : SV_Target
             {
+                fixed atten = LIGHT_ATTENUATION(i);
                 float steepness = dot(normalize(abs(i.worldNormal)), float3(0, 1, 0)); //get dot product of normal with up vector. can be returned as a shader
                 float textureChoice = step(_Falloff, steepness); //strictly divides world into steep and not steep parts based on a Falloff value
                 //steepness and textureChoice are both between 0 and 1
@@ -148,7 +150,7 @@ Shader "Unlit/Triplanartest"
                 col += col2;
                 col *= Toon(i.worldNormal, _WorldSpaceLightPos0.xyz)*_Strength+_Brightness;
 
-                return col;   
+                return col;
                 
             }
 
