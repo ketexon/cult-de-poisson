@@ -1,8 +1,10 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.ParticleSystem;
 
 public class FishingRod : Item
 {
@@ -14,7 +16,13 @@ public class FishingRod : Item
     }
 
     [SerializeField] GlobalParametersSO parameters;
+
+    /// <summary>
+    /// The tip of the fishing rod where the fishing line is cast from
+    /// </summary>
     [SerializeField] Transform rodTipTransform;
+    
+    
     [SerializeField] GameObject hookPrefab;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
@@ -34,25 +42,48 @@ public class FishingRod : Item
 
     FishingState fishingState = FishingState.Uncast;
 
+    /// <summary>
+    /// The initial rotation of the fishing rod when 
+    /// we start fishing.
+    /// </summary>
     Quaternion rodFishingStartRot;
 
+    /// <summary>
+    /// The rodTipPos from last frame.
+    /// Used to calculate velocity.
+    /// </summary>
     Vector3 lastRodTipPos;
     Vector3 rodTipVelocity;
 
+    /// <summary>
+    /// The current rotation of the fishing rod while in fishing mode.
+    /// Given to <see cref="PlayerItem"/> to automatically lerp the fishing rod.
+    /// </summary>
     float rodFishingTargetAngle;
+
+    /// <summary>
+    /// The current position x value of the fishing rod when in fishing mode.
+    /// Given to <see cref="PlayerItem"/> to automatically lerp the fishing rod.
+    /// </summary>
     float rodFishingTargetX;
 
     float reelStrength = 0;
 
+    /// <summary>
+    /// If the hook is in range to either pick up a hooked fish or reset fishing.
+    /// </summary>
     bool hookInRange = false;
 
     Fish hookedFish;
 
+    /// <summary>
+    /// Callback coming from <see cref="InputUI"/> to remove the UI from screen.
+    /// </summary>
     System.Action inputUIDestructor = null;
 
-    public override void Initialize(GameObject player, PlayerInput playerInput, PlayerItem playerItem, PlayerInteract playerInteract)
+    public override void Initialize(InitializeParams initParams)
     {
-        base.Initialize(player, playerInput, playerItem, playerInteract);
+        base.Initialize(initParams);
 
         moveAction.action.performed += OnFishMove;
         moveAction.action.canceled += OnFishMove;
@@ -99,10 +130,15 @@ public class FishingRod : Item
         base.OnUse();
     
         playerInput.SwitchCurrentActionMap("Fishing");
+        
+        // store the initial rotation of the rod
+        // and reset the angle and x position offsets
         rodFishingStartRot = playerItem.TargetRot;
         rodFishingTargetAngle = 0;
         rodFishingTargetX = 0;
 
+        // we need to rotate the player item ourselves
+        // so we stop it from automatically rotating
         playerItem.SetRotationLock(false);
 
         UpdateInputUI();
@@ -169,15 +205,24 @@ public class FishingRod : Item
 
                 var fishSO = hookedFish.FishSO;
 
+                ResetFishing();
+                UpdateInputUI();
+
                 playerItem.EnableTemporaryItem(fishItem);
                 (playerItem.EnabledItem as FishItem).SetFish(fishSO);
             }
-
-            ResetFishing();
-            UpdateInputUI();
+            else
+            {
+                ResetFishing();
+                UpdateInputUI();
+            }
         }
     }
 
+    /// <summary>
+    /// Spawns a hook with the same velocity as the rod tip.
+    /// Spawns a fishing line and attach it to the hook.
+    /// </summary>
     void Cast()
     {
         hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
@@ -196,6 +241,10 @@ public class FishingRod : Item
         fishingState = FishingState.Cast;
     }
 
+    /// <summary>
+    /// Reset internal fishing state and destroy 
+    /// non-child GameObjects (fishing line and hook).
+    /// </summary>
     void ResetFishing()
     {
         fishingState = FishingState.Uncast;
@@ -215,6 +264,10 @@ public class FishingRod : Item
         }
     }
 
+    /// <summary>
+    /// Called by <see cref="FishingHook"/> to set the <see cref="hookInRange"/> member.
+    /// </summary>
+    /// <param name="inRange"></param>
     public void SetHookInRange(bool inRange)
     {
         if(hookInRange != inRange)
@@ -229,20 +282,25 @@ public class FishingRod : Item
         inputUIDestructor?.Invoke();
         inputUIDestructor = null;
 
+        // UI only applies if the hook is in range
         if (!hookInRange)
         {
             return;
         }
+        // if we are fishing, put UI to stop fishing
         if (playerInput.currentActionMap.name == parameters.FishingActionMap)
         {
             inputUIDestructor = InputUI.Instance.AddInputUI(exitAction, "Stop fishing");
         }
+        // if we are not fishing
         else
         {
+            // put UI to collect fish
             if (hookedFish)
             {
                 inputUIDestructor = playerInteract.AddInteract(OnInteract, "Collect fish");
             }
+            // put UI to reset fishing
             else
             {
                 inputUIDestructor = playerInteract.AddInteract(OnInteract, "Reset fishing");

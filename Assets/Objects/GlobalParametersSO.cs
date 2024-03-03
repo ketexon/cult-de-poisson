@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Parameters fro the game used across multiple components.
+/// Includes layer masks and economy values.
+/// </summary>
 [CreateAssetMenu(fileName = "GlobalParameters", menuName = "Global Parameters")]
 public class GlobalParametersSO : ScriptableObject
 {
@@ -17,6 +21,9 @@ public class GlobalParametersSO : ScriptableObject
 
     [SerializeField]
     public LayerMask InteractLayerMask;
+
+    [SerializeField]
+    public LayerMask BucketFishLayerMask;
 
     [Header("Fish Zones")]
     [Tooltip("How long a hook needs to be in a Fish Zone for a fish to be caught.")]
@@ -51,5 +58,6 @@ public class GlobalParametersSO : ScriptableObject
     void Reset()
     {
         HookLayerMask = FindUtil.Layer("hook");
+        BucketFishLayerMask = FindUtil.Layer("BucketFish");
     }
 }

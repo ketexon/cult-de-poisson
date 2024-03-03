@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 using UnityEditor;
 using UnityEditor.VersionControl;
@@ -166,6 +167,8 @@ public static class FindUtil
 
         List<System.Func<T, bool>> filters = new();
 
+        List<string> nameContainsInsensitive = new();
+
         public FindAssetQuery()
         {
 #if !UNITY_EDITOR
@@ -208,8 +211,7 @@ public static class FindUtil
         {
             if (insensitive)
             {
-                name = name.ToLower();
-                filters.Add(asset => asset.name.ToLower().Contains(name));
+                nameContainsInsensitive.Add(name);
             }
             else
             {
@@ -227,7 +229,12 @@ public static class FindUtil
 
         string GenerateQueryString()
         {
-            return $"t:{typeof(T).Name}";
+            List<string> p = new(nameContainsInsensitive);
+            p.Add($"t:{typeof(T).Name}");
+
+            StringBuilder sb = new();
+            sb.AppendJoin(' ', p);
+            return sb.ToString();
         }
 
         public List<T> ExecuteMultiple()
@@ -243,7 +250,6 @@ public static class FindUtil
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 T asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
                 bool passesFilters = true;
-
                 foreach (var filter in filters)
                 {
                     if (!filter(asset))

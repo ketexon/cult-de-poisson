@@ -24,6 +24,9 @@ MonoBehaviour:
   InteractLayerMask:
     serializedVersion: 2
     m_Bits: 4096
+  BucketFishLayerMask:
+    serializedVersion: 2
+    m_Bits: 16384
   MinHookInFishZoneDelay: 5
   MaxHookInFishZoneDelay: 10
   FishingActionMap: Fishing

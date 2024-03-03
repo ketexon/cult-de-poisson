@@ -7,12 +7,12 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] GlobalParametersSO parameters;
-    [SerializeField] new Camera camera;
+    [SerializeField] new Cinemachine.CinemachineVirtualCamera camera;
     [SerializeField] float mouseSensitivity;
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
-    public Camera Camera => camera;
+    public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
     CharacterController characterController;
 
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
-        camera = GetComponentInChildren<Camera>();
+        camera = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
     }
 
     void Awake()
@@ -65,6 +65,12 @@ public class PlayerMovement : MonoBehaviour
         inputDir = transform.rotation * new Vector3(dir.x, 0, dir.y);
     }
 
+    /// <summary>
+    /// Used to calculate velocity relative to any plane we are on.
+    /// This is to prevent the player from moving into a plane when going uphill
+    /// or into air when going downhill. This function also applies gravity.
+    /// </summary>
+    /// <returns></returns>
     Vector3 CalculateVelocity()
     {
         var velocity = inputDir * speed;
