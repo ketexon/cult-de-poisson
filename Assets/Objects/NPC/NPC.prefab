@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactable: 1
   npcSO: {fileID: 11400000, guid: 8b8f941c02b46684ab33af84eae4d7a8, type: 2}
-  DialogueView: {fileID: 3548719117354832640}
+  DialogueView: {fileID: 0}
 --- !u!1 &4950747784917468914
 GameObject:
   m_ObjectHideFlags: 0

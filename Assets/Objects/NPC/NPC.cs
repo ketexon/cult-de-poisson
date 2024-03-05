@@ -9,14 +9,12 @@ public class NPC : Interactable
     //TODO: Pathfinding
 
     public NPCSO npcSO;
-    public DialogueBox DialogueView;
 
     DialogueManager dialogueManager;
 
     void Start()
     {
         dialogueManager = Player.Instance.DialogueManager;
-        DialogueView.gameObject.SetActive(false);
     }
 
     public override string InteractMessage => "Talk to " + npcSO.Name;

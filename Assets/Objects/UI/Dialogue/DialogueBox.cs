@@ -33,7 +33,7 @@ public class DialogueBox : DialogueViewBase
     /// </summary>
     void LookAtPlayer()
     {
-        Vector3 playerTarget = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        Vector3 playerTarget = new(player.transform.position.x, transform.position.y, player.transform.position.z);
 
         Quaternion target = Quaternion.LookRotation(playerTarget - transform.position);
         Quaternion current = transform.parent.rotation;
@@ -69,7 +69,11 @@ public class DialogueBox : DialogueViewBase
 
     public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
     {
-        if (dialogueLine.CharacterName != npcName) { return; }
+        if (dialogueLine.CharacterName != npcName)
+        {
+            onDialogueLineFinished?.Invoke();
+            return;
+        }
 
         textSpeed = 0.05f;
         StartCoroutine(RunLineInternal(dialogueLine.TextWithoutCharacterName.Text, onDialogueLineFinished));
