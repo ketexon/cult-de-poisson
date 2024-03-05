@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Yarn.Unity;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Journal : Item
 {
+    const string TURN_PAGE_TRIGGER = "turnPage";
+
     [SerializeField]
     CinemachineVirtualCamera virtualCamera;
 
@@ -17,12 +20,19 @@ public class Journal : Item
     [SerializeField]
     GameObject[] journalPages = new GameObject[0];
 
+    Animator animator;
+
     bool usingJournal = false;
+    bool turningPage = false;
+
+    int curPage = 0;
 
     private void Start()
     {
         Canvas canvas = GetComponentInChildren<Canvas>();
         canvas.worldCamera = mainCamera;
+
+        animator = GetComponentInChildren<Animator>();
 
         OnExitJournal();
     }
@@ -57,6 +67,21 @@ public class Journal : Item
         base.OnStopUsingItem();
     }
 
+    public void OpenPage(int pageNumber)
+    {
+        if (pageNumber < 0 || pageNumber >= journalPages.Length)
+        {
+            Debug.LogError("Invalid page number: " + pageNumber);
+            return;
+        }
+
+        if (pageNumber == curPage)
+        {
+            return;
+        }
+
+        StartCoroutine(OpenPageInternal(pageNumber));
+    }
     void StopUsingJournal(CallbackContext ctx) //Exiting the journal
     {
         playerInput.SwitchCurrentActionMap("Gameplay");
@@ -80,19 +105,30 @@ public class Journal : Item
         }
     }
 
-    public void OpenPage(int pageNumber)
+    IEnumerator OpenPageInternal(int pageNumber)
     {
-        if (pageNumber < 0 || pageNumber >= journalPages.Length)
-        {
-            Debug.LogError("Invalid page number: " + pageNumber);
-            return;
-        }
+        turningPage = true;
+        curPage = pageNumber;
 
         foreach (GameObject page in journalPages)
         {
             page.SetActive(false);
         }
 
+        animator.SetTrigger(TURN_PAGE_TRIGGER);
+
+        yield return null; //wait for a frame so the animator clip has a chance to be set
+        AnimatorClipInfo info = animator.GetCurrentAnimatorClipInfo(0)[0];
+
+        yield return new WaitForSeconds(info.clip.length);
+
         journalPages[pageNumber].SetActive(true);
+        turningPage = false;
     }
+
+    public void SetTurningPage(bool turningPage)
+    {
+        this.turningPage = turningPage;
+    }
+
 }
