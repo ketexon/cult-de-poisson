@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,8 @@ using static UnityEngine.InputSystem.InputAction;
 public class Journal : Item
 {
     const string TURN_PAGE_TRIGGER = "turnPage";
+    const string OPEN_JOURNAL_TRIGGER = "open";
+    const string CLOSE_JOURNAL_TRIGGER = "close";
 
     [SerializeField]
     CinemachineVirtualCamera virtualCamera;
@@ -23,7 +26,7 @@ public class Journal : Item
     Animator animator;
 
     bool usingJournal = false;
-    bool turningPage = false;
+    bool inAnimation = false;
 
     int curPage = 0;
 
@@ -52,12 +55,12 @@ public class Journal : Item
             return;
         }
 
-        journalPages[0].SetActive(true);
-
         usingJournal = true;
         playerInput.SwitchCurrentActionMap("Journal");
         virtualCamera.enabled = true;
         LockCursor.PushLockState(CursorLockMode.None);
+
+        StartCoroutine(OpenJournalInternal());
     }
 
     public override void OnStopUsingItem()
@@ -75,7 +78,7 @@ public class Journal : Item
             return;
         }
 
-        if (pageNumber == curPage)
+        if (pageNumber == curPage || inAnimation)
         {
             return;
         }
@@ -85,6 +88,8 @@ public class Journal : Item
     void StopUsingJournal(CallbackContext ctx) //Exiting the journal
     {
         playerInput.SwitchCurrentActionMap("Gameplay");
+
+        StartCoroutine(TriggerAnimation(CLOSE_JOURNAL_TRIGGER));
 
         OnExitJournal();
     }
@@ -107,7 +112,6 @@ public class Journal : Item
 
     IEnumerator OpenPageInternal(int pageNumber)
     {
-        turningPage = true;
         curPage = pageNumber;
 
         foreach (GameObject page in journalPages)
@@ -115,20 +119,30 @@ public class Journal : Item
             page.SetActive(false);
         }
 
-        animator.SetTrigger(TURN_PAGE_TRIGGER);
-
-        yield return null; //wait for a frame so the animator clip has a chance to be set
-        AnimatorClipInfo info = animator.GetCurrentAnimatorClipInfo(0)[0];
-
-        yield return new WaitForSeconds(info.clip.length);
+        yield return StartCoroutine(TriggerAnimation(TURN_PAGE_TRIGGER));
 
         journalPages[pageNumber].SetActive(true);
-        turningPage = false;
     }
 
-    public void SetTurningPage(bool turningPage)
+    IEnumerator OpenJournalInternal()
     {
-        this.turningPage = turningPage;
+        inAnimation = true;
+
+        yield return TriggerAnimation(OPEN_JOURNAL_TRIGGER);
+
+        journalPages[0].SetActive(true);
+    }
+
+    IEnumerator TriggerAnimation(string animationTrigger)
+    {
+        inAnimation = true;
+        animator.SetTrigger(animationTrigger);
+
+        yield return null;
+        AnimatorClipInfo info = animator.GetNextAnimatorClipInfo(0)[0];
+
+        yield return new WaitForSeconds(info.clip.length);
+        inAnimation = false;
     }
 
 }
