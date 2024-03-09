@@ -14,6 +14,7 @@ public class Journal : Item
     const string OPEN_JOURNAL_TRIGGER = "open";
     const string CLOSE_JOURNAL_TRIGGER = "close";
 
+
     [SerializeField]
     CinemachineVirtualCamera virtualCamera;
 
@@ -23,18 +24,17 @@ public class Journal : Item
     [SerializeField]
     GameObject[] journalPages = new GameObject[0];
 
+    [SerializeField]
+    Bookmark[] bookmarks = new Bookmark[3];
+
     Animator animator;
 
-    bool usingJournal = false;
     bool inAnimation = false;
-
+    bool usingJournal = false;
     int curPage = 0;
 
     private void Start()
     {
-        Canvas canvas = GetComponentInChildren<Canvas>();
-        canvas.worldCamera = mainCamera;
-
         animator = GetComponentInChildren<Animator>();
 
         OnExitJournal();
@@ -59,6 +59,11 @@ public class Journal : Item
         playerInput.SwitchCurrentActionMap("Journal");
         virtualCamera.enabled = true;
         LockCursor.PushLockState(CursorLockMode.None);
+
+        foreach (Bookmark bookmark in bookmarks)
+        {
+            bookmark.gameObject.SetActive(true);
+        }
 
         StartCoroutine(OpenJournalInternal());
     }
@@ -91,6 +96,11 @@ public class Journal : Item
 
         StartCoroutine(TriggerAnimation(CLOSE_JOURNAL_TRIGGER));
 
+        foreach (Bookmark bookmark in bookmarks)
+        {
+            bookmark.gameObject.SetActive(false);
+        }
+
         OnExitJournal();
     }
 
@@ -112,6 +122,13 @@ public class Journal : Item
 
     IEnumerator OpenPageInternal(int pageNumber)
     {
+        JournalUIElement[] journalUIElements = journalPages[curPage].GetComponentsInChildren<JournalUIElement>();
+
+        foreach (JournalUIElement element in journalUIElements)
+        {
+            element.Reset();
+        }
+
         curPage = pageNumber;
 
         foreach (GameObject page in journalPages)
@@ -122,6 +139,7 @@ public class Journal : Item
         yield return StartCoroutine(TriggerAnimation(TURN_PAGE_TRIGGER));
 
         journalPages[pageNumber].SetActive(true);
+        journalPages[pageNumber].GetComponent<Canvas>().worldCamera = mainCamera;
     }
 
     IEnumerator OpenJournalInternal()
@@ -131,6 +149,7 @@ public class Journal : Item
         yield return TriggerAnimation(OPEN_JOURNAL_TRIGGER);
 
         journalPages[0].SetActive(true);
+        journalPages[0].GetComponent<Canvas>().worldCamera = mainCamera;
     }
 
     IEnumerator TriggerAnimation(string animationTrigger)
