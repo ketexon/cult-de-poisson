@@ -213,7 +213,7 @@ public class Bucket : Item
 
     void StopUsingBucket()
     {
-        if(playerInput.currentActionMap.name != "Gameplay")
+        if(playerInput.currentActionMap != null && playerInput.currentActionMap.name != "Gameplay")
         {
             playerInput.SwitchCurrentActionMap("Gameplay");
         }
