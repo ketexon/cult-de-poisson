@@ -41,7 +41,7 @@ public class FishMovement : MonoBehaviour
         if (!enabled) return;
         if (parameters.HookLayerMask.Contains(collision.gameObject.layer))
         {
-            var hook = collision.gameObject.GetComponent<FishingHookV2>();
+            var hook = collision.gameObject.GetComponent<FishingHook>();
             if (!hook.Visible) return;
             hook.OnHook?.Invoke(GetComponent<Fish>());
             enabled = false;

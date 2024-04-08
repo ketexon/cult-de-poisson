@@ -7,10 +7,10 @@ public class FishVision : MonoBehaviour
 {
     new SphereCollider collider;
 
-    public System.Action<FishingHookV2> HookVisibleEvent;
+    public System.Action<FishingHook> HookVisibleEvent;
     public System.Action HookInvisibleEvent;
 
-    FishingHookV2 hook;
+    FishingHook hook;
 
 #if UNITY_EDITOR
     void OnDrawGizmos()
@@ -44,7 +44,7 @@ public class FishVision : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!enabled) return;
-        hook = other.GetComponent<FishingHookV2>();
+        hook = other.GetComponent<FishingHook>();
 
         hook.VisibilityChangedEvent += OnHookVisibilityChanged;
 

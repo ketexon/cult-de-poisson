@@ -6,20 +6,36 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 public class FishingHook : MonoBehaviour
 {
+    public System.Action<bool> VisibilityChangedEvent;
+    public System.Action<Fish> OnHook;
+
+    bool _visible = true;
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if(value != Visible)
+            {
+                _visible = value;
+                VisibilityChangedEvent?.Invoke(value);
+            }
+        }
+    }
+
     [System.NonSerialized]
-    public FishingRod PlayerFish;
+    public FishingRod FishingRod;
 
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] float waterDrag = 5.0f;
     [SerializeField] float bobDistance = 5.0f;
-    [SerializeField] InputActionReference useAction;
 
     public System.Action<Vector3> WaterHitEvent;
     public System.Action<Fish> FishHookEvent;
     public Vector3? WaterHitPos { get; private set; }
 
     Fish fish = null;
-    Rigidbody rb;
+    public Rigidbody RigidBody { get; private set; }
     ConfigurableJoint joint;
 
     bool inWater = false;
@@ -42,21 +58,24 @@ public class FishingHook : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        joint = rb.GetComponent<ConfigurableJoint>();
+        RigidBody = GetComponent<Rigidbody>();
+        joint = RigidBody.GetComponent<ConfigurableJoint>();
 
-        initialDrag = rb.drag;
+        initialDrag = RigidBody.drag;
 
         joint.linearLimit = new SoftJointLimit() {
             limit = bobDistance
         };
+
+        // dont move with parent
+        transform.SetParent(null, true);
     }
 
     void FixedUpdate()
     {
         if (fish && inWater)
         {
-            rb.AddForce(fish.ResistanceAcceleration(), ForceMode.Acceleration);            
+            RigidBody.AddForce(fish.ResistanceAcceleration(), ForceMode.Acceleration);            
         }
     }
 
@@ -69,11 +88,11 @@ public class FishingHook : MonoBehaviour
 
         if(limit < parameters.HookDistancePickupRange)
         {
-            PlayerFish.SetHookInRange(true);
+            FishingRod.SetHookInRange(true);
         }
         else if(limit > parameters.HookDistancePickupRange)
         {
-            PlayerFish.SetHookInRange(false);
+            FishingRod.SetHookInRange(false);
         }
     }
 
@@ -92,7 +111,7 @@ public class FishingHook : MonoBehaviour
         {
             WaterHitPos = transform.position;
             WaterHitEvent?.Invoke(WaterHitPos.Value);
-            rb.drag = waterDrag;
+            RigidBody.drag = waterDrag;
             inWater = true;
         }
     }
@@ -102,7 +121,7 @@ public class FishingHook : MonoBehaviour
         if (parameters.WaterLayerMask.Contains(other.gameObject.layer))
         {
             inWater = false;
-            rb.drag = initialDrag;  
+            RigidBody.drag = initialDrag;  
         }
     }
 }

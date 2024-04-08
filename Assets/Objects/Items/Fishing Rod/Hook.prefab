@@ -93,14 +93,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3444284660832831277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7679bdfccb05f2c49bebcaaabdc6aecf, type: 3}
+  m_Script: {fileID: 11500000, guid: e8f16773b9f78074ebd2b2f2ac2ddf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   waterDrag: 5
-  bobDistance: 5
-  useAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
-    type: 3}
+  bobDistance: 2
 --- !u!153 &7978381937376338535
 ConfigurableJoint:
   m_ObjectHideFlags: 0

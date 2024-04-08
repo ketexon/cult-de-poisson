@@ -22,23 +22,18 @@ public class FishingRod : Item
     /// </summary>
     [SerializeField] Transform rodTipTransform;
     
-    
-    [SerializeField] GameObject hookPrefab;
+    [SerializeField] FishingHook hook;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
-    [SerializeField] GameObject fishingLinePrefab;
+    [SerializeField] FishingLine fishingLine;
 
     [SerializeField] ItemSO fishItem;
     [SerializeField] PlayerInventorySO inventory;
 
-    [SerializeField] InputActionReference interactAction;
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference reelAction;
     [SerializeField] InputActionReference exitAction;
-
-    GameObject hookGO;
-    FishingLine fishingLine;
 
     FishingState fishingState = FishingState.Uncast;
 
@@ -225,16 +220,11 @@ public class FishingRod : Item
     /// </summary>
     void Cast()
     {
-        hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
-        var hook = hookGO.GetComponent<FishingHook>();
-
-        hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
-        hook.PlayerFish = this;
-
+        var hookRB = hook.GetComponent<Rigidbody>();
+        hookRB.position = rodTipTransform.position;
+        hookRB.velocity = rodTipVelocity;
         hook.FishHookEvent += OnHookFish;
-
-        var fishingLineGO = Instantiate(fishingLinePrefab);
-        fishingLine = fishingLineGO.GetComponent<FishingLine>();
+        hook.gameObject.SetActive(true);
 
         fishingLine.OnCast(hook, rodTipTransform, rodTipVelocity);
 
@@ -252,15 +242,9 @@ public class FishingRod : Item
         hookedFish = null;
         hookInRange = false;
 
-        if (fishingLine)
+        if (hook)
         {
-            Destroy(fishingLine.gameObject);
-            fishingLine = null;
-        }
-        if (hookGO)
-        {
-            Destroy(hookGO);
-            hookGO = null;
+            hook.gameObject.SetActive(false);
         }
     }
 

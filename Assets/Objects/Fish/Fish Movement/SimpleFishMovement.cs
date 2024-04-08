@@ -18,7 +18,7 @@ public class SimpleFishMovement : FishMovement
     Vector3 targetDirection;
     float speed;
 
-    FishingHookV2 hook;
+    FishingHook hook;
 
     Rigidbody rb;
     new Collider collider;
@@ -53,7 +53,7 @@ public class SimpleFishMovement : FishMovement
         }
     }
 
-    void OnHookVisible(FishingHookV2 hook)
+    void OnHookVisible(FishingHook hook)
     {
         this.hook = hook;
         speed = chaseHookSpeed;
