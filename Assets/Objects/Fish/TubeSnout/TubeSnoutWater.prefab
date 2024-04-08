@@ -139,6 +139,7 @@ MonoBehaviour:
   maxTugInterval: 3
   minTugStrength: 1
   maxTugStrength: 4
+  tugAcceleration: 2
 --- !u!1001 &4777690079186523124
 PrefabInstance:
   m_ObjectHideFlags: 0

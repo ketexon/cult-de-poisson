@@ -62,7 +62,6 @@ public class HookedFish : MonoBehaviour
         
         if(inWater && parameters.WaterLayerMask.Contains(other.gameObject.layer))
         {
-            Debug.Log(other.gameObject);
             inWater = false;
             if (enabled)
             {

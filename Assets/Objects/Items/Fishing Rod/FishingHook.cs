@@ -23,19 +23,23 @@ public class FishingHook : MonoBehaviour
         }
     }
 
-    [System.NonSerialized]
-    public FishingRod FishingRod;
+    [SerializeField] FishingRod fishingRod;
 
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] float waterDrag = 5.0f;
     [SerializeField] float bobDistance = 5.0f;
 
     public System.Action<Vector3> WaterHitEvent;
-    public System.Action<Fish> FishHookEvent;
+
     public Vector3? WaterHitPos { get; private set; }
 
     Fish fish = null;
+    HookedFish hookedFish = null;
+
     public Rigidbody RigidBody { get; private set; }
+
+    new Collider collider;
+    
     ConfigurableJoint joint;
 
     bool inWater = false;
@@ -43,13 +47,6 @@ public class FishingHook : MonoBehaviour
     public float BobDistance => bobDistance;
 
     float initialDrag;
-
-    public void OnCatchFish(FishSO fish)
-    {
-        var fishGO = Instantiate(fish.InWaterPrefab, transform);
-        this.fish = fishGO.GetComponent<Fish>();
-        FishHookEvent?.Invoke(this.fish);
-    }
 
     void Reset()
     {
@@ -60,15 +57,39 @@ public class FishingHook : MonoBehaviour
     {
         RigidBody = GetComponent<Rigidbody>();
         joint = RigidBody.GetComponent<ConfigurableJoint>();
-
-        initialDrag = RigidBody.drag;
-
-        joint.linearLimit = new SoftJointLimit() {
-            limit = bobDistance
-        };
+        collider = GetComponent<Collider>();
 
         // dont move with parent
         transform.SetParent(null, true);
+
+        initialDrag = RigidBody.drag;
+    }
+
+    void OnEnable()
+    {
+        Visible = true;
+        RigidBody.drag = initialDrag;
+
+        joint.linearLimit = new SoftJointLimit()
+        {
+            limit = bobDistance
+        };
+
+        OnHook += OnHookInternal;
+    }
+
+    void OnDisable()
+    {
+        // the RB is still enabled, so fish can still see the RB
+        Visible = false;
+
+        if (hookedFish)
+        {
+            // necessry to remove subscribed callbacks
+            Unhook();
+        }
+
+        DetachFromRB();
     }
 
     void FixedUpdate()
@@ -88,11 +109,11 @@ public class FishingHook : MonoBehaviour
 
         if(limit < parameters.HookDistancePickupRange)
         {
-            FishingRod.SetHookInRange(true);
+            fishingRod.SetHookInRange(true);
         }
         else if(limit > parameters.HookDistancePickupRange)
         {
-            FishingRod.SetHookInRange(false);
+            fishingRod.SetHookInRange(false);
         }
     }
 
@@ -102,6 +123,43 @@ public class FishingHook : MonoBehaviour
         joint.xMotion = ConfigurableJointMotion.Limited;
         joint.yMotion = ConfigurableJointMotion.Limited;
         joint.zMotion = ConfigurableJointMotion.Limited;
+    }
+
+    public void DetachFromRB()
+    {
+        joint.connectedBody = null;
+        joint.xMotion = ConfigurableJointMotion.Free;
+        joint.yMotion = ConfigurableJointMotion.Free;
+        joint.zMotion = ConfigurableJointMotion.Free;
+    }
+
+    void OnHookInternal(Fish fish)
+    {
+        this.fish = fish;
+        hookedFish = fish.GetComponent<HookedFish>();
+        hookedFish.enabled = true;
+
+        fish.AttachTo(RigidBody);
+
+        collider.enabled = false;
+        // since we disable the collider, we don't get any
+        // more OnTrigger_ updates, so we should reset the
+        // drag here
+        RigidBody.drag = initialDrag;
+
+        // other fish should no longer see hook
+        Visible = false;
+
+        hookedFish.UnhookEvent += Unhook;
+    }
+
+    void Unhook()
+    {
+        hookedFish.UnhookEvent -= Unhook;
+
+        fish.Detach();
+
+        ResetHook();
     }
 
     void OnTriggerEnter(Collider other)
@@ -123,5 +181,16 @@ public class FishingHook : MonoBehaviour
             inWater = false;
             RigidBody.drag = initialDrag;  
         }
+    }
+
+    /// <summary>
+    /// Set hook to initial state to be cast again
+    /// </summary>
+    void ResetHook()
+    {
+        fish = null;
+        hookedFish = null;
+        collider.enabled = true;
+        Visible = false;
     }
 }

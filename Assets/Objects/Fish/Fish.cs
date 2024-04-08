@@ -44,20 +44,29 @@ public class Fish : MonoBehaviour
 
     public void InitializeBucket()
     {
-        rb.isKinematic = false;
+        rb.isKinematic = true;
         rb.detectCollisions = false;
-        boxCollider.isTrigger = true;
-        if(TryGetComponent<FishMovement>(out var fishMovement))
+        boxCollider.enabled = false;
+        if(FishMovement)
         {
-            fishMovement.enabled = false;
+            FishMovement.enabled = false;
+        }
+        if (HookedFish)
+        {
+            HookedFish.enabled = false;
         }
     }
 
     public void InitializeWater(FishZone fishZone)
     {
-        if (TryGetComponent<FishMovement>(out var fishMovement))
+        if (FishMovement)
         {
-            fishMovement.FishZone = fishZone;
+            FishMovement.enabled = true;
+            FishMovement.FishZone = fishZone;
+        }
+        if (HookedFish)
+        {
+            HookedFish.enabled = false;
         }
     }
 

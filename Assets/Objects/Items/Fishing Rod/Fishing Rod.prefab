@@ -164,7 +164,7 @@ MonoBehaviour:
   fishingSensitivityY: 0.05
   fishingSensitivityX: 0.05
   fishingLine: {fileID: 685155558921625414}
-  fishItem: {fileID: 11400000, guid: 8fe9604f1e6adc54a859ab482f080426, type: 2}
+  fishItemSO: {fileID: 0}
   inventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
   moveAction: {fileID: -1182480507873766809, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
@@ -416,6 +416,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3498793798631046661, guid: 8c8f5953dcbe27c4381a343a531abbe2,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010426282565841167, guid: 8c8f5953dcbe27c4381a343a531abbe2,
+        type: 3}
+      propertyPath: fishingRod
+      value: 
+      objectReference: {fileID: 5564895037554884821}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

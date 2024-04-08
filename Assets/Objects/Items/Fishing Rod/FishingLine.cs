@@ -39,12 +39,28 @@ public class FishingLine : MonoBehaviour
         parameters = FindUtil.Asset<GlobalParametersSO>();
     }
 
-    void OnDestroy()
+    void OnEnable()
+    {
+        lineRenderer.enabled = true;
+    }
+
+    void OnDisable()
     {
         if (bobGO)
         {
             Destroy(bobGO);
+            bobGO = null;
+            
         }
+        lineRenderer.enabled = false;
+
+        // reset values
+        bob = null;
+        hook = null;
+
+        reelingPhase = false;
+        bobDistance = null;
+        hookDistance = null;
     }
 
     public void OnCast(FishingHook hook, Transform tip, Vector3 rodTipVelocity)

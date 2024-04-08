@@ -16,8 +16,6 @@ public class SimpleHookedFish : HookedFish
 
     Coroutine coro = null;
 
-    Quaternion? targetRot = null;
-
     void FixedUpdate()
     {
         if (enabled && RodTipTransform && inWater)
