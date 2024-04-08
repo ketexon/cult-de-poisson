@@ -139,14 +139,13 @@ public class FishingRod : Item
         UpdateInputUI();
     }
 
-    public override void OnStopUsingItem()
+    void OnDisable()
     {
         inputUIDestructor?.Invoke();
         if (hookedFish && hookInRange)
         {
             inventory.AddFish(hookedFish.FishSO);
         }
-        base.OnStopUsingItem();
         ResetFishing();
     }
 
@@ -203,7 +202,7 @@ public class FishingRod : Item
                 ResetFishing();
                 UpdateInputUI();
 
-                playerItem.EnableTemporaryItem(fishItem);
+                playerItem.EnableItem(fishItem, temporary: true);
                 (playerItem.EnabledItem as FishItem).SetFish(fishSO);
             }
             else
