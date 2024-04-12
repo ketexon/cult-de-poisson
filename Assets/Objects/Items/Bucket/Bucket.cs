@@ -10,7 +10,7 @@ public class Bucket : Item
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     [SerializeField] PlayerInventorySO inventory;
-    [SerializeField] ItemSO fishItem;
+    [SerializeField] ItemSO fishItemSO;
     [SerializeField] float maxRaycastDistance = 5.0f;
 
     [SerializeField] InputActionReference pointAction;
@@ -56,8 +56,12 @@ public class Bucket : Item
     {
         base.Initialize(initParams);
 
+    }
+
+    void OnEnable()
+    {
         // assign fish to each slot in the bucket
-        for(int i = 0; i < fishSpawnContainer.childCount; i++)
+        for (int i = 0; i < fishSpawnContainer.childCount; i++)
         {
             // if we have no more slots or we have no more fish, break
             if (i >= inventory.Fish.Count) break;
@@ -90,7 +94,8 @@ public class Bucket : Item
         cycleFishAction.action.performed += OnCycleFish;
         selectFishAction.action.performed += OnSelectFish;
     }
-    public override void OnStopUsingItem()
+
+    void OnDisable()
     {
         StopUsingBucket();
 
@@ -106,31 +111,7 @@ public class Bucket : Item
         {
             Destroy(fish.gameObject);
         }
-
-        // Destroy everything BUT the vcam
-        foreach (Transform t in transform)
-        {
-            if(t.gameObject != virtualCamera.gameObject)
-            {
-                Destroy(t.gameObject);
-            }
-        }
-
-        // disable the vcam, but wait until it is done blending to destroy it
-        // and finish the destructor (ie. Destroy(gameObject))
-
-        virtualCamera.enabled = false;
-
-        IEnumerator DestroyCoroutine()
-        {
-            yield return new WaitForEndOfFrame();
-            while (cinemachineBrain.IsBlending)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            base.OnStopUsingItem();
-        }
-        StartCoroutine(DestroyCoroutine());
+        spawnedFish.Clear();
     }
 
     public override void OnUse()
@@ -169,7 +150,7 @@ public class Bucket : Item
         {
             var fishSO = hoveredFish.FishSO;
 
-            playerItem.EnableTemporaryItem(fishItem);
+            playerItem.EnableItem(fishItemSO, temporary: true);
 
             (playerItem.EnabledItem as FishItem).SetFish(fishSO);
         }
@@ -217,9 +198,11 @@ public class Bucket : Item
         {
             var fishSO = spawnedFish[selectedFish.Value].GetComponent<Fish>().FishSO;
 
-            playerItem.EnableTemporaryItem(fishItem);
-
-            (playerItem.EnabledItem as FishItem).SetFish(fishSO);
+            var newItem = playerItem.EnableItem(fishItemSO, temporary: true) as FishItem;
+            if (newItem)
+            {
+                newItem.SetFish(fishSO);
+            }
         }
     }
 
@@ -230,7 +213,7 @@ public class Bucket : Item
 
     void StopUsingBucket()
     {
-        if(playerInput.currentActionMap.name != "Gameplay")
+        if(playerInput.currentActionMap != null && playerInput.currentActionMap.name != "Gameplay")
         {
             playerInput.SwitchCurrentActionMap("Gameplay");
         }
