@@ -897,6 +897,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rod
       objectReference: {fileID: 0}
+    - target: {fileID: 565233922410181394, guid: e3c86562f757c6640b740a19fbb5278b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 807094908905749210, guid: e3c86562f757c6640b740a19fbb5278b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1033,6 +1038,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish Item
       objectReference: {fileID: 0}
+    - target: {fileID: 8688625216361870954, guid: bea5292862d48e840a3b7841c421e111,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1106,6 +1116,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bucket
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684512066022116301, guid: 3545394e24651a147a73e6382ef503fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
