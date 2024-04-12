@@ -6,10 +6,10 @@ using UnityEngine;
 // Interact not implemented yet
 public class DoorInteractable : Interactable
 {
-    public override string InteractMessage => CanInteract ? "Unlock Door?" : "Door is Locked";
+    public override string InteractMessage => InteractEnabled ? "Unlock Door?" : "Door is Locked";
 
     public void Start() {
-        CanInteract = false;
+        InteractEnabled = false;
         Player.Instance.Item.ItemChangeEvent += updateCanInteract;
     }
 
@@ -25,9 +25,9 @@ public class DoorInteractable : Interactable
         yield return new WaitForSeconds(delay);
 
         if (item is FishItem fishItem && fishItem.fishSO.Name == "Key Fish") {
-            CanInteract = true;
+            InteractEnabled = true;
         } else {
-            CanInteract = false;
+            InteractEnabled = false;
         }
     }
 }

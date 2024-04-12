@@ -64,7 +64,7 @@ public class UpdateQuestInteractable : Interactable
                 || (!quest.MustStartToComplete && status == QuestStatus.NotStarted);
 
             // we can only interact if we can complete the quest
-            CanInteract = QuestStateSO.Instance.CanComplete(quest);
+            InteractEnabled = QuestStateSO.Instance.CanComplete(quest);
         }
     }
 }

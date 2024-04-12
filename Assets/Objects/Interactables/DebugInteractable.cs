@@ -9,11 +9,11 @@ public class DebugInteractable : Interactable
     public override void OnInteract()
     {
         Debug.Log("Debug Interact");
-        CanInteract = false;
+        InteractEnabled = false;
         IEnumerator ResumeInteractableCoroutine()
         {
             yield return new WaitForSeconds(2.0f);
-            CanInteract = true;
+            InteractEnabled = true;
         }
         StartCoroutine(ResumeInteractableCoroutine());
     }

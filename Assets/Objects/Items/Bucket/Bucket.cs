@@ -150,9 +150,9 @@ public class Bucket : Item
         {
             var fishSO = hoveredFish.FishSO;
 
-            playerItem.EnableItem(fishItemSO, temporary: true);
-
-            (playerItem.EnabledItem as FishItem).SetFish(fishSO);
+            var fishItem = playerItem.GetItem(fishItemSO, allowNonHeldItems: true) as FishItem;
+            fishItem.SetFish(fishSO);
+            playerItem.EnableItem(fishItem, temporary: true);
         }
     }
     

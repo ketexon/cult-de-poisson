@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    [SerializeField] bool _interactable = true;
+    [SerializeField] bool _interactEnabled = true;
+    bool _interactVisible = true;
 
     protected new Collider collider;
     
@@ -12,15 +13,15 @@ public abstract class Interactable : MonoBehaviour
     /// Used by <c>PlayerIntact</c> to show interact text but not
     /// allow interaction. Useful for disabled interactables.
     /// </summary>
-    public bool CanInteract
+    public virtual bool InteractEnabled
     {
-        get => _interactable;
+        get => _interactEnabled;
         protected set
         {
-            if(_interactable != value)
+            if(_interactEnabled != value)
             {
-                _interactable = value;
-                CanInteractChangeEvent?.Invoke(_interactable);
+                _interactEnabled = value;
+                InteractDisabledChangedEvent?.Invoke(_interactEnabled);
             }
         }
     }
@@ -28,7 +29,29 @@ public abstract class Interactable : MonoBehaviour
     /// <summary>
     /// Called when CanInteract is changed.
     /// </summary>
-    public System.Action<bool> CanInteractChangeEvent;
+    public System.Action<bool> InteractDisabledChangedEvent;
+
+    /// <summary>
+    /// Used by <c>PlayerIntact</c> to show interact text but not
+    /// allow interaction. Useful for disabled interactables.
+    /// </summary>
+    public virtual bool InteractVisible
+    {
+        get => _interactVisible;
+        protected set
+        {
+            if (_interactVisible != value)
+            {
+                _interactVisible = value;
+                InteractVisibleChangedEvent?.Invoke(_interactVisible);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Called when CanInteract is changed.
+    /// </summary>
+    public System.Action<bool> InteractVisibleChangedEvent;
 
     /// <summary>
     /// Message to show in UI when hovering this item

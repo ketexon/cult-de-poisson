@@ -63,13 +63,15 @@ public class PlayerInteract : MonoBehaviour
             {
                 if (_interactable)
                 {
-                    _interactable.CanInteractChangeEvent -= OnInteractableCanInteractChange;
+                    _interactable.InteractDisabledChangedEvent -= OnInteractableStateChange;
+                    _interactable.InteractVisibleChangedEvent -= OnInteractableStateChange;
                 }
                 _interactable = value;
                 UpdateUI();
                 if (_interactable)
                 {
-                    _interactable.CanInteractChangeEvent += OnInteractableCanInteractChange;
+                    _interactable.InteractDisabledChangedEvent += OnInteractableStateChange;
+                    _interactable.InteractVisibleChangedEvent += OnInteractableStateChange;
                 }
             }
         }
@@ -93,7 +95,8 @@ public class PlayerInteract : MonoBehaviour
     {
         if (_interactable)
         {
-            _interactable.CanInteractChangeEvent -= OnInteractableCanInteractChange;
+            _interactable.InteractDisabledChangedEvent -= OnInteractableStateChange;
+            _interactable.InteractVisibleChangedEvent -= OnInteractableStateChange;
         }
     }
 
@@ -106,7 +109,7 @@ public class PlayerInteract : MonoBehaviour
         {
             return;
         }
-        if (Interactable && Interactable.CanInteract)
+        if (Interactable && Interactable.InteractVisible && Interactable.InteractEnabled)
         {
             Interactable.OnInteract();
         }
@@ -182,7 +185,7 @@ public class PlayerInteract : MonoBehaviour
     /// This means we need to redraw the UI to show that
     /// the interactable is no longer disabled.
     /// </summary>
-    void OnInteractableCanInteractChange(bool _)
+    void OnInteractableStateChange(bool _)
     {
         UpdateUI();
     }
@@ -196,15 +199,15 @@ public class PlayerInteract : MonoBehaviour
         interactableUIDestructor?.Invoke();
         interactableUIDestructor = null;
         bool hasInteractTarget = false;
-        if (Interactable)
+        if (Interactable && Interactable.InteractVisible)
         {
             interactableUIDestructor = InputUI.Instance.AddInputUI(
                 interactAction,
                 Interactable.InteractMessage,
-                !Interactable.CanInteract
+                !Interactable.InteractEnabled
             );
-            hasInteractTarget = Interactable.CanInteract;
-            InputUI.Instance.SetCrosshairEnabled(Interactable.CanInteract);
+            hasInteractTarget = Interactable.InteractEnabled;
+            InputUI.Instance.SetCrosshairEnabled(Interactable.InteractEnabled);
         }
         else
         {

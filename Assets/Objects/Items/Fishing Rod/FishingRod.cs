@@ -28,7 +28,7 @@ public class FishingRod : Item
     [SerializeField] float fishingSensitivityX = 0.05f;
     [SerializeField] GameObject fishingLinePrefab;
 
-    [SerializeField] ItemSO fishItem;
+    [SerializeField] ItemSO fishItemSO;
     [SerializeField] PlayerInventorySO inventory;
 
     [SerializeField] InputActionReference interactAction;
@@ -207,8 +207,9 @@ public class FishingRod : Item
                 ResetFishing();
                 UpdateInputUI();
 
+                var fishItem = playerItem.GetItem(fishItemSO) as FishItem;
+                fishItem.SetFish(fishSO);
                 playerItem.EnableItem(fishItem, temporary: true);
-                (playerItem.EnabledItem as FishItem).SetFish(fishSO);
             }
             else
             {
