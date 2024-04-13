@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Fish : MonoBehaviour
 {
+    public FishItemBehaviour ItemBehaviour { get; private set; }
+
     [SerializeField] public FishSO FishSO;
     protected Rigidbody rb;
     protected BoxCollider boxCollider;
@@ -18,6 +20,8 @@ public class Fish : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+
+        ItemBehaviour = GetComponent<FishItemBehaviour>();
     }
 
     /// <summary>

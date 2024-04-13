@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Base class for all item scripts.
 /// </summary>
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IInteractItem
 {
     /// <summary>
     /// The ItemSO corresponding to the Item.
@@ -34,6 +34,30 @@ public class Item : MonoBehaviour
         public Camera MainCamera;
         public CinemachineBrain CinemachineBrain;
     };
+
+    public virtual bool InteractVisible => false;
+
+    public virtual bool InteractEnabled => false;
+
+    public virtual string InteractMessage => null;
+
+    /// <summary>
+    /// If true, the item and the current interactable
+    /// are treated as one interaction. This primarily
+    /// does not show the message of the interactable, if it exists.
+    /// Eg. if this is the KeyFish and the Interactable is the door
+    ///     by default, 
+    ///         the KeyFish would have no message
+    ///         the door would say "Door is locked"
+    ///     if looking at the door with the keyfish
+    ///         the KeyFish would have the message "Unlock door"
+    ///         the door *should have no message*
+    ///     If InteractsWithInteractable is false, the door's message
+    ///     will automatically be deleted to prevent coupling
+    /// </summary>
+    public virtual bool InteractsWithInteractable => false;
+
+    public virtual void OnInteract(Interactable target) { }
 
     /// <summary>
     /// Called when the UseItem key is pressed.

@@ -3,11 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface IInteractable
+{
+    bool InteractVisible { get; }
+    bool InteractEnabled { get; }
+    string InteractMessage { get; }
+}
+
+public interface IInteractItem : IInteractable
+{
+    bool InteractsWithInteractable { get; }
+    void OnInteract(Interactable target);
+}
+
 /// <summary>
 /// Script to allow player to interact with multiple items.
+/// In addition, communicates between the player's item and the 
+/// interactable being looked at to determine if either can be used 
+/// independently or if they can be used together.
+/// 
+/// If both the item and the interactable are interactable,
+/// the compatibility is checked vie <see cref="Item.InteractEnabled"/>
 /// </summary>
 [RequireComponent(typeof(PlayerMovement))]
-public class PlayerInteract : MonoBehaviour
+public class PlayerInteract : SingletonBehaviour<PlayerInteract>
 {
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] InputActionReference interactAction;
@@ -78,21 +97,36 @@ public class PlayerInteract : MonoBehaviour
     }
 
     PlayerMovement playerMovement;
+    PlayerItem playerItem;
 
     System.Action interactableUIDestructor = null;
+    System.Action itemUIDestructor = null;
 
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
     }
 
-    void Awake()
+    override protected void Awake()
     {
+        base.Awake();
+
         playerMovement = GetComponent<PlayerMovement>();
+        playerItem = GetComponent<PlayerItem>();
+    }
+
+    void Start()
+    {
+        playerItem.ItemChangeEvent += OnItemChange;
     }
 
     void OnDestroy()
     {
+        if (playerItem)
+        {
+            playerItem.ItemChangeEvent -= OnItemChange;
+        }
+
         if (_interactable)
         {
             _interactable.InteractDisabledChangedEvent -= OnInteractableStateChange;
@@ -191,20 +225,59 @@ public class PlayerInteract : MonoBehaviour
     }
 
     /// <summary>
+    /// Callback for <see cref="PlayerItem.ItemChangeEvent"/>
+    /// </summary>
+    void OnItemChange(Item newItem)
+    {
+        UpdateUI();
+    }
+
+    /// <summary>
     /// Basically just redraws the entire UI if we add any new
     /// interactables or one interactable becomes disabled/enabled
     /// </summary>
     void UpdateUI()
     {
+        // CLEAN UP CURRENT UI
         interactableUIDestructor?.Invoke();
         interactableUIDestructor = null;
+
+        itemUIDestructor?.Invoke();
+        itemUIDestructor = null;
+
+        /// whether there is already an interact target
+        /// all remaining interact targets will be disabled
+        /// to make sure only one callback is pressed per [INTERACT]
+        /// keypress
+        /// eg. if you can interact with a door or use your fish, 
+        ///         the door will be enabled first, since it is an interactable
+        ///         This will set hasInteractTarget to true
+        ///         Now, picking using the fish will be disabled
         bool hasInteractTarget = false;
-        if (Interactable && Interactable.InteractVisible)
+
+        /// set to false if the item can be used
+        /// *on* the interactable
+        bool shouldShowInteractable = true;
+
+        // Register interact for item
+        if (playerItem.EnabledItem.InteractVisible)
+        {
+            itemUIDestructor = InputUI.Instance.AddInputUI(
+                interactAction,
+                playerItem.EnabledItem.InteractMessage,
+                !playerItem.EnabledItem.InteractEnabled || hasInteractTarget
+            );
+            hasInteractTarget = playerItem.EnabledItem.InteractEnabled;
+            InputUI.Instance.SetCrosshairEnabled(Interactable.InteractEnabled);
+        }
+
+        // Register interact for interactable
+        if (shouldShowInteractable && Interactable && Interactable.InteractVisible)
         {
             interactableUIDestructor = InputUI.Instance.AddInputUI(
                 interactAction,
                 Interactable.InteractMessage,
-                !Interactable.InteractEnabled
+                !Interactable.InteractEnabled || hasInteractTarget
             );
             hasInteractTarget = Interactable.InteractEnabled;
             InputUI.Instance.SetCrosshairEnabled(Interactable.InteractEnabled);
@@ -213,6 +286,8 @@ public class PlayerInteract : MonoBehaviour
         {
             InputUI.Instance.SetCrosshairEnabled(false);
         }
+
+        // Register other interact targets supplied
         foreach (var interactTarget in interactTargets)
         {
             interactTarget.InputUIDestructor?.Invoke();
