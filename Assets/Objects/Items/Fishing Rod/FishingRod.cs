@@ -97,6 +97,11 @@ public class FishingRod : Item
 
         clickAction.action.performed += OnFishClick;
         reelAction.action.performed += OnFishReel;
+
+        if (InputUI.Instance)
+        {
+            UpdateInputUI();
+        }
     }
 
     void Awake()
@@ -104,6 +109,11 @@ public class FishingRod : Item
         lastRodTipPos = rodTipTransform.position;
 
         uncastLocalRotation = rod.localRotation;
+    }
+
+    void Start()
+    {
+        UpdateInputUI();
     }
 
     void Update()
@@ -136,7 +146,8 @@ public class FishingRod : Item
 
     protected virtual void OnDisable()
     {
-        //inputUIDestructor?.Invoke();
+        inputUIDestructor?.Invoke();
+
         if (fish && hookInRange)
         {
             inventory.AddFish(fish.FishSO);
@@ -184,6 +195,8 @@ public class FishingRod : Item
         playerItem.SetRotationLock(false);
 
         InteractivityChangeEvent?.Invoke(this);
+
+        UpdateInputUI();
     }
 
     void OnReleaseAim(InputAction.CallbackContext ctx)
@@ -197,6 +210,8 @@ public class FishingRod : Item
         playerItem.SetRotationLock(true);
 
         InteractivityChangeEvent?.Invoke(this);
+
+        UpdateInputUI();
     }
 
 
@@ -228,15 +243,6 @@ public class FishingRod : Item
     {
         reelStrength = Mathf.Clamp(-ctx.ReadValue<float>() / 120, -1, 1);
         fishingLine.Reel(reelStrength);
-    }
-
-    public void OnExitFishing(InputAction.CallbackContext ctx)
-    {
-        playerInput.SwitchCurrentActionMap("Gameplay");
-        playerItem.TargetRot = rodFishingStartRot;
-        playerItem.SetRotationLock(true);
-
-        UpdateInputUI();
     }
 
     #region Interaction
@@ -304,6 +310,8 @@ public class FishingRod : Item
             hook.gameObject.SetActive(false);
         }
         fishingLine.enabled = false;
+
+        InteractivityChangeEvent?.Invoke(this);
     }
 
     /// <summary>
@@ -321,28 +329,17 @@ public class FishingRod : Item
 
     void UpdateInputUI()
     {
-        //inputUIDestructor?.Invoke();
-        //inputUIDestructor = null;
-
-        //// UI only applies if the hook is in range
-        //if (!hookInRange)
-        //{
-        //    return;
-        //}
-        //// if we are holding right click
-        //else if(aiming)
-        //{
-        //    // put UI to collect fish
-        //    if (fish)
-        //    {
-        //        inputUIDestructor = playerInteract.AddInteract(OnInteract, "Collect fish");
-        //    }
-        //    // put UI to reset fishing
-        //    else
-        //    {
-        //        inputUIDestructor = playerInteract.AddInteract(OnInteract, "Reset fishing");
-        //    }
-        //}
+        if (aiming)
+        {
+            inputUIDestructor?.Invoke();
+        }
+        else
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(
+                aimAction,
+                "Aim fishing rod"
+            );
+        }
     }
 
     public void OnHookFish(Fish fish)
