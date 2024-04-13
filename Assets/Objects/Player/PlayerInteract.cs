@@ -293,13 +293,6 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void OnItemChange(Item newItem)
     {
-        Debug.Log(newItem);
-        if(newItem is FishItem fishItem)
-        {
-            Debug.Log(fishItem.fishSO);
-            Debug.Log(fishItem.InteractItem);
-            Debug.Log(InteractItem as Object);
-        }
         UpdateInteractivity();
     }
 
