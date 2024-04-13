@@ -173,7 +173,7 @@ public class PlayerItem : MonoBehaviour
     /// <returns></returns>
     public Item GetItem(ItemSO itemSO, bool allowNonHeldItems = false)
     {
-        return GetItemIndex(itemSO, allowNonHeldItems: true) is int idx
+        return GetItemIndex(itemSO, allowNonHeldItems: allowNonHeldItems) is int idx
             ? items[idx]
             : null;
     }

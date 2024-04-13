@@ -14,8 +14,11 @@ public class FishItem : Item
     [SerializeField] float placeMaxDistance = 10.0f;
     [System.NonSerialized] public FishSO fishSO;
     GameObject fishGO;
+    Fish fish;
     GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
+
+    public override IInteractObject InteractItem => fish ? fish.ItemBehaviour : null;
 
     public void SetFish(FishSO fishSO)
     {
@@ -25,12 +28,16 @@ public class FishItem : Item
             Destroy(fishGO);
         }
         fishGO = Instantiate(fishSO.PhysicalPrefab, this.transform);
-        fishGO.GetComponent<Fish>().InitializeBucket();
+        gameObject.SetActive(true); // we must activate before we initialize bucket so that awake is called on Fish
+        fish = fishGO.GetComponent<Fish>();
+        fish.InitializeBucket();
+
     }
 
     public void SetFish(Fish fish)
     {
         this.fishSO = fish.FishSO;
+        this.fish = fish;
         if (fishGO)
         {
             Destroy(fishGO);

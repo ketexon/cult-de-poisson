@@ -2,28 +2,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
-public interface IInteractable
-{
-    bool InteractVisible { get; }
-    bool InteractEnabled { get; }
-    string InteractMessage { get; }
-}
+/// <summary>
+/// An object that participates in an interaction. 
+/// Either an an <see cref="IInteractAgent"/> or an <see cref="IInteractTarget"/>. 
+/// </summary>
+public interface IInteractObject
+{ }
 
-public interface IInteractItem : IInteractable
+/// <summary>
+/// An object being interacted with.
+/// See <see cref="PlayerInteract"/>
+/// </summary>
+public interface IInteractTarget : IInteractObject
 {
-    bool InteractsWithInteractable { get; }
-    void OnInteract(Interactable target);
+    bool TargetInteractVisible { get; }
+    bool TargetInteractEnabled { get; }
+    string TargetInteractMessage { get; }
+
+    void OnInteract();
 }
 
 /// <summary>
-/// Script to allow player to interact with multiple items.
-/// In addition, communicates between the player's item and the 
-/// interactable being looked at to determine if either can be used 
-/// independently or if they can be used together.
-/// 
-/// If both the item and the interactable are interactable,
-/// the compatibility is checked vie <see cref="Item.InteractEnabled"/>
+/// An object that interacts with an See <see cref="IInteractTarget"/>.
+/// See <see cref="PlayerInteract"/>
+/// </summary>
+public interface IInteractAgent : IInteractObject
+{
+    bool AgentInteractVisible(Interactable target);
+    bool AgentInteractEnabled(Interactable target);
+    string AgentInteractMessage(Interactable target);
+
+    void OnInteract(Interactable target) { }
+}
+
+/// <summary>
+/// Interface to allow an object to defer interact
+/// behavior to another object. For example, it is 
+/// used in <see cref="Item.InteractItem"/> for <see cref="FishItem"/> to defer
+/// interact behaviour to the <see cref="Fish.ItemBehaviour"/> of the currently held fish.
+/// </summary>
+public interface IInteractTargetProxy
+{
+    IInteractObject InteractItem { get; }
+}
+
+/// <summary>
+/// <para>
+///     Script that handles main player interaction throug the F key.
+/// </para>
+/// <para>
+///     There are two types of interacting components (<see cref="IInteractObject"/>): the <see cref="IInteractAgent"/> and the <see cref="IInteractTarget"/>.
+///     The target is the thing being interacted with (eg. a door), and the agent is the "tool" (eg. the key).
+/// </para>
+/// <para>By default, it checks 4 places for interactions:</para>
+/// <list type="bullet">
+///     <item>The item the player is holding as an agent to the interactable the player is looking at</item>
+///     <item>The interactable the player is looking at as a target without an agent</item>
+///     <item>The item the player is holding as a target without an agent</item>
+///     <item>Any interactions registered by other scripts</item>
+/// </list>
+/// <para>
+///     See <see cref="KeyFishItemBehaviour"/> for an example of an Agent.
+///     See <see cref="Interactable"/> for the interact targets.
+/// </para>
 /// </summary>
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerInteract : SingletonBehaviour<PlayerInteract>
@@ -36,7 +79,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// This is either an Interactable (eg. an item on the ground)
     /// or added programmatically through code
     /// </summary>
-    class InteractTarget
+    class ExternalInteractTarget : IInteractTarget
     {
         /// <summary>
         /// Called when this target is "next" to be interacted with
@@ -63,16 +106,25 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         /// See <c>InputUI</c>
         /// </summary>
         public System.Action InputUIDestructor;
+
+        public bool TargetInteractVisible => true;
+
+        public bool TargetInteractEnabled => !Disabled;
+
+        public string TargetInteractMessage => Message;
+
+        public void OnInteract() => Callback?.Invoke();
+
     }
 
-    List<InteractTarget> interactTargets = new();
+    List<ExternalInteractTarget> externalInteractTargets = new();
 
     Interactable _interactable;
 
     /// <summary>
     /// The interactable the player is hovering over
     /// </summary>
-    Interactable Interactable {
+    public Interactable Interactable {
         get => _interactable;
         // Sets the interactable and unsubscribes from the previous
         // interactable's events
@@ -86,7 +138,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
                     _interactable.InteractVisibleChangedEvent -= OnInteractableStateChange;
                 }
                 _interactable = value;
-                UpdateUI();
+                UpdateInteractivity();
                 if (_interactable)
                 {
                     _interactable.InteractDisabledChangedEvent += OnInteractableStateChange;
@@ -96,8 +148,15 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         }
     }
 
+    // The curent interact target and agent
+    // as of refresh
+    IInteractTarget interactTarget = null;
+    IInteractAgent interactAgent = null;
+
     PlayerMovement playerMovement;
     PlayerItem playerItem;
+
+    IInteractObject InteractItem => playerItem.EnabledItem.InteractItem;
 
     System.Action interactableUIDestructor = null;
     System.Action itemUIDestructor = null;
@@ -143,13 +202,17 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         {
             return;
         }
-        if (Interactable && Interactable.InteractVisible && Interactable.InteractEnabled)
+        if (interactAgent != null)
         {
-            Interactable.OnInteract();
+            interactAgent.OnInteract(Interactable);
+        }
+        else if (interactTarget != null)
+        {
+            interactTarget.OnInteract();
         }
         else
         {
-            foreach (var interactTarget in interactTargets)
+            foreach (var interactTarget in externalInteractTargets)
             {
                 if (!interactTarget.Disabled)
                 {
@@ -172,17 +235,17 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// <returns>A destructor to call to remove the interactable text from screen.</returns>
     public System.Action AddInteract(System.Action callback, string message, bool disabled = false)
     {
-        InteractTarget target = new()
+        ExternalInteractTarget target = new()
         {
             Callback = callback,
             Message = message,
             Disabled = disabled,
         };
-        interactTargets.Add(target);
-        UpdateUI();
+        externalInteractTargets.Add(target);
+        UpdateInteractivity();
         return () =>
         {
-            interactTargets.Remove(target);
+            externalInteractTargets.Remove(target);
             target.InputUIDestructor?.Invoke();
         };
     }
@@ -222,7 +285,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void OnInteractableStateChange(bool _)
     {
-        UpdateUI();
+        UpdateInteractivity();
     }
 
     /// <summary>
@@ -230,14 +293,21 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void OnItemChange(Item newItem)
     {
-        UpdateUI();
+        Debug.Log(newItem);
+        if(newItem is FishItem fishItem)
+        {
+            Debug.Log(fishItem.fishSO);
+            Debug.Log(fishItem.InteractItem);
+            Debug.Log(InteractItem as Object);
+        }
+        UpdateInteractivity();
     }
 
     /// <summary>
     /// Basically just redraws the entire UI if we add any new
     /// interactables or one interactable becomes disabled/enabled
     /// </summary>
-    void UpdateUI()
+    void UpdateInteractivity()
     {
         // CLEAN UP CURRENT UI
         interactableUIDestructor?.Invoke();
@@ -245,6 +315,9 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
 
         itemUIDestructor?.Invoke();
         itemUIDestructor = null;
+
+        interactAgent = null;
+        interactTarget = null;
 
         /// whether there is already an interact target
         /// all remaining interact targets will be disabled
@@ -258,38 +331,82 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
 
         /// set to false if the item can be used
         /// *on* the interactable
-        bool shouldShowInteractable = true;
+        bool agentInteractEnabled = false;
 
-        // Register interact for item
-        if (playerItem.EnabledItem.InteractVisible)
+        bool showCrosshair = false;
+
+        // Register agent interact for PlayerItem
+        if (InteractItem is IInteractAgent agent && agent.AgentInteractVisible(Interactable))
         {
+            bool enabled = agent.AgentInteractEnabled(Interactable);
+
             itemUIDestructor = InputUI.Instance.AddInputUI(
                 interactAction,
-                playerItem.EnabledItem.InteractMessage,
-                !playerItem.EnabledItem.InteractEnabled || hasInteractTarget
+                agent.AgentInteractMessage(Interactable),
+                disabled: !enabled || hasInteractTarget
             );
-            hasInteractTarget = playerItem.EnabledItem.InteractEnabled;
-            InputUI.Instance.SetCrosshairEnabled(Interactable.InteractEnabled);
+
+            // only show the interactable's message
+            // if the interact item *does not* interact
+            // with that interactable
+            if (enabled && !hasInteractTarget)
+            {
+                hasInteractTarget = true;
+
+                agentInteractEnabled = true;
+
+                interactAgent = agent;
+                
+                showCrosshair = true;
+            }
         }
 
-        // Register interact for interactable
-        if (shouldShowInteractable && Interactable && Interactable.InteractVisible)
+        // Register object interact for interactable
+        if (!agentInteractEnabled && Interactable && Interactable.TargetInteractVisible)
         {
+            bool enabled = Interactable.TargetInteractEnabled;
+
             interactableUIDestructor = InputUI.Instance.AddInputUI(
                 interactAction,
-                Interactable.InteractMessage,
-                !Interactable.InteractEnabled || hasInteractTarget
+                Interactable.TargetInteractMessage,
+                disabled: !enabled || hasInteractTarget
             );
-            hasInteractTarget = Interactable.InteractEnabled;
-            InputUI.Instance.SetCrosshairEnabled(Interactable.InteractEnabled);
-        }
-        else
-        {
-            InputUI.Instance.SetCrosshairEnabled(false);
+
+            if (enabled && !hasInteractTarget)
+            {
+                hasInteractTarget = true;
+                
+                interactTarget = Interactable;
+
+                showCrosshair = true;
+            }
         }
 
+        InputUI.Instance.SetCrosshairEnabled(showCrosshair);
+
+        // register object interact for item
+        // Register agent interact for PlayerItem
+        if (!agentInteractEnabled && InteractItem is IInteractTarget obj && obj.TargetInteractVisible)
+        {
+            bool enabled = obj.TargetInteractEnabled;
+
+            itemUIDestructor = InputUI.Instance.AddInputUI(
+                interactAction,
+                obj.TargetInteractMessage,
+                disabled: !enabled || hasInteractTarget
+            );
+
+            if (enabled && !hasInteractTarget)
+            {
+                hasInteractTarget = true;
+
+                interactTarget = obj;
+            }
+        }
+
+
         // Register other interact targets supplied
-        foreach (var interactTarget in interactTargets)
+        foreach (var interactTarget in externalInteractTargets)
         {
             interactTarget.InputUIDestructor?.Invoke();
             interactTarget.InputUIDestructor = InputUI.Instance.AddInputUI(

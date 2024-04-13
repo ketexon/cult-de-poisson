@@ -165,11 +165,9 @@ public class Bucket : Item
         {
             var fishSO = spawnedFish[selectedFish.Value].GetComponent<Fish>().FishSO;
 
-            var newItem = playerItem.EnableItem(fishItemSO, temporary: true) as FishItem;
-            if (newItem)
-            {
-                newItem.SetFish(fishSO);
-            }
+            var newItem = playerItem.GetItem(fishItemSO, true) as FishItem;
+            newItem.SetFish(fishSO);
+            playerItem.EnableItem(newItem, temporary: true);
         }
     }
 

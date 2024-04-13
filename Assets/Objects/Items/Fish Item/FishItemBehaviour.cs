@@ -5,16 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FishItemBehaviour : MonoBehaviour, IInteractItem
+public class FishItemBehaviour : MonoBehaviour, IInteractAgent, IInteractTarget
 {
-    public virtual bool InteractsWithInteractable => false;
+    public virtual bool TargetInteractVisible => false;
+    public virtual bool TargetInteractEnabled => true;
+    public virtual string TargetInteractMessage => null;
 
-    public virtual bool InteractVisible => false;
 
-    public virtual bool InteractEnabled => false;
+    public virtual bool AgentInteractVisible(Interactable target) => false;
+    public virtual string AgentInteractMessage(Interactable target) => null;
+    public virtual bool AgentInteractEnabled(Interactable target) => true;
 
-    public virtual string InteractMessage => null;
 
-    public virtual void OnInteract(Interactable target)
-    {}
+    public virtual void OnInteract() { }
+    public virtual void OnInteract(Interactable target) { }
 }

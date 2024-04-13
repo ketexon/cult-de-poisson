@@ -19,7 +19,7 @@ public class NPC : Interactable
         DialogueView.gameObject.SetActive(false);
     }
 
-    public override string InteractMessage => "Talk to " + npcSO.Name;
+    public override string TargetInteractMessage => "Talk to " + npcSO.Name;
 
     public override void OnInteract()
     {

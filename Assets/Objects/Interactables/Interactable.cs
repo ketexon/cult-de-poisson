@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour, IInteractable
+public abstract class Interactable : MonoBehaviour, IInteractTarget
 {
     [SerializeField] bool _interactEnabled = true;
     bool _interactVisible = true;
@@ -12,7 +12,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable
     /// Used by <c>PlayerIntact</c> to show interact text but not
     /// allow interaction. Useful for disabled interactables.
     /// </summary>
-    public virtual bool InteractEnabled
+    public virtual bool TargetInteractEnabled
     {
         get => _interactEnabled;
         protected set
@@ -49,7 +49,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable
     /// Used by <c>PlayerIntact</c> to show interact text but not
     /// allow interaction. Useful for disabled interactables.
     /// </summary>
-    public virtual bool InteractVisible
+    public virtual bool TargetInteractVisible
     {
         get => _interactVisible;
         protected set
@@ -70,7 +70,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable
     /// <summary>
     /// Message to show in UI when hovering this item
     /// </summary>
-    public abstract string InteractMessage { get; }
+    public abstract string TargetInteractMessage { get; }
 
     public virtual void OnInteract() { }
 }

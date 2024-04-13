@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Base class for all item scripts.
 /// </summary>
-public class Item : MonoBehaviour, IInteractItem
+public class Item : MonoBehaviour, IInteractTargetProxy, IInteractAgent, IInteractTarget
 {
     /// <summary>
     /// The ItemSO corresponding to the Item.
@@ -37,11 +37,18 @@ public class Item : MonoBehaviour, IInteractItem
         public CinemachineBrain CinemachineBrain;
     };
 
-    public virtual bool InteractVisible => false;
+    public virtual IInteractObject InteractItem => this;
 
-    public virtual bool InteractEnabled => false;
+    // These interactions are for interacting *with the item itself*
+    public virtual bool TargetInteractVisible => false;
+    public virtual bool TargetInteractEnabled => true;
+    public virtual string TargetInteractMessage => null;
 
-    public virtual string InteractMessage => null;
+    // These interactions are for interacting with an interactable
+    // using the current item
+    public virtual bool AgentInteractVisible(Interactable _) => false;
+    public virtual bool AgentInteractEnabled(Interactable _) => false;
+    public virtual string AgentInteractMessage(Interactable _) => null;
 
     /// <summary>
     /// If true, the item and the current interactable
@@ -59,6 +66,7 @@ public class Item : MonoBehaviour, IInteractItem
     /// </summary>
     public virtual bool InteractsWithInteractable => false;
 
+    public virtual void OnInteract() { }
     public virtual void OnInteract(Interactable target) { }
 
     /// <summary>
