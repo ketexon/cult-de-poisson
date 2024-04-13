@@ -16,6 +16,8 @@ public class Item : MonoBehaviour, IInteractItem
     /// </summary>
     [SerializeField] ItemSO itemSO;
 
+    public virtual bool CanSwitchItems => true;
+
     public ItemSO ItemSO => itemSO;
 
     protected GameObject player;

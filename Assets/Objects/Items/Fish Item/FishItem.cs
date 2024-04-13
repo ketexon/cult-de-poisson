@@ -24,7 +24,22 @@ public class FishItem : Item
         {
             Destroy(fishGO);
         }
-        fishGO = Instantiate(fishSO.InHandPrefab, this.transform);
+        fishGO = Instantiate(fishSO.PhysicalPrefab, this.transform);
+        fishGO.GetComponent<Fish>().InitializeBucket();
+    }
+
+    public void SetFish(Fish fish)
+    {
+        this.fishSO = fish.FishSO;
+        if (fishGO)
+        {
+            Destroy(fishGO);
+        }
+        fishGO = fish.gameObject;
+        fish.transform.SetParent(transform);
+        fish.transform.position = this.transform.position;
+        fish.transform.rotation = Quaternion.identity;
+        fish.InitializeBucket();
     }
 
     public void Awake()

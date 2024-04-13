@@ -8,6 +8,10 @@ using static UnityEngine.ParticleSystem;
 
 public class FishingRod : Item
 {
+    // only allow switching items if there is no hooked fish
+    // (ie. force player to pick up/drop fish)
+    public override bool CanSwitchItems => hookedFish == null;
+
     enum FishingState
     {
         Uncast,
@@ -22,23 +26,18 @@ public class FishingRod : Item
     /// </summary>
     [SerializeField] Transform rodTipTransform;
     
-    
-    [SerializeField] GameObject hookPrefab;
+    [SerializeField] FishingHook hook;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
-    [SerializeField] GameObject fishingLinePrefab;
+    [SerializeField] FishingLine fishingLine;
 
     [SerializeField] ItemSO fishItemSO;
     [SerializeField] PlayerInventorySO inventory;
 
-    [SerializeField] InputActionReference interactAction;
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference reelAction;
     [SerializeField] InputActionReference exitAction;
-
-    GameObject hookGO;
-    FishingLine fishingLine;
 
     FishingState fishingState = FishingState.Uncast;
 
@@ -74,7 +73,8 @@ public class FishingRod : Item
     /// </summary>
     bool hookInRange = false;
 
-    Fish hookedFish;
+    Fish fish;
+    HookedFish hookedFish;
 
     /// <summary>
     /// Callback coming from <see cref="InputUI"/> to remove the UI from screen.
@@ -147,9 +147,9 @@ public class FishingRod : Item
     void OnDisable()
     {
         inputUIDestructor?.Invoke();
-        if (hookedFish && hookInRange)
+        if (fish && hookInRange)
         {
-            inventory.AddFish(hookedFish.FishSO);
+            inventory.AddFish(fish.FishSO);
         }
         ResetFishing();
     }
@@ -198,18 +198,18 @@ public class FishingRod : Item
     {
         if(hookInRange)
         {
-            if (hookedFish)
+            if (fish)
             {
-                inventory.AddFish(hookedFish.FishSO);
+                // save hooked fish, since enabling another item
+                // calls OnDisable, which sets hookedFish to null
+                var hookedFish = this.fish;
 
-                var fishSO = hookedFish.FishSO;
+                // note: this will disable the current script, and hence
+                // add the hooked fish to the inventory
+                var fishItem = playerItem.EnableItem(fishItemSO, temporary: true) as FishItem;
+                fishItem.SetFish(hookedFish);
 
-                ResetFishing();
                 UpdateInputUI();
-
-                var fishItem = playerItem.GetItem(fishItemSO) as FishItem;
-                fishItem.SetFish(fishSO);
-                playerItem.EnableItem(fishItem, temporary: true);
             }
             else
             {
@@ -225,17 +225,15 @@ public class FishingRod : Item
     /// </summary>
     void Cast()
     {
-        hookGO = Instantiate(hookPrefab, rodTipTransform.position, transform.rotation);
-        var hook = hookGO.GetComponent<FishingHook>();
+        var hookRB = hook.GetComponent<Rigidbody>();
 
-        hookGO.GetComponent<Rigidbody>().velocity = rodTipVelocity;
-        hook.PlayerFish = this;
+        hook.transform.position = rodTipTransform.position;
+        hookRB.velocity = rodTipVelocity;
 
-        hook.FishHookEvent += OnHookFish;
+        hook.OnHook += OnHookFish;
+        hook.gameObject.SetActive(true);
 
-        var fishingLineGO = Instantiate(fishingLinePrefab);
-        fishingLine = fishingLineGO.GetComponent<FishingLine>();
-
+        fishingLine.enabled = true;
         fishingLine.OnCast(hook, rodTipTransform, rodTipVelocity);
 
         fishingState = FishingState.Cast;
@@ -249,23 +247,18 @@ public class FishingRod : Item
     {
         fishingState = FishingState.Uncast;
 
-        hookedFish = null;
+        fish = null;
         hookInRange = false;
 
-        if (fishingLine)
+        if (hook)
         {
-            Destroy(fishingLine.gameObject);
-            fishingLine = null;
+            hook.gameObject.SetActive(false);
         }
-        if (hookGO)
-        {
-            Destroy(hookGO);
-            hookGO = null;
-        }
+        fishingLine.enabled = false;
     }
 
     /// <summary>
-    /// Called by <see cref="FishingHook"/> to set the <see cref="hookInRange"/> member.
+    /// Called by <see cref="FishingHookV2"/> to set the <see cref="hookInRange"/> member.
     /// </summary>
     /// <param name="inRange"></param>
     public void SetHookInRange(bool inRange)
@@ -296,7 +289,7 @@ public class FishingRod : Item
         else
         {
             // put UI to collect fish
-            if (hookedFish)
+            if (fish)
             {
                 inputUIDestructor = playerInteract.AddInteract(OnInteract, "Collect fish");
             }
@@ -310,6 +303,10 @@ public class FishingRod : Item
 
     public void OnHookFish(Fish fish)
     {
-        this.hookedFish = fish;
+        this.fish = fish;
+
+        hookedFish = fish.GetComponent<HookedFish>();
+        hookedFish.PlayerTransform = player.transform;
+        hookedFish.RodTipTransform = rodTipTransform;
     }
 }

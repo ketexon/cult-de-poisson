@@ -194,7 +194,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
             transform.position, playerMovement.Camera.transform.forward, 
             out RaycastHit hit, 
             parameters.InteractDistance, 
-            parameters.InteractLayerMask
+            parameters.InteractLayerMask,
+            QueryTriggerInteraction.Collide // hit triggers
         ))
         {
             var interactable = hit.collider.GetComponent<Interactable>();

@@ -6,8 +6,7 @@ public abstract class Interactable : MonoBehaviour, IInteractable
 {
     [SerializeField] bool _interactEnabled = true;
     bool _interactVisible = true;
-
-    protected new Collider collider;
+    [SerializeField] protected new Collider collider;
     
     /// <summary>
     /// Used by <c>PlayerIntact</c> to show interact text but not
@@ -24,6 +23,21 @@ public abstract class Interactable : MonoBehaviour, IInteractable
                 InteractDisabledChangedEvent?.Invoke(_interactEnabled);
             }
         }
+    }
+
+    protected virtual void Reset()
+    {
+        collider = GetComponent<Collider>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        collider.enabled = true;
+    }
+
+    protected virtual void OnDisable()
+    {
+        collider.enabled = false;
     }
 
     /// <summary>

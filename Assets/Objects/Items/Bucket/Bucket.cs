@@ -86,9 +86,7 @@ public class Bucket : Item
             var bucketFish = fish.gameObject.AddComponent<BucketFish>();
             spawnedFish.Add(bucketFish);
         }
-
-        pointAction.action.performed += OnPoint;
-        clickAction.action.performed += OnClick;
+        
         exitAction.action.performed += OnExitBucket;
 
         cycleFishAction.action.performed += OnCycleFish;
@@ -99,8 +97,6 @@ public class Bucket : Item
     {
         StopUsingBucket();
 
-        pointAction.action.performed -= OnPoint;
-        clickAction.action.performed -= OnClick;
         exitAction.action.performed -= OnExitBucket;
 
         cycleFishAction.action.performed -= OnCycleFish;
@@ -127,35 +123,6 @@ public class Bucket : Item
         LockCursor.PushLockState(CursorLockMode.None);
     }
 
-    void OnPoint(InputAction.CallbackContext ctx)
-    {
-        pointPos = ctx.ReadValue<Vector2>();
-
-        Ray ray = mainCamera.ScreenPointToRay(pointPos);
-        if (Physics.Raycast(
-            ray,
-            out RaycastHit hit,
-            float.MaxValue,
-            parameters.BucketFishLayerMask
-        ))
-        {
-            var fish = hit.collider.GetComponent<Fish>();
-            hoveredFish = fish;
-        }
-    }
-
-    void OnClick(InputAction.CallbackContext ctx)
-    {
-        if (hoveredFish)
-        {
-            var fishSO = hoveredFish.FishSO;
-
-            var fishItem = playerItem.GetItem(fishItemSO, allowNonHeldItems: true) as FishItem;
-            fishItem.SetFish(fishSO);
-            playerItem.EnableItem(fishItem, temporary: true);
-        }
-    }
-    
     void OnCycleFish(InputAction.CallbackContext ctx)
     {
         var floatValue = ctx.ReadValue<float>();
