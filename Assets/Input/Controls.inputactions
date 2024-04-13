@@ -85,6 +85,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "eac58a49-d4eb-46b4-b2fd-443d6fefafd9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reel",
+                    "type": "Value",
+                    "id": "b511c15e-b2d3-4eb5-be27-466f3819fdaf",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -199,17 +217,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6184301b-908b-49bf-b2d2-e30871472764",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KBM",
-                    "action": "CycleItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "QE",
                     "id": "99622df0-41fe-44cc-86c7-918b2e500fdb",
                     "path": "1DAxis",
@@ -263,6 +270,28 @@
                     "action": "Temp1",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3dbc999-370e-43de-9708-ed5e70893567",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f9870eb-ad11-4060-a094-7a22bc1761ef",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -302,6 +331,15 @@
                     "type": "Value",
                     "id": "8db6ad73-b52e-49a5-8be7-0cae0dd16615",
                     "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Unaim",
+                    "type": "Button",
+                    "id": "008f6b90-3de1-41c2-a1b5-55070cbac046",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -360,6 +398,17 @@
                     "processors": "",
                     "groups": "KBM",
                     "action": "Reel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0353a1e5-ac2b-4193-b622-133d9c2ee360",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Unaim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

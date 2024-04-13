@@ -9,6 +9,9 @@ using UnityEngine.Serialization;
 [ExecuteInEditMode]
 public class TransformVisualizer : MonoBehaviour
 {
+    [SerializeField] bool useCustomScale;
+    [SerializeField] Vector3 scale;
+
 #if UNITY_EDITOR
     Mesh gizmosMesh;
 
@@ -58,7 +61,7 @@ public class TransformVisualizer : MonoBehaviour
             gizmosMesh, 0, 
             position: transform.position, 
             rotation: transform.rotation, 
-            scale: transform.localScale
+            scale: useCustomScale ? scale : transform.localScale
         );
 #endif
     }
