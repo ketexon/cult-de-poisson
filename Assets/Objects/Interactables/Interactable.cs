@@ -20,7 +20,7 @@ public abstract class Interactable : MonoBehaviour, IInteractTarget
             if(_interactEnabled != value)
             {
                 _interactEnabled = value;
-                InteractDisabledChangedEvent?.Invoke(_interactEnabled);
+                InteractivityChangeEvent?.Invoke(this);
             }
         }
     }
@@ -41,11 +41,6 @@ public abstract class Interactable : MonoBehaviour, IInteractTarget
     }
 
     /// <summary>
-    /// Called when CanInteract is changed.
-    /// </summary>
-    public System.Action<bool> InteractDisabledChangedEvent;
-
-    /// <summary>
     /// Used by <c>PlayerIntact</c> to show interact text but not
     /// allow interaction. Useful for disabled interactables.
     /// </summary>
@@ -57,15 +52,13 @@ public abstract class Interactable : MonoBehaviour, IInteractTarget
             if (_interactVisible != value)
             {
                 _interactVisible = value;
-                InteractVisibleChangedEvent?.Invoke(_interactVisible);
+                InteractivityChangeEvent?.Invoke(this);
             }
         }
     }
 
-    /// <summary>
-    /// Called when CanInteract is changed.
-    /// </summary>
-    public System.Action<bool> InteractVisibleChangedEvent;
+
+    public System.Action<IInteractObject> InteractivityChangeEvent { get; set; }
 
     /// <summary>
     /// Message to show in UI when hovering this item

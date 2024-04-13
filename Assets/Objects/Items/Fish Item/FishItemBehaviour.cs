@@ -16,6 +16,7 @@ public class FishItemBehaviour : MonoBehaviour, IInteractAgent, IInteractTarget
     public virtual string AgentInteractMessage(Interactable target) => null;
     public virtual bool AgentInteractEnabled(Interactable target) => true;
 
+    public virtual System.Action<IInteractObject> InteractivityChangeEvent { get; set; }
 
     public virtual void OnInteract() { }
     public virtual void OnInteract(Interactable target) { }

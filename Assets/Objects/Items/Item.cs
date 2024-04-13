@@ -39,6 +39,8 @@ public class Item : MonoBehaviour, IInteractTargetProxy, IInteractAgent, IIntera
 
     public virtual IInteractObject InteractItem => this;
 
+    public virtual System.Action<IInteractObject> InteractivityChangeEvent { get; set; }
+
     // These interactions are for interacting *with the item itself*
     public virtual bool TargetInteractVisible => false;
     public virtual bool TargetInteractEnabled => true;

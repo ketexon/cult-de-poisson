@@ -9,7 +9,14 @@ using UnityEngine.Rendering.Universal;
 /// Either an an <see cref="IInteractAgent"/> or an <see cref="IInteractTarget"/>. 
 /// </summary>
 public interface IInteractObject
-{ }
+{ 
+    /// <summary>
+    /// Callback to let <see cref="PlayerInteract"/> know that some property
+    /// affecting interactivity has changed.
+    /// Eg. after you make an interact target invisible, you should invoke this.
+    /// </summary>
+    System.Action<IInteractObject> InteractivityChangeEvent { get; set; }
+}
 
 /// <summary>
 /// An object being interacted with.
@@ -115,6 +122,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
 
         public void OnInteract() => Callback?.Invoke();
 
+        public System.Action<IInteractObject> InteractivityChangeEvent { get; set; }
+
     }
 
     List<ExternalInteractTarget> externalInteractTargets = new();
@@ -134,15 +143,13 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
             {
                 if (_interactable)
                 {
-                    _interactable.InteractDisabledChangedEvent -= OnInteractableStateChange;
-                    _interactable.InteractVisibleChangedEvent -= OnInteractableStateChange;
+                    _interactable.InteractivityChangeEvent -= OnInteractObjectStateChange;
                 }
                 _interactable = value;
                 UpdateInteractivity();
                 if (_interactable)
                 {
-                    _interactable.InteractDisabledChangedEvent += OnInteractableStateChange;
-                    _interactable.InteractVisibleChangedEvent += OnInteractableStateChange;
+                    _interactable.InteractivityChangeEvent += OnInteractObjectStateChange;
                 }
             }
         }
@@ -156,7 +163,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     PlayerMovement playerMovement;
     PlayerItem playerItem;
 
-    IInteractObject InteractItem => playerItem.EnabledItem.InteractItem;
+    Item enabledItem = null;
+    IInteractObject InteractItem => enabledItem.InteractItem;
 
     System.Action interactableUIDestructor = null;
     System.Action itemUIDestructor = null;
@@ -177,6 +185,9 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     void Start()
     {
         playerItem.ItemChangeEvent += OnItemChange;
+
+        enabledItem = playerItem.EnabledItem;
+        UpdateInteractivity();
     }
 
     void OnDestroy()
@@ -186,10 +197,14 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
             playerItem.ItemChangeEvent -= OnItemChange;
         }
 
+        if (enabledItem)
+        {
+            enabledItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
+        }
+
         if (_interactable)
         {
-            _interactable.InteractDisabledChangedEvent -= OnInteractableStateChange;
-            _interactable.InteractVisibleChangedEvent -= OnInteractableStateChange;
+            _interactable.InteractivityChangeEvent -= OnInteractObjectStateChange;
         }
     }
 
@@ -283,7 +298,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// This means we need to redraw the UI to show that
     /// the interactable is no longer disabled.
     /// </summary>
-    void OnInteractableStateChange(bool _)
+    void OnInteractObjectStateChange(IInteractObject _)
     {
         UpdateInteractivity();
     }
@@ -293,6 +308,13 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void OnItemChange(Item newItem)
     {
+        if (enabledItem)
+        {
+            enabledItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
+        }
+        enabledItem = newItem;
+        enabledItem.InteractivityChangeEvent += OnInteractObjectStateChange;
+        
         UpdateInteractivity();
     }
 
