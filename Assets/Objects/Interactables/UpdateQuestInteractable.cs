@@ -8,7 +8,7 @@ public class UpdateQuestInteractable : Interactable
     [SerializeField] QuestStatus targetStatus;
     [SerializeField] string message;
 
-    public override string InteractMessage => string.Format(message, quest.Name);
+    public override string TargetInteractMessage => string.Format(message, quest.Name);
 
     void Awake()
     {
@@ -64,7 +64,7 @@ public class UpdateQuestInteractable : Interactable
                 || (!quest.MustStartToComplete && status == QuestStatus.NotStarted);
 
             // we can only interact if we can complete the quest
-            CanInteract = QuestStateSO.Instance.CanComplete(quest);
+            TargetInteractEnabled = QuestStateSO.Instance.CanComplete(quest);
         }
     }
 }
