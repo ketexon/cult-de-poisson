@@ -303,6 +303,7 @@ public class FishingRod : Item
 
 
         fish = null;
+        hookedFish = null;
         hookInRange = false;
 
         if (hook)
