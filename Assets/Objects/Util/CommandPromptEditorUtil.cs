@@ -19,14 +19,57 @@ public class CommandPromptEditorUtil
 
         directoryPath = Path.GetFullPath(directoryPath);
 
-        Debug.Log(directoryPath);
-
 #if UNITY_EDITOR_WIN
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        // try to open Windows Terminal
+        try
         {
-            WorkingDirectory = directoryPath,
-            FileName = "powershell.exe",
-        });
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "wt.exe",
+                Arguments = @$"-d {'"'}{directoryPath}{'"'}",
+            });
+            return;
+        }
+        catch(System.ComponentModel.Win32Exception)
+        {}
+
+        // try to open Powershell 7
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "pwsh.exe",
+                WorkingDirectory = directoryPath,
+            });
+        }
+        catch (System.ComponentModel.Win32Exception)
+        { }
+
+        // try to open Powershell 5
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "powershell.exe",
+                WorkingDirectory = directoryPath,
+            });
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {}
+
+        // try to open Command Prompt
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                WorkingDirectory = directoryPath,
+            });
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {}
+
+        throw new System.NotSupportedException("Could not open terminal");
 #else
         Debug.LogError("Cannot open console on your platform: not supported");
 #endif

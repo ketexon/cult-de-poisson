@@ -12,7 +12,7 @@ public class FishItem : Item
     [SerializeField] float throwVelocity = 10.0f;
     [SerializeField] float throwAngularVelocity = 10.0f;
     [SerializeField] float placeMaxDistance = 10.0f;
-    FishSO fishSO;
+    [System.NonSerialized] public FishSO fishSO;
     GameObject fishGO;
     GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
