@@ -257,8 +257,8 @@ GameObject:
   - component: {fileID: 3059176816871463667}
   - component: {fileID: 2972364860089777460}
   - component: {fileID: 75327676347670396}
+  - component: {fileID: 1462544016098704614}
   - component: {fileID: 589010488059326791}
-  - component: {fileID: 3547995663088542019}
   - component: {fileID: 2403612065999515020}
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
@@ -564,6 +564,28 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   maxPitch: 85
   speed: 3
+--- !u!195 &1462544016098704614
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &589010488059326791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,32 +598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df65bcb2147fb40b031d102d0d928d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!143 &3547995663088542019
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868503324844711377}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2403612065999515020
 MeshFilter:
   m_ObjectHideFlags: 0
