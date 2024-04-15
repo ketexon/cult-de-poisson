@@ -45,7 +45,7 @@ public class FishItem : Item
         fishGO = fish.gameObject;
         fish.transform.SetParent(transform);
         fish.transform.position = this.transform.position;
-        fish.transform.rotation = Quaternion.identity;
+        fish.transform.localRotation = Quaternion.identity;
         fish.InitializeBucket();
     }
 
