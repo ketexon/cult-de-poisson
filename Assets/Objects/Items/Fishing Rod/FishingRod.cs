@@ -147,6 +147,7 @@ public class FishingRod : Item
     protected virtual void OnDisable()
     {
         inputUIDestructor?.Invoke();
+        inputUIDestructor = null;
 
         if (fish && hookInRange)
         {
@@ -330,9 +331,10 @@ public class FishingRod : Item
 
     void UpdateInputUI()
     {
+        inputUIDestructor?.Invoke();
         if (aiming)
         {
-            inputUIDestructor?.Invoke();
+            inputUIDestructor = null;
         }
         else
         {
