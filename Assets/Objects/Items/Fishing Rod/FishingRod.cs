@@ -331,14 +331,13 @@ public class FishingRod : Item
 
     void UpdateInputUI()
     {
+        inputUIDestructor?.Invoke();
         if (aiming)
         {
-            inputUIDestructor?.Invoke();
             inputUIDestructor = null;
         }
         else
         {
-            inputUIDestructor?.Invoke();
             inputUIDestructor = InputUI.Instance.AddInputUI(
                 aimAction,
                 "Aim fishing rod"
