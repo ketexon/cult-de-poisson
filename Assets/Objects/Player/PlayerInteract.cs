@@ -187,6 +187,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         playerItem.ItemChangeEvent += OnItemChange;
 
         enabledItem = playerItem.EnabledItem;
+
+        InteractItem.InteractivityChangeEvent += OnInteractObjectStateChange;
         UpdateInteractivity();
     }
 
@@ -199,7 +201,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
 
         if (enabledItem)
         {
-            enabledItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
+            InteractItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
         }
 
         if (_interactable)
@@ -310,10 +312,10 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     {
         if (enabledItem)
         {
-            enabledItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
+            InteractItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
         }
         enabledItem = newItem;
-        enabledItem.InteractivityChangeEvent += OnInteractObjectStateChange;
+        InteractItem.InteractivityChangeEvent += OnInteractObjectStateChange;
         
         UpdateInteractivity();
     }
