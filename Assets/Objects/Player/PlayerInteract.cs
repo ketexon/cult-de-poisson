@@ -187,6 +187,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         playerItem.ItemChangeEvent += OnItemChange;
 
         enabledItem = playerItem.EnabledItem;
+        enabledItem.InteractivityChangeEvent += OnInteractObjectStateChange;
         UpdateInteractivity();
     }
 

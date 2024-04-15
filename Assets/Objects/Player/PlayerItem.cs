@@ -25,6 +25,8 @@ public class PlayerItem : MonoBehaviour
     [SerializeField] List<Item> startingItems;
     [SerializeField] int startingItemIndex;
 
+    public float RotateSpeed => rotateSpeed;
+
     [System.NonSerialized] public Vector3 ItemOffsetPos;
     [System.NonSerialized] public Quaternion CurRot;
     [System.NonSerialized] public Quaternion TargetRot;
@@ -110,10 +112,11 @@ public class PlayerItem : MonoBehaviour
     /// <param name="ctx"></param>
     public void OnCycleItem(InputAction.CallbackContext ctx)
     {
-        if(!ctx.performed)
+        if(!ctx.performed || !EnabledItem.CanSwitchItems)
         {
             return;
         }
+
         int newItemIndex;
 
         if (IsTemporaryItem)

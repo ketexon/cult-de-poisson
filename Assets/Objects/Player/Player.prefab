@@ -932,12 +932,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5564895037554884821, guid: 898217cfbd4f5bd49a7a10b3ec15ab21,
-        type: 3}
-      propertyPath: fishItemSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 8fe9604f1e6adc54a859ab482f080426,
-        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
