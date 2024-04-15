@@ -163,6 +163,38 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1863753795686496237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407148782109372770}
+  m_Layer: 3
+  m_Name: PlayerLook
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1407148782109372770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863753795686496237}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 927102954168792265}
+  m_Father: {fileID: 8300069304211402914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4401689185411706630
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +295,8 @@ GameObject:
   - component: {fileID: 3996832497727268894}
   - component: {fileID: 9126025737234344027}
   - component: {fileID: 1349254100363335738}
+  - component: {fileID: 8517853631623376857}
+  - component: {fileID: 1858290789290917980}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -283,7 +317,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 927102954168792265}
+  - {fileID: 1407148782109372770}
   m_Father: {fileID: 3340069615599303650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3059176816871463667
@@ -302,6 +336,7 @@ MonoBehaviour:
   Input: {fileID: 2972364860089777460}
   Item: {fileID: 9126025737234344027}
   Interact: {fileID: 1349254100363335738}
+  Movement: {fileID: 75327676347670396}
   Camera: {fileID: 2649129788575905462}
   CinemachineBrain: {fileID: 1204132734477593009}
 --- !u!114 &2972364860089777460
@@ -526,6 +561,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 95432716-5e9b-4aa3-b2af-de6cd581676c
     m_ActionName: FishingV2/Reel[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eac58a49-d4eb-46b4-b2fd-443d6fefafd9
+    m_ActionName: Gameplay/Aim[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b511c15e-b2d3-4eb5-be27-466f3819fdaf
+    m_ActionName: Gameplay/Reel[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 008f6b90-3de1-41c2-a1b5-55070cbac046
+    m_ActionName: Fishing/Unaim[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -545,6 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   camera: {fileID: 2436561657006774574}
+  lookRoot: {fileID: 1407148782109372770}
   mouseSensitivity: 0.1
   maxPitch: 85
   speed: 3
@@ -670,6 +718,56 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+--- !u!54 &8517853631623376857
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1858290789290917980
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +878,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4601614923824174754}
-  m_Father: {fileID: 8300069304211402914}
+  m_Father: {fileID: 1407148782109372770}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &1894638955606026219
 AudioListener:
