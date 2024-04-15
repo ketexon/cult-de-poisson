@@ -256,13 +256,13 @@ GameObject:
   - component: {fileID: 8300069304211402914}
   - component: {fileID: 3059176816871463667}
   - component: {fileID: 2972364860089777460}
+  - component: {fileID: 9126025737234344027}
   - component: {fileID: 75327676347670396}
   - component: {fileID: 589010488059326791}
-  - component: {fileID: 3547995663088542019}
   - component: {fileID: 2403612065999515020}
   - component: {fileID: 3996832497727268894}
-  - component: {fileID: 9126025737234344027}
   - component: {fileID: 1349254100363335738}
+  - component: {fileID: 6915407978647227103}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -526,11 +526,46 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 95432716-5e9b-4aa3-b2af-de6cd581676c
     m_ActionName: FishingV2/Reel[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eac58a49-d4eb-46b4-b2fd-443d6fefafd9
+    m_ActionName: Gameplay/Aim[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b511c15e-b2d3-4eb5-be27-466f3819fdaf
+    m_ActionName: Gameplay/Reel[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 008f6b90-3de1-41c2-a1b5-55070cbac046
+    m_ActionName: Fishing/Unaim[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &9126025737234344027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37cb7812c808ebc44b7b8bb1d6a20bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 2972364860089777460}
+  playerInteract: {fileID: 1349254100363335738}
+  mainCamera: {fileID: 2649129788575905462}
+  cinemachineBrain: {fileID: 1204132734477593009}
+  itemContainerTransform: {fileID: 8616573123594162493}
+  rotateSpeed: 5
+  startingItems:
+  - {fileID: 3191426836252093821}
+  - {fileID: 8670695197074598236}
+  startingItemIndex: 0
+  saveState: {fileID: 11400000, guid: 7b8994e2d97575d42a5b075aae33ef95, type: 2}
 --- !u!114 &75327676347670396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,32 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df65bcb2147fb40b031d102d0d928d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!143 &3547995663088542019
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868503324844711377}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2403612065999515020
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -636,29 +645,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9126025737234344027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868503324844711377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37cb7812c808ebc44b7b8bb1d6a20bfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 2972364860089777460}
-  playerInteract: {fileID: 1349254100363335738}
-  mainCamera: {fileID: 2649129788575905462}
-  cinemachineBrain: {fileID: 1204132734477593009}
-  itemContainerTransform: {fileID: 8616573123594162493}
-  rotateSpeed: 5
-  startingItems:
-  - {fileID: 3191426836252093821}
-  - {fileID: 8670695197074598236}
-  startingItemIndex: 0
-  saveState: {fileID: 11400000, guid: 7b8994e2d97575d42a5b075aae33ef95, type: 2}
 --- !u!114 &1349254100363335738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,6 +660,28 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   interactAction: {fileID: -4028561130961059824, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+--- !u!195 &6915407978647227103
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5000003
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0

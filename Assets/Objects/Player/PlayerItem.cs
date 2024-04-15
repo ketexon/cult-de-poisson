@@ -260,7 +260,10 @@ public class PlayerItem : MonoBehaviour
         }
         CurRot = Quaternion.Lerp(CurRot, TargetRot, Time.deltaTime * rotateSpeed);
         itemContainerTransform.rotation = CurRot;
+    }
 
+    void LateUpdate()
+    {
         itemContainerTransform.position = ItemOffsetPos + transform.position;
     }
 }
