@@ -187,7 +187,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         playerItem.ItemChangeEvent += OnItemChange;
 
         enabledItem = playerItem.EnabledItem;
-        enabledItem.InteractivityChangeEvent += OnInteractObjectStateChange;
+
+        InteractItem.InteractivityChangeEvent += OnInteractObjectStateChange;
         UpdateInteractivity();
     }
 
@@ -200,7 +201,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
 
         if (enabledItem)
         {
-            enabledItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
+            InteractItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
         }
 
         if (_interactable)
@@ -311,10 +312,10 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     {
         if (enabledItem)
         {
-            enabledItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
+            InteractItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
         }
         enabledItem = newItem;
-        enabledItem.InteractivityChangeEvent += OnInteractObjectStateChange;
+        InteractItem.InteractivityChangeEvent += OnInteractObjectStateChange;
         
         UpdateInteractivity();
     }
@@ -325,6 +326,13 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void UpdateInteractivity()
     {
+        // if InputUI has been destroyed,
+        // then don't actually update
+        if (!InputUI.Instance)
+        {
+            return;
+        }
+        
         // CLEAN UP CURRENT UI
         interactableUIDestructor?.Invoke();
         interactableUIDestructor = null;
