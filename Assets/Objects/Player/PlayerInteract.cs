@@ -326,6 +326,13 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void UpdateInteractivity()
     {
+        // if InputUI has been destroyed,
+        // then don't actually update
+        if (!InputUI.Instance)
+        {
+            return;
+        }
+        
         // CLEAN UP CURRENT UI
         interactableUIDestructor?.Invoke();
         interactableUIDestructor = null;
