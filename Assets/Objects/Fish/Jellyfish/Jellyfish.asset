@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d99a69eb107724eb670fb6e2043528, type: 3}
+  m_Name: Jellyfish
+  m_EditorClassIdentifier: 
+  Name: Jellyfish
+  InWaterPrefab: {fileID: 6168559306990160984, guid: 03b6be2279d76fb45bdd65ed6ebf3bc0,
+    type: 3}
+  InHandPrefab: {fileID: 6168559306990160984, guid: 03b6be2279d76fb45bdd65ed6ebf3bc0,
+    type: 3}
+  InBucketPrefab: {fileID: 6168559306990160984, guid: 03b6be2279d76fb45bdd65ed6ebf3bc0,
+    type: 3}
+  PhysicalPrefab: {fileID: 6168559306990160984, guid: 03b6be2279d76fb45bdd65ed6ebf3bc0,
+    type: 3}
