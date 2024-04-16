@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] GlobalParametersSO parameters;
@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
-    public Cinemachine.CinemachineVirtualCamera Camera => camera;
+    NavMeshAgent agent;
 
-    CharacterController characterController;
+    public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
     public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y);
     public Vector3 Position => transform.position;
@@ -31,17 +31,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
-        if (characterController.isGrounded)
-        {
-            lastTimeOnGround = Time.time;
-        }
-
-        characterController.Move(CalculateVelocity() * Time.deltaTime);
+        var displacement = CalculateVelocity() * Time.deltaTime;
+        agent.Move(displacement);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
@@ -78,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.position,
                 Vector3.down,
                 out var hitInfo,
-                characterController.height / 2 + 0.2f,
+                agent.height / 2 + 0.2f,
                 parameters.GroundLayerMask,
                 QueryTriggerInteraction.Ignore
             )
