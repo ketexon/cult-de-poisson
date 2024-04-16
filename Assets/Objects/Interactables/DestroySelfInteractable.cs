@@ -24,7 +24,7 @@ public class DestroySelfInteractable : Interactable
         Destroy(gameObject);
     }
 
-    public override string InteractMessage
+    public override string TargetInteractMessage
     {
         get
         {

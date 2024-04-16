@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1491,7 +1491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff0433685af54e0abcffddf551846a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactable: 1
+  _interactEnabled: 0
+  collider: {fileID: 1639712503}
 --- !u!1 &1884237228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1926,52 +1927,52 @@ PrefabInstance:
     - target: {fileID: 1553160861477879479, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1553160861477879479, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1553160861477879479, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 544
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1553160861477879479, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 288
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1553160861477879479, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -242.91702
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4396811587444130495, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4396811587444130495, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4396811587444130495, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 544
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4396811587444130495, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 288
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4396811587444130495, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -202.91702
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5358967820596978305, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}

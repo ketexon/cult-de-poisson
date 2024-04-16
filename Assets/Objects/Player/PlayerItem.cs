@@ -25,6 +25,8 @@ public class PlayerItem : MonoBehaviour
     [SerializeField] List<Item> startingItems;
     [SerializeField] int startingItemIndex;
 
+    public float RotateSpeed => rotateSpeed;
+
     [System.NonSerialized] public Vector3 ItemOffsetPos;
     [System.NonSerialized] public Quaternion CurRot;
     [System.NonSerialized] public Quaternion TargetRot;
@@ -48,8 +50,10 @@ public class PlayerItem : MonoBehaviour
     /// </summary>
     Item.InitializeParams itemInitializeParams;
 
-    public int EnabledItemIndex { get; protected set; }
+    public int EnabledItemIndex => EnabledItem.transform.GetSiblingIndex();
     public Item EnabledItem { get; protected set; }
+
+    int lastItemIndex;
 
     public bool IsTemporaryItem { get; protected set; }
 
@@ -72,7 +76,6 @@ public class PlayerItem : MonoBehaviour
     {
         items = new(itemContainerTransform.GetComponentsInChildren<Item>(includeInactive: true));
         heldItems = new(startingItems);
-        EnabledItemIndex = startingItemIndex;
 
         // disable all items that are not the starting item
         foreach (var item in items)
@@ -98,7 +101,7 @@ public class PlayerItem : MonoBehaviour
             item.Initialize(itemInitializeParams);
         }
 
-        EnableItem(EnabledItemIndex);
+        EnableItem(startingItemIndex);
     }
 
     /// <summary>
@@ -109,15 +112,16 @@ public class PlayerItem : MonoBehaviour
     /// <param name="ctx"></param>
     public void OnCycleItem(InputAction.CallbackContext ctx)
     {
-        if(!ctx.performed)
+        if(!ctx.performed || !EnabledItem.CanSwitchItems)
         {
             return;
         }
+
         int newItemIndex;
 
         if (IsTemporaryItem)
         {
-            newItemIndex = EnabledItemIndex;
+            newItemIndex = lastItemIndex;
         }
         else
         {
@@ -149,19 +153,32 @@ public class PlayerItem : MonoBehaviour
     }
 
     /// <summary>
-    /// Given an ItemSO, give the index in <see cref="items"/>
+    /// Given an ItemSO, give the index in <see cref="items"/>. If the item does not exist, returns null.
     /// </summary>
     /// <param name="itemSO"></param>
-    /// <param name="temporary"></param>
+    /// <param name="allowNonHeldItems"></param>
     /// <returns></returns>
-    int? GetItemIndexFromSO(ItemSO itemSO, bool temporary = false)
+    public int? GetItemIndex(ItemSO itemSO, bool allowNonHeldItems = false)
     {
         var index = items.FindIndex(item => {
             return item.ItemSO == itemSO;
         });
         // return the index if the index yielded a result
         // and, if the item is not temporary, it is in the held items
-        return index >= 0 && (temporary || heldItems.Contains(items[index])) ? index : null;
+        return index >= 0 && (allowNonHeldItems || heldItems.Contains(items[index])) ? index : null;
+    }
+
+    /// <summary>
+    /// Given an ItemSO, gives the Item. If the item does not exist, returns null.
+    /// </summary>
+    /// <param name="itemSO"></param>
+    /// <param name="allowNonHeldItems">If true, allows items not currently in the hand to be returned</param>
+    /// <returns></returns>
+    public Item GetItem(ItemSO itemSO, bool allowNonHeldItems = false)
+    {
+        return GetItemIndex(itemSO, allowNonHeldItems: allowNonHeldItems) is int idx
+            ? items[idx]
+            : null;
     }
 
     /// <summary>
@@ -170,14 +187,7 @@ public class PlayerItem : MonoBehaviour
     /// <param name="index"></param>
     public Item EnableItem(int index, bool temporary = false)
     {
-        var item = items[index];
-        if(!temporary && !heldItems.Contains(item))
-        {
-            Debug.LogWarning($"Tried to switch to an item not in the inventory: {item}.");
-            return null;
-        }
-        IsTemporaryItem = temporary;
-        return EnableItem(item, index, temporary);
+        return EnableItem(items[index], temporary);
     }
 
     /// <summary>
@@ -185,12 +195,17 @@ public class PlayerItem : MonoBehaviour
     /// </summary>
     /// <param name="item"></param>
     /// <param name="index"></param>
-    Item EnableItem(Item item, int index, bool temporary = false)
+    public Item EnableItem(Item item, bool temporary = false)
     {
         if (!temporary)
         {
-            EnabledItemIndex = index;
+            if (!heldItems.Contains(item))
+            {
+                Debug.LogWarning($"Tried to switch to an item not in the inventory: {item}.");
+                return null;
+            }
         }
+        IsTemporaryItem = temporary;
         return EnableItemInternal(item);
     }
 
@@ -200,7 +215,7 @@ public class PlayerItem : MonoBehaviour
     /// <param name="item"></param>
     public Item EnableItem(ItemSO itemSO, bool temporary = false)
     {
-        int? itemIndex = GetItemIndexFromSO(itemSO, temporary);
+        int? itemIndex = GetItemIndex(itemSO, temporary);
         Debug.Assert(
             itemIndex != null,
             $"Could not find item \"{itemSO}\" in currently held items.\n"
@@ -214,14 +229,6 @@ public class PlayerItem : MonoBehaviour
         return null;
     }
 
-    // This enables the item but makes it so when you cycle items, it goes
-    // back to the last item used, since they have no index.
-    public Item EnableTemporaryItem(Item item)
-    {
-        IsTemporaryItem = true;
-        return EnableItemInternal(item);
-    }
-
     /// <summary>
     /// Internal enable item function to actually destroy the old item and instantiate the new item.
     /// </summary>
@@ -230,6 +237,7 @@ public class PlayerItem : MonoBehaviour
     {
         if (EnabledItem)
         {
+            lastItemIndex = EnabledItemIndex;
             EnabledItem.gameObject.SetActive(false);
         }
 

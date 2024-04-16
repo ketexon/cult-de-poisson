@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public static class Extensions
 {
@@ -46,4 +47,36 @@ public static class Extensions
         Mathf.Max(v1.y, v2.y),
         Mathf.Max(v1.z, v2.z)
     );
+
+    public static float Volume(this Vector3 length) => length.x * length.y * length.z;
+
+    /// <summary>
+    /// Returns a random vector between two vectors.
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public static Vector3 Random(Vector3 min, Vector3 max) => new Vector3(
+        (max - min).x * UnityEngine.Random.value,
+        (max - min).y * UnityEngine.Random.value,
+        (max - min).z * UnityEngine.Random.value
+    ) + min;
+
+    public static float NormalizeAngle360(float angle) => (angle % 360 + 360) % 360;
+    public static float NormalizeAngle180(float angle) => NormalizeAngle360(angle + 180) - 180;
+
+    static public float ClampAngle(float angle, float min, float max)
+    {
+        float minNormalized = NormalizeAngle180(min - angle);
+        float maxNormalized = NormalizeAngle180(max - angle);
+
+        if (minNormalized <= 0 && maxNormalized >= 0)
+        {
+            return angle;
+        }
+        if (Mathf.Abs(minNormalized) <= Mathf.Abs(maxNormalized))
+            return min;
+        return max;
+    }
+
 }
