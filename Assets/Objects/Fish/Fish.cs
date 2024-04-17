@@ -5,7 +5,6 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     public FishItemBehaviour ItemBehaviour { get; private set; }
-
     [SerializeField] public FishSO FishSO;
     protected Rigidbody rb;
     protected BoxCollider boxCollider;
@@ -49,6 +48,7 @@ public class Fish : MonoBehaviour
     {
         rb.isKinematic = true;
         rb.detectCollisions = false;
+        rb.useGravity = false;
         boxCollider.enabled = false;
         if(FishMovement)
         {
@@ -62,10 +62,27 @@ public class Fish : MonoBehaviour
 
     public void InitializeWater(FishZone fishZone)
     {
+        rb.useGravity = false;
         if (FishMovement)
         {
             FishMovement.enabled = true;
             FishMovement.FishZone = fishZone;
+        }
+        if (HookedFish)
+        {
+            HookedFish.enabled = false;
+        }
+    }
+
+    public void InitializePhysical()
+    {
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+        rb.useGravity = true;
+        boxCollider.enabled = true;
+        if (FishMovement)
+        {
+            FishMovement.enabled = false;
         }
         if (HookedFish)
         {

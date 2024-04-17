@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7065934463964850046}
   - component: {fileID: -7640563538418567719}
   - component: {fileID: -8933835358141023102}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FishBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582537697710654690}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 798ea4dbdd564024696ae5ac171632c8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
