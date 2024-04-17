@@ -96,7 +96,7 @@ public class PlayerItem : MonoBehaviour
             CinemachineBrain = cinemachineBrain,
         };
 
-        foreach (var item in heldItems)
+        foreach (var item in items)
         {
             item.Initialize(itemInitializeParams);
         }
