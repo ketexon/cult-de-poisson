@@ -13,9 +13,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
-    public Cinemachine.CinemachineVirtualCamera Camera => camera;
-
     NavMeshAgent agent;
+
+    public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
     public float Pitch => camera.transform.rotation.eulerAngles.x;
     public float Yaw => transform.rotation.eulerAngles.y;
@@ -45,8 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        var translation = speed * Time.deltaTime * inputDir;
-        agent.Move(translation);
+        var displacement = CalculateVelocity() * Time.deltaTime;
+        agent.Move(displacement);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
@@ -134,5 +134,37 @@ public class PlayerMovement : MonoBehaviour
     {
         var dir = ctx.ReadValue<Vector2>();
         inputDir = transform.rotation * new Vector3(dir.x, 0, dir.y);
+    }
+
+    /// <summary>
+    /// Used to calculate velocity relative to any plane we are on.
+    /// This is to prevent the player from moving into a plane when going uphill
+    /// or into air when going downhill. This function also applies gravity.
+    /// </summary>
+    /// <returns></returns>
+    Vector3 CalculateVelocity()
+    {
+        var velocity = inputDir * speed;
+        if (Physics.Raycast(
+                transform.position,
+                Vector3.down,
+                out var hitInfo,
+                agent.height / 2 + 0.2f,
+                parameters.GroundLayerMask,
+                QueryTriggerInteraction.Ignore
+            )
+        )
+        {
+            var newVelocity = Quaternion.FromToRotation(Vector3.up, hitInfo.normal) * velocity;
+            if(newVelocity.y < 0)
+            {
+                // if we are going downhill, make the direction of the velocity parallel
+                // to the slope
+                // this prevents us from going forward then falling
+                velocity = newVelocity;
+            }
+        }
+        velocity += Physics.gravity * (Time.time - lastTimeOnGround);
+        return velocity;
     }
 }
