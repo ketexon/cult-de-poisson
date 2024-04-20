@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< Updated upstream
   m_IndirectSpecularColor: {r: 0.27149314, g: 0.044900212, b: 0.38708276, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0.35240132, g: 0.026974192, b: 0.36506414, a: 1}
+>>>>>>> Stashed changes
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1956,17 +1960,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ef7e9cb7dca48374889581e4c0c8e0f8, type: 2}
+      objectReference: {fileID: 2100000, guid: 15762bfbc7b075f42aca67f9e245a9d5, type: 2}
     - target: {fileID: -85744201872177665, guid: 49c5b94ee372a204fa383cf04bf530ad,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 093fcc4833215944b843f57a72195407, type: 2}
+      objectReference: {fileID: 2100000, guid: 6d3f3e3fc96a63b4fa6277623a5aa413, type: 2}
     - target: {fileID: -85744201872177665, guid: 49c5b94ee372a204fa383cf04bf530ad,
         type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 87c91275cf6c120469f0671b0a70a963, type: 2}
+      objectReference: {fileID: 2100000, guid: 5534b6f3daeabd142aff828ee2656d5a, type: 2}
     - target: {fileID: 919132149155446097, guid: 49c5b94ee372a204fa383cf04bf530ad,
         type: 3}
       propertyPath: m_Name
@@ -1976,7 +1980,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 87c91275cf6c120469f0671b0a70a963, type: 2}
+      objectReference: {fileID: 2100000, guid: 6d3f3e3fc96a63b4fa6277623a5aa413, type: 2}
     - target: {fileID: 4531912228224351498, guid: 49c5b94ee372a204fa383cf04bf530ad,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -1987,6 +1991,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: ebb16edf185e13043a18ecb81130b983, type: 2}
+    - target: {fileID: 4531912228224351498, guid: 49c5b94ee372a204fa383cf04bf530ad,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 15762bfbc7b075f42aca67f9e245a9d5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2824,6 +2833,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2f3a776c1cfaf714e821d8a4a2cf1948, type: 2}
+    - target: {fileID: -1461304994638716399, guid: d1043029e524c9f46a062255e151f595,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1918c74e0d8d88f47b8cf9d703736d81, type: 2}
     - target: {fileID: 919132149155446097, guid: d1043029e524c9f46a062255e151f595,
         type: 3}
       propertyPath: m_Name
