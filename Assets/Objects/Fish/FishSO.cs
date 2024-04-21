@@ -10,22 +10,4 @@ public class FishSO : ScriptableObject
     public GameObject InHandPrefab;
     public GameObject InBucketPrefab;
     public GameObject PhysicalPrefab;
-
-    void Reset()
-    {
-        InHandPrefab = FindUtil.QueryAsset<GameObject>()
-            .SiblingTo(this)
-            .NameContains("hand", insensitive: true)
-            .Execute();
-
-        InWaterPrefab = new FindUtil.FindAssetQuery<GameObject>()
-            .SiblingTo(this)
-            .NameContains("water", insensitive: true)
-            .Execute();
-
-        InWaterPrefab = new FindUtil.FindAssetQuery<GameObject>()
-            .SiblingTo(this)
-            .NameContains("bucket", insensitive: true)
-            .Execute();
-    }
 }

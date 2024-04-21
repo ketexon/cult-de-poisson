@@ -38,10 +38,6 @@ public class Bucket : Item
         parameters = FindUtil.Asset<GlobalParametersSO>();
         virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
         inventory = FindUtil.Asset<PlayerInventorySO>();
-        fishSpawnContainer = FindUtil.Query<Transform>(this)
-            .InChildren
-            .NameContains("spawn", insensitive: true)
-            .Execute();
     }
 
 

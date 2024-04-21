@@ -173,10 +173,6 @@ public class FishingRod : Item
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
         playerInput = GetComponentInParent<PlayerInput>();
-        rodTipTransform = FindUtil.Query<Transform>(this)
-            .InChildren
-            .NameContains("tip", insensitive: true)
-            .Execute();
     }
 
     void OnAim(InputAction.CallbackContext ctx)
