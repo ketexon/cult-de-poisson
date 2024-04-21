@@ -261,8 +261,9 @@ public class FishingRod : Item
 
             // note: this will disable the current script, and hence
             // add the hooked fish to the inventory
-            var fishItem = playerItem.EnableItem(fishItemSO, temporary: true) as FishItem;
+            var fishItem = playerItem.GetItem(fishItemSO, true) as FishItem;
             fishItem.SetFish(hookedFish);
+            playerItem.EnableItem(fishItem, true);
 
             InteractivityChangeEvent?.Invoke(this);
         }
