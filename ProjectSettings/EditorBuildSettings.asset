@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Boot.unity
+    guid: 974f7847d2b67d8468e4823e1dca43fd
+  - enabled: 1
     path: Assets/Scenes/lvl-cove.unity
     guid: f2e0b9880f0c89e4a8db78298cfe5fd3
   m_configObjects: {}

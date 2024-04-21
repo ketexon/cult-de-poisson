@@ -11,6 +11,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 {
     [SerializeField] Canvas canvas;
     [SerializeField] Player player;
+    [SerializeField] GameObject defaultPanel;
 
     [SerializeField] InputActionReference escapeAction;
 
@@ -53,6 +54,8 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         canvas.enabled = true;
         player.Camera.enabled = false;
         LockCursor.PushLockState(CursorLockMode.None);
+
+        PushPanel(defaultPanel);
     }
 
     void CloseMenu()
@@ -65,8 +68,9 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     public void PushPanel(GameObject panel)
     {
-        if(panels.TryPeek(out var oldPanel)){
-            oldPanel.SetActive(false);
+        if(panels.TryPeek(out var lastPanel))
+        {
+            lastPanel.SetActive(false);
         }
         panels.Push(panel);
         panel.SetActive(true);
@@ -83,11 +87,13 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     public void PopPanel()
     {
-        if(panels.Count > 0)
+        var top = panels.Pop();
+        top.SetActive(false);
+        if (panels.TryPeek(out var lastPanel))
         {
-            panels.Pop();
+            lastPanel.SetActive(true);
         }
-        if(panels.Count == 0)
+        else
         {
             CloseMenu();
         }
