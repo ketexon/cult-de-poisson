@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class SettingsUI : SingletonBehaviour<SettingsUI>
 {
     [SerializeField] Canvas canvas;
@@ -68,7 +72,11 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     public void Quit()
     {
-
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     public void PopPanel()

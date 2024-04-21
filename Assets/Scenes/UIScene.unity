@@ -1000,6 +1000,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1481832696719040802, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_Name
+      value: SettingsButton
+      objectReference: {fileID: 0}
     - target: {fileID: 1783855829205300783, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1105,6 +1110,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscapeMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 2454418642204328705, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_Name
+      value: LoadButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508404652154826686, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_Name
+      value: SaveButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503842361310798946, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503842361310798946, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503842361310798946, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3883541756034714188, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1179,6 +1209,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078340260899195411, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 5251189952491376678}
+    - target: {fileID: 9081534866315760487, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_Name
+      value: QuitButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
