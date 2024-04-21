@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Carp
   m_EditorClassIdentifier: 
   Name: Carp
-  InWaterPrefab: {fileID: 582537697710654690, guid: 7549e94af72b31845b206f97437179a3,
+  InWaterPrefab: {fileID: 6168559306990160984, guid: 1596b65850a011d46ae83f40c90711c2,
     type: 3}
-  InHandPrefab: {fileID: 582537697710654690, guid: 5137abbc280b8de47ab2104b5bb72251,
+  InHandPrefab: {fileID: 6168559306990160984, guid: 1596b65850a011d46ae83f40c90711c2,
     type: 3}
-  InBucketPrefab: {fileID: 582537697710654690, guid: 7549e94af72b31845b206f97437179a3,
+  InBucketPrefab: {fileID: 6168559306990160984, guid: 1596b65850a011d46ae83f40c90711c2,
+    type: 3}
+  PhysicalPrefab: {fileID: 6168559306990160984, guid: 1596b65850a011d46ae83f40c90711c2,
     type: 3}

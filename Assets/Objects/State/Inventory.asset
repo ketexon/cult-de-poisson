@@ -15,3 +15,7 @@ MonoBehaviour:
   StartingFish:
   - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
   - {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
+  StartingRods:
+  - {fileID: 11400000, guid: 1567b03e664957648ab7234545690108, type: 2}
+  StartingTackleboxItems:
+  - {fileID: 11400000, guid: d23696d5009b9084f950f6161fde5db6, type: 2}

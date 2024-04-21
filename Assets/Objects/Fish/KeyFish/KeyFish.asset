@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: KeyFish
   m_EditorClassIdentifier: 
   Name: Key Fish
-  InWaterPrefab: {fileID: 582537697710654690, guid: 4c9cabd52cae4c842805e61c999bb609,
+  InWaterPrefab: {fileID: 7836643293546776421, guid: 5398ff0914d58bc45933f514138f5e6e,
     type: 3}
-  InHandPrefab: {fileID: 582537697710654690, guid: c0e1788d0692979458dc10a3465d403c,
+  InHandPrefab: {fileID: 7836643293546776421, guid: 5398ff0914d58bc45933f514138f5e6e,
     type: 3}
-  InBucketPrefab: {fileID: 582537697710654690, guid: 4c9cabd52cae4c842805e61c999bb609,
+  InBucketPrefab: {fileID: 7836643293546776421, guid: 5398ff0914d58bc45933f514138f5e6e,
     type: 3}
-  PhysicalPrefab: {fileID: 582537697710654690, guid: 7a82e6fbf01764848ac70417c21419d9,
+  PhysicalPrefab: {fileID: 7836643293546776421, guid: 5398ff0914d58bc45933f514138f5e6e,
     type: 3}

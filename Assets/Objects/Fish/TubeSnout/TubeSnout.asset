@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TubeSnout
   m_EditorClassIdentifier: 
   Name: Tube Snout
-  InWaterPrefab: {fileID: 582537697710654690, guid: a2723a24d53ce334bba425a6a1ddde26,
+  InWaterPrefab: {fileID: 4683928207900699466, guid: 4c2133dcd24b70c4a9750c9e9613e65c,
     type: 3}
-  InHandPrefab: {fileID: 582537697710654690, guid: 3384f58fed343aa4589972aa4d7c3c4c,
+  InHandPrefab: {fileID: 4683928207900699466, guid: 4c2133dcd24b70c4a9750c9e9613e65c,
     type: 3}
-  InBucketPrefab: {fileID: 582537697710654690, guid: a2723a24d53ce334bba425a6a1ddde26,
+  InBucketPrefab: {fileID: 4683928207900699466, guid: 4c2133dcd24b70c4a9750c9e9613e65c,
     type: 3}
-  PhysicalPrefab: {fileID: 582537697710654690, guid: a2723a24d53ce334bba425a6a1ddde26,
+  PhysicalPrefab: {fileID: 4683928207900699466, guid: 4c2133dcd24b70c4a9750c9e9613e65c,
     type: 3}

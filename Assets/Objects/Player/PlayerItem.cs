@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static UnityEngine.Rendering.VolumeComponent;
 
 /// <summary>
@@ -18,10 +19,13 @@ public class PlayerItem : MonoBehaviour
     [SerializeField] PlayerInteract playerInteract;
     [SerializeField] Camera mainCamera;
     [SerializeField] CinemachineBrain cinemachineBrain;
-    [SerializeField] Transform itemTransform;
+    [FormerlySerializedAs("itemTransform")]
+    [SerializeField] Transform itemContainerTransform;
     [SerializeField] float rotateSpeed = 5;
-    [SerializeField] List<ItemSO> startingItems;
+    [SerializeField] List<Item> startingItems;
     [SerializeField] int startingItemIndex;
+
+    public float RotateSpeed => rotateSpeed;
 
     [System.NonSerialized] public Vector3 ItemOffsetPos;
     [System.NonSerialized] public Quaternion CurRot;
@@ -30,7 +34,8 @@ public class PlayerItem : MonoBehaviour
 
     [SerializeField] SaveStateSO saveState;
 
-    List<ItemSO> items;
+    List<Item> items;
+    HashSet<Item> heldItems;
 
     public System.Action<Item> ItemChangeEvent;
 
@@ -45,8 +50,10 @@ public class PlayerItem : MonoBehaviour
     /// </summary>
     Item.InitializeParams itemInitializeParams;
 
-    public int EnabledItemIndex { get; protected set; }
+    public int EnabledItemIndex => EnabledItem.transform.GetSiblingIndex();
     public Item EnabledItem { get; protected set; }
+
+    int lastItemIndex;
 
     public bool IsTemporaryItem { get; protected set; }
 
@@ -67,16 +74,17 @@ public class PlayerItem : MonoBehaviour
 
     void Awake()
     {
-        items = startingItems;
-        EnabledItemIndex = startingItemIndex;
+        items = new(itemContainerTransform.GetComponentsInChildren<Item>(includeInactive: true));
+        heldItems = new(startingItems);
 
-        foreach(Transform t in itemTransform)
+        // disable all items that are not the starting item
+        foreach (var item in items)
         {
-            Destroy(t.gameObject);
+            item.gameObject.SetActive(false);
         }
 
-        CurRot = itemTransform.rotation;
-        ItemOffsetPos = itemTransform.position - transform.position;
+        CurRot = itemContainerTransform.rotation;
+        ItemOffsetPos = itemContainerTransform.position - transform.position;
 
         itemInitializeParams = new()
         {
@@ -88,7 +96,12 @@ public class PlayerItem : MonoBehaviour
             CinemachineBrain = cinemachineBrain,
         };
 
-        EnableItem(EnabledItemIndex);
+        foreach (var item in items)
+        {
+            item.Initialize(itemInitializeParams);
+        }
+
+        EnableItem(startingItemIndex);
     }
 
     /// <summary>
@@ -99,23 +112,40 @@ public class PlayerItem : MonoBehaviour
     /// <param name="ctx"></param>
     public void OnCycleItem(InputAction.CallbackContext ctx)
     {
-        if(!ctx.performed)
+        if(!ctx.performed || !EnabledItem.CanSwitchItems)
         {
             return;
         }
+
+        float v = ctx.ReadValue<float>();
+        int dir = Math.Sign(v);
+        CycleItem(dir);
+    }
+
+    public void CycleItem(int dir)
+    {
         int newItemIndex;
+
         if (IsTemporaryItem)
         {
-            newItemIndex = EnabledItemIndex;
+            newItemIndex = lastItemIndex;
         }
         else
         {
-            float v = ctx.ReadValue<float>();
-            newItemIndex = (Math.Sign(v) + EnabledItemIndex + items.Count) % items.Count;
+            newItemIndex = EnabledItemIndex;
+            Item item;
+
+            // try cycling until we reach an item held in hand
+            do
+            {
+                newItemIndex = (newItemIndex + dir + items.Count) % items.Count;
+                item = items[newItemIndex];
+            } while (!heldItems.Contains(item));
         }
 
         EnableItem(newItemIndex);
     }
+
 
     /// <summary>
     /// When the player presses space bar, relay that to the item.
@@ -130,12 +160,41 @@ public class PlayerItem : MonoBehaviour
     }
 
     /// <summary>
+    /// Given an ItemSO, give the index in <see cref="items"/>. If the item does not exist, returns null.
+    /// </summary>
+    /// <param name="itemSO"></param>
+    /// <param name="allowNonHeldItems"></param>
+    /// <returns></returns>
+    public int? GetItemIndex(ItemSO itemSO, bool allowNonHeldItems = false)
+    {
+        var index = items.FindIndex(item => {
+            return item.ItemSO == itemSO;
+        });
+        // return the index if the index yielded a result
+        // and, if the item is not temporary, it is in the held items
+        return index >= 0 && (allowNonHeldItems || heldItems.Contains(items[index])) ? index : null;
+    }
+
+    /// <summary>
+    /// Given an ItemSO, gives the Item. If the item does not exist, returns null.
+    /// </summary>
+    /// <param name="itemSO"></param>
+    /// <param name="allowNonHeldItems">If true, allows items not currently in the hand to be returned</param>
+    /// <returns></returns>
+    public Item GetItem(ItemSO itemSO, bool allowNonHeldItems = false)
+    {
+        return GetItemIndex(itemSO, allowNonHeldItems: allowNonHeldItems) is int idx
+            ? items[idx]
+            : null;
+    }
+
+    /// <summary>
     /// Enables an item by index in inventory.
     /// </summary>
     /// <param name="index"></param>
-    public void EnableItem(int index)
+    public Item EnableItem(int index, bool temporary = false)
     {
-        EnableItem(items[index], index);
+        return EnableItem(items[index], temporary);
     }
 
     /// <summary>
@@ -143,54 +202,58 @@ public class PlayerItem : MonoBehaviour
     /// </summary>
     /// <param name="item"></param>
     /// <param name="index"></param>
-    void EnableItem(ItemSO item, int index)
+    public Item EnableItem(Item item, bool temporary = false)
     {
-        IsTemporaryItem = false;
-        EnabledItemIndex = index;
-        EnableItemInternal(item);
+        if (!temporary)
+        {
+            if (!heldItems.Contains(item))
+            {
+                Debug.LogWarning($"Tried to switch to an item not in the inventory: {item}.");
+                return null;
+            }
+        }
+        IsTemporaryItem = temporary;
+        return EnableItemInternal(item);
     }
 
     /// <summary>
     /// Enable an item from its ItemSO.
     /// </summary>
     /// <param name="item"></param>
-    public void EnableItem(ItemSO item)
+    public Item EnableItem(ItemSO itemSO, bool temporary = false)
     {
-        // if no index supplied, try to determine it
-        var index = items.FindIndex((otherItem) => otherItem == item);
+        int? itemIndex = GetItemIndex(itemSO, temporary);
         Debug.Assert(
-            index >= 0,
-            $"Could not find item \"{item}\" in currently held items.\n"
+            itemIndex != null,
+            $"Could not find item \"{itemSO}\" in currently held items.\n"
             + "Use EnableTemporaryItem to add an item not in held items."
         );
 
-        EnableItem(item, index);
-    }
-
-    // This enables the item but makes it so when you cycle items, it goes
-    // back to the last item used, since they have no index.
-    public void EnableTemporaryItem(ItemSO item)
-    {
-        IsTemporaryItem = true;
-        EnableItemInternal(item);
+        if (itemIndex != null)
+        {
+            return EnableItem(itemIndex.Value, temporary: temporary);
+        }
+        return null;
     }
 
     /// <summary>
     /// Internal enable item function to actually destroy the old item and instantiate the new item.
     /// </summary>
     /// <param name="item"></param>
-    void EnableItemInternal(ItemSO item)
+    Item EnableItemInternal(Item item)
     {
         if (EnabledItem)
         {
-            EnabledItem.OnStopUsingItem();
+            lastItemIndex = EnabledItemIndex;
+            EnabledItem.gameObject.SetActive(false);
         }
 
-        var itemGO = Instantiate(item.Prefab, itemTransform);
-        EnabledItem = itemGO.GetComponent<Item>();
-        EnabledItem.Initialize(itemInitializeParams);
+        EnabledItem = item;
+        item.gameObject.SetActive(true);
 
         ItemChangeEvent?.Invoke(EnabledItem);
+
+        return item;
     }
 
     /// <summary>
@@ -203,8 +266,11 @@ public class PlayerItem : MonoBehaviour
             TargetRot = transform.rotation;
         }
         CurRot = Quaternion.Lerp(CurRot, TargetRot, Time.deltaTime * rotateSpeed);
-        itemTransform.rotation = CurRot;
+        itemContainerTransform.rotation = CurRot;
+    }
 
-        itemTransform.position = ItemOffsetPos + transform.position;
+    void LateUpdate()
+    {
+        itemContainerTransform.position = ItemOffsetPos + transform.position;
     }
 }
