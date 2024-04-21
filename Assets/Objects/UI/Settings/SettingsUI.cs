@@ -52,6 +52,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         player.Input.DeactivateInput();
         canvas.enabled = true;
         player.Camera.enabled = false;
+        LockCursor.PushLockState(CursorLockMode.None);
     }
 
     void CloseMenu()
@@ -59,6 +60,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         canvas.enabled = false;
         player.Input.ActivateInput();
         player.Camera.enabled = true;
+        LockCursor.PushLockState(CursorLockMode.Locked);
     }
 
     public void PushPanel(GameObject panel)

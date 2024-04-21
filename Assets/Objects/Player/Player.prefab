@@ -348,35 +348,11 @@ MonoBehaviour:
     m_ActionId: e14042b4-45ed-4d83-acf8-486487d366a4
     m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 589010488059326791}
-        m_TargetAssemblyTypeName: LockCursor, Assembly-CSharp
-        m_MethodName: OnActivate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5ee55593-30ba-499b-a1f7-bae0142e24a7
     m_ActionName: Gameplay/Activate[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 589010488059326791}
-        m_TargetAssemblyTypeName: LockCursor, Assembly-CSharp
-        m_MethodName: OnCancel
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 45818e84-4085-47ff-b56d-71d06da14d7f
     m_ActionName: Gameplay/Cancel[/Keyboard/escape]
   - m_PersistentCalls:

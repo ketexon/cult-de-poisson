@@ -8,7 +8,14 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class LockCursor : MonoBehaviour
 {
+    Player player;
     static Stack<CursorLockMode> lockModeStack = new();
+
+
+    void Awake()
+    {
+        player = GetComponent<Player>();
+    }
 
     /// <summary>
     /// Set the lock state for the cursor
@@ -26,23 +33,5 @@ public class LockCursor : MonoBehaviour
     public static void PopLockState()
     {
         Cursor.lockState = lockModeStack.Pop();
-    }
-
-    /// <summary>
-    /// Lock the cursor when you click on the game.
-    /// </summary>
-    /// <param name="ctx"></param>
-    public void OnActivate(InputAction.CallbackContext ctx)
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    /// <summary>
-    /// Unlock the cursor when you press escape.
-    /// </summary>
-    /// <param name="ctx"></param>
-    public void OnCancel(InputAction.CallbackContext ctx)
-    {
-        Cursor.lockState = CursorLockMode.None;
     }
 }
