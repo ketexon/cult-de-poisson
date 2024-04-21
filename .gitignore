@@ -74,3 +74,4 @@ crashlytics-build.properties
 
 # blender backups
 *.blend?
+*.blend?.meta
