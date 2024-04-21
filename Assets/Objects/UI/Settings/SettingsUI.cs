@@ -14,7 +14,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     [SerializeField] InputActionReference escapeAction;
 
-    Stack<GameObject> panels;
+    Stack<GameObject> panels = new();
 
     bool Open => canvas.enabled;
 
