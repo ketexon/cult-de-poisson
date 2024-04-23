@@ -15,58 +15,38 @@ public class SpeciesDropdown : JournalUIElement
 	[SerializeField] GameObject dropdownPanel;
 	[SerializeField] TMP_Text weight, length, depth, catchMethod, favoredHabitat, catchDifficulty, isKeyFish, notes;
 
-	bool isOpen = false;
 	bool isInteractable = true;
 	RectTransform dropdownTransform;
 
-	void Awake()
-	{
-		UpdateTextFields();
-	}
-
 	void Start()
 	{
+		UpdateTextFields();
 		dropdownTransform = dropdownPanel.GetComponent<RectTransform>();
-	}
-
-	//Implemented by IPointerClickHandler interface
-	public override void OnPointerClick(PointerEventData eventData)
-	{
-		if (!isInteractable) return;
-
-		if (!isOpen)
-		{
-			OpenDropdown();
-		}
-		else
-		{
-			CloseDropdown();
-		}
 	}
 
 	//Inherited from JournalUIElement
 	public override void Reset()
 	{
 		dropdownTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-		isOpen = false;
-		isInteractable = true;
+		OpenDropdown();
 	}
 
 	//Opens the species dropdown and displays the fish's data
 	public void OpenDropdown()
 	{
-		isOpen = true;
+		if (!isInteractable) return;
 		StartCoroutine(DoOpenDropdown());
 	}
 
 	public void CloseDropdown()
 	{
-		isOpen = false;
+		if (!isInteractable) return;
 		StartCoroutine(DoCloseDropdown());
 	}
 
 	public void SetFishSO(FishSO fishSO)
 	{
+		if (!isInteractable) return;
 		this.fishSO = fishSO;
 		UpdateTextFields();
 	}
@@ -119,5 +99,13 @@ public class SpeciesDropdown : JournalUIElement
 		catchDifficulty.text = "Catch Difficulty: " + fishSO.FishInfo.CatchDifficulty;
 		isKeyFish.text = "Key Fish: " + fishSO.FishInfo.IsKeyFish;
 		notes.text = "Notes: " + fishSO.FishInfo.Notes;
+		StartCoroutine(CloseAndOpenDropdown());
+	}
+
+	IEnumerator CloseAndOpenDropdown()
+	{
+		CloseDropdown();
+		yield return new WaitWhile(() => !isInteractable);
+		OpenDropdown();
 	}
 }

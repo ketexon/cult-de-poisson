@@ -1,16 +1,14 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Yarn.Unity;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Journal : Item
 {
-    const string TURN_PAGE_TRIGGER = "turnPage";
+    const string TURN_PAGE_FORWARD_TRIGGER = "turnPageForward";
+    const string TURN_PAGE_BACKWARD_TRIGGER = "turnPageBack";
     const string OPEN_JOURNAL_TRIGGER = "open";
     const string CLOSE_JOURNAL_TRIGGER = "close";
 
@@ -22,7 +20,7 @@ public class Journal : Item
     InputActionReference exitAction;
 
     [SerializeField]
-    GameObject[] journalPages = new GameObject[0];
+    GameObject[] journalHeadPages = new GameObject[0];
 
     [SerializeField]
     Bookmark[] bookmarks = new Bookmark[3];
@@ -31,7 +29,7 @@ public class Journal : Item
 
     bool inAnimation = false;
     bool usingJournal = false;
-    int curPage = 0;
+    float curSection = 0;
 
     private void Start()
     {
@@ -49,7 +47,7 @@ public class Journal : Item
 
     public override void OnUse()
     {
-        if (journalPages.Length == 0)
+        if (journalHeadPages.Length == 0)
         {
             Debug.LogError("Journal has no pages to display.");
             return;
@@ -77,13 +75,13 @@ public class Journal : Item
 
     public void OpenPage(int pageNumber)
     {
-        if (pageNumber < 0 || pageNumber >= journalPages.Length)
+        if (pageNumber < 0 || pageNumber >= journalHeadPages.Length)
         {
             Debug.LogError("Invalid page number: " + pageNumber);
             return;
         }
 
-        if (pageNumber == curPage || inAnimation)
+        if (pageNumber == curSection || inAnimation)
         {
             return;
         }
@@ -114,7 +112,7 @@ public class Journal : Item
         usingJournal = false;
         virtualCamera.enabled = false;
 
-        foreach (GameObject page in journalPages)
+        foreach (GameObject page in journalHeadPages)
         {
             page.SetActive(false);
         }
@@ -122,24 +120,31 @@ public class Journal : Item
 
     IEnumerator OpenPageInternal(int pageNumber)
     {
-        JournalUIElement[] journalUIElements = journalPages[curPage].GetComponentsInChildren<JournalUIElement>();
+        JournalUIElement[] journalUIElements = journalHeadPages[(int)curSection].GetComponentsInChildren<JournalUIElement>();
 
         foreach (JournalUIElement element in journalUIElements)
         {
             element.Reset();
         }
 
-        curPage = pageNumber;
-
-        foreach (GameObject page in journalPages)
+        foreach (GameObject page in journalHeadPages)
         {
             page.SetActive(false);
         }
 
-        yield return StartCoroutine(TriggerAnimation(TURN_PAGE_TRIGGER));
+        if (pageNumber > curSection)
+        {
+            yield return StartCoroutine(TriggerAnimation(TURN_PAGE_FORWARD_TRIGGER));
+        }
+        else
+        {
+            yield return StartCoroutine(TriggerAnimation(TURN_PAGE_BACKWARD_TRIGGER));
+        }
 
-        journalPages[pageNumber].SetActive(true);
-        journalPages[pageNumber].GetComponent<Canvas>().worldCamera = mainCamera;
+
+        curSection = pageNumber;
+        journalHeadPages[pageNumber].SetActive(true);
+        journalHeadPages[pageNumber].GetComponent<Canvas>().worldCamera = mainCamera;
     }
 
     IEnumerator OpenJournalInternal()
@@ -148,8 +153,8 @@ public class Journal : Item
 
         yield return TriggerAnimation(OPEN_JOURNAL_TRIGGER);
 
-        journalPages[0].SetActive(true);
-        journalPages[0].GetComponent<Canvas>().worldCamera = mainCamera;
+        journalHeadPages[0].SetActive(true);
+        journalHeadPages[0].GetComponent<Canvas>().worldCamera = mainCamera;
     }
 
     IEnumerator TriggerAnimation(string animationTrigger)
@@ -158,10 +163,23 @@ public class Journal : Item
         animator.SetTrigger(animationTrigger);
 
         yield return null;
-        AnimatorClipInfo info = animator.GetNextAnimatorClipInfo(0)[0];
+        AnimatorClipInfo[] info;
 
-        yield return new WaitForSeconds(info.clip.length);
+
+        info = animator.GetNextAnimatorClipInfo(0);
+
+        if (info.Length == 0)
+        {
+            info = animator.GetCurrentAnimatorClipInfo(0);
+        }
+
+        yield return new WaitForSeconds(info[0].clip.length);
         inAnimation = false;
+    }
+
+    public string[] GetUnlockedFish()
+    {
+        return new string[] { "KeyFish", "TubeSnout" };
     }
 
 }
