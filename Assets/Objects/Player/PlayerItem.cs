@@ -39,6 +39,8 @@ public class PlayerItem : MonoBehaviour
 
     public System.Action<Item> ItemChangeEvent;
 
+    Player player;
+
     /// <summary>
     /// Whether the item should lock its rotation to the player's rotation.
     /// </summary>
@@ -74,6 +76,8 @@ public class PlayerItem : MonoBehaviour
 
     void Awake()
     {
+        player = GetComponent<Player>();
+
         items = new(itemContainerTransform.GetComponentsInChildren<Item>(includeInactive: true));
         heldItems = new(startingItems);
 
@@ -263,7 +267,7 @@ public class PlayerItem : MonoBehaviour
     {
         if (playerLock)
         {
-            TargetRot = transform.rotation;
+            TargetRot = Quaternion.Euler(0, player.Movement.Yaw, 0);
         }
         CurRot = Quaternion.Lerp(CurRot, TargetRot, Time.deltaTime * rotateSpeed);
         itemContainerTransform.rotation = CurRot;

@@ -9,17 +9,20 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] new Cinemachine.CinemachineVirtualCamera camera;
+    [SerializeField] Transform lookRoot;
     [SerializeField] float mouseSensitivity;
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
     NavMeshAgent agent;
+    Rigidbody rb;
+    new Collider collider;
 
     public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
     public float Pitch => camera.transform.rotation.eulerAngles.x;
-    public float Yaw => transform.rotation.eulerAngles.y;
-    public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y);
+    public float Yaw => lookRoot.rotation.eulerAngles.y;
+    public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, lookRoot.rotation.eulerAngles.y);
     public Vector3 Position => transform.position;
 
     Vector3 inputDir = Vector3.zero;
@@ -32,6 +35,20 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     Vector2? pitchRange = null, yawRange = null;
 
+    bool shouldReenableAgent = false;
+
+    public void SetPhysicsEnabled(bool enabled)
+    {
+        if (enabled)
+        {
+            SetPhysicsEnabledImpl(true);
+        }
+        else
+        {
+            shouldReenableAgent = true;
+        }
+    }
+
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
@@ -41,12 +58,17 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
     }
 
     void Update()
     {
-        var displacement = CalculateVelocity() * Time.deltaTime;
-        agent.Move(displacement);
+        if (agent.enabled)
+        {
+            var displacement = CalculateVelocity() * Time.deltaTime;
+            agent.Move(displacement);
+        }
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
@@ -55,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
         var delta = ctx.ReadValue<Vector2>();
 
-        var playerEulerY = transform.rotation.eulerAngles.y;
+        var playerEulerY = lookRoot.rotation.eulerAngles.y;
         float newPlayerEulerY = playerEulerY + delta.x * mouseSensitivity;
 
         if (yawRange is Vector2 yr)
@@ -70,8 +92,8 @@ public class PlayerMovement : MonoBehaviour
         var deltaPlayerEulerY = newPlayerEulerY - playerEulerY;
         var deltaRotY = Quaternion.Euler(deltaPlayerEulerY * Vector3.up);
 
-        transform.rotation = transform.rotation * deltaRotY;
-        
+        lookRoot.rotation = lookRoot.rotation * deltaRotY;
+
         inputDir = deltaRotY * inputDir;
 
         var cameraEulerX = (camera.transform.rotation.eulerAngles.x + 180) % 360 - 180;
@@ -133,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         var dir = ctx.ReadValue<Vector2>();
-        inputDir = transform.rotation * new Vector3(dir.x, 0, dir.y);
+        inputDir = lookRoot.rotation * new Vector3(dir.x, 0, dir.y);
     }
 
     /// <summary>
@@ -166,5 +188,38 @@ public class PlayerMovement : MonoBehaviour
         }
         velocity += Physics.gravity * (Time.time - lastTimeOnGround);
         return velocity;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(shouldReenableAgent)
+        {
+            SetPhysicsEnabledImpl(false);
+        }
+    }
+
+    void SetPhysicsEnabledImpl(bool enabled)
+    {
+        if (enabled)
+        {
+            rb.isKinematic = false;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+            collider.enabled = true;
+
+            agent.enabled = false;
+        }
+        else
+        {
+            rb.isKinematic = true;
+            rb.interpolation = RigidbodyInterpolation.None;
+
+            collider.enabled = false;
+
+            agent.enabled = true;
+        }
+
+        shouldReenableAgent = false;
+
     }
 }

@@ -13,6 +13,7 @@ public class Player : SingletonBehaviour<Player>
     public PlayerInput Input;
     public PlayerItem Item;
     public PlayerInteract Interact;
+    public PlayerMovement Movement;
     public Camera Camera;
     public CinemachineBrain CinemachineBrain;
 
@@ -21,6 +22,7 @@ public class Player : SingletonBehaviour<Player>
         Input = GetComponentInChildren<PlayerInput>();
         Item = GetComponentInChildren<PlayerItem>();
         Interact = GetComponentInChildren<PlayerInteract>();
+        Movement = GetComponentInChildren<PlayerMovement>();
         Camera = GetComponentInChildren<Camera>();
         if (Camera)
         {
