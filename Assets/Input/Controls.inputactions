@@ -765,6 +765,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Journal",
+            "id": "9546c1c8-6066-478a-8bfc-0d8816da9bf2",
+            "actions": [
+                {
+                    "name": "Exit Journal",
+                    "type": "Button",
+                    "id": "c426f53a-03d0-4fdb-b1f9-e996004df881",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "43472095-60a7-4852-97e7-2b429ea2ccf8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit Journal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14666393-7fb3-4c8e-93c3-6cef92f780a5",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit Journal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
