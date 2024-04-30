@@ -8,7 +8,7 @@
 .button {
     border-radius: 6px;
     background-color: rgba(42, 42, 42, 0.4);
-    --button-on-background: rgba(255, 255, 255, 255);
+    --button-on-background: rgb(255, 255, 255);
     color: var(--button-on-background);
 }
 
@@ -23,7 +23,8 @@
     padding: 0;
 }
 
-.button__key {
+.button__text-icon {
+    display: none;
     -unity-font-definition: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght%20SDF.asset?fileID=11400000&guid=38da8e63a07186f42a533d88239abc37&type=2#Inter-VariableFont_slnt,wght SDF');
     margin: 0;
     padding: 1px 4px;
@@ -31,4 +32,39 @@
     border-color: var(--button-on-background);
     border-width: 1px;
     font-size: 10px;
+    -unity-font: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght.ttf?fileID=12800000&guid=c6341633248aaa349a4c624a036f8a66&type=3#Inter-VariableFont_slnt,wght');
+}
+
+.button__image-icon {
+    display: none;
+    flex-grow: 1;
+    align-self: stretch;
+    min-width: 16px;
+    min-height: 16px;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--button-on-background);
+}
+
+.button--image-icon .button__image-icon {
+    display: flex;
+}
+
+.button--text-icon .button__text-icon {
+    display: flex;
+}
+
+.icon--rmb {
+    background-image: url('project://database/Assets/Images/UI/keybinds/rmb.png?fileID=21300000&guid=f546287d52a6f594083c32ba7942cd37&type=3#rmb');
+}
+
+.icon--lmb {
+    background-image: url('project://database/Assets/Images/UI/keybinds/lmb.png?fileID=21300000&guid=817ee5ef7d2874b42a9532283a467fba&type=3#lmb');
+}
+
+.icon--scroll-y {
+    background-image: url('project://database/Assets/Images/UI/keybinds/scroll.png?fileID=21300000&guid=46649ee8bdf4da248835b50dd7630e39&type=3#scroll');
+}
+
+#interaction-container .button {
+    margin-top: 4px;
 }

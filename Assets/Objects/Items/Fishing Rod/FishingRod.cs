@@ -27,7 +27,7 @@ public class FishingRod : Item
     /// The tip of the fishing rod where the fishing line is cast from
     /// </summary>
     [SerializeField] Transform rodTipTransform;
-    
+
     [SerializeField] FishingHook hook;
     [SerializeField] float fishingSensitivityY = 0.05f;
     [SerializeField] float fishingSensitivityX = 0.05f;
@@ -230,7 +230,7 @@ public class FishingRod : Item
 
     public void OnFishClick(InputAction.CallbackContext ctx)
     {
-        if(fishingState == FishingState.Uncast)
+        if (fishingState == FishingState.Uncast)
         {
             Cast();
         }
@@ -289,6 +289,8 @@ public class FishingRod : Item
         fishingLine.OnCast(hook, rodTipTransform, rodTipVelocity);
 
         fishingState = FishingState.Cast;
+
+        UpdateInputUI();
     }
 
     /// <summary>
@@ -319,7 +321,7 @@ public class FishingRod : Item
     /// <param name="inRange"></param>
     public void SetHookInRange(bool inRange)
     {
-        if(hookInRange != inRange)
+        if (hookInRange != inRange)
         {
             hookInRange = inRange;
             InteractivityChangeEvent?.Invoke(this);
@@ -329,17 +331,42 @@ public class FishingRod : Item
     void UpdateInputUI()
     {
         inputUIDestructor?.Invoke();
+        List<InputUI.Entry> interactions = new();
+
         if (aiming)
         {
-            inputUIDestructor = null;
+            if(fishingState == FishingState.Uncast)
+            {
+                interactions.Add(new()
+                {
+                    InputAction = clickAction,
+                    Message = "to cast"
+                });
+            }
+            else
+            {
+                interactions.Add(new()
+                {
+                    InputAction = reelAction,
+                    Message = "to reel"
+                });
+            }
+            interactions.Add(new()
+            {
+                InputAction = moveAction,
+                Message = "to move rod"
+            });
         }
         else
         {
-            inputUIDestructor = InputUI.Instance.AddInputUI(
-                aimAction,
-                "Aim fishing rod"
-            );
+            interactions.Add(new()
+            {
+                InputAction = aimAction,
+                Message = "to aim rod"
+            });
         }
+
+        inputUIDestructor = InputUI.Instance.AddInputUI(interactions);
     }
 
     public void OnHookFish(Fish fish)

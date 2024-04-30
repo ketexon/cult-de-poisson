@@ -7,6 +7,13 @@ using UnityEngine.UIElements;
 
 public class InputUI : SingletonBehaviour<InputUI>
 {
+    public class Entry
+    {
+        public InputAction InputAction;
+        public string Message;
+        public bool Disabled = false;
+    }
+
     [SerializeField] Animator crosshairAnimator;
 
     [SerializeField] UIDocument document;
@@ -16,6 +23,13 @@ public class InputUI : SingletonBehaviour<InputUI>
 
     public bool CrosshairEnabled { get; private set; } = false;
     public bool CrosshairVisible { get; private set; } = true;
+
+    readonly Dictionary<string, string> DisplayStringIconClassMap = new()
+    {
+        { "RMB", "icon--rmb" },
+        { "LMB", "icon--lmb" },
+        { "Scroll y", "icon--scroll-y" },
+    };
 
     override protected void Awake()
     {
@@ -32,7 +46,7 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <param name="value"></param>
     public void SetCrosshairEnabled(bool value)
     {
-        if(CrosshairEnabled != value)
+        if (CrosshairEnabled != value)
         {
             CrosshairEnabled = value;
             crosshairAnimator.SetBool("Enabled", CrosshairEnabled);
@@ -64,19 +78,64 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <returns>A callback to call to remove the input.</returns>
     public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false)
     {
-        var ve = interactionTemplate.Instantiate();
-        if (disabled)
+        var ve = AddInputUIToDocument(new Entry
         {
-            ve.Q<VisualElement>("interact-indicator").AddToClassList("disabled");
-        }
-        ve.Q<Label>(null, "button__key").text = inputAction.GetBindingDisplayString();
-        ve.Q<Label>(null, "button__label").text = message;
-
-        interactionContainer.Add(ve);
+            InputAction = inputAction,
+            Message = message,
+            Disabled = disabled
+        });
 
         return () =>
         {
             ve.RemoveFromHierarchy();
         };
+    }
+
+    public System.Action AddInputUI(IEnumerable<Entry> entries)
+    {
+        List<VisualElement> ves = new List<VisualElement>();
+        foreach(var entry in entries)
+        {
+            ves.Add(AddInputUIToDocument(entry));
+        }
+        return () =>
+        {
+            foreach(var ve in ves)
+            {
+                ve.RemoveFromHierarchy();
+            }
+        };
+    }
+
+    private VisualElement AddInputUIToDocument(Entry entry)
+    {
+        var ve = interactionTemplate.Instantiate();
+        var root = ve.Q<VisualElement>("interaction-indicator");
+        if (entry.Disabled)
+        {
+            root.AddToClassList("disabled");
+        }
+        string bindingDisplayString = InputUtil.GetActionDisplayString(entry.InputAction);
+        if (DisplayStringIconClassMap.ContainsKey(bindingDisplayString))
+        {
+            root.AddToClassList("button--image-icon");
+
+            var imageIcon = ve.Q<VisualElement>(null, "button__image-icon");
+            imageIcon.AddToClassList(DisplayStringIconClassMap[bindingDisplayString]);
+        }
+        else
+        {
+            root.AddToClassList("button--text-icon");
+
+            var textIcon = ve.Q<Label>(null, "button__text-icon");
+            textIcon.text = bindingDisplayString;
+        }
+
+        var label = ve.Q<Label>(null, "button__label");
+        label.text = entry.Message;
+
+        interactionContainer.Add(ve);
+
+        return ve;
     }
 }

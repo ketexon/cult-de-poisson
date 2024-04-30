@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
-    <ui:VisualElement name="interact-indicator" class="button" style="flex-grow: 0; align-items: center; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; flex-direction: row; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
-        <ui:Label tabindex="-1" text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button__key" class="button__key" style="font-size: 10px; -unity-font: url(&apos;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&apos;); -unity-font-definition: initial; min-height: 16px; -unity-text-align: middle-center;" />
+    <ui:VisualElement name="interaction-indicator" class="button" style="flex-grow: 0; align-items: center; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; flex-direction: row; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
+        <ui:VisualElement style="align-self: stretch; flex-direction: row;">
+            <ui:Label tabindex="-1" text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button__key" class="button__text-icon" />
+            <ui:VisualElement name="button__icon" class="button__image-icon" />
+        </ui:VisualElement>
         <ui:Label tabindex="-1" text="to inspect bucket" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button__label" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&amp;guid=33eee739a25c0a34eaaab225b362c8e1&amp;type=2#m5x7 SDF&apos;); -unity-text-align: middle-left;" />
     </ui:VisualElement>
 </ui:UXML>
