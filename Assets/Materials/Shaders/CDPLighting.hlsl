@@ -19,7 +19,7 @@ half3 CalculateToonLightingColor(LightingData lightingData, half3 albedo)
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_GLOBAL_ILLUMINATION))
     {
-        // lightingColor += lightingData.giColor;
+        lightingColor += lightingData.giColor;
     }
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_MAIN_LIGHT))
@@ -50,17 +50,19 @@ half3 CalculateToonLightingColor(LightingData lightingData, half3 albedo)
 
 ToonLighingResult CalculateToonLighting(Light light, InputData inputData, SurfaceData surfaceData)
 {
-    half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
+    ToonLighingResult res;
+
+    // half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
+    half3 attenuatedLightColor = light.color;
     half3 lightDiffuseColor = LightingLambert(attenuatedLightColor, light.direction, inputData.normalWS);
 
     half3 lightSpecularColor = half3(0,0,0);
+
     #if defined(_SPECGLOSSMAP) || defined(_SPECULAR_COLOR)
     half smoothness = exp2(10 * surfaceData.smoothness + 1);
-
     lightSpecularColor += LightingSpecular(attenuatedLightColor, light.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, 1), smoothness);
     #endif
 
-    ToonLighingResult res;
     res.specular = lightSpecularColor;
 #if _ALPHAPREMULTIPLY_ON
     res.color = lightDiffuseColor * surfaceData.albedo * surfaceData.alpha;
@@ -138,8 +140,8 @@ half4 ToonLighting(InputData inputData, SurfaceData surfaceData, int steps)
     LIGHT_LOOP_END
     #endif
 
-    toonRes.color *= floor(length(toonRes.color * steps)) / steps;
-    toonRes.specular *= floor(length(toonRes.specular * steps)) / steps;
+    toonRes.color = floor(length(toonRes.color * steps / surfaceData.albedo)) / steps * surfaceData.albedo;
+    toonRes.specular = floor(length(toonRes.specular * steps)) / steps;
 
     lightingData.mainLightColor = toonRes.color * surfaceData.albedo + toonRes.specular;
 
