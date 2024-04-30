@@ -1,0 +1,34 @@
+.unity-label {
+    font-size: 16px;
+    -unity-paragraph-spacing: 0;
+    margin: 0;
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+}
+
+.button {
+    border-radius: 6px;
+    background-color: rgba(42, 42, 42, 0.4);
+    --button-on-background: rgba(255, 255, 255, 255);
+    color: var(--button-on-background);
+}
+
+.button.disabled {
+    --button-on-background: rgba(255, 255, 255, 0.5);
+}
+
+.button__label {
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 20px;
+    margin-left: 4px;
+    padding: 0;
+}
+
+.button__key {
+    -unity-font-definition: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght%20SDF.asset?fileID=11400000&guid=38da8e63a07186f42a533d88239abc37&type=2#Inter-VariableFont_slnt,wght SDF');
+    margin: 0;
+    padding: 1px 4px;
+    border-radius: 4px;
+    border-color: var(--button-on-background);
+    border-width: 1px;
+    font-size: 10px;
+}

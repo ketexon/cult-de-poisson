@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3484798, g: 0.05171499, b: 0.37580162, a: 1}
+  m_IndirectSpecularColor: {r: 0.5223332, g: 0.2183815, b: 0.37580162, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2232,6 +2232,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InputUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5358967820596978305, guid: 7b565015b596ec44c8ed1b229dfdde91,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5969463169664651914, guid: 7b565015b596ec44c8ed1b229dfdde91,
         type: 3}
       propertyPath: m_fontSize
@@ -2243,7 +2248,8 @@ PrefabInstance:
       value: 28.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6059215308881272105, guid: 7b565015b596ec44c8ed1b229dfdde91, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b565015b596ec44c8ed1b229dfdde91, type: 3}
@@ -2726,6 +2732,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscapeMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3883541756034714188, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2750,6 +2781,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588425821676912616, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6090750738414490155, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
         type: 3}

@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 897253665416964323}
   - component: {fileID: 5619769366419584994}
+  - component: {fileID: 2190250465746568455}
   m_Layer: 5
   m_Name: InputUI
   m_TagString: Untagged
@@ -147,10 +148,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446473172848a4542a17cacf92dac62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputUIElementPrefab: {fileID: 1942454338899421817, guid: 58e02f3ce45bcd84e88b2740e496f4cd,
-    type: 3}
-  inputUIElementParent: {fileID: 6059215308881272105}
   crosshairAnimator: {fileID: 8254425102246840869}
+  document: {fileID: 2190250465746568455}
+  interactionTemplate: {fileID: 9197481963319205126, guid: e0799291426fb2340996fd6feef3b2b9,
+    type: 3}
+--- !u!114 &2190250465746568455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5358967820596978305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 72f54c98fb5b77b4d999ad38e291b866, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: b3c7c85d512ec694db5f638c6fae7391,
+    type: 3}
+  m_SortingOrder: 0
 --- !u!1 &6059215308881272105
 GameObject:
   m_ObjectHideFlags: 0

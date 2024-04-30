@@ -3,36 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class InputUI : SingletonBehaviour<InputUI>
 {
-    [SerializeField] GameObject inputUIElementPrefab;
-    [SerializeField] GameObject inputUIElementParent;
     [SerializeField] Animator crosshairAnimator;
+
+    [SerializeField] UIDocument document;
+    [SerializeField] VisualTreeAsset interactionTemplate;
+
+    VisualElement interactionContainer;
 
     public bool CrosshairEnabled { get; private set; } = false;
     public bool CrosshairVisible { get; private set; } = true;
 
-    void Reset()
-    {
-        var candidate = GetComponentInChildren<LayoutGroup>();
-        if (candidate != null)
-        {
-            inputUIElementParent = candidate.gameObject;
-        }
-        else
-        {
-            inputUIElementParent = gameObject;
-        }
-    }
-
     override protected void Awake()
     {
         base.Awake();
-        foreach(Transform t in inputUIElementParent.transform)
-        {
-            Destroy(t.gameObject);
-        }
+
+        interactionContainer = document.rootVisualElement.Q<VisualElement>("interaction-container");
+        interactionContainer.Clear();
     }
 
     /// <summary>
@@ -74,16 +64,19 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <returns>A callback to call to remove the input.</returns>
     public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false)
     {
-        var go = Instantiate(inputUIElementPrefab, inputUIElementParent.transform);
-        go.GetComponent<InputUIElement>().Initialize(
-            inputAction.GetBindingDisplayString(),
-            message,
-            disabled
-        );
-        
+        var ve = interactionTemplate.Instantiate();
+        if (disabled)
+        {
+            ve.Q<VisualElement>("interact-indicator").AddToClassList("disabled");
+        }
+        ve.Q<Label>(null, "button__key").text = inputAction.GetBindingDisplayString();
+        ve.Q<Label>(null, "button__label").text = message;
+
+        interactionContainer.Add(ve);
+
         return () =>
         {
-            Destroy(go);
+            ve.RemoveFromHierarchy();
         };
     }
 }
