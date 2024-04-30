@@ -2726,6 +2726,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscapeMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949992155695938525, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3883541756034714188, guid: 5b9d95a37b96bfc458e37acd1affbbb4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4848,7 +4873,7 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: ae6c7b770e7b5f34296aefcc20fd0bb2, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 1000
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80

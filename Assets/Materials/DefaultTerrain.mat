@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DefaultTerrain
-  m_Shader: {fileID: 4800000, guid: ab42a404e1fe3ac459ae533e23a68a24, type: 3}
+  m_Shader: {fileID: 4800000, guid: 3ffda02b4943d444391a3d76fb470abb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -148,6 +148,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Tex2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -178,6 +186,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
+    - _EnableInstancedPerPixelNormal2: 1
     - _EnvironmentReflections: 1
     - _Falloff: 0.866
     - _GlossMapScale: 0
@@ -207,6 +216,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Strength: 0.2
     - _Surface: 0
+    - _Test: 1
     - _Tiling: 1
     - _WorkflowMode: 1
     - _ZWrite: 1

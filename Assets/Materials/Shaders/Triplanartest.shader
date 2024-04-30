@@ -23,8 +23,6 @@ Shader "Unlit/Triplanartest"
         [HideInInspector] _Splat2 ("Layer 2 (B)", 2D) = "white" {}
         [HideInInspector] _Splat1 ("Layer 1 (G)", 2D) = "white" {}
         [HideInInspector] _Splat0 ("Layer 0 (R)", 2D) = "white" {}
-    
-        
     }
     SubShader
     {
