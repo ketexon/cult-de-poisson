@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+    enum LinkType { Ladder };
+
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] new Cinemachine.CinemachineVirtualCamera camera;
     [SerializeField] Transform lookRoot;
@@ -16,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     NavMeshAgent agent;
     Rigidbody rb;
+    PlayerInput playerInput;
     new Collider collider;
 
     public Cinemachine.CinemachineVirtualCamera Camera => camera;
@@ -28,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 inputDir = Vector3.zero;
 
     float lastTimeOnGround;
+    bool movingOnLink;
 
     /// <summary>
     /// Pitch and yaw range. pitchRange is guarenteed to be between 0,360. 
@@ -58,16 +64,24 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     void Update()
     {
-        if (agent.enabled)
+        if (playerInput.inputIsActive && agent.enabled)
         {
             var displacement = CalculateVelocity() * Time.deltaTime;
             agent.Move(displacement);
+        }
+        else if (!movingOnLink && agent.isOnOffMeshLink)
+        {
+            movingOnLink = true;
+            HandleLinkMovement(LinkType.Ladder);
         }
     }
 
@@ -109,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         var deltaCameraEulerX = newCameraEulerX - cameraEulerX;
-        
+
         camera.transform.rotation = camera.transform.rotation * Quaternion.Euler(deltaCameraEulerX * Vector3.right);
     }
 
@@ -158,6 +172,11 @@ public class PlayerMovement : MonoBehaviour
         inputDir = lookRoot.rotation * new Vector3(dir.x, 0, dir.y);
     }
 
+    public void DisableKeyboardMovement()
+    {
+        GetComponent<PlayerInput>().DeactivateInput();
+    }
+
     /// <summary>
     /// Used to calculate velocity relative to any plane we are on.
     /// This is to prevent the player from moving into a plane when going uphill
@@ -178,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
         )
         {
             var newVelocity = Quaternion.FromToRotation(Vector3.up, hitInfo.normal) * velocity;
-            if(newVelocity.y < 0)
+            if (newVelocity.y < 0)
             {
                 // if we are going downhill, make the direction of the velocity parallel
                 // to the slope
@@ -192,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(shouldReenableAgent)
+        if (shouldReenableAgent)
         {
             SetPhysicsEnabledImpl(false);
         }
@@ -221,5 +240,62 @@ public class PlayerMovement : MonoBehaviour
 
         shouldReenableAgent = false;
 
+    }
+
+    void HandleLinkMovement(LinkType linkType)
+    {
+        switch (linkType)
+        {
+            case LinkType.Ladder:
+                StartCoroutine(HandleLadderLinkMovement());
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator HandleLadderLinkMovement()
+    {
+        OffMeshLinkData data = agent.currentOffMeshLinkData;
+        bool isGoingUp = data.startPos.y < data.endPos.y;
+
+        if (isGoingUp)
+        {
+            yield return GoUpLadder(data);
+        }
+        else
+        {
+            yield return GoDownLadder(data);
+        }
+
+
+        movingOnLink = false;
+    }
+
+    IEnumerator GoUpLadder(OffMeshLinkData data)
+    {
+        while (transform.position.y - .5f < data.endPos.y)
+        {
+            transform.position += Vector3.up * Time.deltaTime;
+            yield return null;
+        }
+        agent.CompleteOffMeshLink();
+    }
+
+    IEnumerator GoDownLadder(OffMeshLinkData data)
+    {
+        Vector3 aboveBottom = new(data.endPos.x, transform.position.y, data.endPos.z);
+
+        while (Vector3.Distance(transform.position, aboveBottom) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime);
+            yield return null;
+        }
+        while (transform.position.y - 0.5f > data.endPos.y)
+        {
+            transform.position += Vector3.down * Time.deltaTime;
+            yield return null;
+        }
+        agent.CompleteOffMeshLink();
     }
 }
