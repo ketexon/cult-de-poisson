@@ -146,9 +146,6 @@ public class FishingRod : Item
 
     protected virtual void OnDisable()
     {
-        inputUIDestructor?.Invoke();
-        inputUIDestructor = null;
-
         if (fish && hookInRange)
         {
             inventory.AddFish(fish.FishSO);
@@ -167,6 +164,9 @@ public class FishingRod : Item
 
         clickAction.action.performed -= OnFishClick;
         reelAction.action.performed -= OnFishReel;
+
+        inputUIDestructor?.Invoke();
+        inputUIDestructor = null;
     }
 
     void Reset()
@@ -242,34 +242,6 @@ public class FishingRod : Item
         fishingLine.Reel(reelStrength);
     }
 
-    #region Interaction
-    public override bool TargetInteractVisible => hookInRange;
-    public override bool TargetInteractEnabled => !aiming;
-    public override string TargetInteractMessage => fish ? "Collect Fish" : "Reset Fishing";
-
-    override public void OnInteract()
-    {
-        if (fish)
-        {
-            // save hooked fish, since enabling another item
-            // calls OnDisable, which sets hookedFish to null
-            var hookedFish = this.fish;
-
-            // note: this will disable the current script, and hence
-            // add the hooked fish to the inventory
-            var fishItem = playerItem.GetItem(fishItemSO, true) as FishItem;
-            fishItem.SetFish(hookedFish);
-            playerItem.EnableItem(fishItem, true);
-
-            InteractivityChangeEvent?.Invoke(this);
-        }
-        else
-        {
-            ResetFishing();
-            InteractivityChangeEvent?.Invoke(this);
-        }
-    }
-    #endregion
 
     /// <summary>
     /// Spawns a hook with the same velocity as the rod tip.
@@ -328,6 +300,34 @@ public class FishingRod : Item
         }
     }
 
+    #region Interaction
+    public override bool TargetInteractVisible => hookInRange;
+    public override bool TargetInteractEnabled => !aiming;
+    public override string TargetInteractMessage => fish ? "to grab fish" : "to reset rod";
+
+    override public void OnInteract()
+    {
+        if (fish)
+        {
+            // save hooked fish, since enabling another item
+            // calls OnDisable, which sets hookedFish to null
+            var hookedFish = this.fish;
+
+            // note: this will disable the current script, and hence
+            // add the hooked fish to the inventory
+            var fishItem = playerItem.GetItem(fishItemSO, true) as FishItem;
+            fishItem.SetFish(hookedFish);
+            playerItem.EnableItem(fishItem, true);
+
+            InteractivityChangeEvent?.Invoke(this);
+        }
+        else
+        {
+            ResetFishing();
+            UpdateInputUI();
+        }
+    }
+
     void UpdateInputUI()
     {
         inputUIDestructor?.Invoke();
@@ -343,14 +343,7 @@ public class FishingRod : Item
                     Message = "to cast"
                 });
             }
-            else
-            {
-                interactions.Add(new()
-                {
-                    InputAction = reelAction,
-                    Message = "to reel"
-                });
-            }
+
             interactions.Add(new()
             {
                 InputAction = moveAction,
@@ -359,6 +352,15 @@ public class FishingRod : Item
         }
         else
         {
+            if(fishingState == FishingState.Cast)
+            {
+                interactions.Add(new()
+                {
+                    InputAction = reelAction,
+                    Message = "to reel"
+                });
+            }
+
             interactions.Add(new()
             {
                 InputAction = aimAction,
@@ -368,6 +370,7 @@ public class FishingRod : Item
 
         inputUIDestructor = InputUI.Instance.AddInputUI(interactions);
     }
+    #endregion
 
     public void OnHookFish(Fish fish)
     {

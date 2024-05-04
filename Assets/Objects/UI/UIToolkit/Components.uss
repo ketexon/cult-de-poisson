@@ -5,66 +5,138 @@
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
 }
 
-.button {
+.interaction-indicator {
+    --button-on-background: rgb(255, 255, 255);
+    --interaction-indicator-font-size: 24px;
     border-radius: 6px;
     background-color: rgba(42, 42, 42, 0.4);
-    --button-on-background: rgb(255, 255, 255);
     color: var(--button-on-background);
 }
 
-.button.disabled {
+.interaction-indicator.disabled {
     --button-on-background: rgba(255, 255, 255, 0.5);
 }
 
-.button__label {
+.interaction-indicator .keybind-icon {
+    --keybind-icon-color: var(--button-on-background);
+    margin-right: 4px;
+}
+
+.interaction-indicator__icons {
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-right: -4px;
+}
+
+.interaction-indicator__label {
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
-    font-size: 20px;
+    font-size: var(--interaction-indicator-font-size);
     margin-left: 4px;
     padding: 0;
-}
-
-.button__text-icon {
-    display: none;
-    -unity-font-definition: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght%20SDF.asset?fileID=11400000&guid=38da8e63a07186f42a533d88239abc37&type=2#Inter-VariableFont_slnt,wght SDF');
-    margin: 0;
-    padding: 1px 4px;
-    border-radius: 4px;
-    border-color: var(--button-on-background);
-    border-width: 1px;
-    font-size: 10px;
-    -unity-font: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght.ttf?fileID=12800000&guid=c6341633248aaa349a4c624a036f8a66&type=3#Inter-VariableFont_slnt,wght');
-}
-
-.button__image-icon {
-    display: none;
     flex-grow: 1;
+    -unity-text-align: upper-center;
+}
+
+#interaction-container .interaction-indicator {
+    margin-top: 4px;
+}
+
+.keybind-icon {
+    --keybind-icon-color: rgb(255, 255, 255);
+    --keybind-icon-font-size: 12px;
+    --keybind-icon-min-width: 20px;
+    min-width: var(--keybind-icon-min-width);
+    min-height: var(--keybind-icon-min-width);
+    color: var(--keybind-icon-color);
     align-self: stretch;
-    min-width: 16px;
-    min-height: 16px;
-    -unity-background-scale-mode: scale-to-fit;
-    -unity-background-image-tint-color: var(--button-on-background);
+    justify-content: stretch;
 }
 
-.button--image-icon .button__image-icon {
-    display: flex;
-}
-
-.button--text-icon .button__text-icon {
-    display: flex;
-}
-
-.icon--rmb {
+.keybind-icon--rmb .keybind-icon__image {
     background-image: url('project://database/Assets/Images/UI/keybinds/rmb.png?fileID=21300000&guid=f546287d52a6f594083c32ba7942cd37&type=3#rmb');
 }
 
-.icon--lmb {
+.keybind-icon--lmb .keybind-icon__image {
     background-image: url('project://database/Assets/Images/UI/keybinds/lmb.png?fileID=21300000&guid=817ee5ef7d2874b42a9532283a467fba&type=3#lmb');
 }
 
-.icon--scroll-y {
+.keybind-icon--scroll-y .keybind-icon__image {
     background-image: url('project://database/Assets/Images/UI/keybinds/scroll.png?fileID=21300000&guid=46649ee8bdf4da248835b50dd7630e39&type=3#scroll');
 }
 
-#interaction-container .button {
-    margin-top: 4px;
+.keybind-icon--text .keybind-icon__text {
+    display: flex;
+}
+
+.keybind-icon--image .keybind-icon__image {
+    display: flex;
+}
+
+.keybind-icon__text {
+    display: none;
+    -unity-font-definition: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght%20SDF.asset?fileID=11400000&guid=38da8e63a07186f42a533d88239abc37&type=2#Inter-VariableFont_slnt,wght SDF');
+    margin: 0;
+    padding: 1px 5px;
+    border-radius: 6px;
+    border-color: var(--keybind-icon-color);
+    border-width: 1px;
+    font-size: var(--keybind-icon-font-size);
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    -unity-font: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght.ttf?fileID=12800000&guid=c6341633248aaa349a4c624a036f8a66&type=3#Inter-VariableFont_slnt,wght');
+}
+
+.keybind-icon__image {
+    display: none;
+    flex-grow: 1;
+    align-self: stretch;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--keybind-icon-color);
+}
+
+.t--display-1 {
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 96px;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgba(0, 0, 0, 0.3);
+}
+
+.button {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 2px;
+    padding-right: 4px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: rgba(42, 42, 42, 0.4);
+}
+
+.button:hover {
+    background-color: rgba(42, 42, 42, 0.9);
+}
+
+.button:focus {
+    background-color: rgba(42, 42, 42, 0.9);
 }

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
+
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,21 +13,32 @@ using UnityEditor;
 
 public class SettingsUI : SingletonBehaviour<SettingsUI>
 {
-    [SerializeField] Canvas canvas;
+    [SerializeField] UIDocument document;
     [SerializeField] Player player;
-    [SerializeField] GameObject defaultPanel;
+    [SerializeField] string defaultPanelName;
 
+    [SerializeField] InputActionReference openSettingsAction;
     [SerializeField] InputActionReference escapeAction;
 
-    Stack<GameObject> panels = new();
+    Stack<VisualElement> panels = new();
 
-    bool Open => canvas.enabled;
+    VisualElement root;
+    bool Open => root.ClassListContains("settings--enabled");
 
     override protected void Awake()
     {
-        escapeAction.action.actionMap.Enable();
-
+        openSettingsAction.action.performed += OnInputEscape;
         escapeAction.action.performed += OnInputEscape;
+
+        root = document.rootVisualElement.Q<VisualElement>("settings");
+
+        RegisterCallbacks();
+
+        // if any other panels are active, disable them
+        foreach (var ve in root.Query<VisualElement>().Class("settings-panel--active").Build())
+        {
+            ve.RemoveFromClassList("settings-panel--active");
+        }
 
         if (Open)
         {
@@ -34,6 +49,27 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
     void OnDestroy()
     {
         escapeAction.action.performed -= OnInputEscape;
+        openSettingsAction.action.performed -= OnInputEscape;
+    }
+
+    void RegisterCallbacks()
+    {
+        // register callbacks for PanelSwitchButtons
+        root.Query<PanelSwitchButton>().ForEach(btn =>
+        {
+            if (btn.TargetPanel == null || btn.TargetPanel == string.Empty)
+            {
+                return;
+            }
+            btn.RegisterCallback<NavigationSubmitEvent>(evt => {
+                PushPanel(btn.TargetPanel);
+            });
+        });
+
+        root.Q<Button>("settings__quit-button").RegisterCallback<NavigationSubmitEvent>(evt =>
+        {
+            Quit();
+        });
     }
 
     void OnInputEscape(InputAction.CallbackContext ctx)
@@ -50,30 +86,40 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     void OpenMenu()
     {
-        player.Input.DeactivateInput();
-        canvas.enabled = true;
+        Time.timeScale = 0;
+
+        root.EnableInClassList("settings--enabled", true);
+
+        player.PushActionMap("UI");
         player.Camera.enabled = false;
         LockCursor.PushLockState(CursorLockMode.None);
 
-        PushPanel(defaultPanel);
+        EventSystem.current.SetSelectedGameObject(gameObject);
+        PushPanel(defaultPanelName);
     }
 
     void CloseMenu()
     {
-        canvas.enabled = false;
-        player.Input.ActivateInput();
+        Time.timeScale = 1;
+
+        root.EnableInClassList("settings--enabled", false);
+
+        player.PopActionMap();
         player.Camera.enabled = true;
-        LockCursor.PushLockState(CursorLockMode.Locked);
+        LockCursor.PopLockState();
     }
 
-    public void PushPanel(GameObject panel)
+    public void PushPanel(string panelName)
     {
         if(panels.TryPeek(out var lastPanel))
         {
-            lastPanel.SetActive(false);
+            lastPanel.EnableInClassList("settings-panel--active", false);
         }
-        panels.Push(panel);
-        panel.SetActive(true);
+        var ve = root.Q<VisualElement>(panelName);
+        panels.Push(ve);
+        ve.EnableInClassList("settings-panel--active", true);
+
+        SelectFirstInPanel(ve);
     }
 
     public void Quit()
@@ -88,14 +134,21 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
     public void PopPanel()
     {
         var top = panels.Pop();
-        top.SetActive(false);
+        top.EnableInClassList("settings-panel--active", false);
         if (panels.TryPeek(out var lastPanel))
         {
-            lastPanel.SetActive(true);
+            lastPanel.EnableInClassList("settings-panel--active", true);
+
+            SelectFirstInPanel(lastPanel);
         }
         else
         {
             CloseMenu();
         }
+    }
+
+    void SelectFirstInPanel(VisualElement panel)
+    {
+        CoroUtil.WaitOneFrame(this, () => panel.Q<VisualElement>(null, "first-focus")?.Focus());
     }
 }

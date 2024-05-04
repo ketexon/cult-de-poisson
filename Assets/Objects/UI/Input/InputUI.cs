@@ -14,28 +14,31 @@ public class InputUI : SingletonBehaviour<InputUI>
         public bool Disabled = false;
     }
 
-    [SerializeField] Animator crosshairAnimator;
-
     [SerializeField] UIDocument document;
     [SerializeField] VisualTreeAsset interactionTemplate;
+    [SerializeField] VisualTreeAsset keybindIconTemplate;
 
     VisualElement interactionContainer;
+    VisualElement crosshair;
+
+    VisualElement root => document.rootVisualElement;
 
     public bool CrosshairEnabled { get; private set; } = false;
     public bool CrosshairVisible { get; private set; } = true;
 
     readonly Dictionary<string, string> DisplayStringIconClassMap = new()
     {
-        { "RMB", "icon--rmb" },
-        { "LMB", "icon--lmb" },
-        { "Scroll y", "icon--scroll-y" },
+        { "RMB", "keybind-icon--rmb" },
+        { "LMB", "keybind-icon--lmb" },
+        { "Scroll Wheel", "keybind-icon--scroll-y" },
     };
 
     override protected void Awake()
     {
         base.Awake();
 
-        interactionContainer = document.rootVisualElement.Q<VisualElement>("interaction-container");
+        interactionContainer = root.Q<VisualElement>("interaction-container");
+        crosshair = root.Q<VisualElement>(null, "crosshair");
         interactionContainer.Clear();
     }
 
@@ -49,7 +52,7 @@ public class InputUI : SingletonBehaviour<InputUI>
         if (CrosshairEnabled != value)
         {
             CrosshairEnabled = value;
-            crosshairAnimator.SetBool("Enabled", CrosshairEnabled);
+            crosshair.EnableInClassList("crosshair--enabled", !CrosshairEnabled);
         }
     }
 
@@ -64,7 +67,7 @@ public class InputUI : SingletonBehaviour<InputUI>
         if (CrosshairVisible != value)
         {
             CrosshairVisible = value;
-            crosshairAnimator.SetBool("Visible", CrosshairVisible);
+            crosshair.EnableInClassList("crosshair--invisible", !CrosshairVisible);
         }
     }
 
@@ -115,23 +118,31 @@ public class InputUI : SingletonBehaviour<InputUI>
         {
             root.AddToClassList("disabled");
         }
-        string bindingDisplayString = InputUtil.GetActionDisplayString(entry.InputAction);
-        if (DisplayStringIconClassMap.ContainsKey(bindingDisplayString))
+        var iconsContainer = root.Q<VisualElement>(null, "interaction-indicator__icons");
+        iconsContainer.Clear();
+
+        var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
+        foreach (var displayString in bindingDisplayStrings)
         {
-            root.AddToClassList("button--image-icon");
+            var icon = keybindIconTemplate.Instantiate();
 
-            var imageIcon = ve.Q<VisualElement>(null, "button__image-icon");
-            imageIcon.AddToClassList(DisplayStringIconClassMap[bindingDisplayString]);
+            if (DisplayStringIconClassMap.ContainsKey(displayString))
+            {
+                icon.AddToClassList("keybind-icon--image");
+                icon.AddToClassList(DisplayStringIconClassMap[displayString]);
+            }
+            else
+            {
+                icon.AddToClassList("keybind-icon--text");
+
+                var iconLabel = icon.Q<Label>(null, "keybind-icon__text");
+                iconLabel.text = displayString;
+            }
+
+            iconsContainer.Add(icon);
         }
-        else
-        {
-            root.AddToClassList("button--text-icon");
 
-            var textIcon = ve.Q<Label>(null, "button__text-icon");
-            textIcon.text = bindingDisplayString;
-        }
-
-        var label = ve.Q<Label>(null, "button__label");
+        var label = ve.Q<Label>(null, "interaction-indicator__label");
         label.text = entry.Message;
 
         interactionContainer.Add(ve);

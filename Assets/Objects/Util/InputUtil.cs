@@ -26,18 +26,16 @@ public static class InputUtil
         return action.actionMap?.asset?.bindingMask;
     }
 
-    public static string GetActionDisplayString(InputAction action)
+    public static List<string> GetActionDisplayStrings(InputAction action)
     {
         InputBinding.DisplayStringOptions options = default;
 
         InputBinding bindingMask = FindEffectiveBindingMask(action) ?? default;
 
-        string result = default;
+        List<string> results = new();
         var bindings = action.bindings;
         for (var i = 0; i < bindings.Count; ++i)
         {
-            if (bindings[i].isPartOfComposite)
-                continue;
             if (!bindingMask.Matches(bindings[i]))
                 continue;
 
@@ -52,15 +50,19 @@ public static class InputUtil
                 && AmbiguousBindings.Contains(text)
             )
             {
-                result = $"{deviceLayoutName} {text}";
+                results.Add($"{deviceLayoutName} {text}");
             }
             else
             {
-                result = text;
+                results.Add(text);
+            }
+            if (bindings[i].isPartOfComposite)
+            {
+                continue;
             }
             break;
         }
 
-        return result;
+        return results;
     }
 }

@@ -15,6 +15,7 @@ public class LockCursor : MonoBehaviour
     void Awake()
     {
         player = GetComponent<Player>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     /// <summary>
