@@ -195,7 +195,6 @@ void LitPassFragmentSimple(
     half4 color = ToonLighting(inputData, surfaceData, _NSteps);
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
     color.a = OutputAlpha(color.a, IsSurfaceTypeTransparent(_Surface));
-
     outColor = color;
 
 #ifdef _WRITE_RENDERING_LAYERS

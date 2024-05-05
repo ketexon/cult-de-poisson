@@ -135,9 +135,11 @@ void ToonWaterFragment(
 
 	color.rgb = MixFog(color.rgb, fogCoord);
 
+	float foamMinDistance = _FoamMinDistance * (sin(_Time * 4) * 1 + 1.5);
+
 	outColor = (
-		color * (distanceFromBottom > _FoamMinDistance)
-		+ _FoamColor * (distanceFromBottom <= _FoamMinDistance)
+		color * (distanceFromBottom > foamMinDistance)
+		+ _FoamColor * (distanceFromBottom <= foamMinDistance)
 	);
 	// float test = dot(existingNormal, input.normalWS);
 	// float test = distanceFromBottom / 10;
