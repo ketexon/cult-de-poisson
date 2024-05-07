@@ -61,15 +61,16 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
             {
                 return;
             }
-            btn.RegisterCallback<NavigationSubmitEvent>(evt => {
+            btn.clicked += () =>
+            {
                 PushPanel(btn.TargetPanel);
-            });
+            };
         });
 
-        root.Q<Button>("settings__quit-button").RegisterCallback<NavigationSubmitEvent>(evt =>
+        root.Q<Button>("settings__quit-button").clicked += () =>
         {
             Quit();
-        });
+        };
     }
 
     void OnInputEscape(InputAction.CallbackContext ctx)
