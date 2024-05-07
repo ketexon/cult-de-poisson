@@ -43,54 +43,21 @@ public class Bucket : Item
 
     void OnEnable()
     {
-        // assign fish to each slot in the bucket
-        for (int i = 0; i < fishSpawnContainer.childCount; i++)
-        {
-            // if we have no more slots or we have no more fish, break
-            if (i >= inventory.Fish.Count) break;
-
-            Transform spawn = fishSpawnContainer.GetChild(i);
-            FishSO fishSO = inventory.Fish[i];
-
-            // spawn the Fish's bucket prefab
-            var go = Instantiate(fishSO.InBucketPrefab, spawn.position, spawn.rotation, transform);
-            var fish = go.GetComponent<Fish>();
-            fish.InitializeBucket();
-
-            // get the physical bounding box of the fish (from BoxCollider)
-            // and use itz z as the length
-            float length = fish.GetComponent<BoxCollider>().size.z * fish.transform.localScale.z;
-
-            // move the fish as far down as it can in the bucket
-            // without touching the bottom
-            float deltaHeight = spawn.localScale.z - length;
-            go.transform.position += spawn.transform.forward * deltaHeight / 2;
-
-            var bucketFish = fish.gameObject.AddComponent<BucketFish>();
-            spawnedFish.Add(bucketFish);
-        }
-        
+        SpawnFishInBucket();
         exitAction.action.performed += OnExitBucket;
-
         cycleFishAction.action.performed += OnCycleFish;
         selectFishAction.action.performed += OnSelectFish;
+        inventory.FishAddedEvent += OnFishAdded;
+
     }
 
     void OnDisable()
     {
         StopUsingBucket();
-
         exitAction.action.performed -= OnExitBucket;
-
         cycleFishAction.action.performed -= OnCycleFish;
         selectFishAction.action.performed -= OnSelectFish;
-
-        // Destroy all fish
-        foreach (BucketFish fish in spawnedFish)
-        {
-            Destroy(fish.gameObject);
-        }
-        spawnedFish.Clear();
+        DestroyFishInBucket();
     }
 
 
@@ -166,6 +133,51 @@ public class Bucket : Item
     void OnExitBucket(InputAction.CallbackContext ctx)
     {
         StopUsingBucket();
+    }
+
+    void OnFishAdded(FishSO _)
+    {
+        DestroyFishInBucket();
+        SpawnFishInBucket();
+    }
+    void SpawnFishInBucket()
+    {
+        // assign fish to each slot in the bucket
+        for (int i = 0; i < fishSpawnContainer.childCount; i++)
+        {
+            // if we have no more slots or we have no more fish, break
+            if (i >= inventory.Fish.Count) break;
+
+            Transform spawn = fishSpawnContainer.GetChild(i);
+            FishSO fishSO = inventory.Fish[i];
+
+            // spawn the Fish's bucket prefab
+            var go = Instantiate(fishSO.InBucketPrefab, spawn.position, spawn.rotation, transform);
+            var fish = go.GetComponent<Fish>();
+            fish.InitializeBucket();
+
+            // get the physical bounding box of the fish (from BoxCollider)
+            // and use itz z as the length
+            float length = fish.GetComponent<BoxCollider>().size.z * fish.transform.localScale.z;
+
+            // move the fish as far down as it can in the bucket
+            // without touching the bottom
+            float deltaHeight = spawn.localScale.z - length;
+            go.transform.position += spawn.transform.forward * deltaHeight / 2;
+
+            var bucketFish = fish.gameObject.AddComponent<BucketFish>();
+            spawnedFish.Add(bucketFish);
+        }
+    }
+
+    void DestroyFishInBucket()
+    {
+        // Destroy all fish
+        foreach (BucketFish fish in spawnedFish)
+        {
+            Destroy(fish.gameObject);
+        }
+        spawnedFish.Clear();
     }
 
     void StopUsingBucket()
