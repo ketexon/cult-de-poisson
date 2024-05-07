@@ -147,6 +147,7 @@ public class FishItem : Item
 
             // Instantiate the fish at the hit location
             Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
+            playerItem.CycleItem(1);
         }
         
     }
