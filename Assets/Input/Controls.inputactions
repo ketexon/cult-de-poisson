@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Temp1",
+                    "name": "PlaceItem",
                     "type": "Button",
                     "id": "81b698d2-052b-444e-b1ce-b87fb6e2bd7c",
                     "expectedControlType": "Button",
@@ -255,7 +255,7 @@
                     "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "AltUseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -266,8 +266,8 @@
                     "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Temp1",
+                    "groups": "KBM",
+                    "action": "PlaceItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -17,9 +17,9 @@ public class FishItem : Item
     Fish fish;
     GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
-
+    public bool canPlace = false;
+    public System.Action InputUIDestructor = null;
     public override IInteractObject InteractItem => fish ? fish.ItemBehaviour : null;
-
     public void SetFish(FishSO fishSO)
     {
         this.fishSO = fishSO;
@@ -49,16 +49,46 @@ public class FishItem : Item
         fish.InitializeBucket();
     }
 
-    public void Awake()
+    public void OnEnable()
     {
         altUseItemAction.action.performed += OnAltUse;
         placeItemAction.action.performed += OnPlaceUse;
+        canPlace = false;
     }
 
-    public void OnDestroy()
+    public void OnDisable()
     {
         altUseItemAction.action.performed -= OnAltUse;
-        placeItemAction.action.performed -= OnPlaceUse;
+        placeItemAction.action.performed -= OnPlaceUse;  
+        InputUIDestructor?.Invoke(); 
+    }
+
+    public void Update()
+    {
+        // Get the front and position vectors of the camera
+        Transform cameraTransform = mainCamera.transform;
+        Vector3 front = cameraTransform.forward;
+        Vector3 position = cameraTransform.position;
+
+        RaycastHit hit;
+
+        // If the raycast hits something, place the fish
+        if(Physics.Raycast(position, front, out hit, placeMaxDistance))
+        {
+            if(!canPlace)
+            {
+                canPlace = true;
+                UpdateUI();
+            }
+        }
+        else
+        {
+            if(canPlace)
+            {
+                canPlace = false;
+                UpdateUI();
+            }
+        }
     }
 
     public void OnAltUse(InputAction.CallbackContext ctx)
@@ -117,6 +147,16 @@ public class FishItem : Item
 
             // Instantiate the fish at the hit location
             Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
+        }
+        
+    }
+
+    public void UpdateUI()
+    {
+        InputUIDestructor?.Invoke();
+        if(canPlace)
+        {
+            InputUIDestructor = InputUI.Instance.AddInputUI(placeItemAction, "to place fish");
         }
     }
 }

@@ -22,6 +22,7 @@ public class PlayerItem : MonoBehaviour
     [FormerlySerializedAs("itemTransform")]
     [SerializeField] Transform itemContainerTransform;
     [SerializeField] float rotateSpeed = 5;
+    [SerializeField] float placeFishDistance = 10.0f;
     [SerializeField] List<Item> startingItems;
     [SerializeField] int startingItemIndex;
 
@@ -145,7 +146,6 @@ public class PlayerItem : MonoBehaviour
 
         EnableItem(newItemIndex);
     }
-
 
     /// <summary>
     /// When the player presses space bar, relay that to the item.
