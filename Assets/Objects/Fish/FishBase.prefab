@@ -104,6 +104,7 @@ MonoBehaviour:
   _interactEnabled: 1
   collider: {fileID: 7065934463964850046}
   InteractMessageTemplate: Pick up {0}
+  inventorySO: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
 --- !u!65 &7065934463964850046
 BoxCollider:
   m_ObjectHideFlags: 0
