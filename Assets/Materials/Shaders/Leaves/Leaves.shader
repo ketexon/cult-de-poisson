@@ -1,5 +1,5 @@
 // Shader targeted for low end devices. Single Pass Forward Rendering.
-Shader "CDP/Toon"
+Shader "CDP/Nature/Leaves"
 {
     // Keep properties of StandardSpecular shader for upgrade reasons.
     Properties
@@ -416,5 +416,5 @@ Shader "CDP/Toon"
     }
 
     Fallback  "Hidden/Universal Render Pipeline/FallbackError"
-    // CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
+    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
 }

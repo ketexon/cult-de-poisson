@@ -1,80 +1,44 @@
-﻿#ifndef CDP_LIGHTING_INCLUDED
-#define CDP_LIGHTING_INCLUDED
+#ifndef CDP_LIGHTING_SHADERGRAPH_INCLUDED
+#define CDP_LIGHTING_SHADERGRAPH_INCLUDED
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceData.hlsl"
 
-struct ToonLighingResult {
-    half3 color;
+/*
+
+struct SurfaceData
+{
+    half3 albedo;
     half3 specular;
+    half  metallic;
+    half  smoothness;
+    half3 normalTS;
+    half3 emission;
+    half  occlusion;
+    half  alpha;
+    half  clearCoatMask;
+    half  clearCoatSmoothness;
 };
 
-half3 CalculateToonLightingColor(LightingData lightingData, half3 albedo)
+*/
+
+void GetAllLights_half(
+    half3 albedo,
+    half3 specular,
+    half  metallic,
+    half  smoothness,
+    half3 normalTS,
+    half3 emission,
+    half  occlusion,
+    half  alpha,
+    half  clearCoatMask,
+    half  clearCoatSmoothness,
+    out half3 diffuseOut,
+    out half3 sepcularOut
+)
 {
-    half3 lightingColor = 0;
+    diffuseOut = 0;
+    sepcularOut = 0;
 
-    if (IsOnlyAOLightingFeatureEnabled())
-    {
-        return lightingData.giColor; // Contains white + AO
-    }
-
-    if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_GLOBAL_ILLUMINATION))
-    {
-        lightingColor += lightingData.giColor;
-    }
-
-    if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_MAIN_LIGHT))
-    {
-        lightingColor += lightingData.mainLightColor;
-    }
-
-    if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_ADDITIONAL_LIGHTS))
-    {
-        lightingColor += lightingData.additionalLightsColor;
-    }
-
-    if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_VERTEX_LIGHTING))
-    {
-        lightingColor += lightingData.vertexLightingColor;
-    }
-
-    lightingColor *= albedo;
-
-    if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_EMISSION))
-    {
-        lightingColor += lightingData.emissionColor;
-    }
-
-    return lightingColor;
-}
-
-
-ToonLighingResult CalculateToonLighting(Light light, InputData inputData, SurfaceData surfaceData)
-{
-    ToonLighingResult res;
-
-    // half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
-    half3 attenuatedLightColor = light.color;
-    half3 lightDiffuseColor = LightingLambert(attenuatedLightColor, light.direction, inputData.normalWS);
-
-    half3 lightSpecularColor = half3(0,0,0);
-
-    #if defined(_SPECGLOSSMAP) || defined(_SPECULAR_COLOR)
-    half smoothness = exp2(10 * surfaceData.smoothness + 1);
-    lightSpecularColor += LightingSpecular(attenuatedLightColor, light.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, 1), smoothness);
-    #endif
-
-    res.specular = lightSpecularColor;
-#if _ALPHAPREMULTIPLY_ON
-    res.color = lightDiffuseColor * surfaceData.albedo * surfaceData.alpha;
-#else
-    res.color = lightDiffuseColor * surfaceData.albedo;
-#endif
-    return res;
-}
-
-half4 ToonLighting(InputData inputData, SurfaceData surfaceData, int steps)
-{
     #if defined(DEBUG_DISPLAY)
     half4 debugColor;
 
@@ -157,5 +121,6 @@ half4 ToonLighting(InputData inputData, SurfaceData surfaceData, int steps)
         surfaceData.alpha
     );
 }
+
 
 #endif

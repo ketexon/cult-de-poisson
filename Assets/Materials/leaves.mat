@@ -8,19 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: leaves
-  m_Shader: {fileID: 4800000, guid: a1116255fa8046d4ea389b184581754d, type: 3}
+  m_Shader: {fileID: 4800000, guid: d27ccccfd1d98234dab5c4cc514cf468, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _ALPHATEST_ON
-  - _RECEIVE_SHADOWS_OFF
   - _SPECULAR_COLOR
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords:
-  - _GLOSSYREFLECTIONS_OFF
-  - _SPECULARHIGHLIGHTS_OFF
-  - _WINDQUALITY_NONE
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
@@ -35,7 +31,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 06bd4a8b3a2e2e4449c492412e088bca, type: 3}
+        m_Texture: {fileID: 2800000, guid: f56b2051237a5cb4ead3d32af6e1e34d, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 3, y: 10}
     - _BumpMap:
@@ -71,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 06bd4a8b3a2e2e4449c492412e088bca, type: 3}
+        m_Texture: {fileID: 2800000, guid: f56b2051237a5cb4ead3d32af6e1e34d, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 3, y: 10}
     - _MetallicGlossMap:
@@ -122,7 +118,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 0
-    - _Cutoff: 0.888
+    - _Cutoff: 0.399
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
@@ -139,8 +135,9 @@ Material:
     - _Occlusion: 7.5
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 50
-    - _ReceiveShadows: 0
+    - _ReceiveShadows: 1
     - _SampleGI: 0
     - _Shininess: 0
     - _Smoothness: 0
@@ -162,10 +159,10 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.005788341, g: 0.17167136, b: 0.0025824558, a: 1}
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
-    - _SpecColor: {r: 0.19999993, g: 0.19999993, b: 0.19999993, a: 0}
+    - _SpecColor: {r: 0.19999942, g: 0.19999942, b: 0.19999942, a: 0}
     - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
