@@ -42,7 +42,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
         if (Open)
         {
-            CloseMenu();
+            root.EnableInClassList("settings--enabled", false);
         }
     }
 

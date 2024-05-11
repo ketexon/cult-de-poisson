@@ -1,3 +1,8 @@
+:root {
+    --p-surface: rgba(42, 42, 42, 0.4);
+    --p-surface-hover: rgba(42, 42, 42, 0.9);
+}
+
 .unity-label {
     font-size: 16px;
     -unity-paragraph-spacing: 0;
@@ -9,7 +14,7 @@
     --button-on-background: rgb(255, 255, 255);
     --interaction-indicator-font-size: 24px;
     border-radius: 6px;
-    background-color: rgba(42, 42, 42, 0.4);
+    background-color: var(--p-surface);
     color: var(--button-on-background);
 }
 
@@ -105,6 +110,13 @@
     -unity-text-outline-color: rgba(0, 0, 0, 0.3);
 }
 
+.t--body-1, .slider .unity-slider__label {
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
+
 .button {
     margin-top: 0;
     margin-right: 0;
@@ -130,13 +142,26 @@
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
-    background-color: rgba(42, 42, 42, 0.4);
+    background-color: var(--p-surface);
 }
 
 .button:hover {
-    background-color: rgba(42, 42, 42, 0.9);
+    background-color: var(--p-surface-hover);
 }
 
 .button:focus {
-    background-color: rgba(42, 42, 42, 0.9);
+    background-color: var(--p-surface-hover);
+}
+
+.panel {
+    background-color: var(--p-surface);
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgb(255, 255, 255);
+}
+
+.slider .unity-slider__label {
+    -unity-text-align: middle-right;
+    padding-right: 8px;
+    min-width: 96px;
 }
