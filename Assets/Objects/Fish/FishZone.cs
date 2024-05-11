@@ -41,7 +41,7 @@ public class FishZone : MonoBehaviour
     void Awake()
     {
         totalBoxColliderVolume = 0;
-        boxColliders = new(GetComponents<BoxCollider>());
+        boxColliders = new(GetComponentsInChildren<BoxCollider>());
         foreach(var boxCollider in boxColliders)
         {
             var length = boxCollider.size;

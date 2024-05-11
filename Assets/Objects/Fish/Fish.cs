@@ -5,6 +5,10 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     public FishItemBehaviour ItemBehaviour { get; private set; }
+    public FishInteractable FishInteractable { get; private set; }
+    public FishMovement FishMovement { get; protected set; }
+    public HookedFish HookedFish { get; protected set; }
+
 
     [SerializeField] public FishSO FishSO;
     protected Rigidbody rb;
@@ -14,10 +18,6 @@ public class Fish : MonoBehaviour
     public ConfigurableJoint Joint;
 
     float _startTime;
-
-    public FishMovement FishMovement { get; protected set; }
-
-    public HookedFish HookedFish { get; protected set; }
 
     protected float Time => UnityEngine.Time.time - _startTime;
 
@@ -31,8 +31,11 @@ public class Fish : MonoBehaviour
         ItemBehaviour = GetComponent<FishItemBehaviour>();
         FishMovement = GetComponent<FishMovement>();
         HookedFish = GetComponent<HookedFish>();
+        FishInteractable = GetComponent<FishInteractable>();
 
         Joint = GetComponent<ConfigurableJoint>();
+
+        InitializePhysical();
     }
 
     /// <summary>
@@ -49,6 +52,7 @@ public class Fish : MonoBehaviour
     {
         rb.isKinematic = true;
         rb.detectCollisions = false;
+        rb.useGravity = false;
         boxCollider.enabled = false;
         if(FishMovement)
         {
@@ -58,10 +62,15 @@ public class Fish : MonoBehaviour
         {
             HookedFish.enabled = false;
         }
+        if (FishInteractable)
+        {
+            FishInteractable.enabled = false;
+        }
     }
 
     public void InitializeWater(FishZone fishZone)
     {
+        rb.useGravity = false;
         if (FishMovement)
         {
             FishMovement.enabled = true;
@@ -70,6 +79,30 @@ public class Fish : MonoBehaviour
         if (HookedFish)
         {
             HookedFish.enabled = false;
+        }
+        if (FishInteractable)
+        {
+            FishInteractable.enabled = false;
+        }
+    }
+
+    public void InitializePhysical()
+    {
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+        rb.useGravity = true;
+        boxCollider.enabled = true;
+        if (FishMovement)
+        {
+            FishMovement.enabled = false;
+        }
+        if (HookedFish)
+        {
+            HookedFish.enabled = false;
+        }
+        if (FishInteractable)
+        {
+            FishInteractable.enabled = true;
         }
     }
 

@@ -100,7 +100,7 @@ public class PlayerItem : MonoBehaviour
             CinemachineBrain = cinemachineBrain,
         };
 
-        foreach (var item in heldItems)
+        foreach (var item in items)
         {
             item.Initialize(itemInitializeParams);
         }
@@ -121,6 +121,13 @@ public class PlayerItem : MonoBehaviour
             return;
         }
 
+        float v = ctx.ReadValue<float>();
+        int dir = Math.Sign(v);
+        CycleItem(dir);
+    }
+
+    public void CycleItem(int dir)
+    {
         int newItemIndex;
 
         if (IsTemporaryItem)
@@ -129,13 +136,12 @@ public class PlayerItem : MonoBehaviour
         }
         else
         {
-            float v = ctx.ReadValue<float>();
-            int dir = Math.Sign(v);
             newItemIndex = EnabledItemIndex;
             Item item;
 
             // try cycling until we reach an item held in hand
-            do {
+            do
+            {
                 newItemIndex = (newItemIndex + dir + items.Count) % items.Count;
                 item = items[newItemIndex];
             } while (!heldItems.Contains(item));
@@ -143,6 +149,7 @@ public class PlayerItem : MonoBehaviour
 
         EnableItem(newItemIndex);
     }
+
 
     /// <summary>
     /// When the player presses space bar, relay that to the item.
@@ -264,7 +271,10 @@ public class PlayerItem : MonoBehaviour
         }
         CurRot = Quaternion.Lerp(CurRot, TargetRot, Time.deltaTime * rotateSpeed);
         itemContainerTransform.rotation = CurRot;
+    }
 
+    void LateUpdate()
+    {
         itemContainerTransform.position = ItemOffsetPos + transform.position;
     }
 }

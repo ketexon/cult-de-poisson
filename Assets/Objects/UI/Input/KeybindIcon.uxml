@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
+    <ui:VisualElement class="keybind-icon" style="align-self: stretch; flex-direction: row;">
+        <ui:Label tabindex="-1" text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="keybind-icon__label" class="keybind-icon__text" />
+        <ui:VisualElement class="keybind-icon__image" />
+    </ui:VisualElement>
+</ui:UXML>

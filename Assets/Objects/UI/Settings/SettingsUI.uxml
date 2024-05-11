@@ -1,0 +1,41 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="InteractionIndicator" src="project://database/Assets/Objects/UI/Input/InteractionIndicator.uxml?fileID=9197481963319205126&amp;guid=e0799291426fb2340996fd6feef3b2b9&amp;type=3#InteractionIndicator" />
+    <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
+    <Style src="project://database/Assets/Objects/UI/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=7bd92303f50ea7347b8efb88b7bb2388&amp;type=3#Settings" />
+    <ui:VisualElement name="settings" class="settings settings--enabled" style="flex-grow: 1;">
+        <ui:VisualElement name="settings__home" class="settings-panel" style="justify-content: center; top: 0; right: 2px; left: -1px; bottom: 0;">
+            <ui:VisualElement name="title" style="flex-grow: 0; flex-shrink: 0; margin-bottom: 64px;">
+                <ui:Label tabindex="-1" text="culte du poisson" parse-escape-sequences="true" display-tooltip-when-elided="true" class="t--display-1" style="-unity-text-align: upper-center;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="menu" focusable="true" tabindex="-1" style="flex-grow: 0; flex-shrink: 0; justify-content: flex-start; align-self: stretch; align-items: center;">
+                <ui:VisualElement name="settings__keybinds" style="flex-grow: 0; margin-bottom: 16px;">
+                    <ui:Instance template="InteractionIndicator" name="InteractionIndicator">
+                        <AttributeOverrides element-name="interaction-indicator__label" text="to resume" />
+                        <AttributeOverrides element-name="keybind-icon__label" text="ESC" />
+                    </ui:Instance>
+                </ui:VisualElement>
+                <ui:VisualElement name="settings__buttons" focusable="true" tabindex="-1" style="flex-grow: 1; min-width: 128px;">
+                    <PanelSwitchButton text="settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__settings-button" target-panel="settings__settings" class="button first-focus" />
+                    <PanelSwitchButton text="save" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__save-button" class="button" />
+                    <PanelSwitchButton text="load" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__load-button" class="button" />
+                    <PanelSwitchButton text="credits" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits-button" class="button" />
+                    <ui:Button text="quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__quit-button" class="button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="settings__settings" class="settings-panel" style="flex-grow: 1; justify-content: center; align-items: center;">
+            <ui:VisualElement name="settings__settings__keybinds" style="flex-grow: 0; margin-bottom: 16px;">
+                <ui:Instance template="InteractionIndicator" name="InteractionIndicator">
+                    <AttributeOverrides element-name="interaction-indicator__label" text="to go back" />
+                    <AttributeOverrides element-name="keybind-icon__label" text="ESC" />
+                </ui:Instance>
+            </ui:VisualElement>
+            <ui:VisualElement name="settings__settings__panel" class="panel" style="width: 300px; height: 300px;">
+                <ui:Label tabindex="-1" text="settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="setings__settings__title" class="t--display-1" style="-unity-text-align: upper-center;" />
+                <ui:VisualElement name="settings__settings__entries" style="flex-grow: 1;">
+                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" class="slider" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -21,14 +21,14 @@ public class SimpleFishMovement : FishMovement
     FishingHook hook;
 
     Rigidbody rb;
-    new Collider collider;
+    new BoxCollider collider;
 
     override protected void Awake()
     {
         base.Awake();
 
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        collider = GetComponent<BoxCollider>();
     }
 
     void Start()
@@ -93,7 +93,16 @@ public class SimpleFishMovement : FishMovement
     /// <returns></returns>
     bool FishWillCollide()
     {
-        return !FishZone.Contains(transform.position + targetDirection * collisionDistance);
+        bool inBounds = FishZone.Contains(transform.position + targetDirection * collisionDistance);
+        bool willCollide = Physics.BoxCast(
+            collider.center + transform.position,
+            collider.size,
+            targetDirection,
+            transform.rotation,
+            collisionDistance,
+            parameters.GroundLayerMask
+        );
+        return !inBounds || willCollide;
     }
 
     // enable fishVision when we are enabled

@@ -45,7 +45,7 @@ public class FishItem : Item
         fishGO = fish.gameObject;
         fish.transform.SetParent(transform);
         fish.transform.position = this.transform.position;
-        fish.transform.rotation = Quaternion.identity;
+        fish.transform.localRotation = Quaternion.identity;
         fish.InitializeBucket();
     }
 
@@ -70,22 +70,25 @@ public class FishItem : Item
         // Get the current position of the in hand
         Transform temp = fishGO.transform;
 
-        // Destroy the in hand fish
-        if(fishGO)
-        {
-            Destroy(fishGO);
-        }
-
         // Remove the fish from the inventory
         inventory.RemoveFish(fishSO);
 
+        fishGO.transform.SetParent(null);
+        
+        fishGO.GetComponent<Fish>().InitializePhysical();
         // Instantiate thrown fish and set its velocity
-        thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
-        thrownFishRigidbody = thrownFish.GetComponent<Rigidbody>(); 
+        //thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
+        thrownFishRigidbody = fishGO.GetComponent<Rigidbody>(); 
         thrownFishRigidbody.velocity = throwVelocity * front;
 
         // Give the thrown fish angular velocity
         thrownFishRigidbody.angularVelocity = throwAngularVelocity * front;
+
+
+        fishGO = null;
+
+        playerItem.CycleItem(1);
+    
     }
     
     public void OnPlaceUse(InputAction.CallbackContext ctx)

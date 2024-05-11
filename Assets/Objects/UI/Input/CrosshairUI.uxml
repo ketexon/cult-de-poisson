@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Objects/UI/Input/InputUI.uss?fileID=7433441132597879392&amp;guid=0a18841eccaadde4e8f27c7c09fee02e&amp;type=3#InputUI" />
+    <ui:VisualElement name="crosshair" picking-mode="Ignore" class="crosshair" style="flex-grow: 0; background-image: url(&apos;project://database/Assets/Images/UI/crosshair.png?fileID=21300000&amp;guid=8537908138ab0044c8718ad48a8d8537&amp;type=3#crosshair&apos;); -unity-background-scale-mode: scale-to-fit; width: 4px; height: 4px; align-self: center; justify-content: flex-start; flex-shrink: 0; margin-top: auto; margin-bottom: auto;" />
+</ui:UXML>
