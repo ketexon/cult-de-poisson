@@ -7,10 +7,19 @@ using UnityEngine;
 
 public class EelFishItemBehaviour : FishItemBehaviour
 {
+    [SerializeField] PlayerInventorySO inventory;
+
     private int AttachedInteractables = 0;
     private Interactable AttachedInteractable = null;
     public override bool AgentInteractVisible(Interactable interactable) => interactable is EelInteractable;
-    public override string AgentInteractMessage(Interactable _) => "Attach eel to this interactable";
+    public override string AgentInteractMessage(Interactable interactable) => 
+        interactable == AttachedInteractable 
+            ? "to detact eel"
+            : string.Format(
+                "to attach eel to {0} endpoint", 
+                AttachedInteractable == null ? "first" : "second"
+            );
+    
     [SerializeField] GameObject EelPhysical;
     [SerializeField] float EelStretchFudgeFactor = 1.0f;
     public override void OnInteract(Interactable target)
@@ -22,6 +31,8 @@ public class EelFishItemBehaviour : FishItemBehaviour
                 Debug.Log("EelFishItemBehaviour: Attached eel to first interactable");
                 AttachedInteractable = eelInteractable;
                 AttachedInteractables++;
+
+                InteractivityChangeEvent?.Invoke(this);
             }
             else if(AttachedInteractables == 1)
             {
@@ -30,21 +41,19 @@ public class EelFishItemBehaviour : FishItemBehaviour
                     Debug.Log("EelFishItemBehaviour: Detached Eel");
                     AttachedInteractable = null;
                     AttachedInteractables = 0;
+
+                    InteractivityChangeEvent?.Invoke(this);
                     return;
                 }
                 else
                 {
                     Debug.Log("EelFishItemBehaviour: Attached eel to second interactable");
                     AttachEel(AttachedInteractable, eelInteractable);
-                    AttachedInteractable = null;
-                    AttachedInteractables = 0;
+                    inventory.RemoveFish(GetComponent<Fish>().FishSO);
+                    Player.Instance.Item.CycleItem();
+                    
                     return;
                 }
-            }
-            else if(AttachedInteractables >= 2)
-            {
-                Debug.Log("EelFishItemBehaviour: Too many interactables attached");
-                return;
             }
         }
     }

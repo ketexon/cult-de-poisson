@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb957872fb8126d4da1d5883e6aa754c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
   EelPhysical: {fileID: 7836643293546776421, guid: 2e2716a6615a1fa4f9a70c37fe95a406,
     type: 3}
   EelStretchFudgeFactor: 1.5
