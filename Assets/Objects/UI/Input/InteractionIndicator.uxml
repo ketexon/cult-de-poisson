@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="KeybindIcon" src="project://database/Assets/Objects/UI/Input/KeybindIcon.uxml?fileID=9197481963319205126&amp;guid=4663a6700fc3f744aa1e17a46b547e54&amp;type=3#KeybindIcon" />
+    <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
+    <ui:VisualElement name="interaction-indicator" class="interaction-indicator" style="flex-grow: 0; align-items: center; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; flex-direction: row; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
+        <ui:VisualElement name="interaction-indicator__icons" class="interaction-indicator__icons" style="flex-direction: row;">
+            <ui:Instance template="KeybindIcon" name="KeybindIcon" class="keybind-icon--rmb keybind-icon--text" />
+        </ui:VisualElement>
+        <ui:Label tabindex="-1" text="to inspect bucket" parse-escape-sequences="true" display-tooltip-when-elided="true" name="interaction-indicator__label" class="interaction-indicator__label" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&amp;guid=33eee739a25c0a34eaaab225b362c8e1&amp;type=2#m5x7 SDF&apos;);" />
+    </ui:VisualElement>
+</ui:UXML>

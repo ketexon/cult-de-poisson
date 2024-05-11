@@ -16,6 +16,20 @@ public class Player : SingletonBehaviour<Player>
     public Camera Camera;
     public CinemachineBrain CinemachineBrain;
 
+    Stack<string> actionMaps = new();
+
+    public void PushActionMap(string actionMap)
+    {
+        actionMaps.Push(actionMap);
+        Input.SwitchCurrentActionMap(actionMap);
+    }
+
+    public void PopActionMap()
+    {
+        actionMaps.Pop();
+        Input.SwitchCurrentActionMap(actionMaps.TryPeek(out var old) ? old : "Gameplay");
+    }
+
     void Reset()
     {
         Input = GetComponentInChildren<PlayerInput>();

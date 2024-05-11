@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Cancel",
+                    "name": "Escape",
                     "type": "Button",
                     "id": "45818e84-4085-47ff-b56d-71d06da14d7f",
                     "expectedControlType": "Button",
@@ -190,7 +190,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Cancel",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -233,7 +233,7 @@
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "CycleItem",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -244,7 +244,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "CycleItem",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -288,7 +288,7 @@
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KBM",
                     "action": "Reel",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -768,17 +768,6 @@
                     "action": "Cycle",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "3e2ffb28-e86f-4f2c-b153-70c027c8ada6",
-                    "path": "<VirtualMouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KBM",
-                    "action": "Cycle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
