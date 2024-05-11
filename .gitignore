@@ -72,5 +72,3 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 *.blend1
-Assets/Models/trees/Tree3/tree3.blend1.meta
-*.meta
