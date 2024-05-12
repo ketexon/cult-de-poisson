@@ -53,7 +53,7 @@ public class CameraPixellater : MonoBehaviour
         }
         else
         {
-            actualHeight = (int)(screenAspect / minWidth); ;
+            actualHeight = (int)(minWidth / screenAspect);
             actualWidth = minWidth;
         }
 
@@ -62,7 +62,7 @@ public class CameraPixellater : MonoBehaviour
             tex.Release();
         }
 
-        tex = new(actualWidth, actualHeight, 16);
+        tex = new(actualWidth, actualHeight, 16, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
         tex.Create();
 
         lastAspect = screenAspect;

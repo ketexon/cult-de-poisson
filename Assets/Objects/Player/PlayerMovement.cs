@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float mouseSensitivity;
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
+    [SerializeField] float ladderClimbSpeed = 0.25f;
 
     NavMeshAgent agent;
     Rigidbody rb;
@@ -73,15 +74,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (playerInput.inputIsActive && agent.enabled)
-        {
-            var displacement = CalculateVelocity() * Time.deltaTime;
-            agent.Move(displacement);
-        }
-        else if (!movingOnLink && agent.isOnOffMeshLink)
+        if (!movingOnLink && agent.isOnOffMeshLink)
         {
             movingOnLink = true;
             HandleLinkMovement(LinkType.Ladder);
+        }
+        else if (!movingOnLink && !agent.isOnOffMeshLink && playerInput.inputIsActive && agent.enabled)
+        {
+            var displacement = CalculateVelocity() * Time.deltaTime;
+            agent.Move(displacement);
         }
     }
 
@@ -165,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Confine();
     }
+
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -268,7 +270,6 @@ public class PlayerMovement : MonoBehaviour
             yield return GoDownLadder(data);
         }
 
-
         movingOnLink = false;
     }
 
@@ -276,7 +277,7 @@ public class PlayerMovement : MonoBehaviour
     {
         while (transform.position.y - .5f < data.endPos.y)
         {
-            transform.position += Vector3.up * Time.deltaTime;
+            transform.position += Vector3.up * Time.deltaTime * ladderClimbSpeed;
             yield return null;
         }
         agent.CompleteOffMeshLink();
@@ -288,14 +289,19 @@ public class PlayerMovement : MonoBehaviour
 
         while (Vector3.Distance(transform.position, aboveBottom) > 0.01f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime);
+            Debug.Log($"A: {transform.position} {aboveBottom} {Time.deltaTime * ladderClimbSpeed} {Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed)}");
+            transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed);
             yield return null;
         }
+
         while (transform.position.y - 0.5f > data.endPos.y)
         {
-            transform.position += Vector3.down * Time.deltaTime;
+            Debug.Log($"B: {transform.position.y} {data.endPos.y}");
+
+            transform.position += Vector3.down * Time.deltaTime * ladderClimbSpeed;
             yield return null;
         }
+        Debug.Log("HI");
         agent.CompleteOffMeshLink();
     }
 }

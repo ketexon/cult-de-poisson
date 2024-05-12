@@ -1,0 +1,28 @@
+#settings__buttons .button {
+    margin-bottom: 8px;
+}
+
+#settings__buttons {
+    margin-bottom: -8px;
+}
+
+.settings {
+    visibility: hidden;
+}
+
+.settings--enabled {
+    visibility: visible;
+}
+
+.settings-panel {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.settings--enabled .settings-panel--active {
+    visibility: visible;
+}

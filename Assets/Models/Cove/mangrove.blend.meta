@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: b67d5f46e0c00aa4fa62ab1057a27a7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: mangroveleaf
     second: {fileID: 2100000, guid: b67d5f46e0c00aa4fa62ab1057a27a7e, type: 2}
   - first:

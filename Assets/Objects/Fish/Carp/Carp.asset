@@ -21,3 +21,12 @@ MonoBehaviour:
     type: 3}
   PhysicalPrefab: {fileID: 6168559306990160984, guid: 1596b65850a011d46ae83f40c90711c2,
     type: 3}
+  FishInfo:
+    Weight: 5
+    LengthFeet: 0
+    LengthInches: 4
+    FishDepth: 0
+    CatchMethod: Lake
+    CatchDifficulty: 2
+    IsKeyFish: 1
+    Notes: None

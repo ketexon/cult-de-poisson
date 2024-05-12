@@ -47,7 +47,7 @@ public class PlayerItem : MonoBehaviour
     bool playerLock = true;
 
     /// <summary>
-    /// Parameters we pass to item so that it doesn't have to 
+    /// Parameters we pass to item so that it doesn't have to
     /// find components and GameObjects in its Awake.
     /// </summary>
     Item.InitializeParams itemInitializeParams;
@@ -109,7 +109,7 @@ public class PlayerItem : MonoBehaviour
     }
 
     /// <summary>
-    /// Called when scrolling/pressing Q/E. 
+    /// Called when scrolling/pressing Q/E.
     /// If we are not holding a temporary item, swaps to the next item.
     /// If we are holding a temporary item, go to the last item used.
     /// </summary>
@@ -126,7 +126,7 @@ public class PlayerItem : MonoBehaviour
         CycleItem(dir);
     }
 
-    public void CycleItem(int dir)
+    public void CycleItem(int dir = 1)
     {
         int newItemIndex;
 
