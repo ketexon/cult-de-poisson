@@ -70,6 +70,7 @@ public class FishingLine : MonoBehaviour
 
         this.hook = hook;
         hook.WaterHitEvent += OnHookHitWater;
+        hook.CollisionEvent += OnHookCollision;
 
         this.rodTipVelocity = rodTipVelocity;
 
@@ -156,18 +157,36 @@ public class FishingLine : MonoBehaviour
         hook.AttachToRB(bobRB);
 
         bob = bobGO.GetComponent<FishingBob>();
-        bob.HitWaterEvent += OnBobHitWater;
+        bob.CollisionEvent += OnBobHitWater;
 
         lineRenderer.positionCount = 3;
     }
 
     void OnBobHitWater()
     {
-        bob.HitWaterEvent -= OnBobHitWater;
+        bob.CollisionEvent -= OnBobHitWater;
         bobDistance = (tip.position - bob.transform.position).magnitude;
         bob.AttachToTip(tip.gameObject, bobDistance.Value);
 
         reelingPhase = true;
+    }
+
+    void OnHookCollision()
+    {
+        if (bob)
+        {
+            bob.CollisionEvent -= OnBobHitWater;
+            bobDistance = (tip.position - bob.transform.position).magnitude;
+            bob.AttachToTip(tip.gameObject, bobDistance.Value);
+        }
+        else
+        {
+            hook.AttachToRB(tip.GetComponent<Rigidbody>());
+            hookDistance = (tip.position - hook.transform.position).magnitude;
+        }
+
+        reelingPhase = true;
+        hook.CollisionEvent -= OnHookCollision;
     }
 
     void DrawPoints()

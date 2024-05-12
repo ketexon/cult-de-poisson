@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 public class FishingHook : MonoBehaviour
 {
     public System.Action<bool> VisibilityChangedEvent;
     public System.Action<Fish> OnHook;
+    public System.Action<Vector3> WaterHitEvent;
+    public System.Action CollisionEvent;
 
     bool _visible = true;
     public bool Visible
@@ -28,8 +27,6 @@ public class FishingHook : MonoBehaviour
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] float waterDrag = 5.0f;
     [SerializeField] float bobDistance = 5.0f;
-
-    public System.Action<Vector3> WaterHitEvent;
 
     public Vector3? WaterHitPos { get; private set; }
 
@@ -181,6 +178,11 @@ public class FishingHook : MonoBehaviour
             inWater = false;
             RigidBody.drag = initialDrag;  
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        CollisionEvent?.Invoke();
     }
 
     /// <summary>
