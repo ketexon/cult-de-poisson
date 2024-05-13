@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5269936959189618475}
   - component: {fileID: 6705737690851664267}
   - component: {fileID: 908303929254149309}
+  - component: {fileID: 2909902797459221727}
   m_Layer: 12
   m_Name: NPC
   m_TagString: Untagged
@@ -120,9 +121,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77049fa6532bb2f4b8ec1499a2b09fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactable: 1
+  _interactEnabled: 1
+  collider: {fileID: 6705737690851664267}
   npcSO: {fileID: 11400000, guid: 8b8f941c02b46684ab33af84eae4d7a8, type: 2}
   DialogueView: {fileID: 3548719117354832640}
+--- !u!208 &2909902797459221727
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325707286155428045}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 1, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4950747784917468914
 GameObject:
   m_ObjectHideFlags: 0

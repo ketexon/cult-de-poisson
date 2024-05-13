@@ -632,6 +632,7 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   maxPitch: 85
   speed: 3
+  ladderClimbSpeed: 1
 --- !u!195 &1462544016098704614
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -647,7 +648,7 @@ NavMeshAgent:
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
+  m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
