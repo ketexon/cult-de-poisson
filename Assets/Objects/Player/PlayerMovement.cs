@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             movingOnLink = true;
             HandleLinkMovement(LinkType.Ladder);
         }
-        else if (!movingOnLink && !agent.isOnOffMeshLink && playerInput.inputIsActive && agent.enabled)
+        else if (!movingOnLink && playerInput.inputIsActive)
         {
             var displacement = CalculateVelocity() * Time.deltaTime;
             agent.Move(displacement);
@@ -261,31 +261,15 @@ public class PlayerMovement : MonoBehaviour
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         bool isGoingUp = data.startPos.y < data.endPos.y;
 
-        if (isGoingUp)
-        {
-            yield return GoUpLadder(data);
-        }
-        else
-        {
-            yield return GoDownLadder(data);
-        }
+        yield return TraverseLadder(data, isGoingUp);
 
         movingOnLink = false;
     }
 
-    IEnumerator GoUpLadder(OffMeshLinkData data)
+    IEnumerator TraverseLadder(OffMeshLinkData data, bool startFromBottom)
     {
-        while (transform.position.y - .5f < data.endPos.y)
-        {
-            transform.position += Vector3.up * Time.deltaTime * ladderClimbSpeed;
-            yield return null;
-        }
-        agent.CompleteOffMeshLink();
-    }
-
-    IEnumerator GoDownLadder(OffMeshLinkData data)
-    {
-        Vector3 aboveBottom = new(data.endPos.x, transform.position.y, data.endPos.z);
+        Vector3 bottom = data.offMeshLink.startTransform.position;
+        Vector3 aboveBottom = new(bottom.x, transform.position.y, bottom.z);
 
         while (Vector3.Distance(transform.position, aboveBottom) > 0.01f)
         {
@@ -294,14 +278,14 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        while (transform.position.y - 0.5f > data.endPos.y)
-        {
-            Debug.Log($"B: {transform.position.y} {data.endPos.y}");
+        float verticalDifference = transform.position.y - data.endPos.y - 0.75f;
 
-            transform.position += Vector3.down * Time.deltaTime * ladderClimbSpeed;
+        while (Mathf.Abs(verticalDifference) > 0.01f)
+        {
+            transform.position += (startFromBottom ? 1 : -1) * ladderClimbSpeed * Time.deltaTime * Vector3.up;
+            verticalDifference = transform.position.y - data.endPos.y - 0.75f;
             yield return null;
         }
-        Debug.Log("HI");
         agent.CompleteOffMeshLink();
     }
 }
