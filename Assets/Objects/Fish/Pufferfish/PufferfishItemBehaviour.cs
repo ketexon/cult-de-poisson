@@ -22,6 +22,12 @@ public class PufferfishItemBehaviour : FishItemBehaviour
         initialDrag = rb.drag;
     }
 
+    void OnDisable()
+    {
+        Player.Instance.Movement.SetPhysicsEnabled(false);
+        rb.drag = initialDrag;
+    }
+
     public override void OnInteract()
     {
         turnedOn = !turnedOn;

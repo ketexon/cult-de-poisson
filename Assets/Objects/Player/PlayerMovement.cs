@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             movingOnLink = true;
             HandleLinkMovement(LinkType.Ladder);
         }
-        else if (!movingOnLink && playerInput.inputIsActive)
+        else if (agent.isOnNavMesh && !movingOnLink && playerInput.inputIsActive)
         {
             var displacement = CalculateVelocity() * Time.deltaTime;
             agent.Move(displacement);
