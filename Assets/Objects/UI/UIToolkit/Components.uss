@@ -12,7 +12,7 @@
 
 .interaction-indicator {
     --button-on-background: rgb(255, 255, 255);
-    --interaction-indicator-font-size: 24px;
+    --interaction-indicator-font-size: 32px;
     border-radius: 6px;
     background-color: var(--p-surface);
     color: var(--button-on-background);
@@ -106,11 +106,18 @@
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
     font-size: 96px;
     color: rgb(255, 255, 255);
-    -unity-text-outline-width: 2px;
-    -unity-text-outline-color: rgba(0, 0, 0, 0.3);
+    -unity-text-outline-width: 0;
+    -unity-text-outline-color: rgba(0, 0, 0, 0.5);
 }
 
-.t--body-1, .slider .unity-slider__label {
+.t--body-1 {
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
+
+.slider .unity-slider__label {
     -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
     font-size: 24px;
@@ -129,7 +136,7 @@
     -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
     color: rgb(255, 255, 255);
-    font-size: 24px;
+    font-size: 32px;
     border-left-color: rgb(255, 255, 255);
     border-right-color: rgb(255, 255, 255);
     border-top-color: rgb(255, 255, 255);

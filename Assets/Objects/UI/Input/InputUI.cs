@@ -12,6 +12,7 @@ public class InputUI : SingletonBehaviour<InputUI>
         public InputAction InputAction;
         public string Message;
         public bool Disabled = false;
+        public int Order = 0;
     }
 
     [SerializeField] UIDocument document;
@@ -79,13 +80,14 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <param name="message">The message to display next to the input action</param>
     /// <param name="disabled">Whether the message should show as disabled (grey font)</param>
     /// <returns>A callback to call to remove the input.</returns>
-    public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false)
+    public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false, int order = 0)
     {
         var ve = AddInputUIToDocument(new Entry
         {
             InputAction = inputAction,
             Message = message,
-            Disabled = disabled
+            Disabled = disabled,
+            Order = order,
         });
 
         return () =>
@@ -113,11 +115,9 @@ public class InputUI : SingletonBehaviour<InputUI>
     private VisualElement AddInputUIToDocument(Entry entry)
     {
         var ve = interactionTemplate.Instantiate();
-        var root = ve.Q<VisualElement>("interaction-indicator");
-        if (entry.Disabled)
-        {
-            root.AddToClassList("disabled");
-        }
+        var root = ve.Q<OrderableElement>("interaction-indicator");
+        root.EnableInClassList("disabled", entry.Disabled);
+        
         var iconsContainer = root.Q<VisualElement>(null, "interaction-indicator__icons");
         iconsContainer.Clear();
 
@@ -145,7 +145,14 @@ public class InputUI : SingletonBehaviour<InputUI>
         var label = ve.Q<Label>(null, "interaction-indicator__label");
         label.text = entry.Message;
 
-        interactionContainer.Add(ve);
+        int index = 0;
+        foreach(var child in interactionContainer.Children())
+        {
+            var orderable = child.Q<OrderableElement>("interaction-indicator");
+            if (orderable.Order < entry.Order) break;
+            ++index;
+        }
+        interactionContainer.Insert(index, ve);
 
         return ve;
     }

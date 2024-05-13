@@ -3,9 +3,9 @@
     <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
     <Style src="project://database/Assets/Objects/UI/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=7bd92303f50ea7347b8efb88b7bb2388&amp;type=3#Settings" />
     <ui:VisualElement name="settings" class="settings settings--enabled" style="flex-grow: 1;">
-        <ui:VisualElement name="settings__home" class="settings-panel" style="justify-content: center; top: 0; right: 2px; left: -1px; bottom: 0;">
+        <ui:VisualElement name="settings__home" class="settings-panel settings-panel--active" style="justify-content: center; top: 0; right: 2px; left: -1px; bottom: 0;">
             <ui:VisualElement name="title" style="flex-grow: 0; flex-shrink: 0; margin-bottom: 64px;">
-                <ui:Label tabindex="-1" text="culte du poisson" parse-escape-sequences="true" display-tooltip-when-elided="true" class="t--display-1" style="-unity-text-align: upper-center;" />
+                <ui:VisualElement name="title__image" style="flex-grow: 1; height: 56px; background-image: url(&apos;project://database/Assets/Objects/UI/Settings/culte%20du%20poisson.png?fileID=2800000&amp;guid=a24d892d530a3d940b9c969946548348&amp;type=3#culte du poisson&apos;); -unity-background-scale-mode: scale-to-fit;" />
             </ui:VisualElement>
             <ui:VisualElement name="menu" focusable="true" tabindex="-1" style="flex-grow: 0; flex-shrink: 0; justify-content: flex-start; align-self: stretch; align-items: center;">
                 <ui:VisualElement name="settings__keybinds" style="flex-grow: 0; margin-bottom: 16px;">
@@ -14,7 +14,7 @@
                         <AttributeOverrides element-name="keybind-icon__label" text="ESC" />
                     </ui:Instance>
                 </ui:VisualElement>
-                <ui:VisualElement name="settings__buttons" focusable="true" tabindex="-1" style="flex-grow: 1; min-width: 128px;">
+                <ui:VisualElement name="settings__buttons" focusable="true" tabindex="-1" style="flex-grow: 1; min-width: 160px;">
                     <PanelSwitchButton text="settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__settings-button" target-panel="settings__settings" class="button first-focus" />
                     <PanelSwitchButton text="save" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__save-button" class="button" />
                     <PanelSwitchButton text="load" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__load-button" class="button" />

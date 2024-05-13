@@ -24,6 +24,7 @@ public class PlayerItem : MonoBehaviour
     [SerializeField] float rotateSpeed = 5;
     [SerializeField] List<Item> startingItems;
     [SerializeField] int startingItemIndex;
+    [SerializeField] InputActionReference cycleItemAction;
 
     public float RotateSpeed => rotateSpeed;
 
@@ -31,6 +32,7 @@ public class PlayerItem : MonoBehaviour
     [System.NonSerialized] public Quaternion CurRot;
     [System.NonSerialized] public Quaternion TargetRot;
     [System.NonSerialized] public Quaternion FishingStartRot;
+
 
     [SerializeField] SaveStateSO saveState;
 
@@ -58,6 +60,9 @@ public class PlayerItem : MonoBehaviour
     int lastItemIndex;
 
     public bool IsTemporaryItem { get; protected set; }
+
+    System.Action inputUIDestructor = null;
+
 
     void Reset()
     {
@@ -271,6 +276,20 @@ public class PlayerItem : MonoBehaviour
         }
         CurRot = Quaternion.Lerp(CurRot, TargetRot, Time.deltaTime * rotateSpeed);
         itemContainerTransform.rotation = CurRot;
+
+        if(inputUIDestructor == null && cycleItemAction.action.enabled)
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(
+                cycleItemAction.action,
+                "to switch items",
+                order: -1000
+            );
+        }
+        else if(inputUIDestructor != null && !cycleItemAction.action.enabled)
+        {
+            inputUIDestructor?.Invoke();
+            inputUIDestructor = null;
+        }
     }
 
     void LateUpdate()

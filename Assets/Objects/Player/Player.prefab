@@ -613,6 +613,8 @@ MonoBehaviour:
   - {fileID: 3191426836252093821}
   - {fileID: 8670695197074598236}
   startingItemIndex: 0
+  cycleItemAction: {fileID: 3900878760210090435, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
   saveState: {fileID: 11400000, guid: 7b8994e2d97575d42a5b075aae33ef95, type: 2}
 --- !u!114 &75327676347670396
 MonoBehaviour:
