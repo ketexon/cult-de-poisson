@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float mouseSensitivity;
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
+    [SerializeField] float ladderClimbSpeed = 0.25f;
 
     NavMeshAgent agent;
     Rigidbody rb;
@@ -73,15 +74,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (playerInput.inputIsActive && agent.enabled)
-        {
-            var displacement = CalculateVelocity() * Time.deltaTime;
-            agent.Move(displacement);
-        }
-        else if (!movingOnLink && agent.isOnOffMeshLink)
+        if (!movingOnLink && agent.isOnOffMeshLink)
         {
             movingOnLink = true;
             HandleLinkMovement(LinkType.Ladder);
+        }
+        else if (!movingOnLink && playerInput.inputIsActive)
+        {
+            var displacement = CalculateVelocity() * Time.deltaTime;
+            agent.Move(displacement);
         }
     }
 
@@ -165,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Confine();
     }
+
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -259,41 +261,29 @@ public class PlayerMovement : MonoBehaviour
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         bool isGoingUp = data.startPos.y < data.endPos.y;
 
-        if (isGoingUp)
-        {
-            yield return GoUpLadder(data);
-        }
-        else
-        {
-            yield return GoDownLadder(data);
-        }
-
+        yield return TraverseLadder(data, isGoingUp);
 
         movingOnLink = false;
     }
 
-    IEnumerator GoUpLadder(OffMeshLinkData data)
+    IEnumerator TraverseLadder(OffMeshLinkData data, bool startFromBottom)
     {
-        while (transform.position.y - .5f < data.endPos.y)
-        {
-            transform.position += Vector3.up * Time.deltaTime;
-            yield return null;
-        }
-        agent.CompleteOffMeshLink();
-    }
-
-    IEnumerator GoDownLadder(OffMeshLinkData data)
-    {
-        Vector3 aboveBottom = new(data.endPos.x, transform.position.y, data.endPos.z);
+        Vector3 bottom = data.offMeshLink.startTransform.position;
+        Vector3 aboveBottom = new(bottom.x, transform.position.y, bottom.z);
 
         while (Vector3.Distance(transform.position, aboveBottom) > 0.01f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime);
+            Debug.Log($"A: {transform.position} {aboveBottom} {Time.deltaTime * ladderClimbSpeed} {Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed)}");
+            transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed);
             yield return null;
         }
-        while (transform.position.y - 0.5f > data.endPos.y)
+
+        float verticalDifference = transform.position.y - data.endPos.y - 0.75f;
+
+        while (Mathf.Abs(verticalDifference) > 0.01f)
         {
-            transform.position += Vector3.down * Time.deltaTime;
+            transform.position += (startFromBottom ? 1 : -1) * ladderClimbSpeed * Time.deltaTime * Vector3.up;
+            verticalDifference = transform.position.y - data.endPos.y - 0.75f;
             yield return null;
         }
         agent.CompleteOffMeshLink();

@@ -164,7 +164,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     PlayerItem playerItem;
 
     Item enabledItem = null;
-    IInteractObject InteractItem => enabledItem.InteractItem;
+    IInteractObject InteractItem => enabledItem ? enabledItem.InteractItem : null;
 
     System.Action interactableUIDestructor = null;
     System.Action itemUIDestructor = null;
@@ -310,12 +310,15 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     /// </summary>
     void OnItemChange(Item newItem)
     {
-        if (enabledItem)
+        if (InteractItem != null)
         {
             InteractItem.InteractivityChangeEvent -= OnInteractObjectStateChange;
         }
         enabledItem = newItem;
-        InteractItem.InteractivityChangeEvent += OnInteractObjectStateChange;
+        if (InteractItem != null)
+        {
+            InteractItem.InteractivityChangeEvent += OnInteractObjectStateChange;
+        }
         
         UpdateInteractivity();
     }

@@ -1,0 +1,13 @@
+.crosshair {
+    transition-property: opacity;
+    transition-duration: 0.1s;
+    opacity: 0.3;
+}
+
+.crosshair--enabled {
+    opacity: 1;
+}
+
+.crosshair--invisible {
+    opacity: 0;
+}
