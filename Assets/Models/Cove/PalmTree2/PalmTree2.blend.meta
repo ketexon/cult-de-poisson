@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ceb822cf1d7b374db8fc2a41dbd9338
+guid: 29d382f7aa5d7d2459a58d8ed3688586
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 1cb8ed33ba799b64ea2aeb7d6b9f319a, type: 2}
+      name: Leaves
+    second: {fileID: 2100000, guid: b67d5f46e0c00aa4fa62ab1057a27a7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: a730bd6beef7a214b88ff4e5fabe9fa0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 87c91275cf6c120469f0671b0a70a963, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: palmleaf
+    second: {fileID: 2100000, guid: a730bd6beef7a214b88ff4e5fabe9fa0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -42,7 +57,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
