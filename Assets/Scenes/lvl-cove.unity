@@ -241,8 +241,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 573822116}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 32
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
@@ -266,6 +271,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
+      propertyPath: m_ActionEvents.Array.data[32].m_ActionId
+      value: 008f6b90-3de1-41c2-a1b5-55070cbac046
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
       propertyPath: m_ActionEvents.Array.data[28].m_ActionName
       value: UI/Escape[/Keyboard/escape]
       objectReference: {fileID: 0}
@@ -284,20 +294,25 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[31].m_ActionName
       value: UI/Click[/Mouse/leftButton]
       objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[32].m_ActionName
+      value: Fishing/Unaim[/Mouse/rightButton]
+      objectReference: {fileID: 0}
     - target: {fileID: 3340069615599303650, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 359.2
+      value: 155.1
       objectReference: {fileID: 0}
     - target: {fileID: 3340069615599303650, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 66.46
+      value: 15.9
       objectReference: {fileID: 0}
     - target: {fileID: 3340069615599303650, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 140.57
+      value: 398.2
       objectReference: {fileID: 0}
     - target: {fileID: 3340069615599303650, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
@@ -396,6 +411,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d819b9d87d1e1aa4597b4c04652d6475, type: 3}
+--- !u!114 &573822116 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342073246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &580508424 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3059176816871463667, guid: d819b9d87d1e1aa4597b4c04652d6475,
@@ -1156,7 +1183,15 @@ PrefabInstance:
       value: Cove Prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4703399344182248676, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 8442717872157894450, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 3404571489462645907, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 4722693552212876779, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 3730464565383533637, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 6873561130215969077, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 6653558626411282074, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
+    - {fileID: 2571936257232972545, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
