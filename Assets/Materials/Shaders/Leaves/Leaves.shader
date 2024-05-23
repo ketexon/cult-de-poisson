@@ -55,7 +55,7 @@ Shader "CDP/Nature/Leaves"
     {
         Tags
         {
-            "RenderType" = "Opaque"
+            "RenderType" = "Transparent"
             "RenderPipeline" = "UniversalPipeline"
             "UniversalMaterialType" = "SimpleLit"
             "IgnoreProjector" = "True"
@@ -74,7 +74,7 @@ Shader "CDP/Nature/Leaves"
             // Render State Commands
             // Use same blending / depth states as Standard shader
             Blend[_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
-            ZWrite[_ZWrite]
+            ZWrite On
             Cull[_Cull]
             AlphaToMask[_AlphaToMask]
 

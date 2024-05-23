@@ -141,13 +141,13 @@ half4 ToonLighting(InputData inputData, SurfaceData surfaceData, int steps)
     LIGHT_LOOP_END
     #endif
 
-    toonRes.color = floor(
-        length(toonRes.color * steps / float3(
-            surfaceData.albedo.x ? surfaceData.albedo.x : 1,
-            surfaceData.albedo.y ? surfaceData.albedo.y : 1,
-            surfaceData.albedo.z ? surfaceData.albedo.z : 1
-        ))
-    ) / steps * surfaceData.albedo;
+    half intensity = length(toonRes.color * steps / float3(
+        surfaceData.albedo.x ? surfaceData.albedo.x : 1,
+        surfaceData.albedo.y ? surfaceData.albedo.y : 1,
+        surfaceData.albedo.z ? surfaceData.albedo.z : 1
+    ));
+
+    toonRes.color = floor(intensity) / steps * surfaceData.albedo;
     toonRes.specular = floor(length(toonRes.specular * steps)) / steps;
 
     lightingData.mainLightColor = toonRes.color * surfaceData.albedo + toonRes.specular;

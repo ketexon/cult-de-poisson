@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b847632e6e69ae04a84b9caed6847fb8
+guid: a1740e912bafc27429196f9e966525c7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
-    second: {fileID: 2100000, guid: 0a5755bb2ec2c224d9b12894c2f8ccad, type: 2}
+      name: Wood
+    second: {fileID: 2100000, guid: 87c91275cf6c120469f0671b0a70a963, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: palmleaf
+    second: {fileID: 2100000, guid: a730bd6beef7a214b88ff4e5fabe9fa0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
