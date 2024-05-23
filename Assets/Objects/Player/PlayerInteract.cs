@@ -271,7 +271,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     {
         // Check if player is pointing at an interactable
         if(Physics.Raycast(
-            transform.position, playerMovement.Camera.transform.forward, 
+            playerMovement.Camera.transform.position, 
+            playerMovement.Camera.transform.forward, 
             out RaycastHit hit, 
             parameters.InteractDistance, 
             parameters.InteractLayerMask,

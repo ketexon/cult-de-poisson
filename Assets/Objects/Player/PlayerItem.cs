@@ -114,6 +114,22 @@ public class PlayerItem : MonoBehaviour
     }
 
     /// <summary>
+    /// Adds an item to the player's held items
+    /// </summary>
+    /// <returns>True if the item was added, false if it was already held</returns>
+    public bool AddItem(ItemSO itemSO, bool thenSwitch = true)
+    {
+        var item = items.Find(i => i.ItemSO == itemSO);
+        if (heldItems.Contains(item)) return false;
+        heldItems.Add(item);
+        if (thenSwitch)
+        {
+            EnableItem(item);
+        }
+        return true;
+    }
+
+    /// <summary>
     /// Called when scrolling/pressing Q/E.
     /// If we are not holding a temporary item, swaps to the next item.
     /// If we are holding a temporary item, go to the last item used.
