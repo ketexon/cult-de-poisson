@@ -24,6 +24,8 @@ public class InputUI : SingletonBehaviour<InputUI>
 
     VisualElement root => document.rootVisualElement;
 
+    public NotificationsUI Notifications { get; private set; }
+
     public bool CrosshairEnabled { get; private set; } = false;
     public bool CrosshairVisible { get; private set; } = true;
 
@@ -41,6 +43,8 @@ public class InputUI : SingletonBehaviour<InputUI>
         interactionContainer = root.Q<VisualElement>("interaction-container");
         crosshair = root.Q<VisualElement>(null, "crosshair");
         interactionContainer.Clear();
+
+        Notifications = GetComponent<NotificationsUI>();
     }
 
     /// <summary>
@@ -117,6 +121,7 @@ public class InputUI : SingletonBehaviour<InputUI>
         var ve = interactionTemplate.Instantiate();
         var root = ve.Q<OrderableElement>("interaction-indicator");
         root.EnableInClassList("disabled", entry.Disabled);
+        root.Order = entry.Order;
         
         var iconsContainer = root.Q<VisualElement>(null, "interaction-indicator__icons");
         iconsContainer.Clear();
