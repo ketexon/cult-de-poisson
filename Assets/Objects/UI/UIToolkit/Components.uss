@@ -10,12 +10,40 @@
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
 }
 
-.interaction-indicator {
+.interaction-indicator, .notification-indicator {
     --button-on-background: rgb(255, 255, 255);
     --interaction-indicator-font-size: 32px;
     border-radius: 6px;
     background-color: var(--p-surface);
     color: var(--button-on-background);
+}
+
+.notification-indicator {
+    border-color: rgba(255, 255, 255, 1);
+    border-width: 2px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.notification-indicator--enter {
+    opacity: 0;
+}
+
+.notification-indicator--enter-active {
+    opacity: 1;
+    transition: opacity 0.1s ease;
+    
+}
+
+.notification-indicator--exit {
+    opacity: 1;
+}
+
+.notification-indicator--exit-active {
+    opacity: 0;
+    transition: opacity 0.1s ease;
 }
 
 .interaction-indicator.disabled {
@@ -35,7 +63,7 @@
     margin-right: -4px;
 }
 
-.interaction-indicator__label {
+.interaction-indicator__label, .notification-indicator__label {
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
     font-size: var(--interaction-indicator-font-size);
     margin-left: 4px;
@@ -56,7 +84,6 @@
     min-height: var(--keybind-icon-min-width);
     color: var(--keybind-icon-color);
     align-self: stretch;
-    justify-content: stretch;
 }
 
 .keybind-icon--rmb .keybind-icon__image {
@@ -171,4 +198,34 @@
     -unity-text-align: middle-right;
     padding-right: 8px;
     min-width: 96px;
+}
+
+.notification-indicator__label {
+    margin-left: 8px;
+}
+
+.notification-indicator__icon-container {
+    display: none;
+}
+
+.notification-indicator__icon {
+    display: none;
+}
+
+.notification-indicator--journal .notification-indicator__icon-container,
+.notification-indicator--fishing .notification-indicator__icon-container
+{
+    display: flex;
+}
+
+.notification-indicator--journal .notification-indicator__journal-icon {
+    display: flex;
+}
+
+.notification-indicator--fishing .notification-indicator__fishing-icon {
+    display: flex;
+}
+
+#notifications .notification-indicator {
+    margin-bottom: 8px;
 }

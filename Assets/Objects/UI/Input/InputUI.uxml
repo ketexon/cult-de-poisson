@@ -1,8 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="InputButton" src="project://database/Assets/Objects/UI/Input/InteractionIndicator.uxml?fileID=9197481963319205126&amp;guid=e0799291426fb2340996fd6feef3b2b9&amp;type=3#InteractionIndicator" />
+    <ui:Template name="NotificationIndicator" src="project://database/Assets/Objects/UI/Input/NotificationIndicator.uxml?fileID=9197481963319205126&amp;guid=883631ef01f68a549b17975d77c2720e&amp;type=3#NotificationIndicator" />
     <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
     <ui:VisualElement name="interaction-container" picking-mode="Ignore" style="flex-grow: 1; align-items: flex-start; justify-content: flex-end; flex-direction: column; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
         <ui:Instance template="InputButton" name="InputButton" />
         <ui:Instance template="InputButton" name="InputButton" />
+    </ui:VisualElement>
+    <ui:VisualElement name="notifications" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+        <ui:VisualElement name="notifications-container" style="flex-grow: 1; align-items: auto; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
+            <ui:Instance template="NotificationIndicator" name="NotificationIndicator" class="notification-indicator--journal" />
+            <ui:Instance template="NotificationIndicator" name="NotificationIndicator" class="notification-indicator--fishing" />
+            <ui:Instance template="NotificationIndicator" name="NotificationIndicator" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

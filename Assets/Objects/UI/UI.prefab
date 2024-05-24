@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8408282752862423169}
   - component: {fileID: 5090792530719148525}
   - component: {fileID: 4046475890618828001}
+  - component: {fileID: 8420633142218873480}
   m_Layer: 0
   m_Name: Document
   m_TagString: Untagged
@@ -87,6 +88,25 @@ MonoBehaviour:
     type: 3}
   keybindIconTemplate: {fileID: 9197481963319205126, guid: 4663a6700fc3f744aa1e17a46b547e54,
     type: 3}
+--- !u!114 &8420633142218873480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414205894825964999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21a86340ff09594c9ab6ce16373b825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  document: {fileID: 8408282752862423169}
+  notificationTemplate: {fileID: 9197481963319205126, guid: 883631ef01f68a549b17975d77c2720e,
+    type: 3}
+  notificationDuration: 5
+  notificationEnterDuration: 0.1
+  notificationExitDuration: 0.1
+  fishColor: {r: 0, g: 1, b: 0.57254905, a: 1}
 --- !u!1 &2475073413666240118
 GameObject:
   m_ObjectHideFlags: 0
