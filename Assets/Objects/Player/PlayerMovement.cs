@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
 
+    [SerializeField] bool lockCamera = false;
+
     public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
     CharacterController characterController;
@@ -46,17 +48,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext ctx)
     {
-        var delta = ctx.ReadValue<Vector2>();
-        var deltaRotY = Quaternion.Euler(delta.x * mouseSensitivity * Vector3.up);
-        transform.rotation = transform.rotation * deltaRotY;
+        if (!lockCamera) {
+            var delta = ctx.ReadValue<Vector2>();
+            var deltaRotY = Quaternion.Euler(delta.x * mouseSensitivity * Vector3.up);
+            transform.rotation = transform.rotation * deltaRotY;
 
-        inputDir = deltaRotY * inputDir;
+            inputDir = deltaRotY * inputDir;
 
-        var cameraEulerX = (camera.transform.rotation.eulerAngles.x + 180) % 360 - 180;
-        var newCameraEulerX = Mathf.Clamp(cameraEulerX - delta.y * mouseSensitivity, -maxPitch, maxPitch);
-        var deltaCameraEulerX = newCameraEulerX - cameraEulerX;
-        
-        camera.transform.rotation = camera.transform.rotation * Quaternion.Euler(deltaCameraEulerX * Vector3.right);
+            var cameraEulerX = (camera.transform.rotation.eulerAngles.x + 180) % 360 - 180;
+            var newCameraEulerX = Mathf.Clamp(cameraEulerX - delta.y * mouseSensitivity, -maxPitch, maxPitch);
+            var deltaCameraEulerX = newCameraEulerX - cameraEulerX;
+            
+            camera.transform.rotation = camera.transform.rotation * Quaternion.Euler(deltaCameraEulerX * Vector3.right);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
