@@ -65,6 +65,5 @@ public class MagneticGameFish : MonoBehaviour
             transform.parent = collider.gameObject.transform;
             isCaught = true;
         }
-        Debug.Log("collision");
     }
 }
