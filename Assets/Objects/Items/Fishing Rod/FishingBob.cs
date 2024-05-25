@@ -12,7 +12,7 @@ public class FishingBob : MonoBehaviour
 
     float initialDrag;
 
-    public System.Action HitWaterEvent;
+    public System.Action CollisionEvent;
 
     bool inWater = false;
 
@@ -64,7 +64,7 @@ public class FishingBob : MonoBehaviour
         {
             inWater = true;
             rb.drag = waterDrag;
-            HitWaterEvent?.Invoke();
+            CollisionEvent?.Invoke();
         }
     }
 
@@ -75,5 +75,10 @@ public class FishingBob : MonoBehaviour
             inWater = false;
             rb.drag = initialDrag;
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        CollisionEvent?.Invoke();
     }
 }

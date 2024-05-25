@@ -32,4 +32,4 @@ MonoBehaviour:
   FishingActionMap: Fishing
   ReelStrength: 5
   HookDistancePickupRange: 2
-  InteractDistance: 2
+  InteractDistance: 3

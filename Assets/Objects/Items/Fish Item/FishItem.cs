@@ -14,8 +14,11 @@ public class FishItem : Item
     [SerializeField] float placeMaxDistance = 10.0f;
     [System.NonSerialized] public FishSO fishSO;
     GameObject fishGO;
+    Fish fish;
     GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
+
+    public override IInteractObject InteractItem => fish ? fish.ItemBehaviour : null;
 
     public void SetFish(FishSO fishSO)
     {
@@ -24,7 +27,26 @@ public class FishItem : Item
         {
             Destroy(fishGO);
         }
-        fishGO = Instantiate(fishSO.InHandPrefab, this.transform);
+        fishGO = Instantiate(fishSO.PhysicalPrefab, this.transform);
+        gameObject.SetActive(true); // we must activate before we initialize bucket so that awake is called on Fish
+        fish = fishGO.GetComponent<Fish>();
+        fish.InitializeBucket();
+
+    }
+
+    public void SetFish(Fish fish)
+    {
+        this.fishSO = fish.FishSO;
+        this.fish = fish;
+        if (fishGO)
+        {
+            Destroy(fishGO);
+        }
+        fishGO = fish.gameObject;
+        fish.transform.SetParent(transform);
+        fish.transform.position = this.transform.position;
+        fish.transform.localRotation = Quaternion.identity;
+        fish.InitializeBucket();
     }
 
     public void Awake()
@@ -48,22 +70,25 @@ public class FishItem : Item
         // Get the current position of the in hand
         Transform temp = fishGO.transform;
 
-        // Destroy the in hand fish
-        if(fishGO)
-        {
-            Destroy(fishGO);
-        }
-
         // Remove the fish from the inventory
         inventory.RemoveFish(fishSO);
 
+        fishGO.transform.SetParent(null);
+        
+        fishGO.GetComponent<Fish>().InitializePhysical();
         // Instantiate thrown fish and set its velocity
-        thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
-        thrownFishRigidbody = thrownFish.GetComponent<Rigidbody>(); 
+        //thrownFish = Instantiate(fishSO.PhysicalPrefab, temp.position, temp.rotation);
+        thrownFishRigidbody = fishGO.GetComponent<Rigidbody>(); 
         thrownFishRigidbody.velocity = throwVelocity * front;
 
         // Give the thrown fish angular velocity
         thrownFishRigidbody.angularVelocity = throwAngularVelocity * front;
+
+
+        fishGO = null;
+
+        playerItem.CycleItem(1);
+    
     }
     
     public void OnPlaceUse(InputAction.CallbackContext ctx)

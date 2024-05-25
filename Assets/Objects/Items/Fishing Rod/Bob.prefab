@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -9152906718160847763}
   - component: {fileID: -835615942817720990}
   - component: {fileID: 1545678073886856273}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Bob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3444284660832831277}
   serializedVersion: 4
-  m_Mass: 5
+  m_Mass: 1
   m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3444284660832831277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab6de1ef4e7f63848ac4128c4f264301, type: 3}
+  m_Script: {fileID: 11500000, guid: 66c8821d4c870db4f972d6ba9346cc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}

@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Crosshair" src="project://database/Assets/Objects/UI/Input/CrosshairUI.uxml?fileID=9197481963319205126&amp;guid=4c4a456c4493fb945aa841073bb98561&amp;type=3#CrosshairUI" />
+    <ui:Template name="Interactions" src="project://database/Assets/Objects/UI/Input/InputUI.uxml?fileID=9197481963319205126&amp;guid=b3c7c85d512ec694db5f638c6fae7391&amp;type=3#InputUI" />
+    <ui:Template name="SettingsUI" src="project://database/Assets/Objects/UI/Settings/SettingsUI.uxml?fileID=9197481963319205126&amp;guid=87002ce13fd630643af5de4eac25a4ef&amp;type=3#SettingsUI" />
+    <ui:Instance template="Crosshair" name="CrosshairUI" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+    <ui:Instance template="Interactions" name="InputUI" picking-mode="Ignore" style="left: 0; top: 0; right: 0; bottom: 0; position: absolute;" />
+    <ui:Instance template="SettingsUI" name="SettingsUI" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+</ui:UXML>

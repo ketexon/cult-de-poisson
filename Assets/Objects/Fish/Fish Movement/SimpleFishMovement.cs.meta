@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7357566fc6bd9404cb94482f97d1bb6f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - FishZone: {instanceID: 0}
+  - fishVisionPrefab: {fileID: 8707592453951195884, guid: 268206c8877278b4388f6f122c8b2805,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

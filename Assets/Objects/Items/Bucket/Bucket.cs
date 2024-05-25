@@ -25,38 +25,25 @@ public class Bucket : Item
     Vector2 pointPos = Vector2.zero;
 
     List<BucketFish> spawnedFish = new();
+    List<string> spawnedFishNames = new();
+
     int? selectedFish = null;
 
     Fish hoveredFish = null;
 
     bool usingBucket = false;
 
+    System.Action inputUIDestructor = null;
+
+    string lastActionMap = null;
+
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
         virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
         inventory = FindUtil.Asset<PlayerInventorySO>();
-        fishSpawnContainer = FindUtil.Query<Transform>(this)
-            .InChildren
-            .NameContains("spawn", insensitive: true)
-            .Execute();
     }
 
-
-    /// <summary>
-    /// Initializes the bucket's fish and registers input bindings.
-    /// The bucket's fish are spawned programmatically through the FishSOs in the
-    /// PlayerInventorySO.
-    /// The fish are spawned in one by one with the same transforms as the children in fishSpawnContainer.
-    /// The scale of the spawn transform is treated as a bounding box, and the fish are then
-    /// moved down in the spawn bounding box as far as possible to the bottom of this bounding box.
-    /// </summary>
-    /// <param name="initParams"></param>
-    public override void Initialize(InitializeParams initParams)
-    {
-        base.Initialize(initParams);
-
-    }
 
     void OnEnable()
     {
@@ -85,10 +72,10 @@ public class Bucket : Item
 
             var bucketFish = fish.gameObject.AddComponent<BucketFish>();
             spawnedFish.Add(bucketFish);
-        }
 
-        pointAction.action.performed += OnPoint;
-        clickAction.action.performed += OnClick;
+            spawnedFishNames.Add(fishSO.Name);
+        }
+        
         exitAction.action.performed += OnExitBucket;
 
         cycleFishAction.action.performed += OnCycleFish;
@@ -97,10 +84,6 @@ public class Bucket : Item
 
     void OnDisable()
     {
-        StopUsingBucket();
-
-        pointAction.action.performed -= OnPoint;
-        clickAction.action.performed -= OnClick;
         exitAction.action.performed -= OnExitBucket;
 
         cycleFishAction.action.performed -= OnCycleFish;
@@ -112,50 +95,60 @@ public class Bucket : Item
             Destroy(fish.gameObject);
         }
         spawnedFish.Clear();
+
+        inputUIDestructor?.Invoke();
+        inputUIDestructor = null;
     }
 
-    public override void OnUse()
-    {
-        base.OnUse();
 
+    #region Interaction
+
+    public override bool TargetInteractVisible => !usingBucket;
+    public override string TargetInteractMessage => "to open bucket";
+
+    public override void OnInteract()
+    {
         usingBucket = true;
 
-        playerInput.SwitchCurrentActionMap("Bucket");
+        EnableBucketInput();
         virtualCamera.enabled = true;
         InputUI.Instance.SetCrosshairVisible(false);
 
-        LockCursor.PushLockState(CursorLockMode.None);
+        InteractivityChangeEvent?.Invoke(this);
+        UpdateInteractivity();
     }
 
-    void OnPoint(InputAction.CallbackContext ctx)
+    void UpdateInteractivity()
     {
-        pointPos = ctx.ReadValue<Vector2>();
+        inputUIDestructor?.Invoke();
+        inputUIDestructor = null;
 
-        Ray ray = mainCamera.ScreenPointToRay(pointPos);
-        if (Physics.Raycast(
-            ray,
-            out RaycastHit hit,
-            float.MaxValue,
-            parameters.BucketFishLayerMask
-        ))
+        List<InputUI.Entry> entries = new();
+        if (selectedFish.HasValue)
         {
-            var fish = hit.collider.GetComponent<Fish>();
-            hoveredFish = fish;
+            entries.Add(new()
+            {
+                InputAction = selectFishAction,
+                Message = $"to select {spawnedFishNames[selectedFish.Value]}"
+            });
         }
-    }
-
-    void OnClick(InputAction.CallbackContext ctx)
-    {
-        if (hoveredFish)
+        else if (usingBucket)
         {
-            var fishSO = hoveredFish.FishSO;
-
-            playerItem.EnableItem(fishItemSO, temporary: true);
-
-            (playerItem.EnabledItem as FishItem).SetFish(fishSO);
+            entries.Add(new()
+            {
+                InputAction = exitAction,
+                Message = $"to exit bucket"
+            });
+            entries.Add(new()
+            {
+                InputAction = cycleFishAction,
+                Message = $"to switch fish"
+            });
         }
+        inputUIDestructor = InputUI.Instance.AddInputUI(entries);
     }
-    
+    #endregion Interaction
+
     void OnCycleFish(InputAction.CallbackContext ctx)
     {
         var floatValue = ctx.ReadValue<float>();
@@ -198,53 +191,76 @@ public class Bucket : Item
         {
             var fishSO = spawnedFish[selectedFish.Value].GetComponent<Fish>().FishSO;
 
-            var newItem = playerItem.EnableItem(fishItemSO, temporary: true) as FishItem;
-            if (newItem)
-            {
-                newItem.SetFish(fishSO);
-            }
+            StopUsingBucket();
+            DisableBucketInput();
+
+            var newItem = playerItem.GetItem(fishItemSO, true) as FishItem;
+            newItem.SetFish(fishSO);
+            playerItem.EnableItem(newItem, temporary: true);
+        }
+        else
+        {
+            StopUsingBucket();
+            DisableBucketInput();
+            UpdateInteractivity();
         }
     }
 
     void OnExitBucket(InputAction.CallbackContext ctx)
     {
         StopUsingBucket();
+        DisableBucketInput();
+
+        UpdateInteractivity();
+        InteractivityChangeEvent?.Invoke(this);
+    }
+
+    void EnableBucketInput()
+    {
+        Player.Instance.PushActionMap("Bucket");
+    }
+
+    void DisableBucketInput()
+    {
+        Player.Instance.PopActionMap();
     }
 
     void StopUsingBucket()
     {
-        if(playerInput.currentActionMap != null && playerInput.currentActionMap.name != "Gameplay")
-        {
-            playerInput.SwitchCurrentActionMap("Gameplay");
-        }
-
         virtualCamera.enabled = false;
         InputUI.Instance.SetCrosshairVisible(true);
-
-        if (usingBucket)
-        {
-            LockCursor.PopLockState();
-        }
 
         usingBucket = false;
 
         SelectFish(null);
+
+        InteractivityChangeEvent?.Invoke(this);
     }
 
     // when a fish is highlighted, sets the position and rotation
     // on the BucketFish script, which takes care of the lerping
     void SelectFish(int? index)
     {
+        if(selectedFish == index)
+        {
+            return;
+        }
+
         if (selectedFish.HasValue)
         {
             spawnedFish[selectedFish.Value].TargetLocalPos = spawnedFish[selectedFish.Value].StartLocalPos;
             spawnedFish[selectedFish.Value].TargetLocalRotation = spawnedFish[selectedFish.Value].StartLocalRotation;
         }
+
         selectedFish = index;
+
         if (selectedFish.HasValue)
         {
-            spawnedFish[selectedFish.Value].TargetLocalPos = fishSelectedTransform.localPosition;
-            spawnedFish[selectedFish.Value].TargetLocalRotation = fishSelectedTransform.localRotation;
+            var fish = spawnedFish[selectedFish.Value];
+            fish.TargetLocalPos = fishSelectedTransform.localPosition;
+            fish.TargetLocalRotation = fishSelectedTransform.localRotation;
         }
+
+        UpdateInteractivity();
     }
 }

@@ -1,0 +1,231 @@
+:root {
+    --p-surface: rgba(42, 42, 42, 0.4);
+    --p-surface-hover: rgba(42, 42, 42, 0.9);
+}
+
+.unity-label {
+    font-size: 16px;
+    -unity-paragraph-spacing: 0;
+    margin: 0;
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+}
+
+.interaction-indicator, .notification-indicator {
+    --button-on-background: rgb(255, 255, 255);
+    --interaction-indicator-font-size: 32px;
+    border-radius: 6px;
+    background-color: var(--p-surface);
+    color: var(--button-on-background);
+}
+
+.notification-indicator {
+    border-color: rgba(255, 255, 255, 1);
+    border-width: 2px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.notification-indicator--enter {
+    opacity: 0;
+}
+
+.notification-indicator--enter-active {
+    opacity: 1;
+    transition: opacity 0.1s ease;
+    
+}
+
+.notification-indicator--exit {
+    opacity: 1;
+}
+
+.notification-indicator--exit-active {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+
+.interaction-indicator.disabled {
+    --button-on-background: rgba(255, 255, 255, 0.5);
+}
+
+.interaction-indicator .keybind-icon {
+    --keybind-icon-color: var(--button-on-background);
+    margin-right: 4px;
+}
+
+.interaction-indicator__icons {
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-right: -4px;
+}
+
+.interaction-indicator__label, .notification-indicator__label {
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: var(--interaction-indicator-font-size);
+    margin-left: 4px;
+    padding: 0;
+    flex-grow: 1;
+    -unity-text-align: upper-center;
+}
+
+#interaction-container .interaction-indicator {
+    margin-top: 4px;
+}
+
+.keybind-icon {
+    --keybind-icon-color: rgb(255, 255, 255);
+    --keybind-icon-font-size: 12px;
+    --keybind-icon-min-width: 20px;
+    min-width: var(--keybind-icon-min-width);
+    min-height: var(--keybind-icon-min-width);
+    color: var(--keybind-icon-color);
+    align-self: stretch;
+}
+
+.keybind-icon--rmb .keybind-icon__image {
+    background-image: url('project://database/Assets/Images/UI/keybinds/rmb.png?fileID=21300000&guid=f546287d52a6f594083c32ba7942cd37&type=3#rmb');
+}
+
+.keybind-icon--lmb .keybind-icon__image {
+    background-image: url('project://database/Assets/Images/UI/keybinds/lmb.png?fileID=21300000&guid=817ee5ef7d2874b42a9532283a467fba&type=3#lmb');
+}
+
+.keybind-icon--scroll-y .keybind-icon__image {
+    background-image: url('project://database/Assets/Images/UI/keybinds/scroll.png?fileID=21300000&guid=46649ee8bdf4da248835b50dd7630e39&type=3#scroll');
+}
+
+.keybind-icon--text .keybind-icon__text {
+    display: flex;
+}
+
+.keybind-icon--image .keybind-icon__image {
+    display: flex;
+}
+
+.keybind-icon__text {
+    display: none;
+    -unity-font-definition: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght%20SDF.asset?fileID=11400000&guid=38da8e63a07186f42a533d88239abc37&type=2#Inter-VariableFont_slnt,wght SDF');
+    margin: 0;
+    padding: 1px 5px;
+    border-radius: 6px;
+    border-color: var(--keybind-icon-color);
+    border-width: 1px;
+    font-size: var(--keybind-icon-font-size);
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    -unity-font: url('project://database/Assets/Fonts/Inter-VariableFont_slnt,wght.ttf?fileID=12800000&guid=c6341633248aaa349a4c624a036f8a66&type=3#Inter-VariableFont_slnt,wght');
+}
+
+.keybind-icon__image {
+    display: none;
+    flex-grow: 1;
+    align-self: stretch;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--keybind-icon-color);
+}
+
+.t--display-1 {
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 96px;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 0;
+    -unity-text-outline-color: rgba(0, 0, 0, 0.5);
+}
+
+.t--body-1 {
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
+
+.slider .unity-slider__label {
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
+
+.button {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 2px;
+    padding-right: 4px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    -unity-font-definition: url('project://database/Assets/Fonts/m5x7%20SDF.asset?fileID=11400000&guid=33eee739a25c0a34eaaab225b362c8e1&type=2#m5x7 SDF');
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    color: rgb(255, 255, 255);
+    font-size: 32px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: var(--p-surface);
+}
+
+.button:hover {
+    background-color: var(--p-surface-hover);
+}
+
+.button:focus {
+    background-color: var(--p-surface-hover);
+}
+
+.panel {
+    background-color: var(--p-surface);
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgb(255, 255, 255);
+}
+
+.slider .unity-slider__label {
+    -unity-text-align: middle-right;
+    padding-right: 8px;
+    min-width: 96px;
+}
+
+.notification-indicator__label {
+    margin-left: 8px;
+}
+
+.notification-indicator__icon-container {
+    display: none;
+}
+
+.notification-indicator__icon {
+    display: none;
+}
+
+.notification-indicator--journal .notification-indicator__icon-container,
+.notification-indicator--fishing .notification-indicator__icon-container
+{
+    display: flex;
+}
+
+.notification-indicator--journal .notification-indicator__journal-icon {
+    display: flex;
+}
+
+.notification-indicator--fishing .notification-indicator__fishing-icon {
+    display: flex;
+}
+
+#notifications .notification-indicator {
+    margin-bottom: 8px;
+}

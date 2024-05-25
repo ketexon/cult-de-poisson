@@ -3,36 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class InputUI : SingletonBehaviour<InputUI>
 {
-    [SerializeField] GameObject inputUIElementPrefab;
-    [SerializeField] GameObject inputUIElementParent;
-    [SerializeField] Animator crosshairAnimator;
+    public class Entry
+    {
+        public InputAction InputAction;
+        public string Message;
+        public bool Disabled = false;
+        public int Order = 0;
+    }
+
+    [SerializeField] UIDocument document;
+    [SerializeField] VisualTreeAsset interactionTemplate;
+    [SerializeField] VisualTreeAsset keybindIconTemplate;
+
+    VisualElement interactionContainer;
+    VisualElement crosshair;
+
+    VisualElement root => document.rootVisualElement;
+
+    public NotificationsUI Notifications { get; private set; }
 
     public bool CrosshairEnabled { get; private set; } = false;
     public bool CrosshairVisible { get; private set; } = true;
 
-    void Reset()
+    readonly Dictionary<string, string> DisplayStringIconClassMap = new()
     {
-        var candidate = GetComponentInChildren<LayoutGroup>();
-        if (candidate != null)
-        {
-            inputUIElementParent = candidate.gameObject;
-        }
-        else
-        {
-            inputUIElementParent = gameObject;
-        }
-    }
+        { "RMB", "keybind-icon--rmb" },
+        { "LMB", "keybind-icon--lmb" },
+        { "Scroll Wheel", "keybind-icon--scroll-y" },
+    };
 
     override protected void Awake()
     {
         base.Awake();
-        foreach(Transform t in inputUIElementParent.transform)
-        {
-            Destroy(t.gameObject);
-        }
+
+        interactionContainer = root.Q<VisualElement>("interaction-container");
+        crosshair = root.Q<VisualElement>(null, "crosshair");
+        interactionContainer.Clear();
+
+        Notifications = GetComponent<NotificationsUI>();
     }
 
     /// <summary>
@@ -42,10 +54,10 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <param name="value"></param>
     public void SetCrosshairEnabled(bool value)
     {
-        if(CrosshairEnabled != value)
+        if (CrosshairEnabled != value)
         {
             CrosshairEnabled = value;
-            crosshairAnimator.SetBool("Enabled", CrosshairEnabled);
+            crosshair.EnableInClassList("crosshair--enabled", !CrosshairEnabled);
         }
     }
 
@@ -60,7 +72,7 @@ public class InputUI : SingletonBehaviour<InputUI>
         if (CrosshairVisible != value)
         {
             CrosshairVisible = value;
-            crosshairAnimator.SetBool("Visible", CrosshairVisible);
+            crosshair.EnableInClassList("crosshair--invisible", !CrosshairVisible);
         }
     }
 
@@ -72,18 +84,81 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <param name="message">The message to display next to the input action</param>
     /// <param name="disabled">Whether the message should show as disabled (grey font)</param>
     /// <returns>A callback to call to remove the input.</returns>
-    public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false)
+    public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false, int order = 0)
     {
-        var go = Instantiate(inputUIElementPrefab, inputUIElementParent.transform);
-        go.GetComponent<InputUIElement>().Initialize(
-            inputAction.GetBindingDisplayString(),
-            message,
-            disabled
-        );
-        
+        var ve = AddInputUIToDocument(new Entry
+        {
+            InputAction = inputAction,
+            Message = message,
+            Disabled = disabled,
+            Order = order,
+        });
+
         return () =>
         {
-            Destroy(go);
+            ve.RemoveFromHierarchy();
         };
+    }
+
+    public System.Action AddInputUI(IEnumerable<Entry> entries)
+    {
+        List<VisualElement> ves = new List<VisualElement>();
+        foreach(var entry in entries)
+        {
+            ves.Add(AddInputUIToDocument(entry));
+        }
+        return () =>
+        {
+            foreach(var ve in ves)
+            {
+                ve.RemoveFromHierarchy();
+            }
+        };
+    }
+
+    private VisualElement AddInputUIToDocument(Entry entry)
+    {
+        var ve = interactionTemplate.Instantiate();
+        var root = ve.Q<OrderableElement>("interaction-indicator");
+        root.EnableInClassList("disabled", entry.Disabled);
+        root.Order = entry.Order;
+        
+        var iconsContainer = root.Q<VisualElement>(null, "interaction-indicator__icons");
+        iconsContainer.Clear();
+
+        var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
+        foreach (var displayString in bindingDisplayStrings)
+        {
+            var icon = keybindIconTemplate.Instantiate();
+
+            if (DisplayStringIconClassMap.ContainsKey(displayString))
+            {
+                icon.AddToClassList("keybind-icon--image");
+                icon.AddToClassList(DisplayStringIconClassMap[displayString]);
+            }
+            else
+            {
+                icon.AddToClassList("keybind-icon--text");
+
+                var iconLabel = icon.Q<Label>(null, "keybind-icon__text");
+                iconLabel.text = displayString;
+            }
+
+            iconsContainer.Add(icon);
+        }
+
+        var label = ve.Q<Label>(null, "interaction-indicator__label");
+        label.text = entry.Message;
+
+        int index = 0;
+        foreach(var child in interactionContainer.Children())
+        {
+            var orderable = child.Q<OrderableElement>("interaction-indicator");
+            if (orderable.Order < entry.Order) break;
+            ++index;
+        }
+        interactionContainer.Insert(index, ve);
+
+        return ve;
     }
 }
