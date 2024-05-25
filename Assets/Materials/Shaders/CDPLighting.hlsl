@@ -53,16 +53,15 @@ ToonLighingResult CalculateToonLighting(Light light, InputData inputData, Surfac
 {
     ToonLighingResult res;
 
-    // half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
-    half3 attenuatedLightColor = light.color;
+    half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
     half3 lightDiffuseColor = LightingLambert(attenuatedLightColor, light.direction, inputData.normalWS);
 
     half3 lightSpecularColor = half3(0,0,0);
 
-    #if defined(_SPECGLOSSMAP) || defined(_SPECULAR_COLOR)
-    half smoothness = exp2(10 * surfaceData.smoothness + 1);
-    lightSpecularColor += LightingSpecular(attenuatedLightColor, light.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, 1), smoothness);
-    #endif
+    // #if defined(_SPECGLOSSMAP) || defined(_SPECULAR_COLOR)
+    // half smoothness = exp2(10 * surfaceData.smoothness + 1);
+    // lightSpecularColor += LightingSpecular(attenuatedLightColor, light.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, 1), smoothness);
+    // #endif
 
     res.specular = lightSpecularColor;
 #if _ALPHAPREMULTIPLY_ON
@@ -141,21 +140,32 @@ half4 ToonLighting(InputData inputData, SurfaceData surfaceData, int steps)
     LIGHT_LOOP_END
     #endif
 
-    half intensity = length(toonRes.color * steps / float3(
-        surfaceData.albedo.x ? surfaceData.albedo.x : 1,
-        surfaceData.albedo.y ? surfaceData.albedo.y : 1,
-        surfaceData.albedo.z ? surfaceData.albedo.z : 1
-    ));
+    if(steps == 0){
+        toonRes.color = surfaceData.albedo;
+        toonRes.specular = toonRes.specular;
+        lightingData.mainLightColor = toonRes.color * surfaceData.albedo + toonRes.specular;
+        return half4(
+            CalculateToonLightingColor(lightingData, 1),
+            surfaceData.alpha
+        );
+    }
+    else{
+        half intensity = length(toonRes.color * (steps+1) / float3(
+            surfaceData.albedo.x ? surfaceData.albedo.x : 1,
+            surfaceData.albedo.y ? surfaceData.albedo.y : 1,
+            surfaceData.albedo.z ? surfaceData.albedo.z : 1
+        ));
 
-    toonRes.color = floor(intensity) / steps * surfaceData.albedo;
-    toonRes.specular = floor(length(toonRes.specular * steps)) / steps;
+        toonRes.color = floor(intensity) / steps * surfaceData.albedo;
+        toonRes.specular = floor(length(toonRes.specular * (steps + 1))) / steps;
 
-    lightingData.mainLightColor = toonRes.color * surfaceData.albedo + toonRes.specular;
+        lightingData.mainLightColor = toonRes.color * surfaceData.albedo + toonRes.specular;
 
-    return half4(
-        CalculateToonLightingColor(lightingData, 1),
-        surfaceData.alpha
-    );
+        return half4(
+            CalculateToonLightingColor(lightingData, 1),
+            surfaceData.alpha
+        );
+    }
 }
 
 #endif
