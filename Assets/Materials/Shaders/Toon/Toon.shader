@@ -417,4 +417,5 @@ Shader "CDP/Toon"
 
     Fallback  "Hidden/Universal Render Pipeline/FallbackError"
     // CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
+    CustomEditor "ToonShaderGUI"
 }
