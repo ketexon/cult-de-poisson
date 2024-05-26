@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.009
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0031716118, g: 0.0004654349, b: 0.0033822143, a: 0.009}
+  m_IndirectSpecularColor: {r: 0.0031363182, g: 0.0004654349, b: 0.0033822143, a: 0.009}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -348,21 +348,6 @@ PrefabInstance:
       propertyPath: m_Lens.FieldOfView
       value: 66.1
       objectReference: {fileID: 0}
-    - target: {fileID: 2649129788575905462, guid: d819b9d87d1e1aa4597b4c04652d6475,
-        type: 3}
-      propertyPath: field of view
-      value: 66.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2649129788575905462, guid: d819b9d87d1e1aa4597b4c04652d6475,
-        type: 3}
-      propertyPath: m_TargetTexture
-      value: 
-      objectReference: {fileID: 8400000, guid: f76409af1b66b814fa045c56897f7c9a, type: 2}
-    - target: {fileID: 2649129788575905462, guid: d819b9d87d1e1aa4597b4c04652d6475,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 32761
-      objectReference: {fileID: 0}
     - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
       propertyPath: m_UIInputModule
@@ -522,21 +507,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542030067858303815, guid: d819b9d87d1e1aa4597b4c04652d6475,
-        type: 3}
-      propertyPath: m_Dithering
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542030067858303815, guid: d819b9d87d1e1aa4597b4c04652d6475,
-        type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542030067858303815, guid: d819b9d87d1e1aa4597b4c04652d6475,
-        type: 3}
-      propertyPath: m_RequiresDepthTextureOption
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8397864333555081656, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}

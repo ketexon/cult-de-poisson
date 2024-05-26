@@ -364,7 +364,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         bool showCrosshair = false;
 
         // Register agent interact for PlayerItem
-        if (InteractItem is IInteractAgent agent && agent.AgentInteractVisible(Interactable))
+        if (InteractItem is IInteractAgent agent && Interactable && agent.AgentInteractVisible(Interactable))
         {
             bool enabled = agent.AgentInteractEnabled(Interactable);
 
