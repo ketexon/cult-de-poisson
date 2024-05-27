@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activate: {fileID: 882049797695294922, guid: 74ba8a3a9aaed2040a694812328659e2, type: 3}
-  rodAnimationDuration: 0.6
+  move: {fileID: -3038443500247661225, guid: 74ba8a3a9aaed2040a694812328659e2, type: 3}
+  rodTipYOffset: 0.2
 --- !u!1 &465609885768264612
 GameObject:
   m_ObjectHideFlags: 0
