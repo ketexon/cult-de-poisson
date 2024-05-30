@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
+    public Rigidbody Rigidbody => rb;
     public float Pitch => camera.transform.rotation.eulerAngles.x;
     public float Yaw => lookRoot.rotation.eulerAngles.y;
     public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, lookRoot.rotation.eulerAngles.y);
