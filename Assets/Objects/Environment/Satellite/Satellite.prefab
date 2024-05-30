@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactEnabled: 1
   collider: {fileID: 2654457697745601169}
+  quest: {fileID: 11400000, guid: 180f63baa2516da488fe021cccce68cf, type: 2}
 --- !u!65 &2654457697745601169
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -270,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactEnabled: 1
   collider: {fileID: 5998084325097394525}
+  quest: {fileID: 11400000, guid: 180f63baa2516da488fe021cccce68cf, type: 2}
 --- !u!65 &5998084325097394525
 BoxCollider:
   m_ObjectHideFlags: 0

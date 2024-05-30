@@ -6,6 +6,8 @@ using UnityEngine;
 // Interact not implemented yet
 public class EelInteractable : Interactable
 {
+    [SerializeField] public QuestSO Quest;
+
     public override bool TargetInteractVisible => false;
     public override string TargetInteractMessage => null;
 
