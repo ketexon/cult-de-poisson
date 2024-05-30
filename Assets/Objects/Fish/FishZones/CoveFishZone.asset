@@ -20,4 +20,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9e464790bcab3742ac529c97621e95e, type: 2}
   - {fileID: 11400000, guid: 4732772847e03594888ebed3a0caa1da, type: 2}
   - {fileID: 11400000, guid: 6a29a23eef8645a4d95b98b5394a11e8, type: 2}
+  - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
   FishDensity: 0.005
