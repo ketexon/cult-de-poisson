@@ -4,6 +4,23 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
+#if UNITY_EDITOR
+using UnityEditor;
+
+[CustomEditor(typeof(ExtractTreeCollidersFromTerrain))]
+public class ExtractTreeCollidersFromTerrainEditor : UnityEditor.Editor
+{
+    public override void OnInspectorGUI()
+    {
+        if (GUILayout.Button("Bake Trees"))
+        {
+            (target as ExtractTreeCollidersFromTerrain).ExtractBakeDelete();
+        }
+    }
+}
+
+#endif
+
 /// <summary>
 /// https://forum.unity.com/threads/navmeshsurface-and-terrain-trees.1295496/
 /// </summary>
