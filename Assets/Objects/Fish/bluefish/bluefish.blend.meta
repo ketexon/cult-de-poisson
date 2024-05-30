@@ -7,8 +7,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: BF_body
+    second: {fileID: 2100000, guid: 577fa4181789536418c1c67a7c8a7db3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: BF_dorsal
     second: {fileID: 2100000, guid: 39bef0131fad68a45bb2a39cc46cb337, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BF_eyes
+    second: {fileID: 2100000, guid: 948e9f70ffab9b347a10ac216873da05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BF_fins
+    second: {fileID: 2100000, guid: 40cd752190fe3ec49bc79ee9101b5c8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BF_tail
+    second: {fileID: 2100000, guid: a600e6e7ccc8b4c47b91664591bf0184, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BF_ventral
+    second: {fileID: 2100000, guid: 3a10fe8f0a936af46bdd489e66ad44e8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

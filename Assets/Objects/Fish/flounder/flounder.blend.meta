@@ -1,9 +1,39 @@
 fileFormatVersion: 2
-guid: b638087ca8f8d69489b066176c32eb5e
+guid: 3dbb7a15b8da96347b998d857f1763a7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_body
+    second: {fileID: 2100000, guid: adcf42ad80371944aa0995fe5d423e93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_dorsal
+    second: {fileID: 2100000, guid: f9ed9145714306042a335993e677c370, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_eyes
+    second: {fileID: 2100000, guid: ce607899c2431c04b8ff58ab83db3868, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_fins
+    second: {fileID: 2100000, guid: 328c7c05ca44dfd4db20dae6882eda62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_tail
+    second: {fileID: 2100000, guid: 652d40e1dc8b7c04da24b128545727b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_ventral
+    second: {fileID: 2100000, guid: ab39cb7bf5271f944b7d7319bcda32f7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

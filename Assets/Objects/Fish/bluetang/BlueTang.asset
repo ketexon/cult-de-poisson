@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d99a69eb107724eb670fb6e2043528, type: 3}
+  m_Name: BlueTang
+  m_EditorClassIdentifier: 
+  Name: Blue tang
+  InWaterPrefab: {fileID: 8903927843074057700, guid: b5749c1a0f4444c43a3f43bbb8d5d9fe,
+    type: 3}
+  InHandPrefab: {fileID: 8903927843074057700, guid: b5749c1a0f4444c43a3f43bbb8d5d9fe,
+    type: 3}
+  InBucketPrefab: {fileID: 8903927843074057700, guid: b5749c1a0f4444c43a3f43bbb8d5d9fe,
+    type: 3}
+  PhysicalPrefab: {fileID: 8903927843074057700, guid: b5749c1a0f4444c43a3f43bbb8d5d9fe,
+    type: 3}
+  FishInfo:
+    Weight: 0
+    LengthFeet: 0
+    LengthInches: 0
+    FishDepth: 0
+    CatchMethod: 
+    FavoredHabitat: 
+    CatchDifficulty: 0
+    IsKeyFish: 0
+    Notes: 

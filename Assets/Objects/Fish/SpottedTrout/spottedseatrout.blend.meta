@@ -1,9 +1,44 @@
 fileFormatVersion: 2
-guid: 2273cbdc382f0144b925f270b5066fda
+guid: b638087ca8f8d69489b066176c32eb5e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_back
+    second: {fileID: 2100000, guid: cdfc26c149ddcf548a87cc742138e883, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_belly
+    second: {fileID: 2100000, guid: c6e1a85c3c428aa4f9c4d1ae02239163, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_dorsal
+    second: {fileID: 2100000, guid: e4c30a5423e3e1541af0acd0b7b61417, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_eyes
+    second: {fileID: 2100000, guid: f6f5151804a8b394a8fb1874482546a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_fins
+    second: {fileID: 2100000, guid: eedb67ad18afa034ab7226f428fddb86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_tail
+    second: {fileID: 2100000, guid: 892d4f70af37d0e4bb3f8b4c34a95184, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ST_ventral
+    second: {fileID: 2100000, guid: fcc5f7d71924e3c4caa39bc08617e2b0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
