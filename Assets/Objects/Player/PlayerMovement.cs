@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     bool shouldReenableAgent = false;
 
+    Vector2 lookSpeed = Vector2.zero;
+
     public void SetPhysicsEnabled(bool enabled)
     {
         if (enabled)
@@ -85,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
             var displacement = CalculateVelocity() * Time.deltaTime;
             agent.Move(displacement);
         }
+
+        UpdateLook(lookSpeed * Time.deltaTime);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
@@ -92,6 +96,20 @@ public class PlayerMovement : MonoBehaviour
         if (!ctx.performed) return;
 
         var delta = ctx.ReadValue<Vector2>();
+
+        UpdateLook(delta);
+    }
+
+    public void OnLookSpeed(InputAction.CallbackContext ctx)
+    {
+        //if (ctx.started) return;
+        lookSpeed = ctx.ReadValue<Vector2>();
+        Debug.Log(lookSpeed);
+    }
+
+    void UpdateLook(Vector2 delta)
+    {
+        if (delta == Vector2.zero) return;
 
         var playerEulerY = lookRoot.rotation.eulerAngles.y;
         float newPlayerEulerY = playerEulerY + delta.x * mouseSensitivity;

@@ -617,10 +617,6 @@ MonoBehaviour:
     m_ActionName: Gameplay/Reel[/Mouse/scroll/y]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 008f6b90-3de1-41c2-a1b5-55070cbac046
-    m_ActionName: Fishing/Unaim[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 77f032a1-f16e-4a12-bc51-b4f7a1df0115
     m_ActionName: UI/Escape[/Keyboard/escape]
   - m_PersistentCalls:
@@ -630,11 +626,35 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 1c2012cd-c8a7-4a86-afdd-a0e9bb1ce49a
-    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+    m_ActionName: UI/Point[/Mouse/position]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 31d4cbef-297a-44a5-a52b-d467dff72268
     m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 008f6b90-3de1-41c2-a1b5-55070cbac046
+    m_ActionName: Fishing/Unaim[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 133479c0-1b4d-4bce-b6d7-249310897603
+    m_ActionName: Gameplay/ControllerReel[/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 75327676347670396}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnLookSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9cfe17b5-51b4-41ea-adab-6faf4b0e0676
+    m_ActionName: Gameplay/LookSpeed[/XInputControllerWindows/rightStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
