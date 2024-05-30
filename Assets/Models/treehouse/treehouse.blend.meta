@@ -1,9 +1,45 @@
 fileFormatVersion: 2
-guid: 22c55afcb7ad4484382b9e4f7a37f23f
+guid: 4c9b7b387f78d9a4fb338444833a45d0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark
+    second: {fileID: 2100000, guid: 87c91275cf6c120469f0671b0a70a963, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Book
+    second: {fileID: -3167674105308058297, guid: fff9c8a29a903de45a994074f42d4e56,
+      type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door
+    second: {fileID: 2100000, guid: 6d3f3e3fc96a63b4fa6277623a5aa413, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: House
+    second: {fileID: 2100000, guid: 87c91275cf6c120469f0671b0a70a963, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plancks
+    second: {fileID: 2100000, guid: 093fcc4833215944b843f57a72195407, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof
+    second: {fileID: 2100000, guid: 6d3f3e3fc96a63b4fa6277623a5aa413, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: picnic
+    second: {fileID: 2100000, guid: 093fcc4833215944b843f57a72195407, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -37,7 +73,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
