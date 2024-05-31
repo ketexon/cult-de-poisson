@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
+    public NavMeshAgent Agent => agent;
+    public Rigidbody Rigidbody => rb;
+    public Vector3 Velocity => agent.enabled ? agent.velocity : rb.velocity;
+
     public float Pitch => camera.transform.rotation.eulerAngles.x;
     public float Yaw => lookRoot.rotation.eulerAngles.y;
     public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, lookRoot.rotation.eulerAngles.y);
@@ -81,8 +85,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (agent.isOnNavMesh && !movingOnLink && playerInput.inputIsActive)
         {
-            var displacement = CalculateVelocity() * Time.deltaTime;
-            agent.Move(displacement);
+            agent.velocity = CalculateVelocity();
         }
     }
 
