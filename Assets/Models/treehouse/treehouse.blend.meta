@@ -38,6 +38,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: glow
+    second: {fileID: 2100000, guid: c0bcb21b9e0d46748b7b760a5d8b3271, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: picnic
     second: {fileID: 2100000, guid: 093fcc4833215944b843f57a72195407, type: 2}
   materials:

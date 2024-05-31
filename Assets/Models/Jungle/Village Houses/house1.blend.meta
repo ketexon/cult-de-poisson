@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ffbaab4bef50e2e43881900dc865bb78
+guid: bcb2cfd68fa58534784d60791b560704
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,48 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Dark Wood
-    second: {fileID: 2100000, guid: 6c3fce3395e37e246b8416145ce357be, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Emission
+      name: glow
     second: {fileID: 2100000, guid: c0bcb21b9e0d46748b7b760a5d8b3271, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Green
-    second: {fileID: 2100000, guid: e5f96eeb5e90ee344b527ee9144d43ae, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Light Wood
-    second: {fileID: 2100000, guid: c607073ea6416ca4d8027e5f74d1c6f4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Orange
-    second: {fileID: 2100000, guid: 28bda5a6b70ceee4b82a08d03a71dff4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Orange.001
-    second: {fileID: 2100000, guid: 28bda5a6b70ceee4b82a08d03a71dff4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Pink
-    second: {fileID: 2100000, guid: 4033cc92661ba734d87c2edf5fe24583, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Wood
-    second: {fileID: 2100000, guid: 4518c2e8cd17dd44ca3c47e9dfe1bf23, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Yellow
-    second: {fileID: 2100000, guid: fe800059ad73f0841990fbab46b83574, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
