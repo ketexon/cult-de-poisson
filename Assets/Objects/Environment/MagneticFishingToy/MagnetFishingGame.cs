@@ -1,29 +1,63 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
-public class MagnetFishingGame : MonoBehaviour
+public class MagnetFishingGame : Interactable
 {
     [SerializeField] InputActionReference activate;
     [SerializeField] InputActionReference move;
     [SerializeField] float rodTipYOffset;
+    [SerializeField] CinemachineVirtualCamera vcam;
+
+    [SerializeField] float rotateDownDuration = 0.4f;
+    [SerializeField] float waitDuration = 0.4f;
+    [SerializeField] float rotateUpDuration = 0.4f;
+    [SerializeField] float rotationAngle = 0.7f;
+    [SerializeField] Canvas cutsceneCanvas;
+    [SerializeField] VideoPlayer cutsceneVideo;
+
+    public override bool TargetInteractVisible => true;
+    public override bool TargetInteractEnabled => true;
+    public override string TargetInteractMessage => "to use fishing toy";
+
     private Transform turntable;
     private Transform rod;
     private Transform rodTip;
+    private Transform hook;
     private float rodInitialY;
     private float rodHorizontalRotateSpeed;
+
+    bool caughtFish = false;
+
     void Start()
     {
-        activate.action.performed += OnClick;
-        move.action.performed += (InputAction.CallbackContext ctx) => {rodHorizontalRotateSpeed = ctx.ReadValue<Vector2>().x;};
-        move.action.canceled += (InputAction.CallbackContext ctx) => {rodHorizontalRotateSpeed = 0;};
-
         turntable = transform.Find("Turntable");
         rod = transform.Find("MagnetRodPivot");
         rodTip = rod.Find("MagnetRodTip");
+        hook = transform.Find("MagnetHook");
+
         rodInitialY = rodTip.position.y;
         rodHorizontalRotateSpeed = 0;
+
+        rod.gameObject.SetActive(false);
+        hook.gameObject.SetActive(false);
+        vcam.enabled = false;
+    }
+
+    public override void OnInteract()
+    {
+        base.OnInteract();
+
+        rod.gameObject.SetActive(true);
+        rod.gameObject.SetActive(true);
+        vcam.enabled = true;
+
+        activate.action.performed += OnClick;
+        move.action.performed += (InputAction.CallbackContext ctx) => { rodHorizontalRotateSpeed = ctx.ReadValue<Vector2>().x; };
+        move.action.canceled += (InputAction.CallbackContext ctx) => { rodHorizontalRotateSpeed = 0; };
     }
 
     // Update is called once per frame
@@ -44,21 +78,71 @@ public class MagnetFishingGame : MonoBehaviour
     IEnumerator Fish() {
         // Rotate Down
         Debug.Log("Fiiiiiish");
-        while (rodInitialY - rodTip.position.y < rodTipYOffset) {
-            rod.Rotate(0.4f, 0f, 0f, Space.Self);
+        
+        float startTime = Time.time;
+        float t = 0;
+
+        Quaternion startRot = rod.localRotation;
+        Quaternion targetRot = rod.localRotation 
+            * Quaternion.Euler(rotationAngle, 0, 0);
+
+        for (t = 0; t < 1; t = (Time.time - startTime) / rotateDownDuration) {
+            rod.localRotation = Quaternion.Lerp(startRot, targetRot, t);
             yield return null;
         }
+        rod.localRotation = targetRot;
+
         // Wait
-        float timeElapsed = 0;
-        while (timeElapsed < 0.2f) {
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(waitDuration);
+
+        startTime = Time.time;
         // Rotate Up
-        while (rodInitialY - rodTip.position.y > 0) {
-            rod.Rotate(-0.7f, 0f, 0f, Space.Self);
+        for (t = 0; t < 1; t = (Time.time - startTime) / rotateUpDuration)
+        {
+            rod.localRotation = Quaternion.Lerp(targetRot, startRot, t);
             yield return null;
         }
-        activate.action.performed += OnClick;
+        rod.localRotation = startRot;
+
+        if (caughtFish)
+        {
+            EndFishing();
+        }
+        else
+        {
+            activate.action.performed += OnClick;
+        }
+    }
+
+    public void OnCatchFish(MagnetFishingGameFish f)
+    {
+        caughtFish = true;
+    }
+
+    void EndFishing()
+    {
+        IEnumerator Coro()
+        {
+            yield return new WaitForSeconds(1);
+
+            cutsceneVideo.Play();
+            cutsceneVideo.prepareCompleted += OnVideoStart;
+            cutsceneVideo.loopPointReached += OnVideoEnd;
+        }
+
+        StartCoroutine(Coro());
+    }
+
+    void OnVideoStart(VideoPlayer _)
+    {
+        cutsceneVideo.prepareCompleted -= OnVideoStart;
+        cutsceneCanvas.enabled = true;
+    }
+
+    void OnVideoEnd(VideoPlayer _)
+    {
+        cutsceneVideo.loopPointReached -= OnVideoEnd;
+
+        cutsceneCanvas.enabled = false;
     }
 }

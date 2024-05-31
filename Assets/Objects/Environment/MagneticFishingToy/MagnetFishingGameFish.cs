@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagneticGameFish : MonoBehaviour
+public class MagnetFishingGameFish : MonoBehaviour
 {
     [SerializeField] AnimationCurve animationCurve;
     [SerializeField] float maxHeight;
@@ -16,6 +16,8 @@ public class MagneticGameFish : MonoBehaviour
     private Transform bottomJaw;
     private Vector3 initialBottomJawRotation;
     private bool isCaught = false;
+
+    MagnetFishingGame fishingGame;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,8 @@ public class MagneticGameFish : MonoBehaviour
 
         initialTopJawRotation = topJaw.transform.eulerAngles;
         initialBottomJawRotation = bottomJaw.transform.eulerAngles;
+
+        fishingGame = GetComponentInParent<MagnetFishingGame>();
     }
 
     // Update is called once per frame
@@ -55,15 +59,16 @@ public class MagneticGameFish : MonoBehaviour
             );
 
             timeElapsed += Time.deltaTime * scaleSpeed;
-            timeElapsed = timeElapsed % 1.0f;
+            timeElapsed %= 1.0f;
         }
     }
 
     void OnTriggerEnter(Collider collider) {
         // Can only catch when fish's mouth is open
-        if (collider.gameObject.tag == "MagnetFishingGameRod" && timeElapsed > 0.3f && timeElapsed < 0.73f) {
+        if (collider.gameObject.CompareTag("MagnetFishingGameRod") && timeElapsed > 0.3f && timeElapsed < 0.73f) {
             transform.parent = collider.gameObject.transform;
             isCaught = true;
+            fishingGame.OnCatchFish(this);
         }
     }
 }
