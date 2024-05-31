@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class FishImageButton : JournalUIElement
 {
@@ -14,19 +15,14 @@ public class FishImageButton : JournalUIElement
     [SerializeField]
     FishSO fish;
 
-    Image spriteRenderer;
+    Image spriteRenderer = null;
     bool isInteractable = true;
-
-    void Start()
-    {
-        spriteRenderer = GetComponent<Image>();
-        isInteractable = Journal.GetUnlockedFish().Contains(fish.name);
-    }
 
     public override void Reset()
     {
-        base.Reset();
+        if (!spriteRenderer) { spriteRenderer = GetComponent<Image>(); }
 
+        isInteractable = Journal.GetUnlockedFish().Contains(fish.name);
         spriteRenderer.color = isInteractable ? Color.white : Color.gray;
     }
 
