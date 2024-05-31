@@ -107,6 +107,7 @@ MonoBehaviour:
   notificationEnterDuration: 0.1
   notificationExitDuration: 0.1
   fishColor: {r: 0, g: 1, b: 0.57254905, a: 1}
+  questState: {fileID: 11400000, guid: 53f7ae6806b2eb849aefea617cf75c40, type: 2}
 --- !u!1 &2475073413666240118
 GameObject:
   m_ObjectHideFlags: 0

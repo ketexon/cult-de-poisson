@@ -47,6 +47,11 @@ public class InputUI : SingletonBehaviour<InputUI>
         Notifications = GetComponent<NotificationsUI>();
     }
 
+    void OnControlsChanged(PlayerInput _)
+    {
+        Debug.Log("HI");
+    }
+
     /// <summary>
     /// Set the crosshair enabled state.
     /// If the crosshair is enabled, its opacity is increased.
@@ -86,7 +91,7 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <returns>A callback to call to remove the input.</returns>
     public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false, int order = 0)
     {
-        var ve = AddInputUIToDocument(new Entry
+        var destructor = AddInputUIToDocument(new Entry
         {
             InputAction = inputAction,
             Message = message,
@@ -94,29 +99,26 @@ public class InputUI : SingletonBehaviour<InputUI>
             Order = order,
         });
 
-        return () =>
-        {
-            ve.RemoveFromHierarchy();
-        };
+        return destructor;
     }
 
     public System.Action AddInputUI(IEnumerable<Entry> entries)
     {
-        List<VisualElement> ves = new List<VisualElement>();
+        List<System.Action> destructors = new();
         foreach(var entry in entries)
         {
-            ves.Add(AddInputUIToDocument(entry));
+            destructors.Add(AddInputUIToDocument(entry));
         }
         return () =>
         {
-            foreach(var ve in ves)
+            foreach(var destructor in destructors)
             {
-                ve.RemoveFromHierarchy();
+                destructor();
             }
         };
     }
 
-    private VisualElement AddInputUIToDocument(Entry entry)
+    private System.Action AddInputUIToDocument(Entry entry)
     {
         var ve = interactionTemplate.Instantiate();
         var root = ve.Q<OrderableElement>("interaction-indicator");
@@ -124,28 +126,34 @@ public class InputUI : SingletonBehaviour<InputUI>
         root.Order = entry.Order;
         
         var iconsContainer = root.Q<VisualElement>(null, "interaction-indicator__icons");
-        iconsContainer.Clear();
 
-        var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
-        foreach (var displayString in bindingDisplayStrings)
+        void SetIcon()
         {
-            var icon = keybindIconTemplate.Instantiate();
+            iconsContainer.Clear();
 
-            if (DisplayStringIconClassMap.ContainsKey(displayString))
+            var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
+            foreach (var displayString in bindingDisplayStrings)
             {
-                icon.AddToClassList("keybind-icon--image");
-                icon.AddToClassList(DisplayStringIconClassMap[displayString]);
-            }
-            else
-            {
-                icon.AddToClassList("keybind-icon--text");
+                var icon = keybindIconTemplate.Instantiate();
 
-                var iconLabel = icon.Q<Label>(null, "keybind-icon__text");
-                iconLabel.text = displayString;
-            }
+                if (DisplayStringIconClassMap.ContainsKey(displayString))
+                {
+                    icon.AddToClassList("keybind-icon--image");
+                    icon.AddToClassList(DisplayStringIconClassMap[displayString]);
+                }
+                else
+                {
+                    icon.AddToClassList("keybind-icon--text");
 
-            iconsContainer.Add(icon);
+                    var iconLabel = icon.Q<Label>(null, "keybind-icon__text");
+                    iconLabel.text = displayString;
+                }
+
+                iconsContainer.Add(icon);
+            }
         }
+
+        SetIcon();
 
         var label = ve.Q<Label>(null, "interaction-indicator__label");
         label.text = entry.Message;
@@ -159,6 +167,17 @@ public class InputUI : SingletonBehaviour<InputUI>
         }
         interactionContainer.Insert(index, ve);
 
-        return ve;
+        void OnControlsChange(PlayerInput _)
+        {
+            SetIcon();
+        }
+
+        Player.Instance.Input.controlsChangedEvent.AddListener(OnControlsChange);
+
+        return () =>
+        {
+            ve.RemoveFromHierarchy();
+            Player.Instance.Input.controlsChangedEvent.RemoveListener(OnControlsChange);
+        };
     }
 }

@@ -70,5 +70,8 @@ public class EelFishItemBehaviour : FishItemBehaviour
         fish.InitializeBucket();
         fish.transform.rotation = fish.transform.rotation * Rotation;
         fish.transform.localScale = new Vector3(1, 1, Stretch);
+
+        var q = (I1 as EelInteractable).Quest;
+        QuestStateSO.Instance.CompleteQuest(q);
     }
 }
