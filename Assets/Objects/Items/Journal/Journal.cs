@@ -122,11 +122,6 @@ public class Journal : Item
     {
         JournalUIElement[] journalUIElements = journalHeadPages[(int)curSection].GetComponentsInChildren<JournalUIElement>();
 
-        foreach (JournalUIElement element in journalUIElements)
-        {
-            element.Reset();
-        }
-
         foreach (GameObject page in journalHeadPages)
         {
             page.SetActive(false);
