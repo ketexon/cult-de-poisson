@@ -71,6 +71,20 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         {
             Quit();
         };
+
+        // fix scroll view from not changing sensitivity of moving using arrow keys
+        root.Q<ScrollView>("settings__credits__entries").RegisterCallback<NavigationMoveEvent>((ev) =>
+        {
+            ev.StopPropagation();
+            (ev.currentTarget as ScrollView).scrollOffset -= ev.move;
+        }, TrickleDown.TrickleDown);
+
+        // make a focus on the scrollview actually focus on the scrollbar
+        root.Q<ScrollView>("settings__credits__entries").RegisterCallback<FocusEvent>((ev) =>
+        {
+            using var navEvent = NavigationMoveEvent.GetPooled(NavigationMoveEvent.Direction.Next);
+            ev.currentTarget.SendEvent(navEvent);
+        });
     }
 
     void OnInputEscape(InputAction.CallbackContext ctx)
@@ -87,7 +101,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     void OpenMenu()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
 
         root.EnableInClassList("settings--enabled", true);
 
@@ -101,7 +115,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     void CloseMenu()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
 
         root.EnableInClassList("settings--enabled", false);
 
@@ -150,6 +164,18 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     void SelectFirstInPanel(VisualElement panel)
     {
-        CoroUtil.WaitOneFrame(this, () => panel.Q<VisualElement>(null, "first-focus")?.Focus());
+        CoroUtil.WaitOneFrame(this, () => {
+            var el = panel.Q<VisualElement>(null, "first-focus");
+            if (el != null)
+            {
+                el.Focus();
+            }
+            else
+            {
+                using var navEvent = NavigationMoveEvent
+                    .GetPooled(NavigationMoveEvent.Direction.Next);
+                panel.SendEvent(navEvent);
+            }
+        });
     }
 }

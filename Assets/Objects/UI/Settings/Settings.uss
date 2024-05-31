@@ -26,3 +26,26 @@
 .settings--enabled .settings-panel--active {
     visibility: visible;
 }
+
+#settings__credits__entries {
+    flex-grow: 1;
+}
+
+.credits-entry {
+    flex-direction: row;
+}
+
+.credits-entry__name, .credits-entry__role {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.credits-entry__name {
+    margin-right: 4px;
+    -unity-text-align: middle-right;
+}
+
+.credits-entry__role {
+    margin-left: 4px;
+    -unity-text-align: middle-left;
+}
