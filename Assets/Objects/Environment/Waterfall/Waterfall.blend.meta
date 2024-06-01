@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: 979b94a36a0f28c499e9570df2ec6116
+guid: 4ba1e7e845059734eaedd2c621b3552a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Dish
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Emission
-    second: {fileID: 2100000, guid: 1bdc5f4742888414d845e629693db182, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

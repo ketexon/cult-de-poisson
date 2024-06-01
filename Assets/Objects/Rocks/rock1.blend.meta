@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 979b94a36a0f28c499e9570df2ec6116
+guid: 10c1c21298f45274a93f91e0e453b002
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,18 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Dish
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Emission
-    second: {fileID: 2100000, guid: 1bdc5f4742888414d845e629693db182, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
       name: Material.001
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
+    second: {fileID: 2100000, guid: 2f4373990d4dd47469745e4714d6ab2c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -52,7 +42,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
