@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590299120525651840}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5219998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,7 +68,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 66.1
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -379,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 6868503324844711377}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.022, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -655,6 +655,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9cfe17b5-51b4-41ea-adab-6faf4b0e0676
     m_ActionName: Gameplay/LookSpeed[/XInputControllerWindows/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88887910-b0db-48d7-ac91-da018f47a750
+    m_ActionName: Fishing/ControllerReel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18e7b1d7-e05a-4ef9-a07a-7c846aadec19
+    m_ActionName: Journal/Turn Page[/Keyboard/q,/Keyboard/e,/DualShock4GamepadHID/leftShoulder,/DualShock4GamepadHID/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -680,6 +688,7 @@ MonoBehaviour:
   rotateSpeed: 5
   startingItems:
   - {fileID: 3191426836252093821}
+  - {fileID: 1910599220965616088}
   startingItemIndex: 1
   cycleItemAction: {fileID: 3900878760210090435, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
@@ -877,7 +886,7 @@ Transform:
   m_GameObject: {fileID: 6871060353833082883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0.988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1266,6 +1275,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 4293878559380983060, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2649129788575905462}
     - target: {fileID: 4844683572376676545, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1316,6 +1330,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 5426055392238593394, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426055392238593394, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426055392238593394, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.30948377
+      objectReference: {fileID: 0}
     - target: {fileID: 5989794152055622511, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1366,6 +1395,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 7038520991048359275, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2649129788575905462}
     - target: {fileID: 7261302528053869306, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1441,6 +1475,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 8028223894761594966, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2649129788575905462}
     - target: {fileID: 8368712444961694341, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1521,6 +1560,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 560997beadcb3cb4080f4f3f156d3901, type: 3}
+--- !u!114 &1910599220965616088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3484413572046251761, guid: 560997beadcb3cb4080f4f3f156d3901,
+    type: 3}
+  m_PrefabInstance: {fileID: 3087446727735037737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4222b73f65e5aae4c99f7abf3d907cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6844191403439025580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8368712444961694341, guid: 560997beadcb3cb4080f4f3f156d3901,
