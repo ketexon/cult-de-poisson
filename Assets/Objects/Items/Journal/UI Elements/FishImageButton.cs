@@ -5,7 +5,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+using UnityEngine.Rendering;
 
+[RequireComponent(typeof(Button))]
 public class FishImageButton : JournalUIElement
 {
     readonly Color higlight = new(0.5f, 1, 0.5f, 1);
@@ -16,37 +18,20 @@ public class FishImageButton : JournalUIElement
     FishSO fish;
 
     Image spriteRenderer = null;
-    bool isInteractable = true;
+    Button button = null;
+
+    bool isInteractable = false;
 
     public override void Reset()
     {
         if (!spriteRenderer) { spriteRenderer = GetComponent<Image>(); }
+        if (!button)
+        {
+            button = GetComponent<Button>();
+            button.onClick.AddListener(() => dropdown.SetFishSO(fish));
+        }
 
-        isInteractable = Journal.GetUnlockedFish().Contains(fish.name);
-        spriteRenderer.color = isInteractable ? Color.white : Color.gray;
-    }
-
-    public override void OnPointerEnter(PointerEventData eventData)
-    {
-        base.OnPointerEnter(eventData);
-        if (!isInteractable) return;
-
-        spriteRenderer.color = higlight;
-    }
-
-    public override void OnPointerExit(PointerEventData eventData)
-    {
-        base.OnPointerExit(eventData);
-        if (!isInteractable) return;
-
-        spriteRenderer.color = Color.white;
-    }
-
-    public override void OnPointerClick(PointerEventData eventData)
-    {
-        base.OnPointerClick(eventData);
-        if (!isInteractable) return;
-
-        dropdown.SetFishSO(fish);
+        isInteractable = fish && Journal.GetUnlockedFish().Contains(fish.Name);
+        button.interactable = isInteractable;
     }
 }
