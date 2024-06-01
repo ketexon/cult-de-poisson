@@ -2,7 +2,7 @@
     <ui:Template name="InteractionIndicator" src="project://database/Assets/Objects/UI/Input/InteractionIndicator.uxml?fileID=9197481963319205126&amp;guid=e0799291426fb2340996fd6feef3b2b9&amp;type=3#InteractionIndicator" />
     <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
     <Style src="project://database/Assets/Objects/UI/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=7bd92303f50ea7347b8efb88b7bb2388&amp;type=3#Settings" />
-    <ui:VisualElement name="settings" class="settings settings--enabled" style="flex-grow: 1;">
+    <ui:VisualElement name="settings" picking-mode="Ignore" class="settings settings--enabled" style="flex-grow: 1;">
         <ui:VisualElement name="settings__home" class="settings-panel settings-panel--active" style="justify-content: center; top: 0; right: 2px; left: -1px; bottom: 0;">
             <ui:VisualElement name="title" style="flex-grow: 0; flex-shrink: 0; margin-bottom: 64px;">
                 <ui:VisualElement name="title__image" style="flex-grow: 1; height: 56px; background-image: url(&apos;project://database/Assets/Objects/UI/Settings/culte%20du%20poisson.png?fileID=2800000&amp;guid=a24d892d530a3d940b9c969946548348&amp;type=3#culte du poisson&apos;); -unity-background-scale-mode: scale-to-fit;" />
