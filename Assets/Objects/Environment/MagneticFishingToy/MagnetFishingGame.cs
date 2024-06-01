@@ -52,7 +52,7 @@ public class MagnetFishingGame : Interactable
         base.OnInteract();
 
         rod.gameObject.SetActive(true);
-        rod.gameObject.SetActive(true);
+        hook.gameObject.SetActive(true);
         vcam.enabled = true;
 
         activate.action.performed += OnClick;
