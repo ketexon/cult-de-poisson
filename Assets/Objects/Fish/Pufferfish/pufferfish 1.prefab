@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3371641460193922359}
   - component: {fileID: 2485598705664443868}
   m_Layer: 0
-  m_Name: pufferfish
+  m_Name: pufferfish 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
