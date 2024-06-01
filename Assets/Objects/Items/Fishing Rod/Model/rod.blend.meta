@@ -7,7 +7,22 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Grip
+    second: {fileID: 2100000, guid: 2b5ff3decbec21643b11da243bf02323, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material.001
+    second: {fileID: 2100000, guid: 5bd1ed3f423d8fa41bb5427b9cadd494, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pole
+    second: {fileID: 2100000, guid: 5bd1ed3f423d8fa41bb5427b9cadd494, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: String
     second: {fileID: 2100000, guid: 5bd1ed3f423d8fa41bb5427b9cadd494, type: 2}
   materials:
     materialImportMode: 2
