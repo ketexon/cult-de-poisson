@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Satellite
+  m_Name: Rock
   m_Shader: {fileID: 4800000, guid: a1116255fa8046d4ea389b184581754d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -120,8 +120,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.8151399, g: 0.70630115, b: 0.9056604, a: 1}
-    - _Color: {r: 0.8151399, g: 0.70630115, b: 0.9056604, a: 1}
+    - _BaseColor: {r: 0.3426901, g: 0.2661089, b: 0.3679245, a: 1}
+    - _Color: {r: 0.34269008, g: 0.26610887, b: 0.36792448, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
