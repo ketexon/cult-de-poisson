@@ -10,7 +10,8 @@ public class MagnetFishingGame : Interactable
     [SerializeField] InputActionReference activate;
     [SerializeField] InputActionReference move;
     [SerializeField] float rodTipYOffset;
-    [SerializeField] CinemachineVirtualCamera vcam;
+    [SerializeField] CinemachineVirtualCamera fishingVCam;
+    [SerializeField] CinemachineVirtualCamera caughtVCam;
 
     [SerializeField] float rotateDownDuration = 0.4f;
     [SerializeField] float waitDuration = 0.4f;
@@ -30,7 +31,7 @@ public class MagnetFishingGame : Interactable
     private float rodInitialY;
     private float rodHorizontalRotateSpeed;
 
-    bool caughtFish = false;
+    MagnetFishingGameFish caughtFish = null;
 
     void Start()
     {
@@ -44,7 +45,7 @@ public class MagnetFishingGame : Interactable
 
         rod.gameObject.SetActive(false);
         hook.gameObject.SetActive(false);
-        vcam.enabled = false;
+        fishingVCam.enabled = false;
     }
 
     public override void OnInteract()
@@ -53,7 +54,7 @@ public class MagnetFishingGame : Interactable
 
         rod.gameObject.SetActive(true);
         hook.gameObject.SetActive(true);
-        vcam.enabled = true;
+        fishingVCam.enabled = true;
 
         activate.action.performed += OnClick;
         move.action.performed += (InputAction.CallbackContext ctx) => { rodHorizontalRotateSpeed = ctx.ReadValue<Vector2>().x; };
@@ -116,15 +117,26 @@ public class MagnetFishingGame : Interactable
 
     public void OnCatchFish(MagnetFishingGameFish f)
     {
-        caughtFish = true;
+        caughtFish = f;
     }
 
     void EndFishing()
     {
         IEnumerator Coro()
         {
-            yield return new WaitForSeconds(1);
+            fishingVCam.enabled = false;
 
+            caughtVCam.LookAt = caughtFish.transform;
+            caughtVCam.Follow = caughtFish.transform;
+            caughtVCam.enabled = true;
+
+            yield return null;
+            while (Player.Instance.CinemachineBrain.IsBlending)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1);
             cutsceneVideo.Play();
             cutsceneVideo.prepareCompleted += OnVideoStart;
             cutsceneVideo.loopPointReached += OnVideoEnd;
@@ -144,5 +156,8 @@ public class MagnetFishingGame : Interactable
         cutsceneVideo.loopPointReached -= OnVideoEnd;
 
         cutsceneCanvas.enabled = false;
+
+        fishingVCam.enabled = false;
+        caughtVCam.enabled = false;
     }
 }

@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 9845e29c7ac2644878fe20007650fbc9
+guid: 833f8b6270d61d74ea94a76fecbed1a3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Magnet_Fish
-    second: {fileID: 2100000, guid: 7237bad172f126f48a4a56fe6127f93c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -58,7 +53,7 @@ ModelImporter:
     keepQuads: 0
     weldVertices: 1
     bakeAxisConversion: 0
-    preserveHierarchy: 1
+    preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
