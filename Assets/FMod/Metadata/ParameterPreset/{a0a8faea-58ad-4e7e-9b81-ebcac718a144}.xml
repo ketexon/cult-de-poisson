@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{a0a8faea-58ad-4e7e-9b81-ebcac718a144}">
+		<property name="name">
+			<value>Reel Interval</value>
+		</property>
+		<relationship name="folder">
+			<destination>{b64f70bc-2e73-44a0-a82f-ea8f0cd51bc6}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{5b3d61e0-41a7-4e6a-908f-8c87e7e5d1a6}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{5b3d61e0-41a7-4e6a-908f-8c87e7e5d1a6}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

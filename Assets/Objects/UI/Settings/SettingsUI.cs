@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using UnityEngine.EventSystems;
+using FMOD.Studio;
+using FMODUnity;
+
+
 
 
 
@@ -19,6 +23,10 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     [SerializeField] InputActionReference openSettingsAction;
     [SerializeField] InputActionReference escapeAction;
+
+    [SerializeField] EventReference audioClickEvent;
+
+    Bus inGameBus;
 
     Stack<VisualElement> panels = new();
 
@@ -44,6 +52,8 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         {
             root.EnableInClassList("settings--enabled", false);
         }
+
+        FMODUnity.RuntimeManager.StudioSystem.getBus("bus:/InGame", out inGameBus);
     }
 
     void OnDestroy()
@@ -85,6 +95,16 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
             using var navEvent = NavigationMoveEvent.GetPooled(NavigationMoveEvent.Direction.Next);
             ev.currentTarget.SendEvent(navEvent);
         });
+
+        root.Query<Button>().ForEach(b =>
+        {
+            b.clicked += OnButtonClicked;
+        });
+    }
+
+    private void OnButtonClicked()
+    {
+        RuntimeManager.PlayOneShot(audioClickEvent);
     }
 
     void OnInputEscape(InputAction.CallbackContext ctx)
@@ -110,6 +130,8 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
         EventSystem.current.SetSelectedGameObject(gameObject);
         PushPanel(defaultPanelName);
+
+        inGameBus.setPaused(true);
     }
 
     void CloseMenu()
@@ -120,6 +142,8 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
         player.PopActionMap();
         LockCursor.PopLockState();
+
+        inGameBus.setPaused(false);
     }
 
     public void PushPanel(string panelName)

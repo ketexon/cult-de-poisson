@@ -71,8 +71,13 @@ MonoBehaviour:
     type: 3}
   escapeAction: {fileID: -1417056695044771997, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
-  scrollAction: {fileID: 6080914222201854954, guid: 74ba8a3a9aaed2040a694812328659e2,
-    type: 3}
+  audioClickEvent:
+    Guid:
+      Data1: 1364753525
+      Data2: 1217349035
+      Data3: 2109066917
+      Data4: -1811495530
+    Path: event:/click
 --- !u!114 &4046475890618828001
 MonoBehaviour:
   m_ObjectHideFlags: 0

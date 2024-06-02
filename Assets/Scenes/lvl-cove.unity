@@ -307,6 +307,66 @@ PrefabInstance:
       propertyPath: m_UIInputModule
       value: 
       objectReference: {fileID: 573822116}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[35].m_ActionId
+      value: 18e7b1d7-e05a-4ef9-a07a-7c846aadec19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[36].m_ActionId
+      value: 6b9c9497-e10e-4758-8744-d4e523179cfc
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[37].m_ActionId
+      value: a19d2f8d-b0db-4c34-b29b-341e35d06252
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[38].m_ActionId
+      value: 41eae82f-2c6d-4b90-bee2-a5da2e1c8e96
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[39].m_ActionId
+      value: 8c80a6cc-9ffa-4b01-bcd9-c4a16822dad2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[40].m_ActionId
+      value: a98059f7-736b-4dac-8427-01d6239d4ee5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[35].m_ActionName
+      value: Journal/Turn Page[/Keyboard/q,/Keyboard/e,/DualShock4GamepadHID/leftShoulder,/DualShock4GamepadHID/rightShoulder]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[36].m_ActionName
+      value: Gameplay/Cheat[/Keyboard/equals]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[37].m_ActionName
+      value: UI/Scroll[/Mouse/scroll]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[38].m_ActionName
+      value: FishingToy/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[39].m_ActionName
+      value: FishingToy/Activate[/Mouse/leftButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972364860089777460, guid: d819b9d87d1e1aa4597b4c04652d6475,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[40].m_ActionName
+      value: Fishing/MoveSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 3340069615599303650, guid: d819b9d87d1e1aa4597b4c04652d6475,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -702,61 +762,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_MoveAction
-      value: 
-      objectReference: {fileID: -6165186815827564960, guid: 74ba8a3a9aaed2040a694812328659e2,
-        type: 3}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_PointAction
-      value: 
-      objectReference: {fileID: 1019439535648370982, guid: 74ba8a3a9aaed2040a694812328659e2,
-        type: 3}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_CancelAction
-      value: 
-      objectReference: {fileID: 5817111886442597107, guid: 74ba8a3a9aaed2040a694812328659e2,
-        type: 3}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_SubmitAction
-      value: 
-      objectReference: {fileID: -2986638888425596157, guid: 74ba8a3a9aaed2040a694812328659e2,
-        type: 3}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_LeftClickAction
-      value: 
-      objectReference: {fileID: -2034593247254570495, guid: 74ba8a3a9aaed2040a694812328659e2,
-        type: 3}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_RightClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_MiddleClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_ScrollWheelAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_TrackedDevicePositionAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5030703099219079567, guid: bcfaff55953723547887dbc80a209a8c,
-        type: 3}
-      propertyPath: m_TrackedDeviceOrientationAction
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5090792530719148525, guid: bcfaff55953723547887dbc80a209a8c,
         type: 3}

@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +12,8 @@ public class FishingLine : MonoBehaviour
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] Transform tip;
     [SerializeField] GameObject defaultBobPrefab;
+    [SerializeField, ParamRef] string reelSpeedParameterName;
+    [SerializeField] EventReference reelEventReference;
 
     GameObject bobPrefab = null;
     FishingHook hook = null;
@@ -27,6 +31,8 @@ public class FishingLine : MonoBehaviour
     Vector3 rodTipVelocity;
 
     bool reelingPhase = false;
+
+    float lastReelTime = -Mathf.Infinity;
 
     void Awake()
     {
@@ -111,6 +117,13 @@ public class FishingLine : MonoBehaviour
             hookDistance = Mathf.Max(0, hookDistance.Value - amount * Time.deltaTime * parameters.ReelStrength);
             hook.Reel(hookDistance.Value);
         }
+
+        float timeSinceLastReel = lastReelTime;
+
+        var instance = RuntimeManager.CreateInstance(reelEventReference);
+        instance.setParameterByName(reelSpeedParameterName, Mathf.Min(1, timeSinceLastReel));
+        instance.start();
+        instance.release();
     }
 
     void Update()

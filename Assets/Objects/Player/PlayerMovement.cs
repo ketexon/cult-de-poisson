@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 3;
     [SerializeField] float ladderClimbSpeed = 0.25f;
     [SerializeField] bool lockCamera = false;
+    [SerializeField] EventReference walkEventReference;
 
     NavMeshAgent agent;
     Rigidbody rb;
@@ -40,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
 
     float lastTimeOnGround;
     bool movingOnLink;
+
+    EventInstance audioWalkInstance;
 
     /// <summary>
     /// Pitch and yaw range. pitchRange is guarenteed to be between 0,360. 
@@ -79,6 +85,16 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
+    void Start()
+    {
+        audioWalkInstance = RuntimeManager.CreateInstance(walkEventReference);
+    }
+
+    void OnDestroy()
+    {
+        audioWalkInstance.release();
+    }
+
     void Update()
     {
         if (!movingOnLink && agent.isOnOffMeshLink)
@@ -89,6 +105,18 @@ public class PlayerMovement : MonoBehaviour
         else if (agent.isOnNavMesh && !movingOnLink && playerInput.inputIsActive)
         {
             agent.velocity = CalculateVelocity();
+            if (agent.velocity != Vector3.zero)
+            {
+                audioWalkInstance.getPlaybackState(out var s);
+                if(s != PLAYBACK_STATE.PLAYING)
+                {
+                    audioWalkInstance.start();
+                }
+            }
+            else if(agent.velocity == Vector3.zero)
+            {
+                audioWalkInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
         }
 
         UpdateLook(lookSpeed * Time.deltaTime);

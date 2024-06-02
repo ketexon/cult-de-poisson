@@ -151,3 +151,10 @@ MonoBehaviour:
   tip: {fileID: 0}
   defaultBobPrefab: {fileID: 3444284660832831277, guid: 48c9182d1773bf04185262272a3ecd60,
     type: 3}
+  reelEventReference:
+    Guid:
+      Data1: -1765094930
+      Data2: 1265456081
+      Data3: -1819372657
+      Data4: 1552725148
+    Path: event:/reel

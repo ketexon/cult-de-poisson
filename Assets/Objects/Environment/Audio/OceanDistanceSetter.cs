@@ -15,7 +15,7 @@ public class OceanDistanceSetter : MonoBehaviour
         {
             minDist = Mathf.Min(minDist, Vector3.Distance(Player.Instance.Movement.Position, child.position));
         }
-        Debug.Log(minDist);
+
         RuntimeManager.StudioSystem.setParameterByName(parameter, minDist);
     }
 }

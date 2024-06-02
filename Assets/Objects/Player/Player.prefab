@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590299120525651840}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20064095, y: -0.5325551, z: 0.13164611, w: 0.8116635}
+  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -68,7 +68,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 66.1
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -658,10 +658,6 @@ MonoBehaviour:
     m_ActionName: Gameplay/LookSpeed[/XInputControllerWindows/rightStick]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 88887910-b0db-48d7-ac91-da018f47a750
-    m_ActionName: Fishing/ControllerReel
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 18e7b1d7-e05a-4ef9-a07a-7c846aadec19
     m_ActionName: Journal/Turn Page[/Keyboard/q,/Keyboard/e,/DualShock4GamepadHID/leftShoulder,/DualShock4GamepadHID/rightShoulder]
   - m_PersistentCalls:
@@ -680,6 +676,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 8c80a6cc-9ffa-4b01-bcd9-c4a16822dad2
     m_ActionName: FishingToy/Activate[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a98059f7-736b-4dac-8427-01d6239d4ee5
+    m_ActionName: Fishing/MoveSpeed
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -730,6 +730,13 @@ MonoBehaviour:
   speed: 10.37
   ladderClimbSpeed: 10
   lockCamera: 0
+  walkEventReference:
+    Guid:
+      Data1: 647445519
+      Data2: 1096915272
+      Data3: -896769881
+      Data4: -116079679
+    Path: event:/walk
 --- !u!195 &1462544016098704614
 NavMeshAgent:
   m_ObjectHideFlags: 0
