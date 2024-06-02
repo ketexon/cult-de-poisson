@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactEnabled: 1
   collider: {fileID: 2654457697745601169}
-  quest: {fileID: 11400000, guid: 180f63baa2516da488fe021cccce68cf, type: 2}
+  Quest: {fileID: 0}
 --- !u!65 &2654457697745601169
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactEnabled: 1
   collider: {fileID: 5998084325097394525}
-  quest: {fileID: 11400000, guid: 180f63baa2516da488fe021cccce68cf, type: 2}
+  Quest: {fileID: 0}
 --- !u!65 &5998084325097394525
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -351,10 +351,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7146521406498821007, guid: 979b94a36a0f28c499e9570df2ec6116,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 979b94a36a0f28c499e9570df2ec6116,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 979b94a36a0f28c499e9570df2ec6116,
         type: 3}
       propertyPath: m_Name
       value: satellite
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233112405309087440, guid: 979b94a36a0f28c499e9570df2ec6116,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416272007918961125, guid: 979b94a36a0f28c499e9570df2ec6116,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

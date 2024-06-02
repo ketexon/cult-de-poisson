@@ -213,7 +213,8 @@
 }
 
 .notification-indicator--journal .notification-indicator__icon-container,
-.notification-indicator--fishing .notification-indicator__icon-container
+.notification-indicator--fishing .notification-indicator__icon-container,
+.notification-indicator--satellite .notification-indicator__icon-container,
 {
     display: flex;
 }
@@ -223,6 +224,10 @@
 }
 
 .notification-indicator--fishing .notification-indicator__fishing-icon {
+    display: flex;
+}
+
+.notification-indicator--satellite .notification-indicator__satellite-icon {
     display: flex;
 }
 

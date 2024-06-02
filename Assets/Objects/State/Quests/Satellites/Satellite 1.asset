@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Satellite 1
   m_EditorClassIdentifier: 
   Name: connect first satellite
+  Type: 1
   MustStartToComplete: 0
   Subquests: []

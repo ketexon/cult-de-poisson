@@ -20,7 +20,8 @@ public class NotificationsUI : MonoBehaviour
     {
         None,
         Fishing,
-        Journal
+        Journal,
+        Satellite,
     }
 
     void Start()
@@ -39,7 +40,14 @@ public class NotificationsUI : MonoBehaviour
 
     void OnQuestCompleted(QuestSO questSO)
     {
-        AddNotification($"completed {questSO.Name.ToLower()}", Icon.Journal);
+        if(questSO.Type == QuestType.Satellite)
+        {
+            AddNotification($"satellite connected", Icon.Satellite);
+        }
+        else
+        {
+            AddNotification($"completed {questSO.Name.ToLower()}", Icon.Journal);
+        }
     }
 
     public void AddCatchFishNotification(FishSO so)
@@ -70,6 +78,7 @@ public class NotificationsUI : MonoBehaviour
             {
                 Icon.Fishing => "notification-indicator--fishing",
                 Icon.Journal => "notification-indicator--journal",
+                Icon.Satellite => "notification-indicator--satellite",
                 _ => throw new NotImplementedException($"Icon {icon} not implemented")
             });
         }
