@@ -17,10 +17,14 @@ public class MagnetFishingGame : Interactable
     [SerializeField] float waitDuration = 0.4f;
     [SerializeField] float rotateUpDuration = 0.4f;
     [SerializeField] float rotationAngle = 0.7f;
+    [SerializeField] float caughtCameraHoldDuration = 1.5f;
     [SerializeField] Canvas cutsceneCanvas;
+    [SerializeField] CanvasGroup cutsceneGroup;
     [SerializeField] VideoPlayer cutsceneVideo;
+    [SerializeField] CanvasGroup cutsceneFadeGroup;
+    [SerializeField] float whiteTransitionTime = 0.5f;
 
-    public override bool TargetInteractVisible => true;
+    public override bool TargetInteractVisible => !endedGame;
     public override bool TargetInteractEnabled => true;
     public override string TargetInteractMessage => "to use fishing toy";
 
@@ -32,6 +36,8 @@ public class MagnetFishingGame : Interactable
     private float rodHorizontalRotateSpeed;
 
     MagnetFishingGameFish caughtFish = null;
+
+    bool endedGame = false;
 
     void Start()
     {
@@ -65,6 +71,8 @@ public class MagnetFishingGame : Interactable
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (endedGame) return;
+
         Vector3 turntable_center = turntable.GetComponent<Renderer>().bounds.center;
         turntable.RotateAround(turntable_center, Vector3.up, 1.0f);
         rod.Rotate(0f, rodHorizontalRotateSpeed * 0.2f, 0f, Space.Self);
@@ -135,7 +143,18 @@ public class MagnetFishingGame : Interactable
                 yield return null;
             }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(caughtCameraHoldDuration);
+
+            cutsceneCanvas.enabled = true;
+
+            float startTime = Time.time;
+            for(float t = 0; t < 1; t = (Time.time - startTime)/whiteTransitionTime)
+            {
+                cutsceneFadeGroup.alpha = t;
+                yield return null;
+            }
+            cutsceneFadeGroup.alpha = 1;
+
             cutsceneVideo.Play();
             cutsceneVideo.prepareCompleted += OnVideoStart;
             cutsceneVideo.loopPointReached += OnVideoEnd;
@@ -147,19 +166,60 @@ public class MagnetFishingGame : Interactable
     void OnVideoStart(VideoPlayer _)
     {
         cutsceneVideo.prepareCompleted -= OnVideoStart;
-        cutsceneCanvas.enabled = true;
+        cutsceneGroup.alpha = 1;
+
+        IEnumerator Coro()
+        {
+            float startTime = Time.time;
+            for (float t = 0; t < 1; t = (Time.time - startTime) / whiteTransitionTime)
+            {
+                cutsceneFadeGroup.alpha = 1 - t;
+                yield return null;
+            }
+            cutsceneFadeGroup.alpha = 0;
+        }
+
+        StartCoroutine(Coro());
     }
 
     void OnVideoEnd(VideoPlayer _)
     {
+        IEnumerator Coro()
+        {
+            float startTime = Time.time;
+            for (float t = 0; t < 1; t = (Time.time - startTime) / whiteTransitionTime)
+            {
+                cutsceneFadeGroup.alpha = t;
+                yield return null;
+            }
+
+            cutsceneFadeGroup.alpha = 1;
+            cutsceneGroup.alpha = 0;
+            
+            fishingVCam.enabled = false;
+            caughtVCam.enabled = false;
+
+            startTime = Time.time;
+            for (float t = 0; t < 1; t = (Time.time - startTime) / whiteTransitionTime)
+            {
+                cutsceneFadeGroup.alpha = 1 - t;
+                yield return null;
+            }
+            cutsceneFadeGroup.alpha = 0;
+
+            cutsceneCanvas.enabled = false;
+
+            Player.Instance.PopActionMap();
+            Destroy(this);
+        }
+
+        endedGame = true;
+        InteractivityChangeEvent?.Invoke(this);
         cutsceneVideo.loopPointReached -= OnVideoEnd;
 
-        cutsceneCanvas.enabled = false;
+        hook.gameObject.SetActive(false);
+        rod.gameObject.SetActive(false);
 
-        fishingVCam.enabled = false;
-        caughtVCam.enabled = false;
-
-        Player.Instance.PopActionMap();
-        Destroy(this);
+        StartCoroutine(Coro());
     }
 }

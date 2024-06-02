@@ -64,8 +64,11 @@ MonoBehaviour:
   waitDuration: 0.4
   rotateUpDuration: 0.4
   rotationAngle: 30
+  caughtCameraHoldDuration: 1.5
   cutsceneCanvas: {fileID: 0}
   cutsceneVideo: {fileID: 0}
+  cutsceneWhiteOverlay: {fileID: 0}
+  whiteTransitionTime: 1
 --- !u!65 &281395077072047057
 BoxCollider:
   m_ObjectHideFlags: 0
