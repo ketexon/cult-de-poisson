@@ -28,6 +28,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Leafffff
+    second: {fileID: 2100000, guid: 26fc53bcfba69a540a4f09d06936a26f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Plancks
     second: {fileID: 2100000, guid: 093fcc4833215944b843f57a72195407, type: 2}
   - first:
