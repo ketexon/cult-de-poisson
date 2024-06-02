@@ -55,6 +55,7 @@ public class MagnetFishingGame : Interactable
         rod.gameObject.SetActive(true);
         hook.gameObject.SetActive(true);
         fishingVCam.enabled = true;
+        Player.Instance.PushActionMap("FishingToy");
 
         activate.action.performed += OnClick;
         move.action.performed += (InputAction.CallbackContext ctx) => { rodHorizontalRotateSpeed = ctx.ReadValue<Vector2>().x; };
@@ -78,8 +79,6 @@ public class MagnetFishingGame : Interactable
     // Get Fiiiiish
     IEnumerator Fish() {
         // Rotate Down
-        Debug.Log("Fiiiiiish");
-        
         float startTime = Time.time;
         float t = 0;
 
@@ -159,5 +158,8 @@ public class MagnetFishingGame : Interactable
 
         fishingVCam.enabled = false;
         caughtVCam.enabled = false;
+
+        Player.Instance.PopActionMap();
+        Destroy(this);
     }
 }
