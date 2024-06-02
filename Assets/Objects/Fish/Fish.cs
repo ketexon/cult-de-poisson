@@ -112,6 +112,27 @@ public class Fish : MonoBehaviour
         boxCollider.enabled = true;
     }
 
+    public void InitializeStatic()
+    {
+        if (FishMovement)
+        {
+            FishMovement.enabled = false;
+        }
+        if (HookedFish)
+        {
+            HookedFish.enabled = false;
+        }
+        if (FishInteractable)
+        {
+            FishInteractable.enabled = false;
+        }
+
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+        rb.useGravity = false;
+        boxCollider.enabled = false;
+    }
+
     public void AttachTo(Rigidbody rb)
     {
         Joint.connectedBody = rb;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1890223309276568316}
   - component: {fileID: 8723210444589738559}
   m_Layer: 0
-  m_Name: Connector (1)
+  m_Name: Mushroom Connector A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 6863524481159495388}
   - component: {fileID: 1954764885064372568}
   m_Layer: 0
-  m_Name: Connector (5)
+  m_Name: Mushroom F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 8998485118788522340}
   - component: {fileID: 3173042053727231413}
   m_Layer: 0
-  m_Name: Connector (2)
+  m_Name: Mushroom C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,8 +450,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1819199478899670036}
-  - {fileID: 7413686770295780874}
   - {fileID: 6884597850901654546}
+  - {fileID: 7413686770295780874}
   - {fileID: 1486611132310736946}
   - {fileID: 7267809199341060019}
   - {fileID: 2931830107650239052}
@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 1379983463092458925}
   - component: {fileID: 9026022949947686411}
   m_Layer: 0
-  m_Name: Connector
+  m_Name: Mushroom B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 4025018141870123587}
   - component: {fileID: 6934436265890557605}
   m_Layer: 0
-  m_Name: Connector (3)
+  m_Name: Mushroom D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -789,7 +789,7 @@ GameObject:
   - component: {fileID: 4950488608091501113}
   - component: {fileID: 5836757582977840857}
   m_Layer: 0
-  m_Name: Connector (4)
+  m_Name: Mushroom E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

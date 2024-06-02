@@ -67,7 +67,8 @@ public class EelFishItemBehaviour : FishItemBehaviour
         var go = Instantiate(EelPhysical, MidPoint, Quaternion.identity);
         var fish = go.GetComponent<Fish>();
         Quaternion Rotation = Quaternion.FromToRotation(fish.transform.forward, Pos2 - Pos1);
-        fish.InitializeBucket();
+
+        fish.InitializeStatic();
         fish.transform.rotation = fish.transform.rotation * Rotation;
         fish.transform.localScale = new Vector3(1, 1, Stretch);
 
