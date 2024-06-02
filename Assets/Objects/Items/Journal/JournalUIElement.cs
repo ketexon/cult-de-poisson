@@ -8,12 +8,12 @@ public abstract class JournalUIElement : MonoBehaviour, IPointerClickHandler, IP
 
     protected Journal Journal { get; private set; }
 
-    void Awake()
+    virtual protected void Awake()
     {
         Journal = GetComponentInParent<Journal>();
     }
 
-    void OnEnable()
+    virtual protected void OnEnable()
     {
         Reset();
     }

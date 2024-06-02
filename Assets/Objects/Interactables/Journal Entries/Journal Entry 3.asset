@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a967e1ea0785d414da9824b79007558f, type: 3}
   m_Name: Journal Entry 3
   m_EditorClassIdentifier: 
-  Text: 
+  Text: "Year 1 Day 122\r\nThey have electricity but no form of verbal communication.
+    My attempts at conversation with them have been rendered useless as they do not
+    seem to understand nor wish to speak with me. It\u2019s all just meaningless
+    symbols. I may be forced to simplify my thoughts-- Tomorrow, I shall return with
+    simpler speech. In due time, I will educate them enough to speak with us about
+    the island. We can\u2019t coexist without words.\r"

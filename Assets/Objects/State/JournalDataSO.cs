@@ -8,10 +8,10 @@ public class JournalDataSO : SingletonObject<JournalDataSO>
     HashSet<FishSO> caughtFish = new();
     HashSet<JournalEntrySO> journalEntries = new();
     
-    public IReadOnlyCollection<FishSO> CaughtFish => caughtFish;
+    public HashSet<FishSO> CaughtFish => caughtFish;
     public System.Action<FishSO> NewFishCaughtEvent;
 
-    public IReadOnlyCollection<JournalEntrySO> JournalEntries => journalEntries;
+    public HashSet<JournalEntrySO> JournalEntries => journalEntries;
     public System.Action<JournalEntrySO> NewJournalEntryEvent;
 
     public void AddCaughtFish(FishSO f)

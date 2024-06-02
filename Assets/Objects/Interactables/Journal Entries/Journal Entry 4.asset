@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a967e1ea0785d414da9824b79007558f, type: 3}
   m_Name: Journal Entry 4
   m_EditorClassIdentifier: 
-  Text: 
+  Text: "Year 1 Day 207\r\nAfter observing the natives for a number of days, I have
+    uncovered more about how they obtain their power. It appears as though the eel
+    itself contains a voltage that can be converted to power other objects\u2013from
+    simple volts to continuous streams emitting in lines. Perhaps I could harness
+    this power to help accelerate their language development\u2026\r"
