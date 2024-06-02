@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590299120525651840}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5219998, z: 0}
+  m_LocalRotation: {x: 0.20064095, y: -0.5325551, z: 0.13164611, w: 0.8116635}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,7 +68,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 90
+  field of view: 66.1
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 1349254100363335738}
   - component: {fileID: 8650845327865143688}
   - component: {fileID: 3394347112407118951}
+  - component: {fileID: 247070537556221016}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -663,6 +664,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 18e7b1d7-e05a-4ef9-a07a-7c846aadec19
     m_ActionName: Journal/Turn Page[/Keyboard/q,/Keyboard/e,/DualShock4GamepadHID/leftShoulder,/DualShock4GamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b9c9497-e10e-4758-8744-d4e523179cfc
+    m_ActionName: Gameplay/Cheat[/Keyboard/equals]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a19d2f8d-b0db-4c34-b29b-341e35d06252
+    m_ActionName: UI/Scroll[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 41eae82f-2c6d-4b90-bee2-a5da2e1c8e96
+    m_ActionName: FishingToy/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8c80a6cc-9ffa-4b01-bcd9-c4a16822dad2
+    m_ActionName: FishingToy/Activate[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -862,6 +879,38 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &247070537556221016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e17c13ee8fef554f9531c94c8f1d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cheatAction: {fileID: 8753925788822632802, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  entries:
+  - {fileID: 11400000, guid: a8eb6ae67a9913340a2482eedae11d02, type: 2}
+  - {fileID: 11400000, guid: 0f77fb1b83d521a4db72764909ac1489, type: 2}
+  - {fileID: 11400000, guid: 7fe028838818e174baf2031d1e4a777a, type: 2}
+  - {fileID: 11400000, guid: 53a29da775d35774c851986bfdc0c7b4, type: 2}
+  - {fileID: 11400000, guid: fc4c27d019e73b340a261634f443e3c9, type: 2}
+  - {fileID: 11400000, guid: 50a3dc8b6fdfbbf47a7bd1c4f3845644, type: 2}
+  fish:
+  - {fileID: 11400000, guid: 9e524a81b809ac44d8cc8027cb8eec2a, type: 2}
+  - {fileID: 11400000, guid: d9e464790bcab3742ac529c97621e95e, type: 2}
+  - {fileID: 11400000, guid: 10e6f3d256c3eeb43aead7f3f2b890e2, type: 2}
+  - {fileID: 11400000, guid: 488c641b736643a4aa9b4448ba748068, type: 2}
+  - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
+  - {fileID: 11400000, guid: 4732772847e03594888ebed3a0caa1da, type: 2}
+  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
+  - {fileID: 11400000, guid: fadda4b217eca304f9dd227e05dcf366, type: 2}
+  - {fileID: 11400000, guid: 6a29a23eef8645a4d95b98b5394a11e8, type: 2}
+  - {fileID: 11400000, guid: 732d55710c4b5cd4ca59f093c3d3ef83, type: 2}
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0

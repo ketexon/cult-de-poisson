@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Cheat",
+                    "type": "Button",
+                    "id": "6b9c9497-e10e-4758-8744-d4e523179cfc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -462,6 +471,17 @@
                     "processors": "ScaleVector2(x=1270,y=1270)",
                     "groups": "Controller",
                     "action": "LookSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0d8daff-5cc9-4108-b3bc-dd2e380b8a83",
+                    "path": "<Keyboard>/equals",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Cheat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
