@@ -2,19 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class LogPage : JournalUIElement
 {
     [SerializeField] JournalEntrySO entry;
-
-    CanvasGroup canvasGroup;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
+    [SerializeField] CanvasGroup canvasGroup;
 
     protected override void OnEnable()
     {
