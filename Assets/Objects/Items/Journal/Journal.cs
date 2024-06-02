@@ -136,6 +136,8 @@ public class Journal : Item
 
         inputUIDestructor?.Invoke();
         OnExitJournal();
+
+        InteractivityChangeEvent?.Invoke(this);
     }
 
     void TurnPage(CallbackContext ctx)
