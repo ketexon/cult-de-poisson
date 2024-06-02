@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "LookSpeed",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "9cfe17b5-51b4-41ea-adab-6faf4b0e0676",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Move",
@@ -501,6 +501,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "MoveSpeed",
+                    "type": "Value",
+                    "id": "a98059f7-736b-4dac-8427-01d6239d4ee5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Click",
                     "type": "Button",
                     "id": "eb652cff-f522-44e7-83ad-6439b4377e17",
@@ -535,15 +544,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "ControllerReel",
-                    "type": "Value",
-                    "id": "88887910-b0db-48d7-ac91-da018f47a750",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -554,17 +554,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d36df9f8-0cf5-4cd0-911e-d96bcbe02983",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -615,6 +604,17 @@
                 },
                 {
                     "name": "",
+                    "id": "53a4cc9c-278b-4ad5-a436-090e95665a20",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b1812938-9bcd-4ab1-967a-15c49dcf3ae4",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
@@ -647,59 +647,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "6ec92477-9b61-40a6-8fdd-ee6cbf7a9d2e",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "bdb256e7-afbb-41b9-8c6a-12e7792f78ff",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ControllerReel",
-                    "isComposite": true,
+                    "processors": "ScaleVector2(x=-0.25,y=-0.25)",
+                    "groups": "Controller",
+                    "action": "MoveSpeed",
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "87560e11-385a-4762-a698-195d003f96ef",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "ControllerReel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "a820de35-3acf-48c0-8bca-aa28f8550ede",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "ControllerReel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "8251cb5c-6bba-4d27-9ae9-10b456fe5241",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "ControllerReel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "eb086adf-cfe2-4ffc-9de6-ab6ecbcc5f38",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "ControllerReel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },
@@ -807,11 +763,33 @@
                 },
                 {
                     "name": "",
+                    "id": "f2d68690-011b-4128-91ea-4338adc4dd07",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a9dae343-8cd1-452f-b46a-73f47aa14bbc",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d22851ee-c4b1-4bb9-a8fe-7066884f8029",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -939,6 +917,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6840a0f6-0066-436d-83e6-607d489de7d5",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2bacc82f-bbd4-4565-b14b-1053a60784c4",
                     "path": "*/{Point}",
                     "interactions": "",
@@ -1059,10 +1048,21 @@
                 {
                     "name": "",
                     "id": "1676b351-6c99-4d87-b94b-1d92c49e4625",
-                    "path": "<Gamepad>/start",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83a7bb93-91cd-4d2c-9947-3825bf32b740",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1145,6 +1145,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "QE",
+                    "id": "e5f60e7b-80db-4f89-9923-9281990c73eb",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "de378002-8268-49db-96c7-5b1e48397375",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Cycle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "9daa01e5-e86d-4691-8cdf-daddfa40fc5d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Cycle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "cd8b8295-1597-45d3-90ec-9d1e1da58053",
                     "path": "<Keyboard>/f",
@@ -1158,7 +1191,7 @@
                 {
                     "name": "",
                     "id": "c7b3b50a-c8fd-4952-bbc2-f53c12522d9c",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -1358,7 +1391,7 @@
                 {
                     "name": "",
                     "id": "6dee5119-0db1-47b2-9988-43511e365656",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -1515,11 +1548,33 @@
                 },
                 {
                     "name": "",
+                    "id": "f146db69-a3c8-4721-9438-dd48dd5b4a18",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c3376490-5b02-48c0-8595-4c8452954887",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bee1942-07c6-4005-b578-c036117fbbb1",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Activate",
                     "isComposite": false,
                     "isPartOfComposite": false

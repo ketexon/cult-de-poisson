@@ -103,9 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLookSpeed(InputAction.CallbackContext ctx)
     {
-        //if (ctx.started) return;
         lookSpeed = ctx.ReadValue<Vector2>();
-        Debug.Log(lookSpeed);
     }
 
     void UpdateLook(Vector2 delta)

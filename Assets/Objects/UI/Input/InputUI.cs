@@ -131,6 +131,18 @@ public class InputUI : SingletonBehaviour<InputUI>
         {
             iconsContainer.Clear();
 
+            if(entry.InputAction.name == "ControllerReel")
+            {
+                var icon = keybindIconTemplate.Instantiate();
+
+                icon.AddToClassList("keybind-icon--image");
+                icon.AddToClassList("keybind-icon--dpad-cycle");
+
+                iconsContainer.Add(icon);
+
+                return;
+            }
+
             var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
             foreach (var displayString in bindingDisplayStrings)
             {
