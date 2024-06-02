@@ -711,7 +711,7 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   maxPitch: 85
   speed: 10.37
-  ladderClimbSpeed: 1
+  ladderClimbSpeed: 10
   lockCamera: 0
 --- !u!195 &1462544016098704614
 NavMeshAgent:

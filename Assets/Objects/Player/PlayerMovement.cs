@@ -293,17 +293,23 @@ public class PlayerMovement : MonoBehaviour
 
         while (Vector3.Distance(transform.position, aboveBottom) > 0.01f)
         {
-            Debug.Log($"A: {transform.position} {aboveBottom} {Time.deltaTime * ladderClimbSpeed} {Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed)}");
             transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed);
             yield return null;
         }
 
         float verticalDifference = transform.position.y - data.endPos.y - 0.75f;
 
-        while (Mathf.Abs(verticalDifference) > 0.01f)
+        while (Mathf.Abs(verticalDifference) > 0.1f && (startFromBottom ? verticalDifference < 0 : verticalDifference > 0))
         {
             transform.position += (startFromBottom ? 1 : -1) * ladderClimbSpeed * Time.deltaTime * Vector3.up;
             verticalDifference = transform.position.y - data.endPos.y - 0.75f;
+            yield return null;
+        }
+
+        Vector3 aboveTop = new(data.endPos.x, transform.position.y, data.endPos.z);
+        while (Vector3.Distance(transform.position, aboveTop) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, aboveTop, Time.deltaTime * ladderClimbSpeed);
             yield return null;
         }
         agent.CompleteOffMeshLink();
