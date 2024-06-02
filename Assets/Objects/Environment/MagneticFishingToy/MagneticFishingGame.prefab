@@ -54,8 +54,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactEnabled: 1
   collider: {fileID: 281395077072047057}
-  activate: {fileID: 882049797695294922, guid: 74ba8a3a9aaed2040a694812328659e2, type: 3}
-  move: {fileID: -3038443500247661225, guid: 74ba8a3a9aaed2040a694812328659e2, type: 3}
+  activate: {fileID: 1609193569323157276, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  move: {fileID: -119912415351169938, guid: 74ba8a3a9aaed2040a694812328659e2, type: 3}
   rodTipYOffset: 0.2
   fishingVCam: {fileID: 491237831282294140}
   caughtVCam: {fileID: 1109153723961631123}
