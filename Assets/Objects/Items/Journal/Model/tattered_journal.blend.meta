@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: book_cover
+    second: {fileID: 2100000, guid: eb88078682095244293d8348ccfebb3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: pages
     second: {fileID: 2100000, guid: 222079da2825996499a3f981d004655a, type: 2}
   - first:
@@ -14,6 +19,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: pages.001
     second: {fileID: 2100000, guid: 222079da2825996499a3f981d004655a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: spine
+    second: {fileID: 2100000, guid: a40b101331491cd4b88bb74e1c963bc4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: spine.001
+    second: {fileID: 2100000, guid: a40b101331491cd4b88bb74e1c963bc4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

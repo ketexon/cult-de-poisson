@@ -83,6 +83,8 @@ public class ExtractTreeCollidersFromTerrain : MonoBehaviour
 
     private void CreateNavMeshObstacle(TreePrototype tree, int prototypeIndex, TreeInstance[] instances, int instanceIndex)
     {
+        if(!tree.prefab) return;
+
         var navMeshObstacle = tree.prefab.GetComponent<NavMeshObstacle>();
         if (!navMeshObstacle) return;
 

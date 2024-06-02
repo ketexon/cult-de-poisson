@@ -73,7 +73,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SurfaceNoise:
         m_Texture: {fileID: 2800000, guid: dfe30470aabea7547bf3aaef9e882416, type: 3}
-        m_Scale: {x: 200, y: 200}
+        m_Scale: {x: 50, y: 50}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
@@ -128,11 +128,11 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DepthGradientDeep: {r: 0, g: 0.39331818, b: 1, a: 1}
-    - _DepthGradientShallow: {r: 0, g: 0.64339626, b: 0.8773585, a: 0.7058824}
+    - _DepthGradientShallow: {r: 0, g: 0.8784314, b: 0.8119083, a: 0.5254902}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.69894385, g: 0.83985996, b: 0.8962264, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceNoiseScroll: {r: -0.03, g: -0.01, b: 0, a: 0}
+    - _SurfaceNoiseScroll: {r: -0.04, g: -0.01, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8200690653025939323
 MonoBehaviour:
