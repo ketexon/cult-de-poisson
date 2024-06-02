@@ -92,7 +92,6 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         root.EnableInClassList("settings--enabled", true);
 
         player.PushActionMap("UI");
-        player.Camera.enabled = false;
         LockCursor.PushLockState(CursorLockMode.None);
 
         EventSystem.current.SetSelectedGameObject(gameObject);
@@ -106,7 +105,6 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         root.EnableInClassList("settings--enabled", false);
 
         player.PopActionMap();
-        player.Camera.enabled = true;
         LockCursor.PopLockState();
     }
 
