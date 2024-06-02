@@ -235,7 +235,7 @@ public class Journal : Item
             info = animator.GetCurrentAnimatorClipInfo(0);
         }
 
-        yield return new WaitForSeconds(info[0].clip.length);
+        yield return new WaitForSeconds(info[0].clip.length / animator.GetNextAnimatorStateInfo(0).speed);
         inAnimation = false;
     }
 
