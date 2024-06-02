@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d710cb0b55027b49b5116fd3d7bd0f3, type: 3}
-  m_Name: Satellite 2
+  m_Name: Treehouse Satellite
   m_EditorClassIdentifier: 
   Name: connect second satellite
   Type: 1
