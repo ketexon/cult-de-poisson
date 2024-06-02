@@ -7,7 +7,7 @@ public class PufferfishItemBehaviour : FishItemBehaviour
     [SerializeField] float force = 5;
 
     public override bool TargetInteractVisible => true;
-    public override string TargetInteractMessage => turnedOn ? "to turn on pufferfish :(" : "to turn off pufferfish uwo";
+    public override string TargetInteractMessage => turnedOn ? "to turn off pufferfish :(" : "to turn on pufferfish uwo";
 
     bool turnedOn = false;
 

@@ -78,7 +78,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "AltUseItem",
+                    "name": "Throw",
                     "type": "Button",
                     "id": "9fc70747-2bfd-423c-8a38-d86331696788",
                     "expectedControlType": "Button",
@@ -359,8 +359,19 @@
                     "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "AltUseItem",
+                    "groups": "KBM",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c6ed4af-d8fd-4e87-948e-c2bc34c9bb05",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -795,6 +806,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "16af9e83-6383-4aa5-944d-c3eea74bc4b3",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "Arrow Keys",
                     "id": "32573921-05ac-4af2-9537-38582ef083b3",
                     "path": "2DVector",
@@ -903,17 +925,6 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "ab40ba50-7e06-4b5b-a022-982b4ed6410a",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -1112,7 +1123,40 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
+                    "name": "QE",
+                    "id": "e5f60e7b-80db-4f89-9923-9281990c73eb",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "de378002-8268-49db-96c7-5b1e48397375",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Cycle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "9daa01e5-e86d-4691-8cdf-daddfa40fc5d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Cycle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shoulders",
                     "id": "b6fc3a05-cbe5-485e-81f1-b3eff80a274f",
                     "path": "1DAxis",
                     "interactions": "",
@@ -1145,8 +1189,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "QE",
-                    "id": "e5f60e7b-80db-4f89-9923-9281990c73eb",
+                    "name": "DPad",
+                    "id": "3f65222b-8394-437a-ac58-c3826a525f71",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -1157,22 +1201,55 @@
                 },
                 {
                     "name": "negative",
-                    "id": "de378002-8268-49db-96c7-5b1e48397375",
-                    "path": "<Keyboard>/q",
+                    "id": "de4c55fc-e6c5-4cd2-ab80-9bb01c7d6265",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KBM",
+                    "groups": "Controller",
                     "action": "Cycle",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
-                    "id": "9daa01e5-e86d-4691-8cdf-daddfa40fc5d",
-                    "path": "<Keyboard>/e",
+                    "id": "3b606236-356b-4d21-8edd-a4cbaab693f4",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KBM",
+                    "groups": "Controller",
+                    "action": "Cycle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left Stick",
+                    "id": "87d941e0-2d86-4c48-a22e-5354d9d15a15",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "f262bff8-afdb-4910-858e-dcdd2f55e7ea",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Cycle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "bfc9f7a9-0211-4bf2-b597-c3eed27f5bb4",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Cycle",
                     "isComposite": false,
                     "isPartOfComposite": true

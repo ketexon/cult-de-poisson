@@ -74,23 +74,27 @@ public class PlayerInventorySO : SavableSO
     [SerializeField] public List<FishSO> StartingFish = new();
 
     [System.NonSerialized]
-    public List<FishSO> Fish;
+    List<FishSO> fish;
+
+    public IReadOnlyList<FishSO> Fish => fish;
 
     public System.Action<FishSO> FishAddedEvent;
+    public System.Action<FishSO> FishRemovedEvent;
 
     void OnEnable()
     {
-        Fish = new(StartingFish);
+        fish = new(StartingFish);
     }
 
     public void AddFish(FishSO fish)
     {
-        Fish.Add(fish);
+        this.fish.Add(fish);
         FishAddedEvent?.Invoke(fish);
     }
 
     public void RemoveFish(FishSO fish)
     {
-        Fish.Remove(fish);
+        this.fish.Remove(fish);
+        FishRemovedEvent?.Invoke(fish);
     }
 }
