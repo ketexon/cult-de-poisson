@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class NotificationsUI : MonoBehaviour
+public class NotificationsUI : SingletonBehaviour<NotificationsUI>
 {
     [SerializeField] UIDocument document;
     [SerializeField] VisualTreeAsset notificationTemplate;

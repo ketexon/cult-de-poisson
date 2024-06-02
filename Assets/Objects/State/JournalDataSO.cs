@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Journal Data", menuName = "State/Journal Data")]
-public class JournalDataSO : ScriptableObject
+public class JournalDataSO : SingletonObject<JournalDataSO>
 {
     HashSet<FishSO> caughtFish = new();
+    HashSet<JournalEntrySO> journalEntries = new();
     
     public IReadOnlyCollection<FishSO> CaughtFish => caughtFish;
     public System.Action<FishSO> NewFishCaughtEvent;
+
+    public IReadOnlyCollection<JournalEntrySO> JournalEntries => journalEntries;
+    public System.Action<JournalEntrySO> NewJournalEntryEvent;
 
     public void AddCaughtFish(FishSO f)
     {
@@ -16,6 +20,15 @@ public class JournalDataSO : ScriptableObject
         {
             caughtFish.Add(f);
             NewFishCaughtEvent?.Invoke(f);
+        }
+    }
+
+    public void AddJournalEntry(JournalEntrySO e)
+    {
+        if (!journalEntries.Contains(e))
+        {
+            journalEntries.Add(e);
+            NewJournalEntryEvent?.Invoke(e);
         }
     }
 }
