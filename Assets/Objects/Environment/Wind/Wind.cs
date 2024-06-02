@@ -12,7 +12,7 @@ public class Wind : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("HI");
+        Debug.Log("Entered wind");
         inWind = true;
     }
 
@@ -25,7 +25,7 @@ public class Wind : MonoBehaviour
     {
         if (inWind)
         {
-            RB.AddForce((targetPoint.position - RB.position) * strength);
+            RB.AddForce((targetPoint.position - RB.position).normalized * strength);
         }
     }
 }
