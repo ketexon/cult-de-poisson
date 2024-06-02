@@ -20,6 +20,7 @@ public class JournalDataSO : SingletonObject<JournalDataSO>
         {
             caughtFish.Add(f);
             NewFishCaughtEvent?.Invoke(f);
+            NotificationsUI.Instance.AddCatchFishNotification(f);
         }
     }
 
@@ -29,6 +30,7 @@ public class JournalDataSO : SingletonObject<JournalDataSO>
         {
             journalEntries.Add(e);
             NewJournalEntryEvent?.Invoke(e);
+            NotificationsUI.Instance.AddJournalNotification();
         }
     }
 }

@@ -17,7 +17,6 @@ public class JournalEntryInteractable : Interactable
         base.OnInteract();
 
         JournalDataSO.Instance.AddJournalEntry(entry);
-        NotificationsUI.Instance.AddJournalNotification();
 
         Destroy(gameObject);
     }
