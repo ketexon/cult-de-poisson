@@ -13,12 +13,8 @@ MonoBehaviour:
   m_Name: JungleFishZone
   m_EditorClassIdentifier: 
   Fish:
-  - {fileID: 11400000, guid: 9e524a81b809ac44d8cc8027cb8eec2a, type: 2}
-  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
-  - {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
-  - {fileID: 11400000, guid: 9e524a81b809ac44d8cc8027cb8eec2a, type: 2}
-  - {fileID: 11400000, guid: d9e464790bcab3742ac529c97621e95e, type: 2}
-  - {fileID: 11400000, guid: 4732772847e03594888ebed3a0caa1da, type: 2}
-  - {fileID: 11400000, guid: 6a29a23eef8645a4d95b98b5394a11e8, type: 2}
+  - {fileID: 11400000, guid: 488c641b736643a4aa9b4448ba748068, type: 2}
   - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
+  - {fileID: 11400000, guid: fadda4b217eca304f9dd227e05dcf366, type: 2}
+  - {fileID: 11400000, guid: 732d55710c4b5cd4ca59f093c3d3ef83, type: 2}
   FishDensity: 0.005
