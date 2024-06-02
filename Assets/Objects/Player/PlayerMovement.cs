@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
     [SerializeField] float ladderClimbSpeed = 0.25f;
+    [SerializeField] bool lockCamera = false;
 
     NavMeshAgent agent;
     Rigidbody rb;
@@ -47,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     Vector2? pitchRange = null, yawRange = null;
 
     bool shouldReenableAgent = false;
+
+    Vector2 lookSpeed = Vector2.zero;
 
     public void SetPhysicsEnabled(bool enabled)
     {
@@ -87,13 +90,27 @@ public class PlayerMovement : MonoBehaviour
         {
             agent.velocity = CalculateVelocity();
         }
+
+        UpdateLook(lookSpeed * Time.deltaTime);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed) return;
+        if (!ctx.performed || lockCamera) return;
 
         var delta = ctx.ReadValue<Vector2>();
+
+        UpdateLook(delta);
+    }
+
+    public void OnLookSpeed(InputAction.CallbackContext ctx)
+    {
+        lookSpeed = ctx.ReadValue<Vector2>();
+    }
+
+    void UpdateLook(Vector2 delta)
+    {
+        if (delta == Vector2.zero) return;
 
         var playerEulerY = lookRoot.rotation.eulerAngles.y;
         float newPlayerEulerY = playerEulerY + delta.x * mouseSensitivity;
@@ -276,17 +293,23 @@ public class PlayerMovement : MonoBehaviour
 
         while (Vector3.Distance(transform.position, aboveBottom) > 0.01f)
         {
-            Debug.Log($"A: {transform.position} {aboveBottom} {Time.deltaTime * ladderClimbSpeed} {Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed)}");
             transform.position = Vector3.MoveTowards(transform.position, aboveBottom, Time.deltaTime * ladderClimbSpeed);
             yield return null;
         }
 
         float verticalDifference = transform.position.y - data.endPos.y - 0.75f;
 
-        while (Mathf.Abs(verticalDifference) > 0.01f)
+        while (Mathf.Abs(verticalDifference) > 0.1f && (startFromBottom ? verticalDifference < 0 : verticalDifference > 0))
         {
             transform.position += (startFromBottom ? 1 : -1) * ladderClimbSpeed * Time.deltaTime * Vector3.up;
             verticalDifference = transform.position.y - data.endPos.y - 0.75f;
+            yield return null;
+        }
+
+        Vector3 aboveTop = new(data.endPos.x, transform.position.y, data.endPos.z);
+        while (Vector3.Distance(transform.position, aboveTop) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, aboveTop, Time.deltaTime * ladderClimbSpeed);
             yield return null;
         }
         agent.CompleteOffMeshLink();

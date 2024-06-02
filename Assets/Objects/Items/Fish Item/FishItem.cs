@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class FishItem : Item
 {
-    [SerializeField] InputActionReference altUseItemAction;
+    [SerializeField] InputActionReference throwAction;
     [SerializeField] InputActionReference placeItemAction;
     [SerializeField] PlayerInventorySO inventory;
     [SerializeField] float throwVelocity = 10.0f;
@@ -15,10 +15,14 @@ public class FishItem : Item
     [System.NonSerialized] public FishSO fishSO;
     GameObject fishGO;
     Fish fish;
-    GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
 
+    public override bool CanSwitchItems => inventory.Fish.Count <= inventory.MaxFish;
+    public override string SwitchItemsDisabledReason => "inventory full";
+
     public override IInteractObject InteractItem => fish ? fish.ItemBehaviour : null;
+
+    System.Action inputUIDestructor;
 
     public void SetFish(FishSO fishSO)
     {
@@ -49,26 +53,28 @@ public class FishItem : Item
         fish.InitializeBucket();
     }
 
-    public void Awake()
+    public void OnEnable()
     {
-        altUseItemAction.action.performed += OnAltUse;
+        throwAction.action.performed += OnThrow;
         placeItemAction.action.performed += OnPlaceUse;
+
+        Player.Instance.Input.controlsChangedEvent.AddListener(OnControlsChanged);
+        inputUIDestructor = InputUI.Instance.AddInputUI(throwAction, "to yeet");
     }
 
-    public void OnDestroy()
+    public void OnDisable()
     {
-        altUseItemAction.action.performed -= OnAltUse;
+        throwAction.action.performed -= OnThrow;
         placeItemAction.action.performed -= OnPlaceUse;
+
+        Player.Instance.Input.controlsChangedEvent.RemoveListener(OnControlsChanged);
+        inputUIDestructor?.Invoke();
     }
 
-    public void OnAltUse(InputAction.CallbackContext ctx)
+    public void OnThrow(InputAction.CallbackContext ctx)
     {
         // Get the camera's front vector and make it a unit vector
         Vector3 front = mainCamera.transform.forward;
-        front.Normalize();
-
-        // Get the current position of the in hand
-        Transform temp = fishGO.transform;
 
         // Remove the fish from the inventory
         inventory.RemoveFish(fishSO);
@@ -84,11 +90,9 @@ public class FishItem : Item
         // Give the thrown fish angular velocity
         thrownFishRigidbody.angularVelocity = throwAngularVelocity * front;
 
-
         fishGO = null;
 
-        playerItem.CycleItem(1);
-    
+        playerItem.CycleItem();    
     }
     
     public void OnPlaceUse(InputAction.CallbackContext ctx)
@@ -118,5 +122,11 @@ public class FishItem : Item
             // Instantiate the fish at the hit location
             Instantiate(fishSO.PhysicalPrefab, hit.point, rotation);
         }
+    }
+
+    void OnControlsChanged(PlayerInput _)
+    {
+        inputUIDestructor?.Invoke();
+        inputUIDestructor = InputUI.Instance.AddInputUI(throwAction, "to yeet");
     }
 }

@@ -24,6 +24,8 @@ public class InputUI : SingletonBehaviour<InputUI>
 
     VisualElement root => document.rootVisualElement;
 
+    public NotificationsUI Notifications { get; private set; }
+
     public bool CrosshairEnabled { get; private set; } = false;
     public bool CrosshairVisible { get; private set; } = true;
 
@@ -41,6 +43,13 @@ public class InputUI : SingletonBehaviour<InputUI>
         interactionContainer = root.Q<VisualElement>("interaction-container");
         crosshair = root.Q<VisualElement>(null, "crosshair");
         interactionContainer.Clear();
+
+        Notifications = GetComponent<NotificationsUI>();
+    }
+
+    void OnControlsChanged(PlayerInput _)
+    {
+        Debug.Log("HI");
     }
 
     /// <summary>
@@ -82,7 +91,7 @@ public class InputUI : SingletonBehaviour<InputUI>
     /// <returns>A callback to call to remove the input.</returns>
     public System.Action AddInputUI(InputAction inputAction, string message, bool disabled = false, int order = 0)
     {
-        var ve = AddInputUIToDocument(new Entry
+        var destructor = AddInputUIToDocument(new Entry
         {
             InputAction = inputAction,
             Message = message,
@@ -90,60 +99,76 @@ public class InputUI : SingletonBehaviour<InputUI>
             Order = order,
         });
 
-        return () =>
-        {
-            ve.RemoveFromHierarchy();
-        };
+        return destructor;
     }
 
     public System.Action AddInputUI(IEnumerable<Entry> entries)
     {
-        List<VisualElement> ves = new List<VisualElement>();
+        List<System.Action> destructors = new();
         foreach(var entry in entries)
         {
-            ves.Add(AddInputUIToDocument(entry));
+            destructors.Add(AddInputUIToDocument(entry));
         }
         return () =>
         {
-            foreach(var ve in ves)
+            foreach(var destructor in destructors)
             {
-                ve.RemoveFromHierarchy();
+                destructor();
             }
         };
     }
 
-    private VisualElement AddInputUIToDocument(Entry entry)
+    private System.Action AddInputUIToDocument(Entry entry)
     {
         var ve = interactionTemplate.Instantiate();
         var root = ve.Q<OrderableElement>("interaction-indicator");
         root.EnableInClassList("disabled", entry.Disabled);
+        root.Order = entry.Order;
         
         var iconsContainer = root.Q<VisualElement>(null, "interaction-indicator__icons");
-        iconsContainer.Clear();
 
-        var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
-        foreach (var displayString in bindingDisplayStrings)
+        void SetIcon()
         {
-            var icon = keybindIconTemplate.Instantiate();
+            iconsContainer.Clear();
 
-            if (DisplayStringIconClassMap.ContainsKey(displayString))
+            if(entry.InputAction.name == "ControllerReel")
             {
+                var icon = keybindIconTemplate.Instantiate();
+
                 icon.AddToClassList("keybind-icon--image");
-                icon.AddToClassList(DisplayStringIconClassMap[displayString]);
+                icon.AddToClassList("keybind-icon--dpad-cycle");
+
+                iconsContainer.Add(icon);
+
+                return;
             }
-            else
+
+            var bindingDisplayStrings = InputUtil.GetActionDisplayStrings(entry.InputAction);
+            foreach (var displayString in bindingDisplayStrings)
             {
-                icon.AddToClassList("keybind-icon--text");
+                var icon = keybindIconTemplate.Instantiate();
 
-                var iconLabel = icon.Q<Label>(null, "keybind-icon__text");
-                iconLabel.text = displayString;
+                if (DisplayStringIconClassMap.ContainsKey(displayString))
+                {
+                    icon.AddToClassList("keybind-icon--image");
+                    icon.AddToClassList(DisplayStringIconClassMap[displayString]);
+                }
+                else
+                {
+                    icon.AddToClassList("keybind-icon--text");
+
+                    var iconLabel = icon.Q<Label>(null, "keybind-icon__text");
+                    iconLabel.text = displayString;
+                }
+
+                iconsContainer.Add(icon);
             }
-
-            iconsContainer.Add(icon);
         }
 
+        SetIcon();
+
         var label = ve.Q<Label>(null, "interaction-indicator__label");
-        label.text = entry.Message;
+        label.text = entry.Message.ToLower();
 
         int index = 0;
         foreach(var child in interactionContainer.Children())
@@ -154,6 +179,17 @@ public class InputUI : SingletonBehaviour<InputUI>
         }
         interactionContainer.Insert(index, ve);
 
-        return ve;
+        void OnControlsChange(PlayerInput _)
+        {
+            SetIcon();
+        }
+
+        Player.Instance.Input.controlsChangedEvent.AddListener(OnControlsChange);
+
+        return () =>
+        {
+            ve.RemoveFromHierarchy();
+            Player.Instance.Input.controlsChangedEvent.RemoveListener(OnControlsChange);
+        };
     }
 }

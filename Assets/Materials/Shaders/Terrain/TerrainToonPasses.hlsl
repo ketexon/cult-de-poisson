@@ -357,6 +357,15 @@ void SplatmapFragment(
     if (_NumLayersCount <= 4)
         HeightBasedSplatModify(splatControl, masks);
 #endif
+    
+    //Override control for steep terrain / triplanar shader
+
+    float steepness = dot(normalize(abs(IN.normal)), float3(0, 1, 0));
+    float textureChoice = step(_SteepnessCutoff, steepness);
+
+    splatControl = 
+        splatControl * textureChoice 
+        + (1 - textureChoice) * half4(0,1,0,0);
 
     half weight;
     half4 mixedDiffuse;
@@ -441,6 +450,7 @@ void SplatmapFragment(
     SplatmapFinalColor(color, inputData.fogCoord);
 
     outColor = half4(color.rgb, 1.0h);
+    //outColor = half4(steepness, steepness, steepness, 1);
 
 #ifdef _WRITE_RENDERING_LAYERS
     uint renderingLayers = GetMeshRenderingLayer();

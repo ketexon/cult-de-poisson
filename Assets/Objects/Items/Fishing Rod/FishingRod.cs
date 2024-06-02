@@ -39,8 +39,16 @@ public class FishingRod : Item
     [SerializeField] InputActionReference aimAction;
     [SerializeField] InputActionReference unaimAction;
     [SerializeField] InputActionReference moveAction;
+    [SerializeField] InputActionReference moveSpeedAction;
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference reelAction;
+    [SerializeField] InputActionReference controllerReelAction;
+
+    [SerializeField] JournalDataSO journalData;
+
+    public System.Action<FishSO> FishCaughtEvent;
+
+    Vector2 moveSpeed = Vector2.zero;
 
     FishingState fishingState = FishingState.Uncast;
     bool aiming = false;
@@ -87,6 +95,8 @@ public class FishingRod : Item
     /// </summary>
     System.Action inputUIDestructor = null;
 
+    Vector2 lastControllerReel = Vector2.zero;
+
     protected virtual void OnEnable()
     {
         aimAction.action.performed += OnAim;
@@ -95,8 +105,15 @@ public class FishingRod : Item
         moveAction.action.performed += OnFishMove;
         moveAction.action.canceled += OnFishMove;
 
+        moveSpeedAction.action.performed += OnMoveSpeed;
+        moveSpeedAction.action.canceled += OnMoveSpeed;
+
         clickAction.action.performed += OnFishClick;
         reelAction.action.performed += OnFishReel;
+
+        controllerReelAction.action.performed += OnFishControllerReel;
+
+        playerInput.controlsChangedEvent.AddListener(OnControlsChanged);
 
         if (InputUI.Instance)
         {
@@ -141,6 +158,10 @@ public class FishingRod : Item
                 );
             }
         }
+        else
+        {
+            MoveRodInternal(moveSpeed * -127);
+        }
     }
 
 
@@ -162,8 +183,13 @@ public class FishingRod : Item
         moveAction.action.performed -= OnFishMove;
         moveAction.action.canceled -= OnFishMove;
 
+        moveSpeedAction.action.performed -= OnMoveSpeed;
+        moveSpeedAction.action.canceled -= OnMoveSpeed;
+
         clickAction.action.performed -= OnFishClick;
         reelAction.action.performed -= OnFishReel;
+
+        controllerReelAction.action.performed -= OnFishControllerReel;
 
         inputUIDestructor?.Invoke();
         inputUIDestructor = null;
@@ -215,6 +241,16 @@ public class FishingRod : Item
     public void OnFishMove(InputAction.CallbackContext ctx)
     {
         var delta = ctx.ReadValue<Vector2>();
+        MoveRodInternal(delta);
+    }
+
+    public void OnMoveSpeed(InputAction.CallbackContext ctx)
+    {
+        moveSpeed = ctx.ReadValue<Vector2>();
+    }
+
+    void MoveRodInternal(Vector2 delta)
+    {
         rodFishingTargetAngle = Mathf.Clamp(
             rodFishingTargetAngle + delta.y * fishingSensitivityY,
             -120, 30
@@ -240,6 +276,23 @@ public class FishingRod : Item
     {
         reelStrength = Mathf.Clamp(-ctx.ReadValue<float>() / 120, -1, 1);
         fishingLine.Reel(reelStrength);
+    }
+
+    public void OnFishControllerReel(InputAction.CallbackContext ctx)
+    {
+        var v = ctx.ReadValue<Vector2>();
+        var dir = Vector3.Cross(v, lastControllerReel).z;
+        if(!Mathf.Approximately(dir, 0))
+        {
+            fishingLine.Reel(Mathf.Sign(dir) * 5);
+        }
+
+        lastControllerReel = v;
+    }
+
+    void OnControlsChanged(PlayerInput _)
+    {
+        UpdateInputUI();
     }
 
 
@@ -312,6 +365,7 @@ public class FishingRod : Item
             // save hooked fish, since enabling another item
             // calls OnDisable, which sets hookedFish to null
             var hookedFish = this.fish;
+            var hookedFishSO = hookedFish.FishSO;
 
             // note: this will disable the current script, and hence
             // add the hooked fish to the inventory
@@ -320,6 +374,9 @@ public class FishingRod : Item
             playerItem.EnableItem(fishItem, true);
 
             InteractivityChangeEvent?.Invoke(this);
+
+            FishCaughtEvent?.Invoke(hookedFishSO);
+            journalData.AddCaughtFish(hookedFishSO);
         }
         else
         {
@@ -344,21 +401,43 @@ public class FishingRod : Item
                 });
             }
 
-            interactions.Add(new()
+            if (playerInput.currentControlScheme == "KBM")
             {
-                InputAction = moveAction,
-                Message = "to move rod"
-            });
+                interactions.Add(new()
+                {
+                    InputAction = moveAction,
+                    Message = "to move rod"
+                });
+            }
+            else
+            {
+                interactions.Add(new()
+                {
+                    InputAction = moveSpeedAction,
+                    Message = "to move rod"
+                });
+            }
         }
         else
         {
             if(fishingState == FishingState.Cast)
             {
-                interactions.Add(new()
+                if(playerInput.currentControlScheme == "KBM")
                 {
-                    InputAction = reelAction,
-                    Message = "to reel"
-                });
+                    interactions.Add(new()
+                    {
+                        InputAction = reelAction,
+                        Message = "to reel"
+                    });
+                }
+                else
+                {
+                    interactions.Add(new()
+                    {
+                        InputAction = controllerReelAction,
+                        Message = "to reel"
+                    });
+                }
             }
 
             interactions.Add(new()

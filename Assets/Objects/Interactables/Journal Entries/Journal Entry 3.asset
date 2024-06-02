@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a967e1ea0785d414da9824b79007558f, type: 3}
+  m_Name: Journal Entry 3
+  m_EditorClassIdentifier: 
+  Text: "Year 1 Day 122\r\nThey have electricity but no form of verbal communication.
+    My attempts at conversation with them have been rendered useless as they do not
+    seem to understand nor wish to speak with me. It\u2019s all just meaningless
+    symbols. I may be forced to simplify my thoughts-- Tomorrow, I shall return with
+    simpler speech. In due time, I will educate them enough to speak with us about
+    the island. We can\u2019t coexist without words.\r"

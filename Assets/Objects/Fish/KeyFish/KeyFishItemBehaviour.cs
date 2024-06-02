@@ -7,11 +7,24 @@ using UnityEngine;
 
 public class KeyFishItemBehaviour : FishItemBehaviour
 {
-    public override bool AgentInteractVisible(Interactable interactable) => interactable is DoorInteractable;
-    public override string AgentInteractMessage(Interactable _) => "Open door";
+    [SerializeField] PlayerInventorySO inventory;
+    [SerializeField] string doorTag = "Door";
+
+    Fish fish;
+
+    public override bool AgentInteractVisible(Interactable interactable) => interactable.gameObject.CompareTag(doorTag);
+    public override string AgentInteractMessage(Interactable _) => "to open door";
+
+    void Awake()
+    {
+        fish = GetComponent<Fish>();
+    }
 
     public override void OnInteract(Interactable target)
     {
-        Debug.Log("Interact");
+        target.OnInteract();
+
+        inventory.RemoveFish(fish.FishSO);
+        Player.Instance.Item.CycleItem();
     }
 }

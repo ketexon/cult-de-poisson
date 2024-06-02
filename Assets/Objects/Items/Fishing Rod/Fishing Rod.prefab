@@ -253,10 +253,15 @@ MonoBehaviour:
     type: 3}
   moveAction: {fileID: -1182480507873766809, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+  moveSpeedAction: {fileID: -1712004811172153079, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
   clickAction: {fileID: -7825872856963117365, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   reelAction: {fileID: 6995657538940225816, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
+  controllerReelAction: {fileID: 5080871290493901487, guid: 74ba8a3a9aaed2040a694812328659e2,
+    type: 3}
+  journalData: {fileID: 11400000, guid: c64e4626a0ec8304ab819d8e4f5eb9b8, type: 2}
 --- !u!1 &8603702008569667864
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a967e1ea0785d414da9824b79007558f, type: 3}
+  m_Name: Journal Entry 1
+  m_EditorClassIdentifier: 
+  Text: 'Year 1 Day 18
+
+    Eighteen days after leaving the mainland, I have finally
+    set foot upon an uncivilized island. I have set claim to this cove and begun
+    preparations for a permanent settlement. I fear my crewmates discuss our return
+    too soon. They overlook the treasure to be uncovered here. Men of future generations
+    will honor my family, my son, and his children for pioneering a home for mankind.
+    <u>Man has a responsibility to surface gold hidden beneath the sand.</u>'

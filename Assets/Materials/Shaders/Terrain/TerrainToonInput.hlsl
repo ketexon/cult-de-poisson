@@ -9,6 +9,7 @@ CBUFFER_START(UnityPerMaterial)
     float4 _MainTex_ST;
     half4 _BaseColor;
     half _Cutoff;
+    float _SteepnessCutoff;
 CBUFFER_END
 
 #define _Surface 0.0 // Terrain is always opaque

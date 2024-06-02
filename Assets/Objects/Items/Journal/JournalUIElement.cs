@@ -8,12 +8,12 @@ public abstract class JournalUIElement : MonoBehaviour, IPointerClickHandler, IP
 
     protected Journal Journal { get; private set; }
 
-    void Awake()
+    virtual protected void Awake()
     {
         Journal = GetComponentInParent<Journal>();
     }
 
-    void Start()
+    virtual protected void OnEnable()
     {
         Reset();
     }
@@ -28,6 +28,10 @@ public abstract class JournalUIElement : MonoBehaviour, IPointerClickHandler, IP
 
     public virtual void OnPointerExit(PointerEventData eventData) { }
 
+    /// <summary>
+    /// Resets the UI element to its default state.
+    /// Called when a page is opened
+    /// </summary>
     public virtual void Reset() { }
 
 }

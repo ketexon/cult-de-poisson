@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Journal : Item
 {
@@ -17,7 +21,7 @@ public class Journal : Item
     CinemachineVirtualCamera virtualCamera;
 
     [SerializeField]
-    InputActionReference exitAction;
+    InputActionReference exitAction, turnPageAction;
 
     [SerializeField]
     GameObject[] journalHeadPages = new GameObject[0];
@@ -25,17 +29,43 @@ public class Journal : Item
     [SerializeField]
     Bookmark[] bookmarks = new Bookmark[3];
 
+    [SerializeField]
+    JournalDataSO journalData;
+
     Animator animator;
+    Action inputUIDestructor = null;
+    List<InputUI.Entry> inputUIEntries = new();
 
     bool inAnimation = false;
     bool usingJournal = false;
-    float curSection = 0;
+    int curSection = 0;
+
+    List<string> caughtFishNames = new();
+
+    public override string TargetInteractMessage => "to open journal";
+    public override bool TargetInteractVisible => !usingJournal;
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
 
         OnExitJournal();
+
+        foreach (GameObject page in journalHeadPages)
+        {
+            if (page.TryGetComponent<Canvas>(out var canvas))
+            {
+                canvas.worldCamera = mainCamera;
+            }
+        }
+
+        InitializeInputUI();
+
+        foreach(var f in journalData.CaughtFish)
+        {
+            caughtFishNames.Add(f.Name);
+        }
+        journalData.NewFishCaughtEvent += OnNewFishCaught;
     }
 
     public override void Initialize(InitializeParams initParams)
@@ -43,9 +73,10 @@ public class Journal : Item
         base.Initialize(initParams);
 
         exitAction.action.performed += StopUsingJournal;
+        turnPageAction.action.performed += TurnPage;
     }
 
-    public override void OnUse()
+    public override void OnInteract()
     {
         if (journalHeadPages.Length == 0)
         {
@@ -63,6 +94,10 @@ public class Journal : Item
             bookmark.gameObject.SetActive(true);
         }
 
+        inputUIDestructor = InputUI.Instance.AddInputUI(inputUIEntries);
+
+        InteractivityChangeEvent?.Invoke(this);
+
         StartCoroutine(OpenJournalInternal());
     }
 
@@ -70,6 +105,7 @@ public class Journal : Item
     {
         OnExitJournal();
         exitAction.action.performed -= StopUsingJournal;
+        turnPageAction.action.performed -= TurnPage;
         base.OnStopUsingItem();
     }
 
@@ -77,7 +113,6 @@ public class Journal : Item
     {
         if (pageNumber < 0 || pageNumber >= journalHeadPages.Length)
         {
-            Debug.LogError("Invalid page number: " + pageNumber);
             return;
         }
 
@@ -99,7 +134,25 @@ public class Journal : Item
             bookmark.gameObject.SetActive(false);
         }
 
+        inputUIDestructor?.Invoke();
         OnExitJournal();
+
+        InteractivityChangeEvent?.Invoke(this);
+    }
+
+    void TurnPage(CallbackContext ctx)
+    {
+        if (ctx.performed && usingJournal)
+        {
+            if (ctx.ReadValue<float>() > 0)
+            {
+                OpenPage(curSection + 1);
+            }
+            else
+            {
+                OpenPage(curSection - 1);
+            }
+        }
     }
 
     void OnExitJournal()
@@ -120,13 +173,6 @@ public class Journal : Item
 
     IEnumerator OpenPageInternal(int pageNumber)
     {
-        JournalUIElement[] journalUIElements = journalHeadPages[(int)curSection].GetComponentsInChildren<JournalUIElement>();
-
-        foreach (JournalUIElement element in journalUIElements)
-        {
-            element.Reset();
-        }
-
         foreach (GameObject page in journalHeadPages)
         {
             page.SetActive(false);
@@ -141,10 +187,26 @@ public class Journal : Item
             yield return StartCoroutine(TriggerAnimation(TURN_PAGE_BACKWARD_TRIGGER));
         }
 
+        InitializePage(pageNumber);
+    }
+
+    private void InitializePage(int pageNumber)
+    {
+        GameObject newPage = journalHeadPages[pageNumber];
 
         curSection = pageNumber;
-        journalHeadPages[pageNumber].SetActive(true);
-        journalHeadPages[pageNumber].GetComponent<Canvas>().worldCamera = mainCamera;
+        newPage.SetActive(true);
+        newPage.GetComponent<Canvas>().worldCamera = mainCamera;
+
+        List<Button> buttons = new(newPage.GetComponentsInChildren<Button>());
+        if (buttons.Count > 0)
+        {
+            var first = buttons.Find(b => b.interactable);
+            if (first)
+            {
+                EventSystem.current.SetSelectedGameObject(first.gameObject);
+            }
+        }
     }
 
     IEnumerator OpenJournalInternal()
@@ -155,6 +217,8 @@ public class Journal : Item
 
         journalHeadPages[0].SetActive(true);
         journalHeadPages[0].GetComponent<Canvas>().worldCamera = mainCamera;
+
+        InitializePage(0);
     }
 
     IEnumerator TriggerAnimation(string animationTrigger)
@@ -173,13 +237,29 @@ public class Journal : Item
             info = animator.GetCurrentAnimatorClipInfo(0);
         }
 
-        yield return new WaitForSeconds(info[0].clip.length);
+        yield return new WaitForSeconds(info[0].clip.length / animator.GetNextAnimatorStateInfo(0).speed);
         inAnimation = false;
     }
 
-    public string[] GetUnlockedFish()
+    public List<string> GetUnlockedFishNames() => caughtFishNames;
+
+
+    void InitializeInputUI()
     {
-        return new string[] { "KeyFish", "TubeSnout" };
+        inputUIEntries.Add(new InputUI.Entry
+        {
+            Message = $"to close the journal",
+            InputAction = exitAction,
+        });
+        inputUIEntries.Add(new InputUI.Entry
+        {
+            Message = $"to turn the page",
+            InputAction = turnPageAction,
+        });
     }
 
+    void OnNewFishCaught(FishSO fishSO)
+    {
+        caughtFishNames.Add(fishSO.Name);
+    }
 }

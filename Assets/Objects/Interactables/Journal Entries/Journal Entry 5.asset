@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a967e1ea0785d414da9824b79007558f, type: 3}
+  m_Name: Journal Entry 5
+  m_EditorClassIdentifier: 
+  Text: "Year 2 Day 116\r\nMy invention mirrors 19th century phonograms to project
+    audio lines that induce hypnosis. This should accelerate the ingraining of vocabulary.
+    Unfortunately, there is a delay. My son\u2019s girlfriend is always blabbering
+    on, questioning the mission. What teenagers know, deeming a project unethical
+    when I am making these people more civilized. Too much time frolicking with the
+    locals is to blame. Hopefully, she develops reason as she gets older.\r"

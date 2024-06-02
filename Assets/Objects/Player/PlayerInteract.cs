@@ -271,7 +271,8 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
     {
         // Check if player is pointing at an interactable
         if(Physics.Raycast(
-            transform.position, playerMovement.Camera.transform.forward, 
+            playerMovement.Camera.transform.position, 
+            playerMovement.Camera.transform.forward, 
             out RaycastHit hit, 
             parameters.InteractDistance, 
             parameters.InteractLayerMask,
@@ -363,7 +364,7 @@ public class PlayerInteract : SingletonBehaviour<PlayerInteract>
         bool showCrosshair = false;
 
         // Register agent interact for PlayerItem
-        if (InteractItem is IInteractAgent agent && agent.AgentInteractVisible(Interactable))
+        if (InteractItem is IInteractAgent agent && Interactable && agent.AgentInteractVisible(Interactable))
         {
             bool enabled = agent.AgentInteractEnabled(Interactable);
 

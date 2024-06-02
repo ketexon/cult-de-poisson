@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6eb714c7512144b83ae5432d38a0bb, type: 3}
+  m_Name: JungleFishZone
+  m_EditorClassIdentifier: 
+  Fish:
+  - {fileID: 11400000, guid: 488c641b736643a4aa9b4448ba748068, type: 2}
+  - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
+  - {fileID: 11400000, guid: fadda4b217eca304f9dd227e05dcf366, type: 2}
+  - {fileID: 11400000, guid: 732d55710c4b5cd4ca59f093c3d3ef83, type: 2}
+  FishDensity: 0.005

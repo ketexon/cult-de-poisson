@@ -50,10 +50,6 @@ public class Fish : MonoBehaviour
 
     public void InitializeBucket()
     {
-        rb.isKinematic = true;
-        rb.detectCollisions = false;
-        rb.useGravity = false;
-        boxCollider.enabled = false;
         if(FishMovement)
         {
             FishMovement.enabled = false;
@@ -66,11 +62,15 @@ public class Fish : MonoBehaviour
         {
             FishInteractable.enabled = false;
         }
+
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+        rb.useGravity = false;
+        boxCollider.enabled = false;
     }
 
     public void InitializeWater(FishZone fishZone)
     {
-        rb.useGravity = false;
         if (FishMovement)
         {
             FishMovement.enabled = true;
@@ -84,14 +84,15 @@ public class Fish : MonoBehaviour
         {
             FishInteractable.enabled = false;
         }
+
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+        rb.useGravity = false;
+        boxCollider.enabled = true;
     }
 
     public void InitializePhysical()
     {
-        rb.isKinematic = false;
-        rb.detectCollisions = true;
-        rb.useGravity = true;
-        boxCollider.enabled = true;
         if (FishMovement)
         {
             FishMovement.enabled = false;
@@ -104,6 +105,32 @@ public class Fish : MonoBehaviour
         {
             FishInteractable.enabled = true;
         }
+
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+        rb.useGravity = true;
+        boxCollider.enabled = true;
+    }
+
+    public void InitializeStatic()
+    {
+        if (FishMovement)
+        {
+            FishMovement.enabled = false;
+        }
+        if (HookedFish)
+        {
+            HookedFish.enabled = false;
+        }
+        if (FishInteractable)
+        {
+            FishInteractable.enabled = false;
+        }
+
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+        rb.useGravity = false;
+        boxCollider.enabled = false;
     }
 
     public void AttachTo(Rigidbody rb)

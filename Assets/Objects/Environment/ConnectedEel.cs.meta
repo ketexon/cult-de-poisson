@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5fecd37b959c03a40bab9e33caa666da
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - eelPrefab: {fileID: 7836643293546776421, guid: 570dc640fa6cfb743b197aa53e396a10,
+      type: 3}
+  - point1: {instanceID: 0}
+  - point2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
