@@ -1354,6 +1354,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 660761140418763393, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: entry
+      value: 
+      objectReference: {fileID: 11400000, guid: 50a3dc8b6fdfbbf47a7bd1c4f3845644,
+        type: 2}
     - target: {fileID: 1750193183132566533, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1402,6 +1408,16 @@ PrefabInstance:
     - target: {fileID: 1750193183132566533, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314024249575118394, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314024249575118394, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4006362832312343601, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
@@ -1459,6 +1475,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 118.417
       objectReference: {fileID: 0}
+    - target: {fileID: 5258047243462730395, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_Name
+      value: Scroll 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711306361291727978, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_Name
+      value: Scroll 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6141412067601714838, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
         type: 3}
       propertyPath: cutsceneGroup
@@ -1479,6 +1505,21 @@ PrefabInstance:
       propertyPath: cutsceneFadeGroup
       value: 
       objectReference: {fileID: 1342073247}
+    - target: {fileID: 7520652694204552733, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -115.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520652694204552733, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 31.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520652694204552733, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -120.39
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6205291473800042987, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
     - {fileID: 1147119236995128775, guid: 10ce2a706f20f8e4dbf44b7dd07ff6f6, type: 3}
@@ -1565,17 +1606,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1898142732566400137, guid: c4e79acc6fae11149a5048f5391e7486,
+    - target: {fileID: 1928588781345795144, guid: c4e79acc6fae11149a5048f5391e7486,
         type: 3}
-      propertyPath: Quest
-      value: 
-      objectReference: {fileID: 11400000, guid: 97d10412c2aba60408f1a0bcf8ad8338,
-        type: 2}
-    - target: {fileID: 3937370577486481109, guid: c4e79acc6fae11149a5048f5391e7486,
+      propertyPath: m_Name
+      value: Scroll 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3337651086295674961, guid: c4e79acc6fae11149a5048f5391e7486,
         type: 3}
-      propertyPath: Quest
+      propertyPath: m_Name
+      value: Scroll 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493791203231986925, guid: c4e79acc6fae11149a5048f5391e7486,
+        type: 3}
+      propertyPath: m_Name
+      value: Scroll 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5705679125279468238, guid: c4e79acc6fae11149a5048f5391e7486,
+        type: 3}
+      propertyPath: m_Name
+      value: Scroll 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561904751501431890, guid: c4e79acc6fae11149a5048f5391e7486,
+        type: 3}
+      propertyPath: entry
       value: 
-      objectReference: {fileID: 11400000, guid: 97d10412c2aba60408f1a0bcf8ad8338,
+      objectReference: {fileID: 11400000, guid: fc4c27d019e73b340a261634f443e3c9,
         type: 2}
     - target: {fileID: 6770147125879628244, guid: c4e79acc6fae11149a5048f5391e7486,
         type: 3}

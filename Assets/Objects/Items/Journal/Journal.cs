@@ -96,6 +96,8 @@ public class Journal : Item
 
         inputUIDestructor = InputUI.Instance.AddInputUI(inputUIEntries);
 
+        InteractivityChangeEvent?.Invoke(this);
+
         StartCoroutine(OpenJournalInternal());
     }
 

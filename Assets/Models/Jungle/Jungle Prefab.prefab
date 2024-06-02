@@ -3241,6 +3241,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 314888977219856184}
     m_Modifications:
+    - target: {fileID: 1452851168571194026, guid: 95a2e1fe8a4d4e64491adb1aa55a3ea5,
+        type: 3}
+      propertyPath: Quest
+      value: 
+      objectReference: {fileID: 11400000, guid: 506a69f272d601141a3dc40f0566d7b7,
+        type: 2}
+    - target: {fileID: 4096665010615775478, guid: 95a2e1fe8a4d4e64491adb1aa55a3ea5,
+        type: 3}
+      propertyPath: Quest
+      value: 
+      objectReference: {fileID: 11400000, guid: 506a69f272d601141a3dc40f0566d7b7,
+        type: 2}
     - target: {fileID: 6827433599156668200, guid: 95a2e1fe8a4d4e64491adb1aa55a3ea5,
         type: 3}
       propertyPath: m_Name
@@ -3961,6 +3973,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 314888977219856184}
     m_Modifications:
+    - target: {fileID: 1452851168571194026, guid: 95a2e1fe8a4d4e64491adb1aa55a3ea5,
+        type: 3}
+      propertyPath: Quest
+      value: 
+      objectReference: {fileID: 11400000, guid: 97d10412c2aba60408f1a0bcf8ad8338,
+        type: 2}
+    - target: {fileID: 4096665010615775478, guid: 95a2e1fe8a4d4e64491adb1aa55a3ea5,
+        type: 3}
+      propertyPath: Quest
+      value: 
+      objectReference: {fileID: 11400000, guid: 97d10412c2aba60408f1a0bcf8ad8338,
+        type: 2}
     - target: {fileID: 6827433599156668200, guid: 95a2e1fe8a4d4e64491adb1aa55a3ea5,
         type: 3}
       propertyPath: m_Name
