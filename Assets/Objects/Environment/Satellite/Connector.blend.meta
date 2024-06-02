@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 979b94a36a0f28c499e9570df2ec6116
+guid: c672ae5998b6add43939701f8ebeee76
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,23 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Dish
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Emission
-    second: {fileID: 2100000, guid: 1bdc5f4742888414d845e629693db182, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
       name: Material.001
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Satellite
-    second: {fileID: 2100000, guid: 45ac46382d39b764dbcac5822553f6b5, type: 2}
+    second: {fileID: 2100000, guid: 6f421ec8189103c4a947798c8af10b77, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
