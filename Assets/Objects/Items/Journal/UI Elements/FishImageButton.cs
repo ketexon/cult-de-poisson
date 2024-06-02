@@ -31,7 +31,7 @@ public class FishImageButton : JournalUIElement
             button.onClick.AddListener(() => dropdown.SetFishSO(fish));
         }
 
-        isInteractable = fish && Journal.GetUnlockedFish().Contains(fish.Name);
+        isInteractable = fish && Journal.GetUnlockedFishNames().Contains(fish.Name);
         button.interactable = isInteractable;
     }
 }

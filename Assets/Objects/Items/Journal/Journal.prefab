@@ -304,6 +304,7 @@ MonoBehaviour:
   - {fileID: 3677725479771923556}
   - {fileID: 1121529451128323913}
   - {fileID: 7303866954513399124}
+  journalData: {fileID: 11400000, guid: c64e4626a0ec8304ab819d8e4f5eb9b8, type: 2}
 --- !u!1 &2273889386752912596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,12 +2435,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4956989256114236494, guid: 401cd80091a687e4ea7c73e5aabef910,
-        type: 3}
-      propertyPath: fishSO
-      value: 
-      objectReference: {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d,
-        type: 2}
     - target: {fileID: 5624325113429668376, guid: 401cd80091a687e4ea7c73e5aabef910,
         type: 3}
       propertyPath: m_Name
@@ -2804,12 +2799,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4956989256114236494, guid: 401cd80091a687e4ea7c73e5aabef910,
-        type: 3}
-      propertyPath: fishSO
-      value: 
-      objectReference: {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c,
-        type: 2}
     - target: {fileID: 5624325113429668376, guid: 401cd80091a687e4ea7c73e5aabef910,
         type: 3}
       propertyPath: m_Name

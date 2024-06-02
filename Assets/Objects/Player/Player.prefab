@@ -1226,6 +1226,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 3484413572046251761, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: fishingRod
+      value: 
+      objectReference: {fileID: 8670695197074598236}
     - target: {fileID: 3559611127525853598, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1658,6 +1663,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3850021169010452873}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8670695197074598236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5564895037554884821, guid: 898217cfbd4f5bd49a7a10b3ec15ab21,
+    type: 3}
+  m_PrefabInstance: {fileID: 3850021169010452873}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e503707424c384fa1bf8a9a0dc5200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5463476037500287713
 PrefabInstance:
   m_ObjectHideFlags: 0

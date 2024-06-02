@@ -29,6 +29,9 @@ public class Journal : Item
     [SerializeField]
     Bookmark[] bookmarks = new Bookmark[3];
 
+    [SerializeField]
+    JournalDataSO journalData;
+
     Animator animator;
     Action inputUIDestructor = null;
     List<InputUI.Entry> inputUIEntries = new();
@@ -36,6 +39,8 @@ public class Journal : Item
     bool inAnimation = false;
     bool usingJournal = false;
     int curSection = 0;
+
+    List<string> caughtFishNames = new();
 
     public override string TargetInteractMessage => "to open journal";
     public override bool TargetInteractVisible => !usingJournal;
@@ -55,6 +60,12 @@ public class Journal : Item
         }
 
         InitializeInputUI();
+
+        foreach(var f in journalData.CaughtFish)
+        {
+            caughtFishNames.Add(f.Name);
+        }
+        journalData.NewFishCaughtEvent += OnNewFishCaught;
     }
 
     public override void Initialize(InitializeParams initParams)
@@ -183,10 +194,14 @@ public class Journal : Item
         newPage.SetActive(true);
         newPage.GetComponent<Canvas>().worldCamera = mainCamera;
 
-        Button[] buttons = newPage.GetComponentsInChildren<Button>();
-        if (buttons.Length > 0)
+        List<Button> buttons = new(newPage.GetComponentsInChildren<Button>());
+        if (buttons.Count > 0)
         {
-            EventSystem.current.SetSelectedGameObject(buttons.Where(b => b.interactable).First().gameObject);
+            var first = buttons.Find(b => b.interactable);
+            if (first)
+            {
+                EventSystem.current.SetSelectedGameObject(first.gameObject);
+            }
         }
     }
 
@@ -222,10 +237,7 @@ public class Journal : Item
         inAnimation = false;
     }
 
-    public string[] GetUnlockedFish()
-    {
-        return new string[] { "Key Fish", "Flounder" };
-    }
+    public List<string> GetUnlockedFishNames() => caughtFishNames;
 
 
     void InitializeInputUI()
@@ -240,5 +252,10 @@ public class Journal : Item
             Message = $"to turn the page",
             InputAction = turnPageAction,
         });
+    }
+
+    void OnNewFishCaught(FishSO fishSO)
+    {
+        caughtFishNames.Add(fishSO.Name);
     }
 }

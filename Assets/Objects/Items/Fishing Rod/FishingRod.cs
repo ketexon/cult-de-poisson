@@ -42,6 +42,10 @@ public class FishingRod : Item
     [SerializeField] InputActionReference clickAction;
     [SerializeField] InputActionReference reelAction;
 
+    [SerializeField] JournalDataSO journalData;
+
+    public System.Action<FishSO> FishCaughtEvent;
+
     FishingState fishingState = FishingState.Uncast;
     bool aiming = false;
 
@@ -312,6 +316,7 @@ public class FishingRod : Item
             // save hooked fish, since enabling another item
             // calls OnDisable, which sets hookedFish to null
             var hookedFish = this.fish;
+            var hookedFishSO = hookedFish.FishSO;
 
             // note: this will disable the current script, and hence
             // add the hooked fish to the inventory
@@ -320,6 +325,9 @@ public class FishingRod : Item
             playerItem.EnableItem(fishItem, true);
 
             InteractivityChangeEvent?.Invoke(this);
+
+            FishCaughtEvent?.Invoke(hookedFishSO);
+            journalData.AddCaughtFish(hookedFishSO);
         }
         else
         {

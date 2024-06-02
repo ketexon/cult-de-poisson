@@ -30,7 +30,10 @@ public class SpeciesDropdown : JournalUIElement
 		isInteractable = true;
 		dropdownTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 		UpdateTextFields(false);
-		OpenDropdown();
+		if (fishSO)
+		{
+			OpenDropdown();
+		}
 	}
 
 	//Opens the species dropdown and displays the fish's data
@@ -91,6 +94,10 @@ public class SpeciesDropdown : JournalUIElement
 
 	void UpdateTextFields(bool reopenDropdown)
 	{
+		if (!fishSO)
+		{
+			return;
+		}
 		speciesLabel.text = fishSO.Name;
 		weight.text = "Weight: " + fishSO.FishInfo.Weight + " lbs";
 		length.text = "Length: " + fishSO.FishInfo.LengthFeet + "' " + fishSO.FishInfo.LengthInches + "\"";
