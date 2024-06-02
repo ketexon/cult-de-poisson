@@ -71,12 +71,15 @@ public class PlayerInventorySO : SavableSO
 {
     public override string Key => "inventory";
 
+    [SerializeField] public int MaxFish = 6;
     [SerializeField] public List<FishSO> StartingFish = new();
 
     [System.NonSerialized]
     List<FishSO> fish;
 
     public IReadOnlyList<FishSO> Fish => fish;
+
+    public bool Full => Fish.Count >= MaxFish;
 
     public System.Action<FishSO> FishAddedEvent;
     public System.Action<FishSO> FishRemovedEvent;

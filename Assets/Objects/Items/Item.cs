@@ -17,6 +17,7 @@ public class Item : MonoBehaviour, IInteractTargetProxy, IInteractAgent, IIntera
     [SerializeField] ItemSO itemSO;
 
     public virtual bool CanSwitchItems => true;
+    public virtual string SwitchItemsDisabledReason => null;
 
     public ItemSO ItemSO => itemSO;
 

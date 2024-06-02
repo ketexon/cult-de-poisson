@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class FishInteractable : Interactable
 {
-    [SerializeField] string InteractMessageTemplate = "Pick up {0}";
     [SerializeField] PlayerInventorySO inventorySO;
-    private string fishName;
+
+    public override string TargetInteractMessage => inventorySO.Full ? $"to pick up {fishSO.Name} (inventory full)" : $"to pick up {fishSO.Name}";
+    public override bool TargetInteractEnabled => !inventorySO.Full;
+
     FishSO fishSO;
 
     public void Awake()
     {
-        Fish temp = GetComponent<Fish>();
-
-        fishSO = temp.FishSO;
-        fishName = fishSO.Name;
+        fishSO = GetComponent<Fish>().FishSO;
 
     }
     public override void OnInteract()
@@ -29,6 +28,4 @@ public class FishInteractable : Interactable
         // Destroy fish object
         Destroy(gameObject);
     }
-
-    public override string TargetInteractMessage => string.Format(InteractMessageTemplate, fishName);
 }

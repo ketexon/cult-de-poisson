@@ -15,8 +15,10 @@ public class FishItem : Item
     [System.NonSerialized] public FishSO fishSO;
     GameObject fishGO;
     Fish fish;
-    GameObject thrownFish;
     private Rigidbody thrownFishRigidbody;
+
+    public override bool CanSwitchItems => inventory.Fish.Count <= inventory.MaxFish;
+    public override string SwitchItemsDisabledReason => "inventory full";
 
     public override IInteractObject InteractItem => fish ? fish.ItemBehaviour : null;
 

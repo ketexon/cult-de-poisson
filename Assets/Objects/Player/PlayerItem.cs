@@ -278,6 +278,11 @@ public class PlayerItem : MonoBehaviour
 
         ItemChangeEvent?.Invoke(EnabledItem);
 
+        if (InputUI.Instance)
+        {
+            RecreateInputUI();
+        }
+
         return item;
     }
 
@@ -295,16 +300,35 @@ public class PlayerItem : MonoBehaviour
 
         if(inputUIDestructor == null && cycleItemAction.action.enabled)
         {
-            inputUIDestructor = InputUI.Instance.AddInputUI(
-                cycleItemAction.action,
-                "to switch items",
-                order: -1000
-            );
+            RecreateInputUI();
         }
         else if(inputUIDestructor != null && !cycleItemAction.action.enabled)
         {
             inputUIDestructor?.Invoke();
             inputUIDestructor = null;
+        }
+    }
+
+    void RecreateInputUI()
+    {
+        inputUIDestructor?.Invoke();
+
+        if (EnabledItem && !EnabledItem.CanSwitchItems)
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(
+                cycleItemAction.action,
+                EnabledItem.SwitchItemsDisabledReason == null ? "to switch items" : $"to switch items ({EnabledItem.SwitchItemsDisabledReason})",
+                order: -1000,
+                disabled: true
+            );
+        }
+        else
+        {
+            inputUIDestructor = InputUI.Instance.AddInputUI(
+                cycleItemAction.action,
+                "to switch items",
+                order: -1000
+            );
         }
     }
 
