@@ -716,12 +716,12 @@
                 },
                 {
                     "name": "Navigate",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "085c1199-f5ea-438b-a736-84f85e6cc1e2",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Point",
@@ -737,6 +737,15 @@
                     "type": "Button",
                     "id": "31d4cbef-297a-44a5-a52b-d467dff72268",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "PassThrough",
+                    "id": "a19d2f8d-b0db-4c34-b29b-341e35d06252",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -792,7 +801,7 @@
                     "id": "32573921-05ac-4af2-9537-38582ef083b3",
                     "path": "2DVector",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=18,y=18)",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": true,
@@ -847,7 +856,7 @@
                     "id": "32f63da4-c86f-4e7a-af4b-5f78e61fb25e",
                     "path": "2DVector",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=18,y=18)",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": true,
@@ -927,6 +936,17 @@
                     "processors": "",
                     "groups": "KBM",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5e78ffc-35d1-4899-9b8d-326abc7f31be",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

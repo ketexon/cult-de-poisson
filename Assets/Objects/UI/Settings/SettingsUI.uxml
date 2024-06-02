@@ -18,7 +18,7 @@
                     <PanelSwitchButton text="settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__settings-button" target-panel="settings__settings" class="button first-focus" />
                     <PanelSwitchButton text="save" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__save-button" class="button" />
                     <PanelSwitchButton text="load" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__load-button" class="button" />
-                    <PanelSwitchButton text="credits" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits-button" class="button" />
+                    <PanelSwitchButton text="credits" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits-button" target-panel="settings__credits" class="button" />
                     <ui:Button text="quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__quit-button" class="button" />
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -35,6 +35,71 @@
                 <ui:VisualElement name="settings__settings__entries" style="flex-grow: 1;">
                     <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" class="slider" />
                 </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="settings__credits" class="settings-panel" style="flex-grow: 1; justify-content: center; align-items: center;">
+            <ui:VisualElement name="settings__credits__keybinds" style="flex-grow: 0; margin-bottom: 16px;">
+                <ui:Instance template="InteractionIndicator" name="InteractionIndicator">
+                    <AttributeOverrides element-name="interaction-indicator__label" text="to go back" />
+                    <AttributeOverrides element-name="keybind-icon__label" text="ESC" />
+                </ui:Instance>
+            </ui:VisualElement>
+            <ui:VisualElement name="settings__credits__panel" class="panel" style="width: auto; height: auto;">
+                <ui:Label tabindex="-1" text="credits" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__title" class="t--display-1" style="-unity-text-align: upper-center;" />
+                <ui:ScrollView name="settings__credits__entries" mouse-wheel-scroll-size="36" elasticity="0" scroll-deceleration-rate="0" style="width: 512px; height: 256px;">
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings__credits__entry" class="credits-entry">
+                        <ui:Label tabindex="-1" text="aubrey clark" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__name" class="credits-entry__name t--body-1" />
+                        <ui:Label tabindex="-1" text="lead programmer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings__credits__role" class="credits-entry__role t--body-1" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
