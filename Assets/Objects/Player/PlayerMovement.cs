@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxPitch = 85;
     [SerializeField] float speed = 3;
     [SerializeField] float ladderClimbSpeed = 0.25f;
+    [SerializeField] bool lockCamera = false;
 
     NavMeshAgent agent;
     Rigidbody rb;
@@ -93,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed) return;
+        if (!ctx.performed || lockCamera) return;
 
         var delta = ctx.ReadValue<Vector2>();
 
