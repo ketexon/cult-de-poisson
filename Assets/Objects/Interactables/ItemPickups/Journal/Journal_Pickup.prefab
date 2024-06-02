@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2090769113717942383}
-  m_Layer: 0
+  - component: {fileID: 9012437089827905996}
+  - component: {fileID: 8703802105572929885}
+  m_Layer: 12
   m_Name: Journal_Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +34,43 @@ Transform:
   - {fileID: 1127172879021501165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9012437089827905996
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4649504560420498448}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3977277, y: 0.064312406, z: 0.4}
+  m_Center: {x: 0.04886385, y: -0.007156207, z: -7.3901996e-10}
+--- !u!114 &8703802105572929885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4649504560420498448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04666729a72e7b41ae89d67599dd861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactEnabled: 1
+  collider: {fileID: 9012437089827905996}
+  item: {fileID: 11400000, guid: d67305fde87760940be6ce4306bd50e8, type: 2}
+  destroyAfter: 1
 --- !u!1001 &589475394688290054
 PrefabInstance:
   m_ObjectHideFlags: 0
