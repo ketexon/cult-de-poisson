@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{12829fe0-2022-4114-9a27-9fd1548135f3}">
+		<property name="assetPath">
+			<value>ladder.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>4.3554648526077093</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f73cbf2b-1b2a-413d-86ae-b11fcbecd161}</destination>
+		</relationship>
+	</object>
+</objects>

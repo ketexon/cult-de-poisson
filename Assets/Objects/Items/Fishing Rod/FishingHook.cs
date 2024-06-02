@@ -1,8 +1,11 @@
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 public class FishingHook : MonoBehaviour
 {
+    [SerializeField] EventReference swirlEventReference;
+
     public System.Action<bool> VisibilityChangedEvent;
     public System.Action<Fish> OnHook;
     public System.Action<Vector3> WaterHitEvent;
@@ -27,6 +30,8 @@ public class FishingHook : MonoBehaviour
     [SerializeField] GlobalParametersSO parameters;
     [SerializeField] float waterDrag = 5.0f;
     [SerializeField] float bobDistance = 5.0f;
+
+    bool firstTimeInWater = true;
 
     public Vector3? WaterHitPos { get; private set; }
 
@@ -87,6 +92,8 @@ public class FishingHook : MonoBehaviour
         }
 
         DetachFromRB();
+
+        firstTimeInWater = true;
     }
 
     void FixedUpdate()
@@ -168,6 +175,12 @@ public class FishingHook : MonoBehaviour
             WaterHitEvent?.Invoke(WaterHitPos.Value);
             RigidBody.drag = waterDrag;
             inWater = true;
+
+            if (firstTimeInWater)
+            {
+                RuntimeManager.PlayOneShotAttached(swirlEventReference, gameObject);
+                firstTimeInWater = false;
+            }
         }
     }
 

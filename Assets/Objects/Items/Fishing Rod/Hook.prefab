@@ -96,6 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f16773b9f78074ebd2b2f2ac2ddf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swirlEventReference:
+    Guid:
+      Data1: 1976156108
+      Data2: 1176424622
+      Data3: -492478282
+      Data4: -1765200126
+    Path: event:/water swirl
   fishingRod: {fileID: 0}
   parameters: {fileID: 11400000, guid: 131a8d20c9cb42441ad549963597c52e, type: 2}
   waterDrag: 5

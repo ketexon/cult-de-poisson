@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{1cf1989a-037c-4e3e-8208-8100dccfa726}">
+		<property name="name">
+			<value>Jungle Distance</value>
+		</property>
+		<relationship name="folder">
+			<destination>{b64f70bc-2e73-44a0-a82f-ea8f0cd51bc6}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{66e76c40-2b22-4485-9dd2-e47955b7ec2c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{66e76c40-2b22-4485-9dd2-e47955b7ec2c}">
+		<property name="maximum">
+			<value>150</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>150</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

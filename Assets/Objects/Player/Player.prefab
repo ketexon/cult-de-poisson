@@ -737,6 +737,13 @@ MonoBehaviour:
       Data3: -896769881
       Data4: -116079679
     Path: event:/walk
+  ladderEventReference:
+    Guid:
+      Data1: 1297750904
+      Data2: 1208916573
+      Data3: 1513158295
+      Data4: 1501500391
+    Path: event:/ladder
 --- !u!195 &1462544016098704614
 NavMeshAgent:
   m_ObjectHideFlags: 0

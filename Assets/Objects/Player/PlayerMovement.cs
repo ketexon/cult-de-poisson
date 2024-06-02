@@ -22,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 3;
     [SerializeField] float ladderClimbSpeed = 0.25f;
     [SerializeField] bool lockCamera = false;
+
     [SerializeField] EventReference walkEventReference;
+    [SerializeField] EventReference ladderEventReference;
 
     NavMeshAgent agent;
     Rigidbody rb;
@@ -46,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     bool movingOnLink;
 
     EventInstance audioWalkInstance;
+    EventInstance audioLadderInstance;
 
     /// <summary>
     /// Pitch and yaw range. pitchRange is guarenteed to be between 0,360. 
@@ -88,11 +91,13 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         audioWalkInstance = RuntimeManager.CreateInstance(walkEventReference);
+        audioLadderInstance = RuntimeManager.CreateInstance(ladderEventReference);
     }
 
     void OnDestroy()
     {
         audioWalkInstance.release();
+        audioLadderInstance.release();
     }
 
     void Update()
@@ -101,6 +106,12 @@ public class PlayerMovement : MonoBehaviour
         {
             movingOnLink = true;
             HandleLinkMovement(LinkType.Ladder);
+
+            audioLadderInstance.getPlaybackState(out var s);
+            if(s != PLAYBACK_STATE.PLAYING)
+            {
+                audioLadderInstance.start();
+            }
         }
         else if (agent.isOnNavMesh && !movingOnLink && playerInput.inputIsActive)
         {
@@ -312,6 +323,8 @@ public class PlayerMovement : MonoBehaviour
         yield return TraverseLadder(data, isGoingUp);
 
         movingOnLink = false;
+
+        audioLadderInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     IEnumerator TraverseLadder(OffMeshLinkData data, bool startFromBottom)

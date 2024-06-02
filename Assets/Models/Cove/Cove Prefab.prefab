@@ -216,6 +216,59 @@ MonoBehaviour:
   m_Center: {x: 3.8547745, y: 11.744336, z: 35.054977}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &1481126792234041102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6935215231978698344}
+  - component: {fileID: 3619365272698424524}
+  m_Layer: 0
+  m_Name: OctagonStep2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6935215231978698344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481126792234041102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.3594857, y: 0.5383331, z: -0.23274451, w: 0.7258082}
+  m_LocalPosition: {x: 16.57, y: -43.82, z: 13.09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4092144808989490861}
+  m_LocalEulerAnglesHint: {x: 50.572, y: 75.228, z: 4.442}
+--- !u!65 &3619365272698424524
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481126792234041102}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.411553, y: 1.7566348, z: 1}
+  m_Center: {x: 1.8710505, y: -0.026454164, z: -0.00000022474693}
 --- !u!1 &2425755143017108040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,8 +1419,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.271498, y: 1.7566348, z: 1}
-  m_Center: {x: 1.301026, y: -0.026454965, z: 0.00000027305785}
+  m_Size: {x: 9.411553, y: 1.7566348, z: 1}
+  m_Center: {x: 1.8710505, y: -0.026454164, z: -0.00000022474693}
 --- !u!1 &7279053823786794191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2938,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 5
       addedObject: {fileID: 3487360982625004933}
+    - targetCorrespondingSourceObject: {fileID: 3152412349994793528, guid: 4c9b7b387f78d9a4fb338444833a45d0,
+        type: 3}
+      insertIndex: 6
+      addedObject: {fileID: 6935215231978698344}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3099993640152222452, guid: 4c9b7b387f78d9a4fb338444833a45d0,
         type: 3}
