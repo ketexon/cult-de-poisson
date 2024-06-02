@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590299120525651840}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5219998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,7 +68,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 66.1
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -294,6 +294,55 @@ Transform:
   - {fileID: 927102954168792265}
   m_Father: {fileID: 8300069304211402914}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6207721566844394844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4797675902045353223}
+  - component: {fileID: 3787553388886805518}
+  m_Layer: 0
+  m_Name: PostProcessing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4797675902045353223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6207721566844394844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3340069615599303650}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3787553388886805518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6207721566844394844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 1e12c3dddc75428478a341abdc6c84ee, type: 2}
 --- !u!1 &6868503324844711377
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 6868503324844711377}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.022, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -568,10 +617,6 @@ MonoBehaviour:
     m_ActionName: Gameplay/Reel[/Mouse/scroll/y]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 008f6b90-3de1-41c2-a1b5-55070cbac046
-    m_ActionName: Fishing/Unaim[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 77f032a1-f16e-4a12-bc51-b4f7a1df0115
     m_ActionName: UI/Escape[/Keyboard/escape]
   - m_PersistentCalls:
@@ -581,11 +626,43 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 1c2012cd-c8a7-4a86-afdd-a0e9bb1ce49a
-    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+    m_ActionName: UI/Point[/Mouse/position]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 31d4cbef-297a-44a5-a52b-d467dff72268
     m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 008f6b90-3de1-41c2-a1b5-55070cbac046
+    m_ActionName: Fishing/Unaim[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 133479c0-1b4d-4bce-b6d7-249310897603
+    m_ActionName: Gameplay/ControllerReel[/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 75327676347670396}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnLookSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9cfe17b5-51b4-41ea-adab-6faf4b0e0676
+    m_ActionName: Gameplay/LookSpeed[/XInputControllerWindows/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88887910-b0db-48d7-ac91-da018f47a750
+    m_ActionName: Fishing/ControllerReel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18e7b1d7-e05a-4ef9-a07a-7c846aadec19
+    m_ActionName: Journal/Turn Page[/Keyboard/q,/Keyboard/e,/DualShock4GamepadHID/leftShoulder,/DualShock4GamepadHID/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -611,6 +688,7 @@ MonoBehaviour:
   rotateSpeed: 5
   startingItems:
   - {fileID: 3191426836252093821}
+  - {fileID: 1910599220965616088}
   startingItemIndex: 1
   cycleItemAction: {fileID: 3900878760210090435, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
@@ -809,7 +887,7 @@ Transform:
   m_GameObject: {fileID: 6871060353833082883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0.988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -977,6 +1055,7 @@ Transform:
   - {fileID: 8616573123594162493}
   - {fileID: 929415633395559043}
   - {fileID: 5692129817034609282}
+  - {fileID: 4797675902045353223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3087446727735037737
@@ -1197,6 +1276,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 4293878559380983060, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2649129788575905462}
     - target: {fileID: 4844683572376676545, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1247,6 +1331,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 5426055392238593394, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426055392238593394, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426055392238593394, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.30948377
+      objectReference: {fileID: 0}
     - target: {fileID: 5989794152055622511, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1297,6 +1396,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 7038520991048359275, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2649129788575905462}
     - target: {fileID: 7261302528053869306, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1372,6 +1476,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 8028223894761594966, guid: 560997beadcb3cb4080f4f3f156d3901,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2649129788575905462}
     - target: {fileID: 8368712444961694341, guid: 560997beadcb3cb4080f4f3f156d3901,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1452,6 +1561,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 560997beadcb3cb4080f4f3f156d3901, type: 3}
+--- !u!114 &1910599220965616088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3484413572046251761, guid: 560997beadcb3cb4080f4f3f156d3901,
+    type: 3}
+  m_PrefabInstance: {fileID: 3087446727735037737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4222b73f65e5aae4c99f7abf3d907cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6844191403439025580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8368712444961694341, guid: 560997beadcb3cb4080f4f3f156d3901,

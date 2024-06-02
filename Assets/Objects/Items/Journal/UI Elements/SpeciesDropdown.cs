@@ -18,16 +18,18 @@ public class SpeciesDropdown : JournalUIElement
 	bool isInteractable = true;
 	RectTransform dropdownTransform;
 
-	void Start()
+	void Awake()
 	{
-		UpdateTextFields();
 		dropdownTransform = dropdownPanel.GetComponent<RectTransform>();
 	}
 
 	//Inherited from JournalUIElement
 	public override void Reset()
 	{
+		StopAllCoroutines();
+		isInteractable = true;
 		dropdownTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+		UpdateTextFields(false);
 		OpenDropdown();
 	}
 
@@ -35,12 +37,14 @@ public class SpeciesDropdown : JournalUIElement
 	public void OpenDropdown()
 	{
 		if (!isInteractable) return;
+		isInteractable = false;
 		StartCoroutine(DoOpenDropdown());
 	}
 
 	public void CloseDropdown()
 	{
 		if (!isInteractable) return;
+		isInteractable = false;
 		StartCoroutine(DoCloseDropdown());
 	}
 
@@ -48,12 +52,11 @@ public class SpeciesDropdown : JournalUIElement
 	{
 		if (!isInteractable) return;
 		this.fishSO = fishSO;
-		UpdateTextFields();
+		UpdateTextFields(true);
 	}
 
 	IEnumerator DoOpenDropdown()
 	{
-		isInteractable = false;
 		dropdownPanel.SetActive(true);
 		yield return new WaitForSeconds(0.1f);
 
@@ -71,8 +74,6 @@ public class SpeciesDropdown : JournalUIElement
 
 	IEnumerator DoCloseDropdown()
 	{
-		isInteractable = false;
-
 		RectTransform rectTransform = dropdownPanel.GetComponent<RectTransform>();
 
 		float currentVelocity = 0f;
@@ -88,7 +89,7 @@ public class SpeciesDropdown : JournalUIElement
 		isInteractable = true;
 	}
 
-	void UpdateTextFields()
+	void UpdateTextFields(bool reopenDropdown)
 	{
 		speciesLabel.text = fishSO.Name;
 		weight.text = "Weight: " + fishSO.FishInfo.Weight + " lbs";
@@ -99,7 +100,11 @@ public class SpeciesDropdown : JournalUIElement
 		catchDifficulty.text = "Catch Difficulty: " + fishSO.FishInfo.CatchDifficulty;
 		isKeyFish.text = "Key Fish: " + fishSO.FishInfo.IsKeyFish;
 		notes.text = "Notes: " + fishSO.FishInfo.Notes;
-		StartCoroutine(CloseAndOpenDropdown());
+		if (reopenDropdown)
+		{
+			StartCoroutine(CloseAndOpenDropdown());
+
+		}
 	}
 
 	IEnumerator CloseAndOpenDropdown()

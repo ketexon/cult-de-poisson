@@ -12,6 +12,7 @@ public class NotificationsUI : MonoBehaviour
     [SerializeField] float notificationEnterDuration = 0.1f;
     [SerializeField] float notificationExitDuration = 0.1f;
     [SerializeField] Color fishColor;
+    [SerializeField] QuestStateSO questState;
 
     VisualElement container;
 
@@ -27,6 +28,18 @@ public class NotificationsUI : MonoBehaviour
         container = document.rootVisualElement.Q<VisualElement>("notifications-container");
 
         container.Clear();
+
+        questState.CompletedEvent += OnQuestCompleted;
+    }
+
+    void OnDestroy()
+    {
+        questState.CompletedEvent -= OnQuestCompleted;
+    }
+
+    void OnQuestCompleted(QuestSO questSO)
+    {
+        AddNotification($"completed {questSO.Name.ToLower()}", Icon.Journal);
     }
 
     public void AddCatchFishNotification(FishSO so)

@@ -23,7 +23,7 @@ public static class InputUtil
         if (action.actionMap?.bindingMask != null)
             return action.actionMap?.bindingMask;
 
-        return action.actionMap?.asset?.bindingMask;
+        return action.actionMap.asset.bindingMask;
     }
 
     public static List<string> GetActionDisplayStrings(InputAction action)
@@ -32,12 +32,19 @@ public static class InputUtil
 
         InputBinding bindingMask = FindEffectiveBindingMask(action) ?? default;
 
+        var currentControlScheme = global::Player.Instance.Input.currentControlScheme;
+
         List<string> results = new();
         var bindings = action.bindings;
         for (var i = 0; i < bindings.Count; ++i)
         {
             if (!bindingMask.Matches(bindings[i]))
                 continue;
+
+            if (!new List<string>(bindings[i].groups.Split(';')).Contains(currentControlScheme))
+            {
+                continue;
+            }
 
             var text = action.GetBindingDisplayString(
                 i,

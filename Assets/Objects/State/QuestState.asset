@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: QuestState
   m_EditorClassIdentifier: 
   defaultCompleted: []
-  defaultInProgress:
-  - {fileID: 11400000, guid: f32a41806c464da4fb3acb72bbd08953, type: 2}
+  defaultInProgress: []

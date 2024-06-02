@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera Camera => camera;
 
+    public Rigidbody Rigidbody => rb;
     public float Pitch => camera.transform.rotation.eulerAngles.x;
     public float Yaw => lookRoot.rotation.eulerAngles.y;
     public Vector2 Angle => new Vector2(camera.transform.rotation.eulerAngles.x, lookRoot.rotation.eulerAngles.y);
@@ -44,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     Vector2? pitchRange = null, yawRange = null;
 
     bool shouldReenableAgent = false;
+
+    Vector2 lookSpeed = Vector2.zero;
 
     public void SetPhysicsEnabled(bool enabled)
     {
@@ -85,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
             var displacement = CalculateVelocity() * Time.deltaTime;
             agent.Move(displacement);
         }
+
+        UpdateLook(lookSpeed * Time.deltaTime);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
@@ -92,6 +97,20 @@ public class PlayerMovement : MonoBehaviour
         if (!ctx.performed || lockCamera) return;
 
         var delta = ctx.ReadValue<Vector2>();
+
+        UpdateLook(delta);
+    }
+
+    public void OnLookSpeed(InputAction.CallbackContext ctx)
+    {
+        //if (ctx.started) return;
+        lookSpeed = ctx.ReadValue<Vector2>();
+        Debug.Log(lookSpeed);
+    }
+
+    void UpdateLook(Vector2 delta)
+    {
+        if (delta == Vector2.zero) return;
 
         var playerEulerY = lookRoot.rotation.eulerAngles.y;
         float newPlayerEulerY = playerEulerY + delta.x * mouseSensitivity;
