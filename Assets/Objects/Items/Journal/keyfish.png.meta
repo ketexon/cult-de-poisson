@@ -122,17 +122,7 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline:
-    - - {x: 325.5, y: 97}
-      - {x: 318.5, y: 99}
-      - {x: 299.5, y: 99}
-      - {x: 275.5, y: 78}
-      - {x: 275.5, y: 48}
-      - {x: 284.5, y: 46}
-      - {x: 348.5, y: 46}
-      - {x: 379.5, y: 58}
-      - {x: 379.5, y: 75}
-      - {x: 368.5, y: 83}
+    outline: []
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000

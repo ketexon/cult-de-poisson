@@ -113,8 +113,8 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _MinHeight: 320
-    - _MinWidth: 320
+    - _MinHeight: 180
+    - _MinWidth: 180
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
