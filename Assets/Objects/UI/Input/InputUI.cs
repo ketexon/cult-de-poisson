@@ -156,7 +156,7 @@ public class InputUI : SingletonBehaviour<InputUI>
         SetIcon();
 
         var label = ve.Q<Label>(null, "interaction-indicator__label");
-        label.text = entry.Message;
+        label.text = entry.Message.ToLower();
 
         int index = 0;
         foreach(var child in interactionContainer.Children())
