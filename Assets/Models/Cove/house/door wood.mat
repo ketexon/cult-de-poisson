@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: wood 3
+  m_Name: door wood
   m_Shader: {fileID: 4800000, guid: a1116255fa8046d4ea389b184581754d, type: 3}
   m_Parent: {fileID: 2100000, guid: 15762bfbc7b075f42aca67f9e245a9d5, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -43,5 +43,6 @@ Material:
     - _Ratio: 0.34
     - _Strength: 0.77
     m_Colors:
-    - _Color: {r: 0.4134211, g: 0.5467535, b: 0.9245283, a: 1}
+    - _BaseColor: {r: 0.8207547, g: 0.29874542, b: 0.21990028, a: 1}
+    - _Color: {r: 0.8207547, g: 0.2987454, b: 0.21990025, a: 1}
   m_BuildTextureStacks: []
