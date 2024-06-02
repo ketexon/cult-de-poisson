@@ -302,5 +302,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea10096e9b851104d80b4b92a21690ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 5
-  drag: 5
+  force: 20
+  drag: 10
