@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590299120525651840}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20064095, y: -0.5325551, z: 0.13164611, w: 0.8116635}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalRotation: {x: 0.20700714, y: -0.49106526, z: 0.121389955, w: 0.83741707}
+  m_LocalPosition: {x: 0, y: 1.499999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -905,6 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e17c13ee8fef554f9531c94c8f1d4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: b393dcb3f22dffe47b44109d45f7fd2e, type: 2}
   cheatAction: {fileID: 8753925788822632802, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
   entries:
@@ -914,7 +915,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53a29da775d35774c851986bfdc0c7b4, type: 2}
   - {fileID: 11400000, guid: fc4c27d019e73b340a261634f443e3c9, type: 2}
   - {fileID: 11400000, guid: 50a3dc8b6fdfbbf47a7bd1c4f3845644, type: 2}
-  fish:
+  journalFish:
   - {fileID: 11400000, guid: 9e524a81b809ac44d8cc8027cb8eec2a, type: 2}
   - {fileID: 11400000, guid: d9e464790bcab3742ac529c97621e95e, type: 2}
   - {fileID: 11400000, guid: 10e6f3d256c3eeb43aead7f3f2b890e2, type: 2}
@@ -925,6 +926,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fadda4b217eca304f9dd227e05dcf366, type: 2}
   - {fileID: 11400000, guid: 6a29a23eef8645a4d95b98b5394a11e8, type: 2}
   - {fileID: 11400000, guid: 732d55710c4b5cd4ca59f093c3d3ef83, type: 2}
+  inventoryFish:
+  - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
+  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
+  - {fileID: 11400000, guid: fadda4b217eca304f9dd227e05dcf366, type: 2}
+  - {fileID: 11400000, guid: d3d1d0e182d101e4bb2946afb5ebb04c, type: 2}
+  - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
+  - {fileID: 11400000, guid: d0117b6b014a94c43ae031a4d56c236d, type: 2}
 --- !u!114 &5403694718926495525
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -100,4 +100,12 @@ public class PlayerInventorySO : SavableSO
         this.fish.Remove(fish);
         FishRemovedEvent?.Invoke(fish);
     }
+
+    public void Clear()
+    {
+        while(fish.Count > 0)
+        {
+            RemoveFish(fish[0]);
+        }
+    }
 }
