@@ -48,7 +48,7 @@ public class Bucket : Item
     void OnEnable()
     {
         SpawnFish();
-        
+
         exitAction.action.performed += OnExitBucket;
 
         cycleFishAction.action.performed += OnCycleFish;
@@ -163,7 +163,7 @@ public class Bucket : Item
 
     void ClearFish()
     {
-        foreach(var f in spawnedFish)
+        foreach (var f in spawnedFish)
         {
             Destroy(f.gameObject);
         }
@@ -262,7 +262,7 @@ public class Bucket : Item
     // on the BucketFish script, which takes care of the lerping
     void SelectFish(int? index)
     {
-        if(selectedFish == index)
+        if (selectedFish == index)
         {
             return;
         }
@@ -273,13 +273,16 @@ public class Bucket : Item
             spawnedFish[selectedFish.Value].TargetLocalRotation = spawnedFish[selectedFish.Value].StartLocalRotation;
         }
 
-        selectedFish = index;
-
-        if (selectedFish.HasValue)
+        if (spawnedFish.Count > 0)
         {
-            var fish = spawnedFish[selectedFish.Value];
-            fish.TargetLocalPos = fishSelectedTransform.localPosition;
-            fish.TargetLocalRotation = fishSelectedTransform.localRotation;
+            selectedFish = index;
+
+            if (selectedFish.HasValue)
+            {
+                var fish = spawnedFish[selectedFish.Value];
+                fish.TargetLocalPos = fishSelectedTransform.localPosition;
+                fish.TargetLocalRotation = fishSelectedTransform.localRotation;
+            }
         }
 
         UpdateInteractivity();
