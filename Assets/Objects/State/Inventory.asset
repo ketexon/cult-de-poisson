@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Inventory
   m_EditorClassIdentifier: 
   MaxFish: 6
-  StartingFish:
-  - {fileID: 11400000, guid: fc64fc7305d6dc24aa50d61db4f48097, type: 2}
+  StartingFish: []
