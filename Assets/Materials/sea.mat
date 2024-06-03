@@ -121,7 +121,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _SurfaceDistortionAmount: 0.523
-    - _SurfaceNoiseCutoff: 0.512
+    - _SurfaceNoiseCutoff: 0.56
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
