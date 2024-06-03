@@ -236,7 +236,6 @@ public class MagnetFishingGame : Interactable
 
         cutsceneVideo.prepareCompleted -= OnVideoPrepared;
         cutsceneGroup.alpha = 1;
-        Player.Instance.Camera.enabled = false;
 
         IEnumerator Coro()
         {
@@ -264,8 +263,6 @@ public class MagnetFishingGame : Interactable
                 cutsceneFadeGroup.alpha = t;
                 yield return null;
             }
-
-            Player.Instance.Camera.enabled = true;
 
             cutsceneFadeGroup.alpha = 1;
             cutsceneGroup.alpha = 0;
