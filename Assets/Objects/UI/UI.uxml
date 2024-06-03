@@ -2,7 +2,17 @@
     <ui:Template name="Crosshair" src="project://database/Assets/Objects/UI/Input/CrosshairUI.uxml?fileID=9197481963319205126&amp;guid=4c4a456c4493fb945aa841073bb98561&amp;type=3#CrosshairUI" />
     <ui:Template name="Interactions" src="project://database/Assets/Objects/UI/Input/InputUI.uxml?fileID=9197481963319205126&amp;guid=b3c7c85d512ec694db5f638c6fae7391&amp;type=3#InputUI" />
     <ui:Template name="SettingsUI" src="project://database/Assets/Objects/UI/Settings/SettingsUI.uxml?fileID=9197481963319205126&amp;guid=87002ce13fd630643af5de4eac25a4ef&amp;type=3#SettingsUI" />
+    <Style src="project://database/Assets/Objects/UI/UIToolkit/Components.uss?fileID=7433441132597879392&amp;guid=27e9dd53a9ba3b840a2923182454c246&amp;type=3#Components" />
     <ui:Instance template="Crosshair" name="CrosshairUI" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
     <ui:Instance template="Interactions" name="InputUI" picking-mode="Ignore" style="left: 0; top: 0; right: 0; bottom: 0; position: absolute;" />
     <ui:Instance template="SettingsUI" name="SettingsUI" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+    <ui:VisualElement picking-mode="Ignore" name="EndScreen" style="flex-grow: 1; background-color: rgb(0, 0, 0); transition-property: opacity; transition-duration: 0.2s; justify-content: center; align-items: center;">
+        <ui:VisualElement style="flex-grow: 0; width: 500px; height: 300px; flex-shrink: 0;">
+            <ui:Label tabindex="-1" text="you collected all the satellites" parse-escape-sequences="true" display-tooltip-when-elided="true" class="t--display-1" style="flex-wrap: wrap; font-size: 48px; -unity-text-align: upper-center;" />
+            <ui:Label tabindex="-1" text="Thank you for playing the demo for Upcast Blue" parse-escape-sequences="true" display-tooltip-when-elided="true" class="t--body-1" />
+            <ui:VisualElement style="flex-grow: 1; justify-content: flex-start; align-items: center; margin-top: 16px;">
+                <ui:Button text="continue exploring" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

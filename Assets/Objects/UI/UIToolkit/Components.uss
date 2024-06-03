@@ -10,7 +10,7 @@
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
 }
 
-.interaction-indicator, .notification-indicator {
+.interaction-indicator {
     --button-on-background: rgb(255, 255, 255);
     --interaction-indicator-font-size: 32px;
     border-radius: 6px;
@@ -19,7 +19,15 @@
 }
 
 .notification-indicator {
-    border-color: rgba(255, 255, 255, 1);
+    --button-on-background: rgb(255, 255, 255);
+    --interaction-indicator-font-size: 32px;
+    border-radius: 6px;
+    background-color: var(--p-surface);
+    color: var(--button-on-background);
+}
+
+.notification-indicator {
+    border-color: rgb(255, 255, 255);
     border-width: 2px;
     padding-top: 6px;
     padding-bottom: 6px;
@@ -34,7 +42,6 @@
 .notification-indicator--enter-active {
     opacity: 1;
     transition: opacity 0.1s ease;
-    
 }
 
 .notification-indicator--exit {
@@ -63,7 +70,16 @@
     margin-right: -4px;
 }
 
-.interaction-indicator__label, .notification-indicator__label {
+.interaction-indicator__label {
+    -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
+    font-size: var(--interaction-indicator-font-size);
+    margin-left: 4px;
+    padding: 0;
+    flex-grow: 1;
+    -unity-text-align: upper-center;
+}
+
+.notification-indicator__label {
     -unity-font: url('project://database/Assets/Fonts/m5x7.ttf?fileID=12800000&guid=16bbfcfa97b747448bcb60c584c892b2&type=3#m5x7');
     font-size: var(--interaction-indicator-font-size);
     margin-left: 4px;
@@ -216,10 +232,15 @@
     display: none;
 }
 
-.notification-indicator--journal .notification-indicator__icon-container,
-.notification-indicator--fishing .notification-indicator__icon-container,
-.notification-indicator--satellite .notification-indicator__icon-container,
-{
+.notification-indicator--journal .notification-indicator__icon-container {
+    display: flex;
+}
+
+.notification-indicator--fishing .notification-indicator__icon-container {
+    display: flex;
+}
+
+.notification-indicator--satellite .notification-indicator__icon-container {
     display: flex;
 }
 
@@ -237,4 +258,14 @@
 
 #notifications .notification-indicator {
     margin-bottom: 8px;
+}
+
+#EndScreen {
+    display: none;
+    opacity: 0;
+}
+
+#EndScreen.end-screen--active {
+    display: flex;
+    opacity: 1;
 }

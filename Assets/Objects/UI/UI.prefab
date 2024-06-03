@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5090792530719148525}
   - component: {fileID: 4046475890618828001}
   - component: {fileID: 8420633142218873480}
+  - component: {fileID: 4826965359364060692}
   m_Layer: 0
   m_Name: Document
   m_TagString: Untagged
@@ -115,6 +116,23 @@ MonoBehaviour:
   notificationExitDuration: 0.1
   fishColor: {r: 0, g: 1, b: 0.57254905, a: 1}
   questState: {fileID: 11400000, guid: 53f7ae6806b2eb849aefea617cf75c40, type: 2}
+--- !u!114 &4826965359364060692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414205894825964999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff9484829b46194090f72ea9c8d5a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredQuests:
+  - {fileID: 11400000, guid: 180f63baa2516da488fe021cccce68cf, type: 2}
+  - {fileID: 11400000, guid: 506a69f272d601141a3dc40f0566d7b7, type: 2}
+  - {fileID: 11400000, guid: 97d10412c2aba60408f1a0bcf8ad8338, type: 2}
+  doc: {fileID: 8408282752862423169}
 --- !u!1 &2475073413666240118
 GameObject:
   m_ObjectHideFlags: 0
