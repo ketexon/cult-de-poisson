@@ -9,8 +9,6 @@ public class LogPage : JournalUIElement
 
     protected override void OnEnable()
     {
-        base.Awake();
-
         canvasGroup.alpha = JournalDataSO.Instance.JournalEntries.Contains(entry) ? 1 : 0;
         JournalDataSO.Instance.NewJournalEntryEvent += OnNewJournalEntry;
     }
@@ -22,7 +20,8 @@ public class LogPage : JournalUIElement
 
     void OnNewJournalEntry(JournalEntrySO entry)
     {
-        if (entry == this.entry) { 
+        if (entry == this.entry)
+        {
             canvasGroup.alpha = JournalDataSO.Instance.JournalEntries.Contains(entry) ? 1 : 0;
         }
     }

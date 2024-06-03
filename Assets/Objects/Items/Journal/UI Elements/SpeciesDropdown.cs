@@ -18,8 +18,9 @@ public class SpeciesDropdown : JournalUIElement
 	bool isInteractable = true;
 	RectTransform dropdownTransform;
 
-	void Awake()
+	override protected void Awake()
 	{
+		base.Awake();
 		dropdownTransform = dropdownPanel.GetComponent<RectTransform>();
 	}
 
