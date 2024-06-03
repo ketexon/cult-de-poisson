@@ -198,6 +198,8 @@ public class Journal : Item
         newPage.SetActive(true);
         newPage.GetComponent<Canvas>().worldCamera = mainCamera;
 
+        EventSystem.current.SetSelectedGameObject(newPage);
+
         List<Button> buttons = new(newPage.GetComponentsInChildren<Button>());
         if (buttons.Count > 0)
         {

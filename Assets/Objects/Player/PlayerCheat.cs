@@ -10,6 +10,7 @@ public class PlayerCheat : MonoBehaviour
     [SerializeField] List<JournalEntrySO> entries;
     [SerializeField] List<FishSO> journalFish;
     [SerializeField] List<FishSO> inventoryFish;
+    [SerializeField] List<ItemSO> items;
 
     bool cheated = false;
 
@@ -43,6 +44,11 @@ public class PlayerCheat : MonoBehaviour
         foreach (var f in inventoryFish)
         {
             inventory.AddFish(f);
+        }
+
+        foreach(var i in items)
+        {
+            Player.Instance.Item.AddItem(i, thenSwitch: false);
         }
     }
 }
