@@ -83,7 +83,7 @@ public class SimpleFishMovement : FishMovement
         do
         {
             targetDirection = Extensions.Random(-Vector3.one, Vector3.one).normalized;
-        } while (FishWillCollide() && ++nTries < 5);
+        } while (FishWillCollide() && ++nTries < 3);
     }
 
     /// <summary>
@@ -126,6 +126,12 @@ public class SimpleFishMovement : FishMovement
     void FixedUpdate()
     {
         if (!enabled) return;
+        var playerPos = Player.Instance.Movement.transform.position;
+        if (Vector3.Distance(playerPos, transform.position) > 80)
+        {
+            rb.velocity = Vector3.zero;
+            return;
+        }
 
         // if the hook exists and is inside the fish zone, go towards it
         if (hook && FishZone.Contains(hook.transform.position))
