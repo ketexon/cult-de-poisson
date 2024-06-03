@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5911052734310161331}
   - component: {fileID: 2148797493340032821}
+  - component: {fileID: 1818040892617860625}
   m_Layer: 0
   m_Name: PalmTree3
   m_TagString: Untagged
@@ -58,6 +59,22 @@ LODGroup:
     - renderer: {fileID: 6398977823418662467}
     - renderer: {fileID: 7322392759761393405}
   m_Enabled: 1
+--- !u!208 &1818040892617860625
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175497525639258831}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.4, y: 1.375, z: 1.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &7264046359089072015
 PrefabInstance:
   m_ObjectHideFlags: 0

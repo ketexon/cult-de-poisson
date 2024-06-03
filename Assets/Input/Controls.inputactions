@@ -662,7 +662,7 @@
                     "id": "bdb256e7-afbb-41b9-8c6a-12e7792f78ff",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=-0.4,y=-0.4)",
+                    "processors": "ScaleVector2(x=-0.7,y=-0.7)",
                     "groups": "Controller",
                     "action": "MoveSpeed",
                     "isComposite": false,

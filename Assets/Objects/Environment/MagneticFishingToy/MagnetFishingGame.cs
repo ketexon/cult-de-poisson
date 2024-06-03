@@ -96,6 +96,8 @@ public class MagnetFishingGame : Interactable
         activate.action.performed += OnClick;
         move.action.performed += (InputAction.CallbackContext ctx) => { rodHorizontalRotateSpeed = ctx.ReadValue<Vector2>().x; };
         move.action.canceled += (InputAction.CallbackContext ctx) => { rodHorizontalRotateSpeed = 0; };
+
+        InteractivityChangeEvent?.Invoke(this);
     }
 
     // Update is called once per frame
