@@ -3088,9 +3088,9 @@ PrefabInstance:
       propertyPath: m_text
       value: "Year 15~\r\nI failed. Mankind has failed.         may not accept or
         understand my apology now. I\u2019m sorry that you chose to listen to that
-        woman. My bloodline will end here forgotten                           There\u2019s
-        more to life than fishing. Don\u2019t fear it. Reclamation of The New World
-        is left to you.\r"
+        woman. My bloodline will end here forgotten                           You
+        seem to think fish are the key, but there\u2019s more to life than fishing.
+        Don\u2019t fear it. <u>Reclamation of The New World is left to you.\r</u>"
       objectReference: {fileID: 0}
     - target: {fileID: 3943200576945556325, guid: b5bae3e8d429f0044bd834aebb97f343,
         type: 3}

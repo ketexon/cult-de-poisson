@@ -706,7 +706,6 @@ MonoBehaviour:
   rotateSpeed: 5
   startingItems:
   - {fileID: 3191426836252093821}
-  - {fileID: 1910599220965616088}
   startingItemIndex: 1
   cycleItemAction: {fileID: 3900878760210090435, guid: 74ba8a3a9aaed2040a694812328659e2,
     type: 3}
@@ -1661,18 +1660,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 560997beadcb3cb4080f4f3f156d3901, type: 3}
---- !u!114 &1910599220965616088 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3484413572046251761, guid: 560997beadcb3cb4080f4f3f156d3901,
-    type: 3}
-  m_PrefabInstance: {fileID: 3087446727735037737}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4222b73f65e5aae4c99f7abf3d907cd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6844191403439025580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8368712444961694341, guid: 560997beadcb3cb4080f4f3f156d3901,
