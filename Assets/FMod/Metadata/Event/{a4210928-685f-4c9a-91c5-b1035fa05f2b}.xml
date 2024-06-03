@@ -100,9 +100,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{ba36602e-35cc-4d2e-9ef6-c23a0d352a7f}">
-		<property name="volume">
-			<value>-10</value>
-		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -150,9 +147,6 @@
 	<object class="MixerBusPanner" id="{a0e68092-8238-4090-9ff7-be0e50ac5932}" />
 	<object class="MixerBusFader" id="{857d050c-4594-4fe8-a454-88239d361f8f}" />
 	<object class="SingleSound" id="{9ca74277-5a9e-45fb-acef-e231fabbaf3f}">
-		<property name="startOffset">
-			<value>19</value>
-		</property>
 		<relationship name="audioFile">
 			<destination>{f17ab4f1-423f-43f9-ba20-060d9d144c80}</destination>
 		</relationship>
