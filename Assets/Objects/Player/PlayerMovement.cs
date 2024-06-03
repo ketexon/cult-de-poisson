@@ -73,6 +73,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Teleport(Spawnpoint sp)
+    {
+        transform.position = sp.transform.position;
+        lookRoot.rotation = sp.LookRoot.transform.rotation;
+        camera.transform.rotation = sp.Camera.transform.rotation;
+    }
+
     void Reset()
     {
         parameters = FindUtil.Asset<GlobalParametersSO>();
