@@ -4,6 +4,9 @@
 		<property name="name">
 			<value>InGame</value>
 		</property>
+		<relationship name="automators">
+			<destination>{abc941bd-6a9b-43f2-96e5-af670245585c}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{7bbde053-d149-43d1-a359-93b436b964b8}</destination>
 		</relationship>
@@ -14,11 +17,44 @@
 			<destination>{7f62f83e-08a0-43e1-a40e-7da9adffc3d2}</destination>
 		</relationship>
 	</object>
+	<object class="Automator" id="{abc941bd-6a9b-43f2-96e5-af670245585c}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
+		<relationship name="automationCurves">
+			<destination>{3e45c0b5-aeec-4c9a-8c65-692725341dae}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{7bbde053-d149-43d1-a359-93b436b964b8}">
 		<relationship name="effects">
 			<destination>{41ea44ae-eb50-4981-be95-d129caf3639d}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{bd924fa2-8a4c-4dcd-a361-9f1602386571}" />
+	<object class="AutomationCurve" id="{3e45c0b5-aeec-4c9a-8c65-692725341dae}">
+		<relationship name="parameter">
+			<destination>{003cf561-d780-40a4-92a1-b046b4f6e7de}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{0512c924-a7f8-4fb0-a63a-76eadb20d5b8}</destination>
+			<destination>{22e4f555-7274-4366-b8ab-0db5e415f91e}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{41ea44ae-eb50-4981-be95-d129caf3639d}" />
+	<object class="AutomationPoint" id="{0512c924-a7f8-4fb0-a63a-76eadb20d5b8}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>-80</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{22e4f555-7274-4366-b8ab-0db5e415f91e}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
 </objects>

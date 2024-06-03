@@ -1,16 +1,21 @@
 ﻿using FMOD.Studio;
 using FMODUnity;
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : SingletonBehaviour<AudioManager>
 {
     [SerializeField] EventReference pickupEvent;
     [SerializeField] EventReference windEvent;
+    [SerializeField, ParamRef] string inGameVolumeParam;
+    [SerializeField] float fadeDuration;
 
     EventInstance pickupEventInstance;
     EventInstance windEventInstance;
 
     Bus inGameBus;
+
+    float lastInGameVolume;
 
     void Start()
     {
@@ -49,6 +54,37 @@ public class AudioManager : SingletonBehaviour<AudioManager>
     public void ResumeInGameAudio()
     {
         inGameBus.setPaused(false);
+    }
+
+    public void FadeOutInGameVolume()
+    {
+        RuntimeManager.StudioSystem.getParameterByName(inGameVolumeParam, out lastInGameVolume);
+        IEnumerator Coro()
+        {
+            float startTime = Time.time;
+            for(float t = 0; t < 1; t = (Time.time - startTime)/fadeDuration)
+            {
+                float v = lastInGameVolume * (1 - t);
+                RuntimeManager.StudioSystem.setParameterByName(inGameVolumeParam, v);
+                yield return null;
+            }
+        }
+        StartCoroutine(Coro());
+    }
+
+    public void FadeInInGameVolume()
+    {
+        IEnumerator Coro()
+        {
+            float startTime = Time.time;
+            for (float t = 0; t < 1; t = (Time.time - startTime) / fadeDuration)
+            {
+                float v = lastInGameVolume * t;
+                RuntimeManager.StudioSystem.setParameterByName(inGameVolumeParam, v);
+                yield return null;
+            }
+        }
+        StartCoroutine(Coro());
     }
 }
 
