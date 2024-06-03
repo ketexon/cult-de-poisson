@@ -10,10 +10,14 @@ public class AudioManager : SingletonBehaviour<AudioManager>
     EventInstance pickupEventInstance;
     EventInstance windEventInstance;
 
+    Bus inGameBus;
+
     void Start()
     {
         pickupEventInstance = RuntimeManager.CreateInstance(pickupEvent);
         windEventInstance = RuntimeManager.CreateInstance(windEvent);
+
+        FMODUnity.RuntimeManager.StudioSystem.getBus("bus:/InGame", out inGameBus);
     }
 
     void OnDestroy()
@@ -35,6 +39,16 @@ public class AudioManager : SingletonBehaviour<AudioManager>
     public void StopWindSound()
     {
         windEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    public void PauseInGameAudio()
+    {
+        inGameBus.setPaused(true);
+    }
+
+    public void ResumeInGameAudio()
+    {
+        inGameBus.setPaused(false);
     }
 }
 

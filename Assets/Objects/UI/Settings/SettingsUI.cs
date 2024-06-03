@@ -26,8 +26,6 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
 
     [SerializeField] EventReference audioClickEvent;
 
-    Bus inGameBus;
-
     Stack<VisualElement> panels = new();
 
     VisualElement root;
@@ -52,8 +50,6 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         {
             root.EnableInClassList("settings--enabled", false);
         }
-
-        FMODUnity.RuntimeManager.StudioSystem.getBus("bus:/InGame", out inGameBus);
     }
 
     void OnDestroy()
@@ -131,7 +127,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         EventSystem.current.SetSelectedGameObject(gameObject);
         PushPanel(defaultPanelName);
 
-        inGameBus.setPaused(true);
+        AudioManager.Instance.PauseInGameAudio();
     }
 
     void CloseMenu()
@@ -143,7 +139,7 @@ public class SettingsUI : SingletonBehaviour<SettingsUI>
         player.PopActionMap();
         LockCursor.PopLockState();
 
-        inGameBus.setPaused(false);
+        AudioManager.Instance.ResumeInGameAudio();
     }
 
     public void PushPanel(string panelName)
