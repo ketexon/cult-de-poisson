@@ -15,6 +15,7 @@ public class PickupItemInteractable : Interactable
     public override void OnInteract()
     {
         Player.Instance.Item.AddItem(item, thenSwitch: true);
+        AudioManager.Instance.PlayPickupSound();
         if (destroyAfter)
         {
             Destroy(gameObject);

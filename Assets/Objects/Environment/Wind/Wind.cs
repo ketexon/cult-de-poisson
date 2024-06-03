@@ -14,11 +14,14 @@ public class Wind : MonoBehaviour
     {
         Debug.Log("Entered wind");
         inWind = true;
+        AudioManager.Instance.PlayWindSound();
     }
 
     void OnTriggerExit(Collider other)
     {
         inWind = false;
+
+        AudioManager.Instance.StopWindSound();
     }
 
     void FixedUpdate()

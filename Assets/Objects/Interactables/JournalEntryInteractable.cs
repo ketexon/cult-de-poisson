@@ -17,6 +17,7 @@ public class JournalEntryInteractable : Interactable
         base.OnInteract();
 
         JournalDataSO.Instance.AddJournalEntry(entry);
+        AudioManager.Instance.PlayPickupSound();
 
         Destroy(gameObject);
     }

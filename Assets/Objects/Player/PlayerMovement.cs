@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             shouldReenableAgent = true;
+            audioWalkInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
 

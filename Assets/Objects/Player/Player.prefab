@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590299120525651840}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.20064095, y: -0.5325551, z: 0.13164611, w: 0.8116635}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -68,7 +68,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 90
+  field of view: 66.1
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 8650845327865143688}
   - component: {fileID: 3394347112407118951}
   - component: {fileID: 247070537556221016}
+  - component: {fileID: 5403694718926495525}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -925,6 +926,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fadda4b217eca304f9dd227e05dcf366, type: 2}
   - {fileID: 11400000, guid: 6a29a23eef8645a4d95b98b5394a11e8, type: 2}
   - {fileID: 11400000, guid: 732d55710c4b5cd4ca59f093c3d3ef83, type: 2}
+--- !u!114 &5403694718926495525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868503324844711377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9b36703fd57ef44aff020592867e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupEvent:
+    Guid:
+      Data1: 1878242811
+      Data2: 1308584628
+      Data3: 1780938383
+      Data4: 424232049
+    Path: event:/pickup
+  windEvent:
+    Guid:
+      Data1: -1541338840
+      Data2: 1285187679
+      Data3: 61982097
+      Data4: 727687263
+    Path: event:/wind gust
 --- !u!1 &6871060353833082883
 GameObject:
   m_ObjectHideFlags: 0
